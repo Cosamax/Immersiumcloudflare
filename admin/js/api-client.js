@@ -30,7 +30,18 @@
       plans: '/api/plans',
       promotions: '/api/promotions',
       hero_slides: '/api/hero-slides',
-      session_participants: '/api/training-sessions', // handled via joins
+      session_participants: '/api/session-participants',
+      // ── Aliases used by app.js ──
+      faq_entries: '/api/faq',
+      pricing_plans: '/api/plans',
+      promo_codes: '/api/promotions',
+      editorial_pages: '/api/pages',
+      site_content: '/api/site-content',
+      challenges: '/api/challenges',
+      questions: '/api/questions',
+      knowledge_notions: '/api/notions',
+      simulation_competences: '/api/simulation-competences',
+      simulation_characters: '/api/simulation-characters',
     };
     return map[table] || `/api/${table}`;
   }
@@ -177,7 +188,7 @@
 
           if (pendingUpdate) {
             // Find the ID from filters
-            const idField = filterParams.id || filterParams.game_id || filterParams.slug;
+            const idField = filterParams.id || filterParams.game_id || filterParams.slug || filterParams.key;
             if (idField) {
               await fetch(API_BASE + endpoint + '/' + encodeURIComponent(idField), {
                 method: 'PATCH',
@@ -205,7 +216,7 @@
           }
 
           if (pendingDelete) {
-            const idField = filterParams.id || filterParams.game_id || filterParams.slug;
+            const idField = filterParams.id || filterParams.game_id || filterParams.slug || filterParams.key || filterParams.session_id;
             if (idField) {
               await fetch(API_BASE + endpoint + '/' + encodeURIComponent(idField), {
                 method: 'DELETE',
