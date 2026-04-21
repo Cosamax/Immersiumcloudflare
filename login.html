@@ -112,8 +112,8 @@ body::before { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http:/
         <p style="font-size:13px;color:var(--ink-mute);margin:0">Accès réservé aux administrateurs</p>
       </div>
       <div class="fld">
-        <label>Nom d'utilisateur</label>
-        <input type="text" id="admin-username" required placeholder="admin" autocomplete="off">
+        <label>Nom d'utilisateur ou email</label>
+        <input type="text" id="admin-username" required placeholder="admin@immersium.fr" autocomplete="off">
       </div>
       <div class="fld">
         <label>Code d'accès</label>
@@ -141,17 +141,40 @@ body::before { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http:/
   </div>
 </div>
 
-<script type="module">
-import { supabase } from './js/imm-shared.js';
+<script>
+// ============================================================
+// API Configuration
+// ============================================================
+const API_BASE = 'https://immersium-api.mx-cosaque.workers.dev';
 
 const params = new URLSearchParams(window.location.search);
+
+// Check if already logged in
+(function checkSession() {
+  const token = localStorage.getItem('imm-token');
+  if (token) {
+    fetch(API_BASE + '/api/auth/me', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.user) {
+        if (data.user.role === 'admin') {
+          window.location.href = 'admin/index.html';
+        } else {
+          window.location.href = 'dashboard.html';
+        }
+      }
+    })
+    .catch(() => {});
+  }
+})();
+
+// Tab switching
 if (params.get('mode') === 'signup') switchTab('signup');
+else switchTab('login');
 
-supabase.auth.getSession().then(({ data: { session } }) => {
-  if (session) window.location.href = 'dashboard.html';
-});
-
-window.switchTab = function(tab) {
+function switchTab(tab) {
   document.getElementById('form-login').style.display = tab === 'login' ? '' : 'none';
   document.getElementById('form-signup').style.display = tab === 'signup' ? '' : 'none';
   document.getElementById('form-reset').style.display = tab === 'reset' ? '' : 'none';
@@ -160,9 +183,7 @@ window.switchTab = function(tab) {
   document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
   document.getElementById('tab-admin').classList.toggle('active', tab === 'admin');
   clearMessages();
-};
-
-window.switchTab(params.get('mode') === 'signup' ? 'signup' : 'login');
+}
 
 function showError(msg) {
   const el = document.getElementById('auth-error');
@@ -181,27 +202,52 @@ function clearMessages() {
   document.getElementById('auth-success').style.display = 'none';
 }
 
-window.handleLogin = async function(e) {
+// ============================================================
+// LOGIN (email + password)
+// ============================================================
+function handleLogin(e) {
   e.preventDefault();
   const btn = document.getElementById('login-btn');
   btn.disabled = true; btn.textContent = 'Connexion…';
   clearMessages();
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email: document.getElementById('login-email').value.trim(),
-    password: document.getElementById('login-password').value
-  });
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
 
-  if (error) {
-    showError(error.message === 'Invalid login credentials' ? 'Email ou mot de passe incorrect.' : error.message);
+  fetch(API_BASE + '/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  })
+  .then(r => r.json().then(data => ({ ok: r.ok, data })))
+  .then(({ ok, data }) => {
+    if (!ok || data.error) {
+      showError(data.error || 'Email ou mot de passe incorrect.');
+      btn.disabled = false; btn.textContent = 'Se connecter';
+    } else {
+      // Store token and user info
+      localStorage.setItem('imm-token', data.token);
+      localStorage.setItem('imm-user', JSON.stringify(data.user));
+
+      // Redirect based on role
+      if (data.user.role === 'admin') {
+        window.location.href = 'admin/index.html';
+      } else {
+        const redirect = params.get('redirect') || 'dashboard.html';
+        window.location.href = redirect;
+      }
+    }
+  })
+  .catch(() => {
+    showError('Erreur de connexion. Réessayez.');
     btn.disabled = false; btn.textContent = 'Se connecter';
-  } else {
-    const redirect = params.get('redirect') || 'dashboard.html';
-    window.location.href = redirect;
-  }
-};
+  });
+}
 
-window.handleSignup = async function(e) {
+// ============================================================
+// SIGNUP (email + password + full_name)
+// ============================================================
+function handleSignup(e) {
   e.preventDefault();
   const btn = document.getElementById('signup-btn');
   btn.disabled = true; btn.textContent = 'Création…';
@@ -218,37 +264,38 @@ window.handleSignup = async function(e) {
     return;
   }
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: { data: { full_name: `${fn} ${ln}`.trim() } }
-  });
+  fetch(API_BASE + '/api/auth/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password, full_name: (fn + ' ' + ln).trim() })
+  })
+  .then(r => r.json().then(data => ({ ok: r.ok, data })))
+  .then(({ ok, data }) => {
+    if (!ok || data.error) {
+      showError(data.error || 'Erreur lors de la création du compte.');
+      btn.disabled = false; btn.textContent = 'Créer mon compte gratuitement';
+    } else {
+      // Store token and user info
+      localStorage.setItem('imm-token', data.token);
+      localStorage.setItem('imm-user', JSON.stringify(data.user));
 
-  if (error) {
-    showError(error.message);
+      showSuccess('Compte créé avec succès ! Redirection…');
+      setTimeout(() => {
+        const redirect = params.get('redirect') || 'dashboard.html';
+        window.location.href = redirect;
+      }, 1000);
+    }
+  })
+  .catch(() => {
+    showError('Erreur de connexion. Réessayez.');
     btn.disabled = false; btn.textContent = 'Créer mon compte gratuitement';
-  } else if (data.session) {
-    window.location.href = params.get('redirect') || 'dashboard.html';
-  } else {
-    showSuccess('Compte créé ! Connectez-vous avec vos identifiants.');
-    switchTab('login');
-    document.getElementById('login-email').value = email;
-    btn.disabled = false; btn.textContent = 'Créer mon compte gratuitement';
-  }
-};
-
-window.handleReset = async function(e) {
-  e.preventDefault();
-  clearMessages();
-  const email = document.getElementById('reset-email').value.trim();
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + '/login.html?mode=update-password'
   });
-  if (error) showError(error.message);
-  else showSuccess('Email de réinitialisation envoyé. Vérifiez votre boîte mail.');
-};
+}
 
-window.handleAdminLogin = async function(e) {
+// ============================================================
+// ADMIN LOGIN (username/email + pin)
+// ============================================================
+function handleAdminLogin(e) {
   e.preventDefault();
   const btn = document.getElementById('admin-btn');
   btn.disabled = true; btn.textContent = 'Vérification…';
@@ -257,32 +304,44 @@ window.handleAdminLogin = async function(e) {
   const username = document.getElementById('admin-username').value.trim();
   const pin = document.getElementById('admin-pin').value;
 
-  try {
-    const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-auth`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-      },
-      body: JSON.stringify({ username, pin })
-    });
-
-    const json = await res.json();
-
-    if (!res.ok || json.error) {
-      showError(json.error || 'Identifiants incorrects.');
+  fetch(API_BASE + '/api/auth/admin', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, pin })
+  })
+  .then(r => r.json().then(data => ({ ok: r.ok, data })))
+  .then(({ ok, data }) => {
+    if (!ok || data.error) {
+      showError(data.error || 'Identifiants incorrects.');
       btn.disabled = false; btn.textContent = 'Accéder au panneau admin';
     } else {
-      sessionStorage.setItem('imm-admin', JSON.stringify({ username: json.username, role: json.role }));
-      window.location.href = 'dashboard.html';
+      // Store token and user info
+      localStorage.setItem('imm-token', data.token);
+      localStorage.setItem('imm-user', JSON.stringify(data.user));
+
+      // Redirect to admin dashboard
+      window.location.href = 'admin/index.html';
     }
-  } catch {
+  })
+  .catch(() => {
     showError('Erreur de connexion. Réessayez.');
     btn.disabled = false; btn.textContent = 'Accéder au panneau admin';
-  }
-};
+  });
+}
 
-window.checkStrength = function(pwd) {
+// ============================================================
+// RESET PASSWORD (placeholder — no email service)
+// ============================================================
+function handleReset(e) {
+  e.preventDefault();
+  clearMessages();
+  showSuccess('Fonctionnalité de réinitialisation non disponible pour le moment. Contactez l\'administrateur.');
+}
+
+// ============================================================
+// PASSWORD STRENGTH METER
+// ============================================================
+function checkStrength(pwd) {
   const fill = document.getElementById('strength-fill');
   let score = 0;
   if (pwd.length >= 8) score++;
@@ -293,7 +352,7 @@ window.checkStrength = function(pwd) {
   const colors = ['', '#DC2626', '#D97706', '#16A34A', '#16A34A'];
   fill.style.width = widths[score];
   fill.style.background = colors[score];
-};
+}
 </script>
 </body>
 </html>

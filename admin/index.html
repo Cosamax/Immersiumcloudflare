@@ -240,15 +240,85 @@
 <script src="js/api-client.js"></script>
 <script>
 /* ═══════════════════════════════════════════════════════════════════
-   IMM-GUARD pour admin — Mode démo (pas de Supabase réel)
+   IMM-GUARD pour admin — Vérifie le token d'authentification
    ═══════════════════════════════════════════════════════════════════ */
 (function() {
   'use strict';
-  window.IMM_USER = { id: 'demo-admin', email: 'admin@immersium.fr' };
-  window.IMM_PROFILE = { id: 'demo-admin', email: 'admin@immersium.fr', role: 'admin', full_name: 'Administrateur' };
-  window.ADMIN_SIGNOUT = function() { location.replace('../index.html'); };
-  console.log('[ADMIN Guard] Mode démo — accès accordé');
-  window.dispatchEvent(new CustomEvent('admin:ready', { detail: { user: window.IMM_USER, profile: window.IMM_PROFILE } }));
+  const API_BASE = 'https://immersium-api.mx-cosaque.workers.dev';
+  const token = localStorage.getItem('imm-token');
+
+  if (!token) {
+    console.warn('[ADMIN Guard] Pas de token — redirection vers login');
+    location.replace('../login.html?mode=admin');
+    return;
+  }
+
+  // Vérifier le token auprès de l'API
+  fetch(API_BASE + '/api/auth/me', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (!data.user || data.error) {
+      console.warn('[ADMIN Guard] Session invalide — redirection');
+      localStorage.removeItem('imm-token');
+      localStorage.removeItem('imm-user');
+      location.replace('../login.html?mode=admin');
+      return;
+    }
+
+    // Vérifier le rôle admin
+    if (data.user.role !== 'admin') {
+      console.warn('[ADMIN Guard] Utilisateur non admin — redirection');
+      location.replace('../login.html?mode=admin');
+      return;
+    }
+
+    window.IMM_USER = { id: data.user.id, email: data.user.email };
+    window.IMM_PROFILE = {
+      id: data.user.id,
+      email: data.user.email,
+      role: data.user.role,
+      full_name: data.user.full_name || 'Administrateur'
+    };
+    window.ADMIN_SIGNOUT = function() {
+      fetch(API_BASE + '/api/auth/logout', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + token }
+      }).finally(() => {
+        localStorage.removeItem('imm-token');
+        localStorage.removeItem('imm-user');
+        location.replace('../login.html');
+      });
+    };
+
+    console.log('[ADMIN Guard] Authentifié :', data.user.full_name);
+    window.dispatchEvent(new CustomEvent('admin:ready', {
+      detail: { user: window.IMM_USER, profile: window.IMM_PROFILE }
+    }));
+  })
+  .catch(err => {
+    console.error('[ADMIN Guard] Erreur réseau :', err);
+    // En cas d'erreur réseau, on essaie avec les données locales
+    const stored = localStorage.getItem('imm-user');
+    if (stored) {
+      try {
+        const user = JSON.parse(stored);
+        if (user.role === 'admin') {
+          window.IMM_USER = { id: user.id, email: user.email };
+          window.IMM_PROFILE = { id: user.id, email: user.email, role: 'admin', full_name: user.full_name || user.username || 'Administrateur' };
+          window.ADMIN_SIGNOUT = function() {
+            localStorage.removeItem('imm-token');
+            localStorage.removeItem('imm-user');
+            location.replace('../login.html');
+          };
+          window.dispatchEvent(new CustomEvent('admin:ready', { detail: { user: window.IMM_USER, profile: window.IMM_PROFILE } }));
+          return;
+        }
+      } catch(e) {}
+    }
+    location.replace('../login.html?mode=admin');
+  });
 })();
 </script>
 <script src="js/app.js"></script>

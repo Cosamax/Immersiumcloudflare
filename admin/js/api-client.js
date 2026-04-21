@@ -283,30 +283,49 @@
     },
     auth: {
       signOut: async () => {
-        window.location.href = '/';
+        const token = localStorage.getItem('imm-token');
+        if (token) {
+          try {
+            await fetch(API_BASE + '/api/auth/logout', {
+              method: 'POST',
+              headers: { 'Authorization': 'Bearer ' + token }
+            });
+          } catch(e) {}
+        }
+        localStorage.removeItem('imm-token');
+        localStorage.removeItem('imm-user');
+        window.location.href = '../login.html';
         return { error: null };
       },
       getSession: async () => {
-        return {
-          data: {
-            session: {
-              user: { id: 'admin-001', email: 'admin@immersium.fr' }
-            }
-          },
-          error: null
-        };
+        const token = localStorage.getItem('imm-token');
+        const stored = localStorage.getItem('imm-user');
+        if (token && stored) {
+          try {
+            const user = JSON.parse(stored);
+            return { data: { session: { user } }, error: null };
+          } catch(e) {}
+        }
+        return { data: { session: null }, error: null };
       },
       getUser: async () => {
-        return {
-          data: {
-            user: {
-              id: 'admin-001',
-              email: 'admin@immersium.fr',
-              user_metadata: { full_name: 'Administrateur' }
-            }
-          },
-          error: null
-        };
+        const stored = localStorage.getItem('imm-user');
+        if (stored) {
+          try {
+            const user = JSON.parse(stored);
+            return {
+              data: {
+                user: {
+                  id: user.id,
+                  email: user.email,
+                  user_metadata: { full_name: user.full_name || user.username || 'Administrateur' }
+                }
+              },
+              error: null
+            };
+          } catch(e) {}
+        }
+        return { data: { user: null }, error: null };
       }
     }
   };

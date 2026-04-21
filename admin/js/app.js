@@ -294,10 +294,18 @@ document.querySelector('.nav-back').addEventListener('click', e => { e.preventDe
 $('logoutBtn').addEventListener('click', async () => {
   if (!confirm('Se déconnecter ?')) return;
   try {
-    await window.IMM_SUPABASE.auth.signOut();
-    location.replace('../login.html');
+    if (window.ADMIN_SIGNOUT) {
+      window.ADMIN_SIGNOUT();
+    } else {
+      localStorage.removeItem('imm-token');
+      localStorage.removeItem('imm-user');
+      location.replace('../login.html');
+    }
   } catch(e) {
     showToast('Erreur déconnexion : ' + e.message, 'error');
+    localStorage.removeItem('imm-token');
+    localStorage.removeItem('imm-user');
+    location.replace('../login.html');
   }
 });
 
