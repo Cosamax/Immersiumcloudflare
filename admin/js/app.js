@@ -290,7 +290,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') $('globalSearch').blur();
 });
 
-document.querySelector('.nav-back').addEventListener('click', e => { e.preventDefault(); showToast('Retour au site principal', 'warn'); });
+document.querySelector('.nav-back').addEventListener('click', e => { window.location.href = '/'; });
 $('logoutBtn').addEventListener('click', async () => {
   if (!confirm('Se déconnecter ?')) return;
   try {
