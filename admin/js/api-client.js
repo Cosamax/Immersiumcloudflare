@@ -31,6 +31,9 @@
       promotions: '/api/promotions',
       hero_slides: '/api/hero-slides',
       session_participants: '/api/session-participants',
+      certificates: '/api/certificates',
+      orders: '/api/orders',
+      subscriptions: '/api/subscriptions',
       // ── Aliases used by app.js ──
       faq_entries: '/api/faq',
       pricing_plans: '/api/plans',
@@ -68,7 +71,7 @@
     }
   }
 
-  // ── Query builder (same interface as mock) ──
+  // ── Query builder (same interface as Supabase) ──
   function createQueryBuilder(tableName) {
     let selectFields = null;
     let filters = [];
@@ -80,6 +83,7 @@
     let pendingUpdate = null;
     let pendingInsert = null;
     let pendingDelete = false;
+    let pendingUpsert = null;
 
     const builder = {
       select(fields) {
@@ -150,51 +154,61 @@
         return builder;
       },
 
-      // ── Mutations ──
+      // ── Mutations (return builder for chaining with .eq() etc.) ──
       update(payload) {
         pendingUpdate = payload;
-        return builder._executeMutation();
+        return builder;
       },
       insert(rows) {
         pendingInsert = Array.isArray(rows) ? rows : [rows];
-        return builder._executeMutation();
+        return builder;
+      },
+      upsert(rows) {
+        pendingUpsert = Array.isArray(rows) ? rows : [rows];
+        return builder;
       },
       delete() {
         pendingDelete = true;
-        return builder._executeMutation();
+        return builder;
       },
 
       async _executeMutation() {
         try {
           const endpoint = getEndpoint(tableName);
 
-          if (pendingInsert) {
-            // POST each row
+          if (pendingInsert || pendingUpsert) {
+            const rows = pendingInsert || pendingUpsert;
             const results = [];
-            for (const row of pendingInsert) {
-              if (!row.id) row.id = uuid();
+            for (const row of rows) {
+              if (!row.id && !row.slug && !row.key) row.id = uuid();
               if (!row.created_at) row.created_at = new Date().toISOString();
               const resp = await fetch(API_BASE + endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(row),
               });
+              if (!resp.ok) {
+                const errJson = await resp.json().catch(() => ({}));
+                throw new Error(errJson.error || `HTTP ${resp.status}`);
+              }
               results.push(row);
             }
-            // Invalidate cache
             delete cache[tableName];
             return { data: results, error: null };
           }
 
           if (pendingUpdate) {
-            // Find the ID from filters
             const idField = filterParams.id || filterParams.game_id || filterParams.slug || filterParams.key;
             if (idField) {
-              await fetch(API_BASE + endpoint + '/' + encodeURIComponent(idField), {
+              const resp = await fetch(API_BASE + endpoint + '/' + encodeURIComponent(idField), {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(pendingUpdate),
               });
+              if (!resp.ok) {
+                const errJson = await resp.json().catch(() => ({}));
+                throw new Error(errJson.error || `HTTP ${resp.status}`);
+              }
             } else {
               // Fetch all, filter client-side, update each
               const allData = await fetchTable(tableName);
@@ -218,9 +232,13 @@
           if (pendingDelete) {
             const idField = filterParams.id || filterParams.game_id || filterParams.slug || filterParams.key || filterParams.session_id;
             if (idField) {
-              await fetch(API_BASE + endpoint + '/' + encodeURIComponent(idField), {
+              const resp = await fetch(API_BASE + endpoint + '/' + encodeURIComponent(idField), {
                 method: 'DELETE',
               });
+              if (!resp.ok) {
+                const errJson = await resp.json().catch(() => ({}));
+                throw new Error(errJson.error || `HTTP ${resp.status}`);
+              }
             }
             delete cache[tableName];
             return { data: null, error: null };
@@ -235,6 +253,11 @@
 
       // ── Read execution ──
       async _execute() {
+        // If there's a pending mutation, execute that instead
+        if (pendingUpdate || pendingInsert || pendingDelete || pendingUpsert) {
+          return builder._executeMutation();
+        }
+
         try {
           // Fetch from API
           const allData = await fetchTable(tableName, filterParams.role ? { role: filterParams.role } : {});
@@ -247,6 +270,9 @@
           if (orderField) {
             result.sort((a, b) => {
               const va = a[orderField], vb = b[orderField];
+              if (va == null && vb == null) return 0;
+              if (va == null) return orderAsc ? 1 : -1;
+              if (vb == null) return orderAsc ? -1 : 1;
               if (va < vb) return orderAsc ? -1 : 1;
               if (va > vb) return orderAsc ? 1 : -1;
               return 0;
