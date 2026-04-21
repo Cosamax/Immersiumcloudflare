@@ -368,7 +368,13 @@
     return;
   }
 
-  const game = catalogue[gameId];
+  // Support catalogue en format tableau (array) ou objet
+  let game = null;
+  if (Array.isArray(catalogue)) {
+    game = catalogue.find(g => g.game_id === gameId || g.id === gameId || g.slug === gameId);
+  } else {
+    game = catalogue[gameId];
+  }
   if (!game) {
     document.getElementById('loading-msg').innerHTML = `
       <h2>Simulation introuvable</h2>
@@ -382,7 +388,7 @@
   const challengesData = game.challenges_data || {};
   const totalChallenges = game.challenges || 21;
   const gameColor = game.color || '#000080';
-  const gameNum = CATALOG_NUMS[gameId] || '??';
+  const gameNum = game.num || CATALOG_NUMS[gameId] || '??';
   const gameName = (game.title || gameId.toUpperCase()).split(' — ')[0];
   const gameFullTitle = game.title || gameId.toUpperCase();
   const gameSub = game.subtitle || '';
