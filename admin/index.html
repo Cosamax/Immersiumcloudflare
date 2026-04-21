@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Immersium — Tableau de bord Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="app-side" id="sidebar">
+
+    <!-- Brand -->
+    <div class="app-brand">
+      <div class="brand-top">
+        <span class="name">Immer<em>sium</em><sup class="beta">ADMIN</sup></span>
+        <button class="sidebar-toggle" id="sidebarToggle" title="Réduire le menu" aria-label="Réduire le menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+        </button>
+      </div>
+      <span class="role">TABLEAU DE BORD</span>
+    </div>
+
+    <!-- Retour site -->
+    <a href="#" class="nav-back" data-page="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+      <span>Retour au site</span>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="app-nav" id="appNav">
+
+      <!-- Principal -->
+      <div class="nav-section">
+        <div class="nav-sec-label">Principal</div>
+        <a href="#" class="nav-item active" data-page="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" data-page="stats">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75z"/><path d="M9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625z"/><path d="M16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+          <span>Statistiques</span>
+        </a>
+        <a href="#" class="nav-item" data-page="export">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Export données</span>
+        </a>
+      </div>
+
+      <!-- Utilisateurs -->
+      <div class="nav-section">
+        <div class="nav-sec-label">Utilisateurs</div>
+        <a href="#" class="nav-item" data-page="users">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <span>Tous les utilisateurs</span>
+          <span class="nav-badge">1 284</span>
+        </a>
+        <a href="#" class="nav-item" data-page="formateurs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span>Formateurs</span>
+          <span class="nav-badge">47</span>
+        </a>
+        <a href="#" class="nav-item" data-page="apprenants">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Apprenants</span>
+          <span class="nav-badge">1 237</span>
+        </a>
+        <a href="#" class="nav-item" data-page="demandes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
+          <span>Demandes</span>
+          <span class="nav-badge warn">12</span>
+        </a>
+      </div>
+
+      <!-- Formation -->
+      <div class="nav-section">
+        <div class="nav-sec-label">Formation</div>
+        <a href="#" class="nav-item" data-page="sessions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Sessions</span>
+        </a>
+        <a href="#" class="nav-item" data-page="results">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>Résultats & scores</span>
+        </a>
+        <a href="#" class="nav-item" data-page="coaching">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <span>Coaching</span>
+        </a>
+        <a href="#" class="nav-item" data-page="simulations">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Simulations VR</span>
+        </a>
+      </div>
+
+      <!-- Contenu -->
+      <div class="nav-section">
+        <div class="nav-sec-label">Contenu</div>
+        <a href="#" class="nav-item" data-page="editor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <span>Éditeur de contenu</span>
+        </a>
+        <a href="#" class="nav-item" data-page="hero">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>
+          <span>Page d'accueil</span>
+        </a>
+        <a href="#" class="nav-item" data-page="vedettes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>Vedettes</span>
+        </a>
+        <a href="#" class="nav-item" data-page="pages">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>Pages du site</span>
+        </a>
+        <a href="#" class="nav-item" data-page="faq">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>FAQ</span>
+        </a>
+      </div>
+
+      <!-- Commercial -->
+      <div class="nav-section">
+        <div class="nav-sec-label">Commercial</div>
+        <a href="#" class="nav-item" data-page="tarifs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          <span>Tarifs & offres</span>
+        </a>
+        <a href="#" class="nav-item" data-page="promotions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          <span>Promotions</span>
+        </a>
+      </div>
+
+      <!-- Système -->
+      <div class="nav-section">
+        <div class="nav-sec-label">Système</div>
+        <a href="#" class="nav-item" data-page="access">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          <span>Accès & API</span>
+        </a>
+      </div>
+
+    </nav>
+
+    <!-- User -->
+    <div class="app-user">
+      <div class="av" id="userAvatar">A</div>
+      <div class="user-info">
+        <div class="user-name" id="userName">Administrateur</div>
+        <div class="user-role">Super Admin</div>
+      </div>
+      <button class="logout-btn" id="logoutBtn" title="Déconnexion">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main class="app-main" id="appMain">
+
+    <!-- Topbar -->
+    <header class="topbar" id="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <nav class="breadcrumb" id="breadcrumb" aria-label="Fil d'Ariane">
+          <span>Immersium Admin</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          <span id="breadcrumbPage">Dashboard</span>
+        </nav>
+      </div>
+      <div class="topbar-right">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="search" id="globalSearch" placeholder="Rechercher…" autocomplete="off"/>
+          <kbd>⌘K</kbd>
+        </div>
+        <button class="icon-btn" id="notifBtn" title="Notifications" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Sub-tabs bar -->
+    <div class="subtabs-bar" id="subtabsBar" style="display:none">
+      <div class="subtabs-inner" id="subtabsInner"></div>
+    </div>
+
+    <!-- Page content area -->
+    <div class="page-area" id="pageArea">
+      <!-- Loaded dynamically -->
+    </div>
+
+  </main>
+
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Notification panel -->
+<div class="notif-panel" id="notifPanel" hidden>
+  <div class="notif-panel-h">
+    <span>Notifications</span>
+    <button id="notifClose" aria-label="Fermer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="notif-list">
+    <div class="notif-item unread">
+      <div class="notif-ico">👤</div>
+      <div><strong>Nouvel utilisateur</strong><br/>Marie Dupont vient de s'inscrire<br/><small>Il y a 3 min</small></div>
+    </div>
+    <div class="notif-item unread">
+      <div class="notif-ico">📅</div>
+      <div><strong>Session confirmée</strong><br/>Session coaching #247 confirmée<br/><small>Il y a 12 min</small></div>
+    </div>
+    <div class="notif-item">
+      <div class="notif-ico">⚠️</div>
+      <div><strong>Demande en attente</strong><br/>12 demandes nécessitent une action<br/><small>Il y a 1 h</small></div>
+    </div>
+    <div class="notif-item">
+      <div class="notif-ico">📊</div>
+      <div><strong>Rapport mensuel</strong><br/>Rapport d'avril prêt à télécharger<br/><small>Il y a 2 h</small></div>
+    </div>
+  </div>
+</div>
+<div class="overlay-bg" id="overlayBg" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/mock-supabase.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   IMM-GUARD pour admin — Mode démo (pas de Supabase réel)
+   ═══════════════════════════════════════════════════════════════════ */
+(function() {
+  'use strict';
+  window.IMM_USER = { id: 'demo-admin', email: 'admin@immersium.fr' };
+  window.IMM_PROFILE = { id: 'demo-admin', email: 'admin@immersium.fr', role: 'admin', full_name: 'Administrateur' };
+  window.ADMIN_SIGNOUT = function() { location.replace('../index.html'); };
+  console.log('[ADMIN Guard] Mode démo — accès accordé');
+  window.dispatchEvent(new CustomEvent('admin:ready', { detail: { user: window.IMM_USER, profile: window.IMM_PROFILE } }));
+})();
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>

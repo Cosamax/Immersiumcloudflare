@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FAQ — Admin Immersium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F8F5EE;--bg-alt:#F2EDE0;--paper:#FFFDF7;--paper-hover:#FFFBEF;
+  --ink:#0E1A2B;--ink-soft:#2A3749;--ink-mute:#6B7685;
+  --line:#E8E0CE;--cobalt:#0131B4;--marine:#0131B4;
+  --orange:#FF6B35;--orange-soft:#FFE4D4;--sand:#C9A96E;--sand-soft:#F5E6C8;
+  --coral:#D32F2F;--coral-soft:#FFEBEE;--plum:#7C3AED;--plum-soft:#EDE9FE;
+  --green:#1B5E20;--green-soft:#E8F5E9;
+  --p-cobalt:#D6D6F0;
+  --r:12px;--r-lg:18px;--r-xl:24px;
+  --f-display:"Fraunces",Georgia,serif;
+  --f-body:"Inter Tight",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f-body);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55;min-height:100vh;-webkit-font-smoothing:antialiased}
+button,a{font:inherit;color:inherit;text-decoration:none;border:none;background:none;cursor:pointer}
+
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.app-side{background:var(--ink);color:rgba(255,255,255,.82);position:sticky;top:0;height:100vh;overflow:auto;display:flex;flex-direction:column}
+.app-brand{padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.app-brand .name{font-family:var(--f-display);font-size:22px;font-weight:500;letter-spacing:-.02em;color:#fff}
+.app-brand .name em{font-style:italic;color:var(--orange)}
+.app-brand .beta{font-family:var(--f-mono);font-size:8px;letter-spacing:.1em;background:var(--orange);color:#fff;padding:2px 6px;border-radius:4px;vertical-align:super;margin-left:4px;font-style:normal;font-weight:700}
+.app-brand .role{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-top:8px}
+.app-nav{flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:2px}
+.app-nav-sec{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600;padding:14px 10px 8px}
+.app-nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;font-size:13.5px;color:rgba(255,255,255,.72);transition:all .15s}
+.app-nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+.app-nav a.active{background:rgba(255,107,53,.15);color:var(--orange)}
+.app-nav a svg{opacity:.8;width:16px;height:16px;flex-shrink:0}
+.app-user{padding:14px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px}
+.app-user .av{width:36px;height:36px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.app-user .n{font-size:13px;font-weight:600;color:#fff}
+.app-user .r{font-size:11px;color:rgba(255,255,255,.5)}
+
+.app-top{position:sticky;top:0;z-index:30;background:rgba(248,245,238,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:14px 32px;display:flex;justify-content:space-between;align-items:center}
+.app-main{padding:32px 40px 120px}
+
+.page-h{margin-bottom:24px}
+.page-h .eyebrow{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:6px}
+.page-h h1{font-family:var(--f-display);font-size:36px;font-weight:500;letter-spacing:-.025em;margin-bottom:6px}
+.page-h h1 em{font-style:italic;color:var(--marine)}
+.page-h .sub{color:var(--ink-mute);font-size:14px}
+
+.fld{margin-bottom:14px}
+.fld label{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:7px}
+.fld input,.fld textarea,.fld select{width:100%;padding:11px 14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;font-family:var(--f-body);font-size:14px;color:var(--ink);outline:none;transition:all .15s}
+.fld textarea{min-height:100px;resize:vertical;line-height:1.55}
+.fld select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7685' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.fld input:focus,.fld textarea:focus,.fld select:focus{border-color:var(--marine);box-shadow:0 0 0 3px rgba(0,0,128,.1);background:var(--paper)}
+.fld-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld-row-3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;transition:all .15s;border:1px solid transparent;cursor:pointer}
+.btn-orange{background:var(--orange);color:var(--ink);box-shadow:0 4px 12px -4px rgba(255,107,53,.5)}
+.btn-orange:hover{background:#FF8659}
+.btn-outline{background:var(--paper);border-color:var(--line);color:var(--ink)}
+.btn-outline:hover{background:var(--paper-hover);border-color:var(--sand)}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-sm{padding:6px 12px;font-size:12px;border-radius:8px}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--ink-mute)}
+.btn-ghost:hover{background:var(--bg-alt);color:var(--ink)}
+.btn-danger{background:var(--coral-soft);border-color:transparent;color:var(--coral)}
+.btn-danger:hover{background:#FFCDD2}
+
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 10px;border-radius:999px;font-weight:600}
+.pill-coral{background:var(--coral-soft);color:var(--coral)}
+.pill .dot{width:6px;height:6px;border-radius:50%}
+
+.loader{padding:60px;text-align:center;color:var(--ink-mute)}
+.spin{display:inline-block;width:22px;height:22px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:14px 22px;border-radius:12px;font-size:14px;box-shadow:0 10px 30px -8px rgba(0,0,0,.3);z-index:200;transition:transform .3s}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{background:#1B5E20}
+.toast.error{background:var(--coral)}
+
+/* ─── FAQ list ─── */
+.faq-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px;flex-wrap:wrap}
+.faq-toolbar-left{display:flex;align-items:center;gap:10px}
+.faq-stats{font-size:13px;color:var(--ink-mute)}
+.faq-stats strong{color:var(--ink);font-weight:600}
+
+.category-group{margin-bottom:28px}
+.category-group-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.category-group-header h3{font-family:var(--f-display);font-size:16px;font-weight:500;letter-spacing:-.01em}
+.category-count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:var(--bg-alt);color:var(--ink-soft);font-family:var(--f-mono);font-size:11px;font-weight:600}
+
+.faq-table{width:100%;border-collapse:collapse}
+.faq-table th{text-align:left;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;padding:0 10px 8px;border-bottom:1px solid var(--line)}
+.faq-table th:first-child{padding-left:0}
+.faq-table th:last-child{padding-right:0;text-align:right}
+.faq-row{border-bottom:1px solid var(--line);transition:background .12s}
+.faq-row:last-child{border-bottom:none}
+.faq-row:hover{background:var(--paper-hover)}
+.faq-row td{padding:12px 10px;vertical-align:middle}
+.faq-row td:first-child{padding-left:0}
+.faq-row td:last-child{padding-right:0;text-align:right}
+
+.cat-badge{display:inline-flex;align-items:center;font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap;letter-spacing:.02em}
+.cat-general{background:#E8EAF6;color:#283593}
+.cat-simulations{background:var(--plum-soft);color:var(--plum)}
+.cat-abonnements{background:var(--orange-soft);color:#BF360C}
+.cat-technique{background:var(--sand-soft);color:#5D4037}
+
+.faq-question{font-size:13.5px;font-weight:500;color:var(--ink);max-width:340px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.faq-order{font-family:var(--f-mono);font-size:12px;color:var(--ink-mute);text-align:center}
+
+/* Toggle switch */
+.toggle{position:relative;display:inline-block;width:38px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;border-radius:999px;background:var(--line);cursor:pointer;transition:all .2s}
+.toggle input:checked+.toggle-track{background:var(--green)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:transform .2s;pointer-events:none}
+.toggle input:checked~.toggle-thumb{transform:translateX(16px)}
+
+.row-actions{display:flex;align-items:center;justify-content:flex-end;gap:4px}
+
+.empty-state{text-align:center;padding:48px 24px;color:var(--ink-mute)}
+.empty-state svg{width:36px;height:36px;margin:0 auto 12px;display:block;opacity:.4}
+.empty-state p{font-size:14px}
+
+/* ─── Modal ─── */
+.modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(14,26,43,.45);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--paper);border-radius:var(--r-xl);box-shadow:0 24px 60px -12px rgba(14,26,43,.35);width:100%;max-width:600px;max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+.modal-head{padding:22px 28px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-head h2{font-family:var(--f-display);font-size:21px;font-weight:500;letter-spacing:-.01em}
+.modal-close{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--bg-alt);color:var(--ink-mute);transition:all .15s}
+.modal-close:hover{background:var(--line);color:var(--ink)}
+.modal-body{padding:24px 28px;overflow-y:auto;flex:1}
+.modal-foot{padding:16px 28px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;flex-shrink:0}
+
+/* Checkbox */
+.fld-check{display:flex;align-items:center;gap:10px;cursor:pointer}
+.fld-check input[type=checkbox]{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line);appearance:none;background:var(--bg);cursor:pointer;flex-shrink:0;position:relative;transition:all .15s}
+.fld-check input[type=checkbox]:checked{background:var(--marine);border-color:var(--marine)}
+.fld-check input[type=checkbox]:checked::after{content:'';position:absolute;left:4px;top:1px;width:6px;height:10px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg)}
+.fld-check span{font-size:13.5px;color:var(--ink-soft)}
+
+/* Order controls */
+.order-btns{display:inline-flex;flex-direction:column;gap:2px}
+.order-btns button{width:20px;height:16px;display:flex;align-items:center;justify-content:center;border-radius:4px;background:var(--bg-alt);border:1px solid var(--line);color:var(--ink-mute);font-size:9px;transition:all .12s;line-height:1}
+.order-btns button:hover{background:var(--sand-soft);border-color:var(--sand);color:var(--ink)}
+.order-btns button:disabled{opacity:.3;cursor:not-allowed}
+
+/* Burger mobile */
+.app-burger{display:none;width:40px;height:40px;border-radius:10px;background:var(--paper);border:1px solid var(--line);align-items:center;justify-content:center;cursor:pointer;color:var(--ink);flex-shrink:0}
+.app-burger:hover{background:var(--paper-hover);border-color:var(--sand)}
+.app-burger svg{width:18px;height:18px}
+
+@media(max-width:1100px){
+  .app{grid-template-columns:1fr}
+  .app-side{display:none}
+  .app-main{padding:24px}
+  .fld-row{grid-template-columns:1fr}
+  .fld-row-3{grid-template-columns:1fr 1fr}
+  .app-burger{display:flex}
+  .app-side.mobile-open{display:flex;position:fixed;top:0;left:0;bottom:0;z-index:90;width:min(280px,85vw);box-shadow:6px 0 30px -6px rgba(0,0,0,.25);animation:slideInLeft .25s ease-out}
+  .app-backdrop{display:none;position:fixed;inset:0;z-index:89;background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
+  .app-backdrop.open{display:block}
+  .faq-question{max-width:200px}
+}
+@keyframes slideInLeft{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+
+@media(max-width:560px){
+  .page-h h1{font-size:26px!important;line-height:1.15!important}
+  .app-main{padding:16px 14px 90px!important}
+  .app-top{padding:10px 14px!important}
+  .fld-row-3{grid-template-columns:1fr!important}
+  input,select,textarea{font-size:16px!important}
+  body{overflow-x:hidden!important}
+  .faq-table th.hide-sm,.faq-row td.hide-sm{display:none}
+  .faq-question{max-width:130px}
+}
+</style>
+</head>
+<body>
+
+<script>window.IMM_REQUIRE_ROLE = 'admin';</script>
+<script src="immersium-guard.js"></script>
+<script type="module" src="js/imm-shared.js"></script>
+
+<div class="app">
+
+  <aside class="app-side">
+    <div class="app-brand">
+      <div class="name">Immer<em>sium</em> <span class="beta">BETA</span></div>
+      <div class="role">ADMIN CONSOLE</div>
+    </div>
+    <nav class="app-nav">
+      <a href="index.html" class="retour-site" style="color:rgba(255,255,255,.95);background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:8px;padding:12px 18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+        Retour au site
+      </a>
+      <a href="admin-dashboard.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Tableau de bord
+      </a>
+      <div class="app-nav-sec">Utilisateurs</div>
+      <a href="admin-users.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Utilisateurs
+      </a>
+      <a href="admin-formateurs.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Formateurs
+      </a>
+      <a href="admin-apprenants.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Apprenants
+      </a>
+      <div class="app-nav-sec">Formation</div>
+      <a href="admin-sessions.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Sessions
+      </a>
+      <a href="admin-results.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75z"/><path d="M9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625z"/><path d="M16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+        Résultats
+      </a>
+      <a href="catalogue.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+        Catalogue
+      </a>
+      <div class="app-nav-sec">Contenu</div>
+      <a href="admin-editor.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Jeux &amp; Formations
+      </a>
+      <a href="admin-simulations.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Config simulations
+      </a>
+      <a href="admin-hero.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Page d'accueil
+      </a>
+      <a href="admin-vedettes.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Vedettes accueil
+      </a>
+      <a href="admin-pages.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Pages du site
+      </a>
+      <a href="admin-faq.html" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        FAQ
+      </a>
+      <a href="admin-tarifs.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Tarifs
+      </a>
+      <a href="admin-coaching.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Coaches
+      </a>
+      <div class="app-nav-sec">Commercial</div>
+      <a href="admin-promotions.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14l6-6"/><circle cx="9.5" cy="9.5" r="1.5"/><circle cx="14.5" cy="14.5" r="1.5"/><rect x="2" y="2" width="20" height="20" rx="2.18"/></svg>
+        Promotions &amp; Accès
+      </a>
+      <div class="app-nav-sec">Système</div>
+      <a href="admin-stats.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>
+        Statistiques
+      </a>
+      <a href="admin-access.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/></svg>
+        Accès &amp; API
+      </a>
+      <a href="admin-export.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+        Exporter
+      </a>
+      <a href="admin-demandes.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Demandes formation
+      </a>
+      <a href="#" onclick="IMM_SIGNOUT();return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Déconnexion
+      </a>
+    </nav>
+    <div class="app-user">
+      <div class="av" id="user-av">—</div>
+      <div><div class="n" id="user-name">Chargement…</div><div class="r">Admin</div></div>
+    </div>
+  </aside>
+
+  <div>
+    <div class="app-top">
+      <button class="app-burger" onclick="toggleAppMenu()" aria-label="Menu" style="margin-right:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div><span class="pill pill-coral"><span class="dot" style="background:currentColor"></span> Mode admin</span></div>
+      <a href="faq.html" target="_blank" class="btn btn-ink" style="padding:8px 14px;font-size:12.5px">Voir la FAQ ↗</a>
+    </div>
+
+    <main class="app-main">
+      <div class="page-h">
+        <div class="eyebrow">
+          <span style="display:inline-flex;align-items:center;gap:4px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;width:1em;height:1em"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Contenu
+          </span>
+        </div>
+        <h1>FAQ <em>questions</em></h1>
+        <div class="sub">Gérez les questions fréquentes affichées sur la page FAQ, organisées par catégorie avec ordre personnalisable.</div>
+      </div>
+
+      <div class="faq-toolbar">
+        <div class="faq-toolbar-left">
+          <div class="faq-stats" id="faq-stats">Chargement…</div>
+        </div>
+        <button class="btn btn-orange" onclick="openModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Ajouter une question
+        </button>
+      </div>
+
+      <div id="faq-list">
+        <div class="loader">
+          <div class="spin"></div>
+          <div style="margin-top:12px">Chargement des questions…</div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ═══ MODAL ADD / EDIT ═══ -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-head">
+      <h2 id="modal-title">Nouvelle question</h2>
+      <button class="modal-close" onclick="closeModal()" aria-label="Fermer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="fld">
+        <label>Catégorie</label>
+        <select id="m-category">
+          <option value="Général">Général</option>
+          <option value="Les simulations">Les simulations</option>
+          <option value="Abonnements &amp; paiement">Abonnements &amp; paiement</option>
+          <option value="Technique">Technique</option>
+        </select>
+      </div>
+      <div class="fld">
+        <label>Question</label>
+        <input type="text" id="m-question" placeholder="Ex : Comment fonctionne l'accès aux simulations ?" maxlength="300">
+      </div>
+      <div class="fld">
+        <label>Réponse</label>
+        <textarea id="m-answer" rows="5" placeholder="Rédigez la réponse complète ici…" style="min-height:140px"></textarea>
+      </div>
+      <div class="fld-row" style="margin-bottom:14px">
+        <div class="fld" style="margin-bottom:0">
+          <label>Ordre d'affichage</label>
+          <input type="number" id="m-sort-order" min="0" max="999" value="10" style="max-width:120px">
+        </div>
+        <div class="fld" style="margin-bottom:0;display:flex;flex-direction:column;justify-content:flex-end">
+          <label style="margin-bottom:10px">Visibilité</label>
+          <label class="fld-check">
+            <input type="checkbox" id="m-active" checked>
+            <span>Afficher cette question (active)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-orange" id="modal-save-btn" onclick="saveItem()">
+        Enregistrer
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="5 13 10 18 20 7"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="app-backdrop" id="app-backdrop" onclick="toggleAppMenu()"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// Supabase init (via imm-shared.js)
+// ═══════════════════════════════════════════════════════════════════
+function getSb() { return window.IMM_SUPABASE; }
+
+// ═══════════════════════════════════════════════════════════════════
+// State
+// ═══════════════════════════════════════════════════════════════════
+const $ = id => document.getElementById(id);
+let allItems   = [];   // raw from DB
+let editingId  = null; // null = new item
+
+const CATEGORIES = [
+  'Général',
+  'Les simulations',
+  'Abonnements & paiement',
+  'Technique'
+];
+
+const CAT_CLASS = {
+  'Général':                    'cat-general',
+  'Les simulations':            'cat-simulations',
+  'Abonnements & paiement':     'cat-abonnements',
+  'Technique':                  'cat-technique'
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// Init
+// ═══════════════════════════════════════════════════════════════════
+let _initialized = false;
+async function initPage(detail) {
+  if (_initialized) return;
+  _initialized = true;
+
+  const name = (detail && detail.name) || 'Admin';
+  $('user-name').textContent = name;
+  $('user-av').textContent   = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'A';
+
+  await loadItems();
+}
+
+document.addEventListener('imm:ready', e => initPage(e.detail));
+
+// ═══════════════════════════════════════════════════════════════════
+// Load
+// ═══════════════════════════════════════════════════════════════════
+async function loadItems() {
+  $('faq-list').innerHTML = '<div class="loader"><div class="spin"></div><div style="margin-top:12px">Chargement…</div></div>';
+  $('faq-stats').textContent = 'Chargement…';
+
+  try {
+    const { data, error } = await getSb()
+      .from('faq_items')
+      .select('id, category, question, answer, sort_order, active, created_at')
+      .order('sort_order', { ascending: true })
+      .order('created_at', { ascending: true });
+
+    if (error) throw error;
+    allItems = data || [];
+    renderList();
+  } catch (err) {
+    $('faq-list').innerHTML = `<div class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p>Erreur lors du chargement : ${esc(err.message)}</p>
+    </div>`;
+    $('faq-stats').textContent = 'Erreur';
+    showToast('error', 'Erreur de chargement : ' + err.message);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Render
+// ═══════════════════════════════════════════════════════════════════
+function renderList() {
+  const total  = allItems.length;
+  const active = allItems.filter(i => i.active).length;
+  $('faq-stats').innerHTML = `<strong>${total}</strong> question${total !== 1 ? 's' : ''} &nbsp;·&nbsp; <strong>${active}</strong> active${active !== 1 ? 's' : ''}`;
+
+  if (total === 0) {
+    $('faq-list').innerHTML = `<div class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <p>Aucune question pour le moment.<br>Cliquez sur « Ajouter une question » pour commencer.</p>
+    </div>`;
+    return;
+  }
+
+  // Group by category (preserve defined order)
+  const groups = {};
+  CATEGORIES.forEach(c => { groups[c] = []; });
+  allItems.forEach(item => {
+    if (!groups[item.category]) groups[item.category] = [];
+    groups[item.category].push(item);
+  });
+
+  let html = '';
+  CATEGORIES.forEach(cat => {
+    const items = groups[cat];
+    if (!items || items.length === 0) return;
+
+    html += `<div class="category-group">
+      <div class="category-group-header">
+        <h3>${esc(cat)}</h3>
+        <span class="category-count">${items.length}</span>
+      </div>
+      <table class="faq-table">
+        <thead>
+          <tr>
+            <th style="width:40px" class="hide-sm">Ordre</th>
+            <th>Question</th>
+            <th class="hide-sm" style="width:130px">Catégorie</th>
+            <th style="width:80px;text-align:center">Actif</th>
+            <th style="width:120px">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${items.map((item, idx) => renderRow(item, idx, items.length)).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  });
+
+  // Items with unknown category
+  const unknownItems = allItems.filter(item => !CATEGORIES.includes(item.category));
+  if (unknownItems.length > 0) {
+    html += `<div class="category-group">
+      <div class="category-group-header">
+        <h3>Autre</h3>
+        <span class="category-count">${unknownItems.length}</span>
+      </div>
+      <table class="faq-table">
+        <thead>
+          <tr>
+            <th style="width:40px" class="hide-sm">Ordre</th>
+            <th>Question</th>
+            <th class="hide-sm" style="width:130px">Catégorie</th>
+            <th style="width:80px;text-align:center">Actif</th>
+            <th style="width:120px">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${unknownItems.map((item, idx) => renderRow(item, idx, unknownItems.length)).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }
+
+  $('faq-list').innerHTML = html;
+}
+
+function renderRow(item, idx, groupLen) {
+  const catClass = CAT_CLASS[item.category] || 'cat-general';
+  const checkedAttr = item.active ? 'checked' : '';
+
+  return `<tr class="faq-row" data-id="${item.id}">
+    <td class="hide-sm">
+      <div style="display:flex;align-items:center;gap:6px">
+        <span class="faq-order">${item.sort_order ?? '—'}</span>
+        <div class="order-btns">
+          <button title="Monter" onclick="moveItem('${item.id}', 'up')" ${idx === 0 ? 'disabled' : ''}>&#9650;</button>
+          <button title="Descendre" onclick="moveItem('${item.id}', 'down')" ${idx === groupLen - 1 ? 'disabled' : ''}>&#9660;</button>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="faq-question" title="${esc(item.question)}">${esc(item.question)}</div>
+    </td>
+    <td class="hide-sm">
+      <span class="cat-badge ${catClass}">${esc(item.category)}</span>
+    </td>
+    <td style="text-align:center">
+      <label class="toggle" title="${item.active ? 'Désactiver' : 'Activer'}">
+        <input type="checkbox" ${checkedAttr} onchange="toggleActive('${item.id}', this.checked)">
+        <div class="toggle-track"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+    </td>
+    <td>
+      <div class="row-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openModal('${item.id}')" title="Modifier">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4z"/></svg>
+          Éditer
+        </button>
+        <button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}')" title="Supprimer">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
+      </div>
+    </td>
+  </tr>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Modal
+// ═══════════════════════════════════════════════════════════════════
+window.openModal = function(id) {
+  editingId = id || null;
+  $('modal-title').textContent = editingId ? 'Modifier la question' : 'Nouvelle question';
+  $('modal-save-btn').textContent = editingId ? 'Mettre à jour' : 'Enregistrer';
+  $('modal-save-btn').innerHTML  = (editingId ? 'Mettre à jour' : 'Enregistrer') +
+    ' <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="5 13 10 18 20 7"/></svg>';
+
+  if (editingId) {
+    const item = allItems.find(i => String(i.id) === String(editingId));
+    if (!item) return;
+    $('m-category').value   = item.category || 'Général';
+    $('m-question').value   = item.question  || '';
+    $('m-answer').value     = item.answer    || '';
+    $('m-sort-order').value = item.sort_order ?? 10;
+    $('m-active').checked   = item.active !== false;
+  } else {
+    $('m-category').value   = 'Général';
+    $('m-question').value   = '';
+    $('m-answer').value     = '';
+    $('m-sort-order').value = nextSortOrder();
+    $('m-active').checked   = true;
+  }
+
+  $('modal-overlay').classList.add('open');
+  setTimeout(() => $('m-question').focus(), 80);
+};
+
+window.closeModal = function() {
+  $('modal-overlay').classList.remove('open');
+  editingId = null;
+};
+
+window.handleOverlayClick = function(e) {
+  if (e.target === $('modal-overlay')) closeModal();
+};
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && $('modal-overlay').classList.contains('open')) closeModal();
+});
+
+function nextSortOrder() {
+  if (allItems.length === 0) return 10;
+  const max = Math.max(...allItems.map(i => i.sort_order || 0));
+  return max + 10;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Save (add or edit)
+// ═══════════════════════════════════════════════════════════════════
+window.saveItem = async function() {
+  const category   = $('m-category').value.trim();
+  const question   = $('m-question').value.trim();
+  const answer     = $('m-answer').value.trim();
+  const sort_order = parseInt($('m-sort-order').value, 10) || 0;
+  const active     = $('m-active').checked;
+
+  if (!question) { showToast('error', 'La question est obligatoire.'); $('m-question').focus(); return; }
+  if (!answer)   { showToast('error', 'La réponse est obligatoire.');  $('m-answer').focus();   return; }
+
+  const btn = $('modal-save-btn');
+  btn.disabled = true;
+  btn.innerHTML = 'Enregistrement…';
+
+  try {
+    if (editingId) {
+      const { error } = await getSb()
+        .from('faq_items')
+        .update({ category, question, answer, sort_order, active })
+        .eq('id', editingId);
+      if (error) throw error;
+      showToast('success', 'Question mise à jour.');
+    } else {
+      const { error } = await getSb()
+        .from('faq_items')
+        .insert([{ category, question, answer, sort_order, active }]);
+      if (error) throw error;
+      showToast('success', 'Question ajoutée.');
+    }
+    closeModal();
+    await loadItems();
+  } catch (err) {
+    showToast('error', 'Erreur : ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = (editingId ? 'Mettre à jour' : 'Enregistrer') +
+      ' <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="5 13 10 18 20 7"/></svg>';
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// Toggle active
+// ═══════════════════════════════════════════════════════════════════
+window.toggleActive = async function(id, active) {
+  try {
+    const { error } = await getSb()
+      .from('faq_items')
+      .update({ active })
+      .eq('id', id);
+    if (error) throw error;
+    const item = allItems.find(i => String(i.id) === String(id));
+    if (item) item.active = active;
+    renderList();
+    showToast('success', active ? 'Question activée.' : 'Question désactivée.');
+  } catch (err) {
+    showToast('error', 'Erreur : ' + err.message);
+    await loadItems(); // revert on error
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// Delete
+// ═══════════════════════════════════════════════════════════════════
+window.deleteItem = async function(id) {
+  const item = allItems.find(i => String(i.id) === String(id));
+  const label = item ? `"${item.question.substring(0, 60)}${item.question.length > 60 ? '…' : ''}"` : 'cette question';
+  if (!confirm(`Supprimer ${label} ?\n\nCette action est irréversible.`)) return;
+
+  try {
+    const { error } = await getSb()
+      .from('faq_items')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
+    allItems = allItems.filter(i => String(i.id) !== String(id));
+    renderList();
+    showToast('success', 'Question supprimée.');
+  } catch (err) {
+    showToast('error', 'Erreur : ' + err.message);
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// Reorder (move up/down within same category)
+// ═══════════════════════════════════════════════════════════════════
+window.moveItem = async function(id, direction) {
+  const item = allItems.find(i => String(i.id) === String(id));
+  if (!item) return;
+
+  const sameCat = allItems
+    .filter(i => i.category === item.category)
+    .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0) || (new Date(a.created_at) - new Date(b.created_at)));
+
+  const idx = sameCat.findIndex(i => String(i.id) === String(id));
+  const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+  if (swapIdx < 0 || swapIdx >= sameCat.length) return;
+
+  const itemA = sameCat[idx];
+  const itemB = sameCat[swapIdx];
+  const orderA = itemA.sort_order ?? 0;
+  const orderB = itemB.sort_order ?? 0;
+
+  try {
+    // Swap sort_order values
+    const [errA, errB] = await Promise.all([
+      getSb().from('faq_items').update({ sort_order: orderB }).eq('id', itemA.id).then(r => r.error),
+      getSb().from('faq_items').update({ sort_order: orderA }).eq('id', itemB.id).then(r => r.error)
+    ]);
+    if (errA) throw errA;
+    if (errB) throw errB;
+
+    // Update local state
+    itemA.sort_order = orderB;
+    itemB.sort_order = orderA;
+    allItems.sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0) || (new Date(a.created_at) - new Date(b.created_at)));
+    renderList();
+    showToast('success', 'Ordre mis à jour.');
+  } catch (err) {
+    showToast('error', 'Erreur : ' + err.message);
+    await loadItems();
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// Utilities
+// ═══════════════════════════════════════════════════════════════════
+function esc(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function showToast(type, msg) {
+  const t = $('toast');
+  t.className = 'toast show ' + type;
+  t.textContent = msg;
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Mobile menu
+// ═══════════════════════════════════════════════════════════════════
+function toggleAppMenu() {
+  const s = document.querySelector('.app-side');
+  const b = $('app-backdrop');
+  if (!s) return;
+  const o = s.classList.toggle('mobile-open');
+  if (b) b.classList.toggle('open', o);
+  document.body.style.overflow = o ? 'hidden' : '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const s = document.querySelector('.app-side.mobile-open');
+    if (s) toggleAppMenu();
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// Beta badge
+// ═══════════════════════════════════════════════════════════════════
+(function() {
+  if (localStorage.getItem('imm_beta_mode') === 'false') {
+    const b = document.querySelector('.app-brand .beta');
+    if (b) b.style.display = 'none';
+  }
+})();
+</script>
+</body>
+</html>
