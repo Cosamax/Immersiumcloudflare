@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Défi — Immersium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="immersium-shared.css">
+
+<style>
+/* ═══════════════════════════════════════════════════
+   GAME PAGE — Caribbean Editorial
+   ═══════════════════════════════════════════════════ */
+
+/* SHELL */
+.game-shell{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* TOPBAR */
+.game-topbar{display:flex;align-items:center;gap:16px;padding:10px 20px;background:var(--paper);border-bottom:1px solid var(--line);flex-shrink:0;z-index:40}
+.game-topbar-left{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
+.game-back{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:var(--bg);border:1px solid var(--line);color:var(--ink);transition:all .15s;flex-shrink:0}
+.game-back:hover{background:var(--paper-hover);border-color:var(--sand)}
+.game-crumb{display:flex;align-items:baseline;gap:8px;font-size:13px;color:var(--ink-soft);min-width:0;overflow:hidden}
+.game-crumb .ord{font-family:var(--f-display);font-style:italic;font-size:11px;color:var(--sand);letter-spacing:.18em;font-weight:500;flex-shrink:0}
+.game-crumb .slash{color:var(--line);flex-shrink:0}
+.game-crumb .ch{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-mute);flex-shrink:0}
+.game-progress{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.game-progress span{font-family:var(--f-mono);font-size:11px;color:var(--cobalt);font-weight:600}
+.game-progress .bar{width:100px;height:5px;background:var(--bg-alt);border-radius:99px;overflow:hidden}
+.game-progress .fill{height:100%;background:var(--cobalt);border-radius:99px;transition:width .4s}
+.game-topbar-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+
+/* MAIN LAYOUT */
+.game-main{display:grid;grid-template-columns:240px 1fr 260px;flex:1;overflow:hidden}
+
+/* SIDEBAR LEFT */
+.game-side{padding:20px;overflow-y:auto;background:var(--paper);border-right:1px solid var(--line)}
+.game-side h5{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:10px}
+.ch-list{display:flex;flex-direction:column;gap:2px;margin-bottom:20px}
+.ch-item{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;font-size:12.5px;color:var(--ink-soft);cursor:pointer;transition:background .12s,color .12s}
+.ch-item:hover{background:var(--bg-alt);color:var(--ink)}
+.ch-item.current{background:var(--cobalt);color:#fff;font-weight:600}
+.ch-item.done{color:var(--ink-mute)}
+.ch-item.done .ch-num{background:var(--bg-alt);color:var(--ink-mute);border-color:var(--line)}
+.ch-item.locked{color:var(--ink-mute);opacity:.5;cursor:default}
+.ch-item.locked .ch-num{position:relative}
+.ch-item.locked .ch-num::after{content:'\1F512';font-size:9px;position:absolute;right:-2px;bottom:-2px}
+
+/* PAYWALL OVERLAY */
+.paywall-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(14,26,43,.85);backdrop-filter:blur(8px);animation:pw-in .3s}
+@keyframes pw-in{from{opacity:0}to{opacity:1}}
+.paywall-box{background:var(--paper);border-radius:20px;max-width:520px;width:92%;padding:48px 40px;text-align:center;box-shadow:0 24px 80px -16px rgba(0,0,0,.5);position:relative}
+.paywall-box .pw-icon{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--orange),#FF8659);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:28px}
+.paywall-box h2{font-family:var(--f-display);font-size:28px;font-weight:500;letter-spacing:-.02em;margin-bottom:8px}
+.paywall-box h2 em{font-style:italic;color:var(--marine)}
+.paywall-box .pw-sub{font-size:14px;color:var(--ink-soft);line-height:1.6;margin-bottom:28px}
+.paywall-box .pw-plans{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.paywall-box .pw-plan{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--ink);transition:all .15s}
+.paywall-box .pw-plan:hover{border-color:var(--orange);background:rgba(255,107,53,.05)}
+.paywall-box .pw-plan .pw-plan-name{font-weight:600;font-size:14px}
+.paywall-box .pw-plan .pw-plan-desc{font-size:12px;color:var(--ink-mute);margin-top:2px}
+.paywall-box .pw-plan .pw-plan-price{font-family:var(--f-display);font-size:20px;font-weight:500;color:var(--orange);white-space:nowrap}
+.paywall-box .pw-plan.featured{border-color:var(--orange);background:rgba(255,107,53,.06)}
+.paywall-box .pw-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--paper);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--ink-mute);transition:all .12s}
+.paywall-box .pw-close:hover{background:var(--bg-alt);color:var(--ink)}
+.paywall-box .pw-free{font-size:12px;color:var(--ink-mute);margin-top:12px}
+.paywall-box .pw-free a{color:var(--cobalt);text-decoration:underline}
+.ch-num{width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-size:12px;font-weight:500;background:var(--bg);border:1px solid var(--line);flex-shrink:0}
+.ch-item.current .ch-num{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3);color:#fff}
+
+/* CONTENT AREA */
+.game-content{padding:32px 40px;overflow-y:auto}
+.game-hero{margin-bottom:32px}
+.game-hero .ord{font-family:var(--f-display);font-style:italic;font-size:12px;color:var(--sand);letter-spacing:.22em;text-transform:uppercase;font-weight:500;margin-bottom:8px}
+.game-hero h1{font-family:var(--f-display);font-size:36px;font-weight:500;letter-spacing:-.025em;line-height:1.1}
+.game-hero h1 em{font-style:italic;color:var(--marine);font-weight:500}
+.game-hero .meta{display:flex;gap:18px;margin-top:14px;font-size:12px;color:var(--ink-mute)}
+.game-hero .meta span{display:flex;align-items:center;gap:5px}
+
+/* BRIEFING */
+.game-briefing{padding:20px 24px;background:var(--bg);border-left:3px solid var(--sand);border-radius:0 var(--r) var(--r) 0;margin-bottom:28px}
+.game-briefing .from{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:10px}
+.game-briefing .content{font-size:14px;line-height:1.65;color:var(--ink-soft)}
+
+/* COMMUNICATIONS */
+.comm-block{margin-bottom:20px;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line)}
+.comm-header{display:flex;align-items:center;gap:10px;padding:12px 18px;font-size:12px;font-weight:600;letter-spacing:.05em}
+.comm-header .comm-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.comm-header .comm-from{font-size:13px;font-weight:600}
+.comm-header .comm-channel{font-size:10px;letter-spacing:.15em;text-transform:uppercase;opacity:.7;margin-left:auto}
+.comm-body{padding:16px 20px;font-size:13.5px;line-height:1.65;color:var(--ink-soft);background:var(--paper)}
+.comm-body .comm-subject{font-weight:600;color:var(--ink);margin-bottom:8px;font-size:12px}
+.comm-email .comm-header{background:rgba(0,85,255,.06);color:var(--cobalt)}
+.comm-email .comm-icon{background:rgba(0,85,255,.12);color:var(--cobalt)}
+.comm-teams .comm-header{background:rgba(88,86,214,.06);color:#5856D6}
+.comm-teams .comm-icon{background:rgba(88,86,214,.12);color:#5856D6}
+.comm-visio .comm-header{background:rgba(13,148,136,.06);color:#0D9488}
+.comm-visio .comm-icon{background:rgba(13,148,136,.12);color:#0D9488}
+.comm-notif .comm-header{background:rgba(220,38,38,.06);color:#DC2626}
+.comm-notif .comm-icon{background:rgba(220,38,38,.12);color:#DC2626}
+.comm-vocal .comm-header{background:rgba(245,158,11,.06);color:#D97706}
+.comm-vocal .comm-icon{background:rgba(245,158,11,.12);color:#D97706}
+
+/* DOCUMENT */
+.game-doc{padding:24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);margin-bottom:28px;font-size:14px;line-height:1.65;color:var(--ink-soft);max-height:400px;overflow-y:auto}
+.game-doc h3,.game-doc h4{color:var(--ink);margin:16px 0 8px}
+.game-doc p{margin-bottom:10px}
+.game-doc ul,.game-doc ol{margin:8px 0 12px 20px}
+.game-doc li{margin-bottom:4px}
+.game-doc table{width:100%;border-collapse:collapse;margin:12px 0}
+.game-doc th,.game-doc td{padding:8px 12px;border:1px solid var(--line);font-size:13px;text-align:left}
+.game-doc th{background:var(--bg);font-weight:600;color:var(--ink)}
+
+/* QUESTIONS */
+.game-q{margin-bottom:28px}
+.game-q .label{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+.game-q .label .type-tag{color:var(--cobalt)}
+.game-q h3{font-family:var(--f-display);font-size:22px;font-weight:500;letter-spacing:-.01em;line-height:1.25;margin-bottom:16px}
+.choice-list{display:flex;flex-direction:column;gap:8px}
+.choice{display:flex;gap:12px;padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);cursor:pointer;transition:all .15s}
+.choice:hover{background:var(--paper-hover);border-color:var(--sand)}
+.choice.selected{background:rgba(0,0,128,.06);border-color:var(--cobalt)}
+.choice.correct{background:rgba(46,125,50,.08);border-color:#2E7D32}
+.choice.incorrect{background:rgba(211,47,47,.06);border-color:var(--coral)}
+.ch-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;margin-top:2px;position:relative;transition:all .15s}
+.choice.selected .ch-radio{border-color:var(--cobalt);background:var(--cobalt)}
+.choice.selected .ch-radio::after{content:"";position:absolute;top:50%;left:50%;width:6px;height:6px;border-radius:50%;background:#fff;transform:translate(-50%,-50%)}
+.choice.correct .ch-radio{border-color:#2E7D32;background:#2E7D32}
+.choice.correct .ch-radio::after{content:"";position:absolute;top:50%;left:50%;width:6px;height:6px;border-radius:50%;background:#fff;transform:translate(-50%,-50%)}
+.choice.incorrect .ch-radio{border-color:var(--coral);background:var(--coral)}
+.choice.incorrect .ch-radio::after{content:"";position:absolute;top:50%;left:50%;width:6px;height:6px;border-radius:50%;background:#fff;transform:translate(-50%,-50%)}
+.ch-check{width:20px;height:20px;border-radius:6px;border:2px solid var(--line);flex-shrink:0;margin-top:2px;position:relative;transition:all .15s}
+.choice.selected .ch-check{border-color:var(--cobalt);background:var(--cobalt)}
+.choice.selected .ch-check::after{content:"\2713";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:12px;font-weight:700}
+.choice .text{font-size:13.5px;line-height:1.5;color:var(--ink-soft)}
+.choice .text strong{color:var(--ink);font-weight:600}
+
+/* ORDERING */
+.ordering-list{display:flex;flex-direction:column;gap:6px}
+.ordering-item{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);cursor:grab;transition:all .15s;user-select:none}
+.ordering-item:hover{background:var(--paper-hover);border-color:var(--sand)}
+.ordering-item.dragging{opacity:.5;border-color:var(--cobalt);background:rgba(0,85,255,.06)}
+.ordering-item .ord-num{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-size:13px;font-weight:600;background:var(--bg-alt);color:var(--ink-mute);flex-shrink:0}
+.ordering-item .ord-text{font-size:13.5px;line-height:1.4;color:var(--ink-soft);flex:1}
+.ordering-item .ord-handle{display:flex;flex-direction:column;gap:1px;opacity:.4;flex-shrink:0;cursor:grab}
+.ordering-item .ord-handle span{display:block;width:14px;height:2px;background:var(--ink-mute);border-radius:1px}
+.ordering-item.correct-pos{background:rgba(46,125,50,.08);border-color:#2E7D32}
+.ordering-item.correct-pos .ord-num{background:#2E7D32;color:#fff}
+.ordering-item.incorrect-pos{background:rgba(211,47,47,.06);border-color:var(--coral)}
+.ordering-item.incorrect-pos .ord-num{background:var(--coral);color:#fff}
+.ordering-btns{display:flex;gap:4px;flex-shrink:0}
+.ordering-btns button{width:28px;height:28px;border:1px solid var(--line);border-radius:6px;background:var(--paper);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-mute);transition:all .12s;font-size:14px;padding:0}
+.ordering-btns button:hover{background:var(--bg-alt);color:var(--ink);border-color:var(--sand)}
+
+/* MATCHING */
+.matching-zone{display:flex;gap:20px;flex-wrap:wrap}
+.matching-col{flex:1;min-width:200px;display:flex;flex-direction:column;gap:6px}
+.matching-col h6{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:6px}
+.matching-item{padding:12px 16px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);font-size:13px;line-height:1.4;color:var(--ink-soft);cursor:pointer;transition:all .15s}
+.matching-item:hover{border-color:var(--sand);background:var(--paper-hover)}
+.matching-item.selected{border-color:var(--cobalt);background:rgba(0,85,255,.06);color:var(--ink)}
+.matching-item.matched{border-color:#2E7D32;background:rgba(46,125,50,.08);cursor:default}
+.matching-item.matched::before{content:"\2713 ";color:#2E7D32;font-weight:700}
+.matching-item.error{border-color:var(--coral);background:rgba(211,47,47,.06)}
+.matching-pairs-display{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.matching-pair-row{display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);font-size:12.5px}
+.matching-pair-row .mp-left{font-weight:600;color:var(--ink);flex:1}
+.matching-pair-row .mp-arrow{color:var(--ink-mute);flex-shrink:0}
+.matching-pair-row .mp-right{color:var(--ink-soft);flex:1;text-align:right}
+.matching-pair-row.mp-correct{border-color:#2E7D32;background:rgba(46,125,50,.06)}
+.matching-pair-row.mp-incorrect{border-color:var(--coral);background:rgba(211,47,47,.06)}
+
+/* CHECKBOX (uses .choice-list + .ch-check already defined) */
+
+/* TUTO */
+.tuto-video{margin-bottom:20px;border-radius:var(--r-lg);overflow:hidden;background:#000;position:relative;padding-bottom:56.25%;height:0}
+.tuto-video iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.tuto-link{display:inline-flex;align-items:center;gap:8px;padding:14px 20px;background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.15);border-radius:var(--r);color:#DC2626;font-size:13px;font-weight:600;margin-bottom:16px;text-decoration:none;transition:all .15s}
+.tuto-link:hover{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.25)}
+
+/* TOOL / SCREENSHOT */
+.tool-instruction{padding:18px 22px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-lg);margin-bottom:16px;font-size:13.5px;line-height:1.65;color:var(--ink-soft)}
+.tool-instruction h6{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--cobalt);font-weight:600;margin-bottom:10px}
+.tool-instruction ol{margin:8px 0 0 20px;padding:0}
+.tool-instruction li{margin-bottom:6px}
+.tool-link{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--cobalt);color:#fff;border-radius:var(--r);font-size:13px;font-weight:600;text-decoration:none;margin-bottom:16px;transition:all .15s}
+.tool-link:hover{opacity:.9}
+
+/* FEEDBACK */
+.feedback{padding:14px 18px;border-radius:var(--r);margin-top:8px;font-size:13px;line-height:1.55;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:rgba(46,125,50,.08);border:1px solid rgba(46,125,50,.2);color:#1B5E20}
+.feedback.incorrect{background:rgba(211,47,47,.06);border:1px solid rgba(211,47,47,.15);color:#B71C1C}
+
+/* FREE RESPONSE */
+.free-textarea{width:100%;min-height:120px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r);font-family:var(--f-body);font-size:14px;line-height:1.6;color:var(--ink);background:var(--bg);resize:vertical;transition:border-color .15s}
+.free-textarea:focus{outline:none;border-color:var(--cobalt)}
+.free-textarea:disabled{opacity:.6;cursor:not-allowed;background:var(--bg-alt)}
+
+/* AI FEEDBACK */
+.ai-loading{display:flex;align-items:center;gap:10px;padding:14px 18px;background:rgba(0,85,255,.06);border:1px solid rgba(0,85,255,.15);border-radius:var(--r);margin-top:8px;font-size:13px;color:var(--cobalt)}
+.ai-spinner{width:18px;height:18px;border:2px solid rgba(0,85,255,.2);border-top-color:var(--cobalt);border-radius:50%;animation:aispin .6s linear infinite}
+@keyframes aispin{to{transform:rotate(360deg)}}
+.ai-feedback{padding:18px 20px;border-radius:var(--r-lg);margin-top:10px;font-size:13px;line-height:1.6;border:1px solid var(--line)}
+.ai-feedback.good{background:rgba(13,148,136,.06);border-color:rgba(13,148,136,.2)}
+.ai-feedback.average{background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.2)}
+.ai-feedback.poor{background:rgba(211,47,47,.06);border-color:rgba(211,47,47,.15)}
+.ai-score{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-display);font-size:28px;font-weight:500;margin-bottom:10px}
+.ai-score .out-of{font-size:14px;color:var(--ink-mute);font-weight:400}
+.ai-detail{margin-top:12px;font-size:12px}
+.ai-detail h6{font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.ai-detail ul{margin:0 0 10px 16px;padding:0}
+.ai-detail li{margin-bottom:3px}
+.ai-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-left:8px}
+.ai-badge.ia{background:rgba(0,85,255,.1);color:var(--cobalt)}
+
+/* MEMO */
+.game-memo{padding:16px 20px;background:var(--bg-alt);border:1px dashed var(--sand);border-radius:var(--r);margin-bottom:28px;font-size:13px;line-height:1.6;color:var(--ink-soft)}
+.game-memo h5{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--sand);font-weight:600;margin-bottom:8px}
+
+/* ACTIONS */
+.game-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:24px;border-top:1px solid var(--line);margin-top:32px}
+.game-help{font-size:11.5px;color:var(--ink-mute);font-style:italic}
+
+/* RIGHT SIDEBAR (toolbox) */
+.game-side-r{border-right:none;border-left:1px solid var(--line)}
+.toolbox .tool-card{padding:12px 14px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);margin-bottom:8px;cursor:pointer;transition:all .15s}
+.toolbox .tool-card:hover{background:var(--paper-hover);border-color:var(--sand)}
+.toolbox .tool-card .t{font-size:12.5px;font-weight:600;color:var(--ink);display:flex;justify-content:space-between;align-items:center}
+.toolbox .tool-card .k{font-family:var(--f-mono);font-size:10px;color:var(--ink-mute);background:var(--bg-alt);padding:2px 6px;border-radius:4px}
+.toolbox .tool-card .d{font-size:11.5px;color:var(--ink-mute);margin-top:4px}
+
+/* NO DATA */
+.no-data{padding:60px 40px;text-align:center}
+.no-data h2{font-family:var(--f-display);font-size:28px;font-weight:500;margin-bottom:12px}
+.no-data p{color:var(--ink-soft);font-size:15px;max-width:480px;margin:0 auto 24px}
+
+/* ONBOARDING */
+.onboarding-screen{padding:0}
+.onboarding-screen .ob-hero{text-align:center;padding:48px 40px 32px;border-bottom:1px solid var(--line)}
+.onboarding-screen .ob-hero .ob-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:99px;background:rgba(0,0,128,.06);color:var(--cobalt);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.onboarding-screen .ob-hero h1{font-family:var(--f-display);font-size:36px;font-weight:500;letter-spacing:-.025em;line-height:1.1;margin-bottom:8px}
+.onboarding-screen .ob-hero h1 em{font-style:italic;color:var(--marine)}
+.onboarding-screen .ob-hero .ob-sub{font-size:15px;color:var(--ink-soft);max-width:520px;margin:0 auto}
+.onboarding-screen .ob-content{padding:32px 40px;font-size:14px;line-height:1.65;color:var(--ink-soft)}
+.onboarding-screen .ob-content div{max-width:100%}
+.onboarding-screen .ob-actions{display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 40px;border-top:1px solid var(--line)}
+.onboarding-screen .ob-actions .btn{font-size:16px;padding:14px 32px}
+.ch-item.onboarding{font-style:italic;color:var(--cobalt)}
+.ch-item.onboarding .ch-num{background:rgba(0,85,255,.1);border-color:rgba(0,85,255,.2);color:var(--cobalt);font-size:10px}
+
+/* BANNIERE DE SIMULATION */
+.sim-banner-persistent{margin:-20px -20px 20px;padding:16px 18px;position:relative;overflow:hidden;color:#fff;display:flex;align-items:center;gap:12px}
+.sim-banner-persistent::before{content:"";position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12) 0%,transparent 65%);pointer-events:none}
+.sim-banner-persistent .sb-logo{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:"Fraunces",serif;font-weight:500;font-size:15px;overflow:hidden;position:relative;z-index:1}
+.sim-banner-persistent .sb-text{flex:1;position:relative;min-width:0;z-index:1}
+.sim-banner-persistent .sb-eye{font-family:"Fraunces",serif;font-style:italic;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;opacity:.75;font-weight:500;margin-bottom:2px}
+.sim-banner-persistent .sb-cname{font-family:"Fraunces",serif;font-weight:500;font-size:16px;letter-spacing:-.005em;line-height:1.1}
+.sim-banner-persistent .sb-sub{font-size:11px;opacity:.85;margin-top:3px}
+
+/* MOBILE */
+.game-menu-btn{display:none;width:44px;height:44px;border-radius:10px;background:var(--paper);border:1px solid var(--line);align-items:center;justify-content:center;cursor:pointer;color:var(--ink);margin-left:8px;flex-shrink:0}
+@media(max-width:960px){
+  .game-main{grid-template-columns:1fr}
+  .game-side{display:none}
+  .game-side.mobile-open{display:block;position:fixed;top:0;left:0;width:280px;height:100vh;z-index:100;box-shadow:var(--sh-lift)}
+  .game-side-r{display:none}
+  .game-menu-btn{display:flex}
+  .game-content{padding:20px}
+  .game-hero h1{font-size:26px}
+  .matching-zone{flex-direction:column}
+}
+</style>
+</head>
+<body style="font-size:14px">
+
+<div class="game-shell">
+
+  <!-- TOPBAR -->
+  <div class="game-topbar">
+    <div class="game-topbar-left">
+      <a href="catalogue.html" class="game-back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="game-crumb">
+        <span class="ord" id="game-crumb-ord">N° —</span>
+        <span id="game-crumb-name" style="font-family:var(--f-display);font-weight:500;font-size:15px">—</span>
+        <span class="slash">·</span>
+        <span class="title" id="game-crumb-session">—</span>
+        <span class="slash">·</span>
+        <span class="ch" id="game-crumb-ch">Défi — / —</span>
+      </div>
+    </div>
+    <div class="game-progress">
+      <span id="progress-pct">0%</span>
+      <div class="bar"><div class="fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="game-topbar-right">
+      <span class="pill pill-cobalt"><span class="dot" style="background:currentColor"></span> En cours</span>
+    </div>
+    <button class="game-menu-btn" onclick="toggleGameMenu()" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="game-main">
+
+    <!-- SIDEBAR LEFT -->
+    <aside class="game-side" id="game-side-left">
+      <div class="sim-banner-persistent" id="sim-banner" style="background:var(--cobalt)">
+        <div class="sb-logo" id="sb-logo">—</div>
+        <div class="sb-text">
+          <div class="sb-eye">Simulation en cours</div>
+          <div class="sb-cname" id="sb-cname">—</div>
+          <div class="sb-sub" id="sb-sub"></div>
+        </div>
+      </div>
+      <div id="sidebar-sessions">
+        <!-- Dynamically generated -->
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="game-content" id="game-content">
+      <div class="no-data" id="loading-msg">
+        <h2>Chargement…</h2>
+        <p>Récupération des données de la simulation.</p>
+      </div>
+    </main>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="game-side game-side-r toolbox" id="toolbox">
+      <h5>Boîte à outils</h5>
+      <div id="toolbox-content">
+        <div style="color:var(--ink-mute);padding:8px 0;font-style:italic;font-size:11.5px">Chargement…</div>
+      </div>
+      <a href="coaching.html" style="color:var(--cobalt);padding:8px 0;margin-top:16px;display:flex;justify-content:space-between;font-size:12.5px">Demander un coach <span>→</span></a>
+    </aside>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SCRIPT : chargement dynamique des défis depuis catalogue.json
+     Supporte : mcq, ordering, matching, checkbox, free, tuto, tool, screenshot
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+(async function() {
+  // ─── Paramètres URL ──────────────────────────────────────────────
+  const params = new URLSearchParams(location.search);
+  const gameId = params.get('game') || 'lumio';
+  let currentIdx = parseInt(params.get('ch'));
+  if (isNaN(currentIdx)) currentIdx = 0; // Default to onboarding
+
+  // ─── Numéros catalogue ───────────────────────────────────────────
+  const CATALOG_NUMS = window.IMM_CATALOG_NUMS || {};
+
+  // ─── Charger le catalogue ────────────────────────────────────────
+  let catalogue = null;
+  try {
+    const resp = await fetch('/data/catalogue.json');
+    catalogue = await resp.json();
+  } catch(e) {
+    document.getElementById('loading-msg').innerHTML = `
+      <h2>Erreur de chargement</h2>
+      <p>Impossible de charger les données du catalogue. Vérifiez que le fichier <code>data/catalogue.json</code> est bien déployé.</p>
+      <a href="catalogue.html" class="btn btn-primary" style="margin-top:16px">Retour au catalogue</a>`;
+    return;
+  }
+
+  const game = catalogue[gameId];
+  if (!game) {
+    document.getElementById('loading-msg').innerHTML = `
+      <h2>Simulation introuvable</h2>
+      <p>La simulation « ${gameId} » n'existe pas dans le catalogue.</p>
+      <a href="catalogue.html" class="btn btn-primary" style="margin-top:16px">Retour au catalogue</a>`;
+    return;
+  }
+
+  // ─── Données du jeu ──────────────────────────────────────────────
+  const sessions = game.sessions || [];
+  const challengesData = game.challenges_data || {};
+  const totalChallenges = game.challenges || 21;
+  const gameColor = game.color || '#000080';
+  const gameNum = CATALOG_NUMS[gameId] || '??';
+  const gameName = (game.title || gameId.toUpperCase()).split(' — ')[0];
+  const gameFullTitle = game.title || gameId.toUpperCase();
+  const gameSub = game.subtitle || '';
+
+  // ─── Construire la liste plate ordonnée des défis (1-indexed) ────
+  const flatChallenges = [];
+  sessions.forEach(s => {
+    (s.challenges || []).forEach(ch => {
+      flatChallenges.push({
+        idx: flatChallenges.length + 1,
+        rawId: ch.id,
+        title: ch.title || 'Défi ' + (flatChallenges.length + 1),
+        sessionTitle: s.title || 'Session ' + s.id,
+        sessionId: s.id
+      });
+    });
+  });
+
+  // ─── Extraire le numéro d'un ID brut ─────────────────────────────
+  function extractNum(rawId) {
+    if (typeof rawId === 'number') return rawId;
+    const m = String(rawId).match(/(\d+)$/);
+    return m ? parseInt(m[1]) : null;
+  }
+
+  // ─── Trouver les données d'un défi par index séquentiel ──────────
+  function getChallengeData(idx) {
+    const ch = flatChallenges[idx - 1];
+    if (!ch) return null;
+    const num = extractNum(ch.rawId);
+    if (num === null) return null;
+    const key1 = `${gameId}_ch${num}`;
+    const key2 = String(ch.rawId);
+    const key3 = `ch${num}`;
+    return challengesData[key1] || challengesData[key2] || challengesData[key3] || null;
+  }
+
+  // ─── Mise à jour titre + bannière ────────────────────────────────
+  document.title = `Défi — ${gameFullTitle} — Immersium`;
+  document.getElementById('game-crumb-ord').textContent = `N° ${gameNum}`;
+  document.getElementById('game-crumb-name').textContent = gameFullTitle;
+  document.getElementById('sb-cname').textContent = gameName;
+  document.getElementById('sb-sub').textContent = gameSub;
+  document.getElementById('sb-logo').textContent = gameName.substring(0, 2).toUpperCase();
+  document.getElementById('sim-banner').style.background = gameColor;
+
+  // ─── Générer la sidebar ──────────────────────────────────────────
+  function renderSidebar() {
+    const container = document.getElementById('sidebar-sessions');
+    let html = '';
+    let globalIdx = 0;
+
+    // Onboarding item (always first)
+    const introText = game.intro_text || '';
+    if (introText.length > 0) {
+      const obCls = currentIdx === 0 ? 'current' : 'done';
+      html += `<h5>Intégration</h5>`;
+      html += '<div class="ch-list">';
+      html += `<div class="ch-item onboarding ${obCls}" onclick="goToChallenge(0)" title="Onboarding — Intégration de l'apprenant">
+        <div class="ch-num">${currentIdx === 0 ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 13 10 18 20 7"/></svg>'}</div>Intégration
+      </div>`;
+      html += '</div>';
+    }
+
+    sessions.forEach((s, si) => {
+      const sessionChallenges = s.challenges || [];
+      html += `<h5 style="margin-top:20px">${esc(s.title || 'Session ' + s.id)}</h5>`;
+      html += '<div class="ch-list">';
+      const access = hasAccess();
+      sessionChallenges.forEach(ch => {
+        globalIdx++;
+        const isCurrent = globalIdx === currentIdx;
+        const isLocked = globalIdx > 1 && !access;
+        const cls = isCurrent ? 'current' : isLocked ? 'locked' : '';
+        const shortTitle = (ch.title || '').length > 28 ? ch.title.substring(0, 26) + '…' : ch.title;
+        html += `<div class="ch-item ${cls}" onclick="goToChallenge(${globalIdx})" title="${esc(ch.title)}">
+          <div class="ch-num">${isLocked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : globalIdx}</div>${esc(shortTitle)}
+        </div>`;
+      });
+      html += '</div>';
+    });
+    container.innerHTML = html;
+  }
+
+  // ─── Helpers pour les types de questions ──────────────────────────
+  const TYPE_LABELS = {
+    'mcq': 'QCM',
+    'checkbox': 'Choix multiples',
+    'ordering': 'Classement',
+    'matching': 'Association',
+    'free': 'Réponse libre',
+    'tuto': 'Tutoriel vidéo',
+    'tool': 'Manipulation outil',
+    'screenshot': 'Capture d\'écran'
+  };
+
+  function getTypeLabel(q) {
+    if (q.type && TYPE_LABELS[q.type]) return TYPE_LABELS[q.type];
+    // Fallback pour MCQ sans type explicite
+    const opts = q.opts || [];
+    if (opts.length > 0) {
+      return opts.filter(o => o.ok).length > 1 ? 'Choix multiples' : 'QCM';
+    }
+    return 'Question';
+  }
+
+  function getEffectiveType(q) {
+    if (q.type) return q.type;
+    // Inférer le type depuis la structure
+    if (q.items && q.solution) return 'ordering';
+    if (q.pairs) return 'matching';
+    if (q.items && !q.solution) return 'checkbox';
+    if (q.opts && q.opts.length > 0) {
+      return q.opts.filter(o => o.ok).length > 1 ? 'checkbox' : 'mcq';
+    }
+    return 'free';
+  }
+
+  // ─── Icônes des communications ───────────────────────────────────
+  const COMM_ICONS = {
+    'email': '\u2709',
+    'teams': '\uD83D\uDCAC',
+    'visio': '\uD83C\uDFA5',
+    'vocal': '\uD83C\uDF99',
+    'notif': '\u26A0'
+  };
+
+  function renderComms(comms) {
+    if (!comms || !Array.isArray(comms) || comms.length === 0) return '';
+    let html = '';
+    comms.forEach(c => {
+      const channel = (c.channel || 'email').toLowerCase();
+      const icon = COMM_ICONS[channel] || '\u2709';
+      const cls = 'comm-' + channel;
+      html += `<div class="comm-block ${cls}">
+        <div class="comm-header">
+          <div class="comm-icon">${icon}</div>
+          <div class="comm-from">${esc(c.from || 'Message')}</div>
+          <div class="comm-channel">${esc(channel)}</div>
+        </div>
+        <div class="comm-body">
+          ${c.subject ? `<div class="comm-subject">Objet : ${esc(c.subject)}</div>` : ''}
+          <div>${(c.body || '').replace(/\n/g, '<br>')}</div>
+        </div>
+      </div>`;
+    });
+    return html;
+  }
+
+  // ─── Rendre le contenu d'un défi ─────────────────────────────────
+  function renderChallenge(idx) {
+    currentIdx = idx;
+
+    // ─── ONBOARDING (idx === 0) ──────────────────────────────────
+    if (idx === 0) {
+      const introHtml = game.intro_text || '';
+      document.getElementById('game-crumb-session').textContent = 'Intégration';
+      document.getElementById('game-crumb-ch').textContent = 'Onboarding';
+      document.getElementById('progress-pct').textContent = '0%';
+      document.getElementById('progress-fill').style.width = '0%';
+      renderSidebar();
+      history.replaceState(null, '', `game.html?game=${gameId}&ch=0`);
+
+      const content = document.getElementById('game-content');
+      content.innerHTML = `
+        <div class="onboarding-screen">
+          <div class="ob-hero">
+            <div class="ob-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              Intégration de l'apprenant
+            </div>
+            <h1>Bienvenue chez <em>${esc(gameName)}</em></h1>
+            <div class="ob-sub">Avant de commencer votre premier défi, prenez le temps de découvrir l'entreprise, votre équipe et votre mission. Cette étape est indispensable pour bien comprendre le contexte de la simulation.</div>
+          </div>
+          <div class="ob-content">${introHtml}</div>
+          <div class="ob-actions">
+            <button class="btn btn-primary btn-lg" onclick="goToChallenge(1)" style="background:${gameColor}">
+              Commencer la simulation
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:8px"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>`;
+      content.scrollTop = 0;
+
+      // Clear toolbox
+      const tb = document.getElementById('toolbox-content');
+      if (tb) tb.innerHTML = '<div style="padding:16px 0"><div style="background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:16px;text-align:center"><div style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--cobalt);font-weight:600;margin-bottom:6px">Conseil</div><div style="font-size:12.5px;color:var(--ink-soft);line-height:1.5">Lisez attentivement l\'intégration. Elle contient toutes les informations nécessaires pour réussir vos défis.</div></div></div>';
+      return;
+    }
+
+    const chInfo = flatChallenges[idx - 1];
+    const questions = getChallengeData(idx);
+    const pct = Math.round((idx / totalChallenges) * 100);
+
+    // Update topbar
+    document.getElementById('game-crumb-session').textContent = chInfo ? chInfo.sessionTitle : 'Session';
+    document.getElementById('game-crumb-ch').textContent = `Défi ${idx} / ${totalChallenges}`;
+    document.getElementById('progress-pct').textContent = pct + '%';
+    document.getElementById('progress-fill').style.width = pct + '%';
+
+    // Update sidebar
+    renderSidebar();
+
+    // Update URL without reload
+    const newUrl = `game.html?game=${gameId}&ch=${idx}`;
+    history.replaceState(null, '', newUrl);
+
+    const content = document.getElementById('game-content');
+
+    if (!questions || questions.length === 0) {
+      content.innerHTML = `
+        <div class="no-data">
+          <h2>Défi ${idx} — ${esc(chInfo ? chInfo.title : 'Sans titre')}</h2>
+          <p>Les questions de ce défi ne sont pas encore disponibles. Elles seront ajoutées prochainement.</p>
+          <div style="display:flex;gap:12px;justify-content:center;margin-top:20px">
+            ${idx > 1 ? `<button class="btn btn-outline" onclick="goToChallenge(${idx - 1})">← Défi précédent</button>` : ''}
+            ${idx < totalChallenges ? `<button class="btn btn-primary" onclick="goToChallenge(${idx + 1})">Défi suivant →</button>` : ''}
+          </div>
+        </div>`;
+      const tb = document.getElementById('toolbox-content');
+      if (tb) tb.innerHTML = '<div style="color:var(--ink-mute);padding:8px 0;font-style:italic;font-size:11.5px">Aucun outil pour ce défi.</div>';
+      return;
+    }
+
+    // Build challenge HTML
+    const firstQ = questions[0];
+    const challengeTitle = firstQ.t || (chInfo ? chInfo.title : 'Défi ' + idx);
+    const challengeColor = firstQ.c || gameColor;
+
+    let html = '';
+
+    // Hero
+    html += `<div class="game-hero">
+      <div class="ord">Défi N° ${idx} — ${esc(chInfo ? chInfo.sessionTitle : '')}</div>
+      <h1>${formatTitle(challengeTitle)}</h1>
+      <div class="meta">
+        <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> ${game.duration_per_challenge || '20 min'} estimées</span>
+        <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15 9 22 9 17 14 19 22 12 17 5 22 7 14 2 9 9 9 12 2"/></svg> Score max : ${questions.length * 20} pts</span>
+        <span>${questions.length} question${questions.length > 1 ? 's' : ''}</span>
+      </div>
+    </div>`;
+
+    // Communications AVANT (from first question's comms_before)
+    if (firstQ.comms_before) {
+      html += renderComms(firstQ.comms_before);
+    }
+
+    // Briefing (from first question's sc)
+    if (firstQ.sc) {
+      html += `<div class="game-briefing">
+        <div class="from" style="color:${challengeColor}">Contexte du défi</div>
+        <div class="content">${esc(firstQ.sc)}</div>
+      </div>`;
+    }
+
+    // Main document (from first question's doc — shared across all questions)
+    if (firstQ.doc) {
+      html += `<div class="game-doc">${firstQ.doc}</div>`;
+    }
+
+    // Questions
+    questions.forEach((q, qi) => {
+      const qNum = qi + 1;
+      const qType = getEffectiveType(q);
+      const typeLabel = getTypeLabel(q);
+
+      html += `<div class="game-q" id="q-${qNum}">
+        <div class="label">Question ${qNum} / ${questions.length} <span class="type-tag">— ${typeLabel}</span></div>
+        <h3>${esc(q.q)}</h3>`;
+
+      // If this question has its own doc different from first
+      if (qi > 0 && q.doc && q.doc !== firstQ.doc) {
+        html += `<details style="margin-bottom:16px"><summary style="cursor:pointer;font-size:12px;color:var(--cobalt);font-weight:600;margin-bottom:8px">Rappel du contexte</summary>
+          <div class="game-doc" style="max-height:250px">${q.doc}</div>
+        </details>`;
+      } else if (qi > 0 && firstQ.doc) {
+        html += `<div style="margin-bottom:12px;font-size:12px;color:var(--ink-mute);font-style:italic">
+          <strong>Rappel du contexte</strong> — Consultez le document principal pour répondre à cette question.
+        </div>`;
+      }
+
+      // ─── RENDER BY TYPE ─────────────────────────────────────────
+      if (qType === 'ordering') {
+        html += renderOrdering(q, qNum);
+      } else if (qType === 'matching') {
+        html += renderMatching(q, qNum);
+      } else if (qType === 'checkbox') {
+        html += renderCheckbox(q, qNum);
+      } else if (qType === 'tuto') {
+        html += renderTuto(q, qNum);
+      } else if (qType === 'tool') {
+        html += renderTool(q, qNum);
+      } else if (qType === 'screenshot') {
+        html += renderScreenshot(q, qNum);
+      } else if (qType === 'free') {
+        html += `<textarea class="free-textarea" data-q="${qNum}" placeholder="${esc(q.placeholder || 'Rédigez votre réponse ici...')}"></textarea>`;
+      } else {
+        // MCQ (default)
+        html += renderMCQ(q, qNum);
+      }
+
+      // Feedback area
+      html += `<div class="feedback" id="fb-${qNum}"></div>`;
+
+      // Memo
+      if (q.memo) {
+        const memoContent = Array.isArray(q.memo)
+          ? '<ul>' + q.memo.map(m => `<li>${esc(m)}</li>`).join('') + '</ul>'
+          : q.memo;
+        html += `<div class="game-memo">
+          <h5>À retenir</h5>
+          ${memoContent}
+        </div>`;
+      }
+
+      // YouTube video link (for non-tuto types that still have ytUrl)
+      if (q.ytUrl && qType !== 'tuto') {
+        html += `<div style="margin-bottom:20px"><a href="${esc(q.ytUrl)}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:var(--cobalt);font-size:13px;font-weight:500">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+          Voir la vidéo explicative
+        </a></div>`;
+      }
+
+      html += '</div>';
+    });
+
+    // Communications APRÈS (from first question's comms_after)
+    if (firstQ.comms_after) {
+      html += '<div style="margin-top:24px"><div style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--ink-mute);margin-bottom:12px">Messages reçus après le défi</div>';
+      html += renderComms(firstQ.comms_after);
+      html += '</div>';
+    }
+
+    // Actions
+    html += `<div class="game-actions">
+      ${idx > 1 ? `<button class="btn btn-outline" onclick="goToChallenge(${idx - 1})">← Défi précédent</button>` : '<div></div>'}
+      <div class="game-help">Répondez aux questions puis validez.</div>
+      <button class="btn btn-primary btn-lg" onclick="validateChallenge(${idx})">
+        Valider ce défi
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="5 13 10 18 20 7"/></svg>
+      </button>
+    </div>`;
+
+    content.innerHTML = html;
+    content.scrollTop = 0;
+
+    // Initialize ordering drag & drop
+    initOrderingDragDrop();
+
+    // Initialize matching interactions
+    initMatchingInteractions();
+
+    // Update toolbox
+    renderToolbox(questions, challengeColor);
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // RENDER FUNCTIONS FOR EACH QUESTION TYPE
+  // ═══════════════════════════════════════════════════════════════════
+
+  function renderMCQ(q, qNum) {
+    const opts = q.opts || [];
+    const isMultiple = opts.filter(o => o.ok).length > 1;
+    let h = `<div class="choice-list" data-q="${qNum}" data-multiple="${isMultiple}" data-type="mcq">`;
+    opts.forEach((opt, oi) => {
+      const indicator = isMultiple ? 'ch-check' : 'ch-radio';
+      h += `<div class="choice" data-q="${qNum}" data-opt="${oi}" data-ok="${opt.ok ? 1 : 0}" data-fb="${esc(opt.fb || '')}" onclick="selectOption(this)">
+        <div class="${indicator}"></div>
+        <div class="text">${formatOptionText(opt.t)}</div>
+      </div>`;
+    });
+    h += '</div>';
+    return h;
+  }
+
+  function renderCheckbox(q, qNum) {
+    const items = q.items || q.opts || [];
+    let h = `<div class="choice-list" data-q="${qNum}" data-multiple="true" data-type="checkbox">`;
+    items.forEach((item, ii) => {
+      const text = item.t || item;
+      const ok = item.ok !== undefined ? item.ok : false;
+      const fb = item.fb || '';
+      h += `<div class="choice" data-q="${qNum}" data-opt="${ii}" data-ok="${ok ? 1 : 0}" data-fb="${esc(fb)}" onclick="selectOption(this)">
+        <div class="ch-check"></div>
+        <div class="text">${esc(text)}</div>
+      </div>`;
+    });
+    h += '</div>';
+    return h;
+  }
+
+  function renderOrdering(q, qNum) {
+    const items = q.items || [];
+    let h = `<div class="ordering-list" data-q="${qNum}" data-type="ordering">`;
+    items.forEach((item, ii) => {
+      h += `<div class="ordering-item" data-q="${qNum}" data-idx="${ii}" draggable="true">
+        <div class="ord-num">${ii + 1}</div>
+        <div class="ord-text">${esc(item)}</div>
+        <div class="ordering-btns">
+          <button onclick="moveOrderItem(this,-1)" title="Monter" type="button">\u25B2</button>
+          <button onclick="moveOrderItem(this,1)" title="Descendre" type="button">\u25BC</button>
+        </div>
+        <div class="ord-handle"><span></span><span></span><span></span></div>
+      </div>`;
+    });
+    h += '</div>';
+    return h;
+  }
+
+  function renderMatching(q, qNum) {
+    const pairs = q.pairs || [];
+    // Shuffle right column
+    const rights = pairs.map(p => p.right);
+    const shuffledRights = [...rights].sort(() => Math.random() - 0.5);
+
+    let h = `<div class="matching-zone" data-q="${qNum}" data-type="matching" data-total="${pairs.length}">
+      <div class="matching-col" data-side="left">
+        <h6>Concepts</h6>`;
+    pairs.forEach((p, pi) => {
+      h += `<div class="matching-item" data-q="${qNum}" data-side="left" data-idx="${pi}" data-value="${esc(p.left)}" onclick="selectMatchItem(this)">${esc(p.left)}</div>`;
+    });
+    h += '</div><div class="matching-col" data-side="right"><h6>Définitions</h6>';
+    shuffledRights.forEach((r, ri) => {
+      h += `<div class="matching-item" data-q="${qNum}" data-side="right" data-idx="${ri}" data-value="${esc(r)}" onclick="selectMatchItem(this)">${esc(r)}</div>`;
+    });
+    h += '</div></div>';
+    h += `<div class="matching-pairs-display" data-q="${qNum}" id="match-pairs-${qNum}"></div>`;
+    return h;
+  }
+
+  function renderTuto(q, qNum) {
+    let h = '';
+    // YouTube embed
+    if (q.ytUrl) {
+      const videoId = extractYouTubeId(q.ytUrl);
+      if (videoId) {
+        h += `<div class="tuto-video"><iframe src="https://www.youtube.com/embed/${videoId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+      } else {
+        h += `<a href="${esc(q.ytUrl)}" target="_blank" class="tuto-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+          Regarder la vidéo du tutoriel
+        </a>`;
+      }
+    }
+    // After watching, answer with MCQ or free text
+    if (q.opts && q.opts.length > 0) {
+      h += renderMCQ(q, qNum);
+    } else {
+      h += `<textarea class="free-textarea" data-q="${qNum}" placeholder="${esc(q.placeholder || 'Après avoir regardé la vidéo, rédigez votre réponse ici...')}"></textarea>`;
+    }
+    return h;
+  }
+
+  function renderTool(q, qNum) {
+    let h = '';
+    if (q.toolUrl) {
+      h += `<a href="${esc(q.toolUrl)}" target="_blank" class="tool-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Ouvrir l'outil
+      </a>`;
+    }
+    if (q.toolInstruction) {
+      h += `<div class="tool-instruction">
+        <h6>Instructions étape par étape</h6>
+        <div>${q.toolInstruction.replace(/\n/g, '<br>')}</div>
+      </div>`;
+    }
+    h += `<textarea class="free-textarea" data-q="${qNum}" data-ai-type="tool" placeholder="${esc(q.placeholder || 'Décrivez ce que vous avez trouvé ou réalisé...')}"></textarea>`;
+    return h;
+  }
+
+  function renderScreenshot(q, qNum) {
+    let h = '';
+    if (q.toolUrl) {
+      h += `<a href="${esc(q.toolUrl)}" target="_blank" class="tool-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Ouvrir dans le navigateur
+      </a>`;
+    }
+    if (q.toolInstruction) {
+      h += `<div class="tool-instruction">
+        <h6>Instructions</h6>
+        <div>${q.toolInstruction.replace(/\n/g, '<br>')}</div>
+      </div>`;
+    }
+    h += `<div style="margin-bottom:12px;font-size:12px;color:var(--ink-mute)">
+      <strong>Comment faire une capture d'écran :</strong><br>
+      Windows : touche Windows + Shift + S &nbsp;|&nbsp; Mac : Command + Shift + 4
+    </div>`;
+    h += `<textarea class="free-textarea" data-q="${qNum}" data-ai-type="screenshot" placeholder="${esc(q.placeholder || 'Décrivez ce que montre votre capture d\'écran (éléments visibles, URL, etc.)...')}"></textarea>`;
+    return h;
+  }
+
+  // ─── YouTube ID extraction ──────────────────────────────────────
+  function extractYouTubeId(url) {
+    if (!url) return null;
+    const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+    return m ? m[1] : null;
+  }
+
+  // ─── Toolbox ─────────────────────────────────────────────────────
+  function renderToolbox(questions, color) {
+    const el = document.getElementById('toolbox-content');
+    if (!el) return;
+
+    let html = '';
+    const docs = new Set();
+    questions.forEach((q, i) => {
+      if (q.doc && !docs.has(q.doc.substring(0, 100))) {
+        docs.add(q.doc.substring(0, 100));
+        const docTitle = (q.t || 'Document').substring(0, 50);
+        html += `<div class="tool-card" onclick="document.getElementById('q-${i+1}').scrollIntoView({behavior:'smooth'})">
+          <div class="t">${esc(docTitle)} <span class="k">DOC</span></div>
+        </div>`;
+      }
+      // Show tool links in toolbox
+      if (q.toolUrl) {
+        html += `<div class="tool-card" onclick="window.open('${esc(q.toolUrl)}','_blank')">
+          <div class="t">Outil Q${i+1} <span class="k">OUTIL</span></div>
+          <div class="d">${esc((q.toolUrl || '').substring(0, 40))}…</div>
+        </div>`;
+      }
+      if (q.ytUrl) {
+        html += `<div class="tool-card" onclick="window.open('${esc(q.ytUrl)}','_blank')">
+          <div class="t">Vidéo Q${i+1} <span class="k">VIDEO</span></div>
+        </div>`;
+      }
+    });
+
+    if (!html) {
+      html = '<div style="color:var(--ink-mute);padding:8px 0;font-style:italic;font-size:11.5px">Aucun outil pour ce défi.</div>';
+    }
+
+    html += `<div style="margin-top:24px;padding:16px;background:${color}18;border:1px solid ${color}30;border-radius:var(--r);font-size:12px;color:var(--ink);line-height:1.5">
+      <div style="font-family:var(--f-display);font-style:italic;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:4px;color:${color}">Conseil</div>
+      Lisez attentivement le document avant de répondre. Les réponses se trouvent dans le contexte fourni.
+    </div>`;
+
+    el.innerHTML = html;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // INTERACTIONS
+  // ═══════════════════════════════════════════════════════════════════
+
+  // ─── Sélection d'une option (MCQ / Checkbox) ────────────────────
+  window.selectOption = function(el) {
+    const list = el.closest('.choice-list');
+    const isMultiple = list.dataset.multiple === 'true';
+
+    if (isMultiple) {
+      el.classList.toggle('selected');
+    } else {
+      list.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+  };
+
+  // ─── Ordering: move items up/down ───────────────────────────────
+  window.moveOrderItem = function(btn, direction) {
+    const item = btn.closest('.ordering-item');
+    const list = item.closest('.ordering-list');
+    const items = Array.from(list.children);
+    const idx = items.indexOf(item);
+
+    if (direction === -1 && idx > 0) {
+      list.insertBefore(item, items[idx - 1]);
+    } else if (direction === 1 && idx < items.length - 1) {
+      list.insertBefore(items[idx + 1], item);
+    }
+
+    // Update numbers
+    Array.from(list.children).forEach((el, i) => {
+      el.querySelector('.ord-num').textContent = i + 1;
+    });
+  };
+
+  // ─── Ordering: drag & drop ──────────────────────────────────────
+  function initOrderingDragDrop() {
+    document.querySelectorAll('.ordering-list').forEach(list => {
+      let dragItem = null;
+
+      list.addEventListener('dragstart', e => {
+        dragItem = e.target.closest('.ordering-item');
+        if (dragItem) {
+          dragItem.classList.add('dragging');
+          e.dataTransfer.effectAllowed = 'move';
+        }
+      });
+
+      list.addEventListener('dragend', e => {
+        if (dragItem) {
+          dragItem.classList.remove('dragging');
+          dragItem = null;
+          // Update numbers
+          Array.from(list.children).forEach((el, i) => {
+            el.querySelector('.ord-num').textContent = i + 1;
+          });
+        }
+      });
+
+      list.addEventListener('dragover', e => {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(list, e.clientY);
+        if (dragItem) {
+          if (afterElement == null) {
+            list.appendChild(dragItem);
+          } else {
+            list.insertBefore(dragItem, afterElement);
+          }
+        }
+      });
+    });
+  }
+
+  function getDragAfterElement(container, y) {
+    const elements = [...container.querySelectorAll('.ordering-item:not(.dragging)')];
+    return elements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return { offset: offset, element: child };
+      }
+      return closest;
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+  }
+
+  // ─── Matching: select and pair items ────────────────────────────
+  let matchState = {}; // { qNum: { selectedLeft: null, selectedRight: null, pairs: [] } }
+
+  function initMatchingInteractions() {
+    matchState = {};
+    document.querySelectorAll('.matching-zone').forEach(zone => {
+      const qNum = zone.dataset.q;
+      matchState[qNum] = { selectedLeft: null, selectedRight: null, pairs: [] };
+    });
+  }
+
+  window.selectMatchItem = function(el) {
+    const qNum = el.dataset.q;
+    const side = el.dataset.side;
+    const value = el.dataset.value;
+
+    if (el.classList.contains('matched')) return;
+
+    const state = matchState[qNum];
+    if (!state) return;
+
+    // Deselect previous on same side
+    const zone = el.closest('.matching-zone');
+    zone.querySelectorAll(`.matching-item[data-side="${side}"]`).forEach(item => {
+      if (!item.classList.contains('matched')) item.classList.remove('selected');
+    });
+
+    el.classList.add('selected');
+
+    if (side === 'left') {
+      state.selectedLeft = { el, value };
+    } else {
+      state.selectedRight = { el, value };
+    }
+
+    // If both sides selected, create a pair
+    if (state.selectedLeft && state.selectedRight) {
+      state.pairs.push({
+        left: state.selectedLeft.value,
+        right: state.selectedRight.value,
+        leftEl: state.selectedLeft.el,
+        rightEl: state.selectedRight.el
+      });
+
+      state.selectedLeft.el.classList.remove('selected');
+      state.selectedLeft.el.classList.add('matched');
+      state.selectedRight.el.classList.remove('selected');
+      state.selectedRight.el.classList.add('matched');
+
+      // Show pair in display area
+      const display = document.getElementById(`match-pairs-${qNum}`);
+      if (display) {
+        const pairHtml = `<div class="matching-pair-row">
+          <span class="mp-left">${esc(state.pairs[state.pairs.length - 1].left)}</span>
+          <span class="mp-arrow">\u2194</span>
+          <span class="mp-right">${esc(state.pairs[state.pairs.length - 1].right)}</span>
+        </div>`;
+        display.insertAdjacentHTML('beforeend', pairHtml);
+      }
+
+      state.selectedLeft = null;
+      state.selectedRight = null;
+    }
+  };
+
+  // ═══════════════════════════════════════════════════════════════════
+  // CORRECTION IA
+  // ═══════════════════════════════════════════════════════════════════
+
+  async function correctFreeResponseWithAI(q, qNum, answer, challengeContext) {
+    const apiKey = localStorage.getItem('imm_claude_api_key');
+    const fbEl = document.getElementById(`fb-${qNum}`);
+
+    if (!apiKey || !answer.trim()) {
+      if (fbEl) {
+        if (!answer.trim()) {
+          fbEl.innerHTML = 'Aucune réponse saisie. Essayez de rédiger votre réponse avant de valider.';
+          fbEl.className = 'feedback show incorrect';
+        } else {
+          fbEl.innerHTML = 'Réponse enregistrée. <span class="ai-badge" style="background:var(--bg-alt);color:var(--ink-mute)">SANS IA</span> Consultez les points « À retenir » pour vérifier votre compréhension.';
+          fbEl.className = 'feedback show correct';
+        }
+      }
+      return { score: answer.trim() ? 5 : 0, total: 10, hasAI: false };
+    }
+
+    if (fbEl) {
+      fbEl.innerHTML = '<div class="ai-loading"><div class="ai-spinner"></div> Correction par Claude IA en cours...</div>';
+      fbEl.className = 'feedback show';
+      fbEl.style.display = 'block';
+    }
+
+    try {
+      const aiContext = q.aiPrompt ? (challengeContext + '\n\nCritères d\'évaluation : ' + q.aiPrompt) : challengeContext;
+      const resp = await fetch('/functions/ai-correct', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'correct',
+          api_key: apiKey,
+          question: q.q,
+          answer: answer,
+          context: aiContext,
+          memo: q.memo || null,
+          game_title: gameFullTitle
+        })
+      });
+
+      const data = await resp.json();
+
+      if (data.success && data.correction) {
+        const c = data.correction;
+        const scoreClass = c.score >= 7 ? 'good' : c.score >= 4 ? 'average' : 'poor';
+        const scoreColor = c.score >= 7 ? '#0D9488' : c.score >= 4 ? '#D97706' : '#DC2626';
+
+        let html = `<div class="ai-feedback ${scoreClass}">`;
+        html += `<div class="ai-score" style="color:${scoreColor}">${c.score}<span class="out-of">/10</span> <span class="ai-badge ia">CLAUDE IA</span></div>`;
+        html += `<div>${c.feedback || ''}</div>`;
+
+        if (c.points_forts && c.points_forts.length > 0) {
+          html += '<div class="ai-detail"><h6 style="color:#0D9488">Points forts</h6><ul>';
+          c.points_forts.forEach(p => { html += `<li>${esc(p)}</li>`; });
+          html += '</ul></div>';
+        }
+        if (c.ameliorations && c.ameliorations.length > 0) {
+          html += '<div class="ai-detail"><h6 style="color:#D97706">Axes d\'amélioration</h6><ul>';
+          c.ameliorations.forEach(a => { html += `<li>${esc(a)}</li>`; });
+          html += '</ul></div>';
+        }
+        html += '</div>';
+
+        if (fbEl) {
+          fbEl.innerHTML = html;
+          fbEl.className = 'feedback show';
+        }
+
+        return { score: c.score, total: 10, hasAI: true };
+      } else {
+        if (fbEl) {
+          fbEl.innerHTML = `Réponse enregistrée. <span class="ai-badge" style="background:rgba(220,38,38,.1);color:#DC2626">ERREUR IA</span> ${esc(data.error || 'Erreur de correction.')} Consultez les points « À retenir ».`;
+          fbEl.className = 'feedback show correct';
+        }
+        return { score: 5, total: 10, hasAI: false };
+      }
+    } catch (err) {
+      if (fbEl) {
+        fbEl.innerHTML = 'Réponse enregistrée. <span class="ai-badge" style="background:var(--bg-alt);color:var(--ink-mute)">HORS LIGNE</span> La correction IA n\'est pas disponible. Consultez les points « À retenir ».';
+        fbEl.className = 'feedback show correct';
+      }
+      return { score: 5, total: 10, hasAI: false };
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // VALIDATION
+  // ═══════════════════════════════════════════════════════════════════
+
+  window.validateChallenge = async function(idx) {
+    const questions = getChallengeData(idx);
+    if (!questions) return;
+
+    const validateBtn = document.querySelector('.game-actions .btn-primary');
+    if (validateBtn) {
+      validateBtn.disabled = true;
+      validateBtn.innerHTML = '<div class="ai-spinner" style="width:14px;height:14px;border-width:2px"></div> Correction en cours...';
+    }
+
+    let score = 0;
+    let total = 0;
+    let aiTotal = 0;
+    let aiScore = 0;
+    const firstQ = questions[0];
+    const challengeContext = firstQ ? (firstQ.sc || firstQ.doc || '') : '';
+
+    const aiPromises = [];
+
+    questions.forEach((q, qi) => {
+      const qNum = qi + 1;
+      const qType = getEffectiveType(q);
+
+      // ─── FREE / TOOL / SCREENSHOT → IA ─────────────────────────
+      if (qType === 'free' || qType === 'tool' || qType === 'screenshot') {
+        const textarea = document.querySelector(`.free-textarea[data-q="${qNum}"]`);
+        const answer = textarea ? textarea.value : '';
+        if (textarea) textarea.disabled = true;
+
+        aiPromises.push(
+          correctFreeResponseWithAI(q, qNum, answer, challengeContext)
+            .then(result => {
+              aiTotal += result.total;
+              aiScore += result.score;
+            })
+        );
+        return;
+      }
+
+      // ─── TUTO (with MCQ or free) ───────────────────────────────
+      if (qType === 'tuto') {
+        if (q.opts && q.opts.length > 0) {
+          // Tuto with MCQ verification
+          total++;
+          const list = document.querySelector(`.choice-list[data-q="${qNum}"]`);
+          if (list) {
+            const questionCorrect = validateMCQList(list, qNum);
+            if (questionCorrect) score++;
+          }
+        } else {
+          // Tuto with free response
+          const textarea = document.querySelector(`.free-textarea[data-q="${qNum}"]`);
+          const answer = textarea ? textarea.value : '';
+          if (textarea) textarea.disabled = true;
+          aiPromises.push(
+            correctFreeResponseWithAI(q, qNum, answer, challengeContext)
+              .then(result => {
+                aiTotal += result.total;
+                aiScore += result.score;
+              })
+          );
+        }
+        return;
+      }
+
+      // ─── ORDERING ──────────────────────────────────────────────
+      if (qType === 'ordering') {
+        total++;
+        const list = document.querySelector(`.ordering-list[data-q="${qNum}"]`);
+        if (list) {
+          const solution = q.solution || [];
+          const currentOrder = Array.from(list.children).map(el => el.querySelector('.ord-text').textContent);
+          let allCorrect = true;
+
+          Array.from(list.children).forEach((el, i) => {
+            const text = el.querySelector('.ord-text').textContent;
+            if (i < solution.length && text === solution[i]) {
+              el.classList.add('correct-pos');
+            } else {
+              el.classList.add('incorrect-pos');
+              allCorrect = false;
+            }
+            el.draggable = false;
+            el.querySelectorAll('.ordering-btns button').forEach(b => b.disabled = true);
+          });
+
+          if (allCorrect) score++;
+
+          // Show feedback
+          const fbEl = document.getElementById(`fb-${qNum}`);
+          if (fbEl) {
+            if (allCorrect) {
+              fbEl.innerHTML = q.feedbackCorrect || 'Parfait ! L\'ordre est correct.';
+              fbEl.className = 'feedback show correct';
+            } else {
+              let correctOrderHtml = '<div style="margin-top:8px"><strong>Ordre correct :</strong><ol style="margin:6px 0 0 20px">';
+              solution.forEach(s => { correctOrderHtml += `<li>${esc(s)}</li>`; });
+              correctOrderHtml += '</ol></div>';
+              fbEl.innerHTML = (q.feedbackIncorrect || 'L\'ordre n\'est pas correct.') + correctOrderHtml;
+              fbEl.className = 'feedback show incorrect';
+            }
+          }
+        }
+        return;
+      }
+
+      // ─── MATCHING ──────────────────────────────────────────────
+      if (qType === 'matching') {
+        total++;
+        const correctPairs = q.pairs || [];
+        const state = matchState[qNum];
+        const userPairs = state ? state.pairs : [];
+
+        let matchCorrect = 0;
+        const pairDisplay = document.getElementById(`match-pairs-${qNum}`);
+
+        // Check each user pair
+        if (pairDisplay) {
+          pairDisplay.innerHTML = '';
+          userPairs.forEach(up => {
+            const isCorrect = correctPairs.some(cp => cp.left === up.left && cp.right === up.right);
+            if (isCorrect) matchCorrect++;
+            pairDisplay.innerHTML += `<div class="matching-pair-row ${isCorrect ? 'mp-correct' : 'mp-incorrect'}">
+              <span class="mp-left">${esc(up.left)}</span>
+              <span class="mp-arrow">${isCorrect ? '\u2713' : '\u2717'}</span>
+              <span class="mp-right">${esc(up.right)}</span>
+            </div>`;
+          });
+
+          // Show missing pairs
+          correctPairs.forEach(cp => {
+            const found = userPairs.some(up => up.left === cp.left && up.right === cp.right);
+            if (!found) {
+              pairDisplay.innerHTML += `<div class="matching-pair-row mp-incorrect" style="opacity:.6">
+                <span class="mp-left">${esc(cp.left)}</span>
+                <span class="mp-arrow">\u2192</span>
+                <span class="mp-right">${esc(cp.right)}</span>
+                <span style="font-size:10px;color:var(--ink-mute);margin-left:8px">(non associé)</span>
+              </div>`;
+            }
+          });
+        }
+
+        // Disable all matching items
+        document.querySelectorAll(`.matching-item[data-q="${qNum}"]`).forEach(el => {
+          el.style.pointerEvents = 'none';
+        });
+
+        if (matchCorrect === correctPairs.length && userPairs.length === correctPairs.length) score++;
+
+        const fbEl = document.getElementById(`fb-${qNum}`);
+        if (fbEl) {
+          if (matchCorrect === correctPairs.length && userPairs.length === correctPairs.length) {
+            fbEl.innerHTML = q.feedbackCorrect || 'Toutes les associations sont correctes !';
+            fbEl.className = 'feedback show correct';
+          } else {
+            fbEl.innerHTML = (q.feedbackIncorrect || `${matchCorrect}/${correctPairs.length} associations correctes. Consultez les corrections ci-dessus.`);
+            fbEl.className = 'feedback show incorrect';
+          }
+        }
+        return;
+      }
+
+      // ─── MCQ / CHECKBOX (default) ─────────────────────────────
+      total++;
+      const list = document.querySelector(`.choice-list[data-q="${qNum}"]`);
+      if (!list) return;
+      const questionCorrect = validateMCQList(list, qNum);
+      if (questionCorrect) score++;
+    });
+
+    // Wait for all AI corrections
+    await Promise.all(aiPromises);
+
+    // Calculate combined score
+    const qcmPct = total > 0 ? (score / total) * 100 : 0;
+    const aiPct = aiTotal > 0 ? (aiScore / aiTotal) * 100 : 0;
+    const hasFree = aiTotal > 0;
+    const hasQcm = total > 0;
+
+    let finalPct, finalLabel;
+    if (hasQcm && hasFree) {
+      finalPct = Math.round((qcmPct + aiPct) / 2);
+      finalLabel = `Exercices : ${score}/${total} — Réponses libres (IA) : ${aiScore}/${aiTotal}`;
+    } else if (hasFree) {
+      finalPct = Math.round(aiPct);
+      finalLabel = `Score IA : ${aiScore}/${aiTotal}`;
+    } else {
+      finalPct = total > 0 ? Math.round((score / total) * 100) : 100;
+      finalLabel = `${score}/${total} réponses correctes`;
+    }
+
+    const scoreColor = finalPct >= 70 ? '#2E7D32' : finalPct >= 40 ? '#D97706' : '#DC2626';
+
+    const content = document.getElementById('game-content');
+    const scoreHtml = `<div style="margin-top:24px;padding:24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);text-align:center">
+      <div style="font-family:var(--f-display);font-size:42px;font-weight:500;color:${scoreColor}">${finalPct}%</div>
+      <div style="font-size:14px;color:var(--ink-soft);margin-top:8px">${finalLabel}</div>
+      <div style="font-size:12px;color:var(--ink-mute);margin-top:4px">${finalPct >= 70 ? 'Excellent travail !' : finalPct >= 40 ? 'Consultez les corrections ci-dessus pour progresser.' : 'Relisez attentivement le contexte et réessayez.'}</div>
+      ${idx < totalChallenges ? `<button class="btn btn-primary btn-lg" style="margin-top:16px" onclick="goToChallenge(${idx + 1})">Passer au défi suivant \u2192</button>` : `<a href="catalogue.html" class="btn btn-primary btn-lg" style="margin-top:16px">Retour au catalogue</a>`}
+    </div>`;
+
+    const actions = content.querySelector('.game-actions');
+    if (actions) {
+      actions.insertAdjacentHTML('afterend', scoreHtml);
+      actions.remove();
+    }
+  };
+
+  // ─── Helper: validate MCQ/Checkbox list ─────────────────────────
+  function validateMCQList(list, qNum) {
+    const choices = list.querySelectorAll('.choice');
+    let questionCorrect = true;
+
+    choices.forEach(c => {
+      const isOk = c.dataset.ok === '1';
+      const isSelected = c.classList.contains('selected');
+      const fb = c.dataset.fb;
+
+      if (isSelected && isOk) {
+        c.classList.add('correct');
+        c.classList.remove('incorrect');
+      } else if (isSelected && !isOk) {
+        c.classList.add('incorrect');
+        c.classList.remove('correct');
+        questionCorrect = false;
+      } else if (!isSelected && isOk) {
+        c.classList.add('correct');
+        questionCorrect = false;
+      }
+
+      if (isSelected && fb) {
+        const fbEl = document.getElementById(`fb-${qNum}`);
+        if (fbEl) {
+          fbEl.textContent = fb;
+          fbEl.className = `feedback show ${isOk ? 'correct' : 'incorrect'}`;
+        }
+      }
+
+      c.style.pointerEvents = 'none';
+    });
+
+    return questionCorrect;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // NAVIGATION & PAYWALL
+  // ═══════════════════════════════════════════════════════════════════
+
+  function hasAccess() {
+    var purchases = JSON.parse(localStorage.getItem('imm_purchases') || '{}');
+    if (purchases[gameId] || purchases['pass_all']) return true;
+
+    try {
+      var sess = JSON.parse(localStorage.getItem('imm_session') || '{}');
+      if (sess.role === 'admin' || sess.role === 'formateur') return true;
+
+      var freeEmails = JSON.parse(localStorage.getItem('imm_free_emails') || '{}');
+      var userEmail = (sess.email || '').toLowerCase();
+      if (userEmail && freeEmails[userEmail]) {
+        var acc = freeEmails[userEmail];
+        if (acc.expire) {
+          var now = new Date().toISOString().split('T')[0];
+          if (acc.expire < now) return false;
+        }
+        if (acc.type === 'pass') return true;
+        if (acc.sims && acc.sims.indexOf(gameId) !== -1) return true;
+      }
+
+      var userName = (sess.name || '').toLowerCase();
+      var freeAccessList = JSON.parse(localStorage.getItem('imm_free_access') || '[]');
+      for (var i = 0; i < freeAccessList.length; i++) {
+        var fa = freeAccessList[i];
+        if (!fa.active) continue;
+        if (fa.expire) {
+          var now2 = new Date().toISOString().split('T')[0];
+          if (fa.expire < now2) continue;
+        }
+        var matchEmail = userEmail && fa.email && fa.email.toLowerCase() === userEmail;
+        var matchName = userName && fa.name && fa.name.toLowerCase() === userName;
+        if (matchEmail || matchName) {
+          if (fa.type === 'pass') return true;
+          if (fa.sims && fa.sims.indexOf(gameId) !== -1) return true;
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  function showPaywall(idx) {
+    var old = document.getElementById('paywall-overlay');
+    if (old) old.remove();
+
+    var simName = gameName;
+    var overlay = document.createElement('div');
+    overlay.id = 'paywall-overlay';
+    overlay.className = 'paywall-overlay';
+    overlay.innerHTML = `
+      <div class="paywall-box">
+        <div class="pw-close" onclick="document.getElementById('paywall-overlay').remove()">&times;</div>
+        <div class="pw-icon">\uD83D\uDD12</div>
+        <h2>D\u00e9bloquez <em>${esc(simName)}</em></h2>
+        <p class="pw-sub">Le d\u00e9fi 1 est offert pour d\u00e9couvrir la simulation.<br>Pour acc\u00e9der aux ${totalChallenges - 1} d\u00e9fis suivants, choisissez une formule :</p>
+        <div class="pw-plans">
+          <a href="paiement.html?plan=solo&sim=${gameId}" class="pw-plan featured">
+            <div>
+              <div class="pw-plan-name">Une simulation — ${esc(simName)}</div>
+              <div class="pw-plan-desc">Acc\u00e8s complet \u00e0 tous les d\u00e9fis + certificat</div>
+            </div>
+            <div class="pw-plan-price">49 \u20ac</div>
+          </a>
+          <a href="paiement.html?plan=pass" class="pw-plan">
+            <div>
+              <div class="pw-plan-name">Pass catalogue</div>
+              <div class="pw-plan-desc">Toutes les simulations pendant 12 mois</div>
+            </div>
+            <div class="pw-plan-price">249 \u20ac</div>
+          </a>
+          <a href="paiement.html?plan=free" class="pw-plan">
+            <div>
+              <div class="pw-plan-name">D\u00e9couverte gratuite</div>
+              <div class="pw-plan-desc">D\u00e9fi 1 de chaque simulation, sans engagement</div>
+            </div>
+            <div class="pw-plan-price">0 \u20ac</div>
+          </a>
+        </div>
+        <div class="pw-free">Vous avez d\u00e9j\u00e0 un acc\u00e8s ? <a href="login.html?next=game.html%3Fgame%3D${gameId}%26ch%3D${idx}">Connectez-vous</a></div>
+      </div>`;
+    document.body.appendChild(overlay);
+  }
+
+  window.goToChallenge = function(idx) {
+    if (idx < 0 || idx > totalChallenges) return;
+    if (idx > 1 && !hasAccess()) {
+      showPaywall(idx);
+      return;
+    }
+    renderChallenge(idx);
+  };
+
+  window.toggleGameMenu = function() {
+    const side = document.getElementById('game-side-left');
+    if (!side) return;
+    side.classList.toggle('mobile-open');
+    document.body.style.overflow = side.classList.contains('mobile-open') ? 'hidden' : '';
+  };
+
+  // ─── Helpers ─────────────────────────────────────────────────────
+  function esc(s) {
+    return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function formatTitle(t) {
+    return esc(t).replace(/_([^_]+)_/g, '<em>$1</em>');
+  }
+
+  function formatOptionText(t) {
+    const m = t.match(/^([^.]+\.)\s*(.*)/s);
+    if (m && m[1].length < 80) return `<strong>${esc(m[1])}</strong> ${esc(m[2])}`;
+    return esc(t);
+  }
+
+    // ─── Démarrage ─────────────────────────────────────────────────
+  if (currentIdx > 1 && !hasAccess()) {
+    renderChallenge(0);
+    showPaywall(currentIdx);
+  } else if (currentIdx === 0 || (isNaN(parseInt(params.get('ch'))) && (game.intro_text || '').length > 0)) {
+    // Show onboarding by default if no ch param and intro_text exists
+    renderChallenge(0);
+  } else {
+    renderChallenge(currentIdx);
+  }
+
+})();
+</script>
+
+<script src="js/imm-catalog.js"></script>
+</body>
+</html>

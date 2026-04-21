@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coaches — Admin Immersium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F8F5EE;--bg-alt:#F2EDE0;--paper:#FFFDF7;--paper-hover:#FFFBEF;
+  --ink:#0E1A2B;--ink-soft:#2A3749;--ink-mute:#6B7685;
+  --line:#E8E0CE;--cobalt:#0131B4;--marine:#0131B4;
+  --orange:#FF6B35;--orange-soft:#FFE4D4;--sand:#C9A96E;--sand-soft:#F5E6C8;
+  --coral:#D32F2F;--coral-soft:#FFEBEE;--plum:#7C3AED;--plum-soft:#EDE9FE;
+  --green:#1B5E20;--green-soft:#E8F5E9;
+  --p-cobalt:#D6D6F0;
+  --r:12px;--r-lg:18px;--r-xl:24px;
+  --f-display:"Fraunces",Georgia,serif;
+  --f-body:"Inter Tight",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f-body);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55;min-height:100vh;-webkit-font-smoothing:antialiased}
+button,a{font:inherit;color:inherit;text-decoration:none;border:none;background:none;cursor:pointer}
+
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.app-side{background:var(--ink);color:rgba(255,255,255,.82);position:sticky;top:0;height:100vh;overflow:auto;display:flex;flex-direction:column}
+.app-brand{padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.app-brand .name{font-family:var(--f-display);font-size:22px;font-weight:500;letter-spacing:-.02em;color:#fff}
+.app-brand .name em{font-style:italic;color:var(--orange)}
+.app-brand .beta{font-family:var(--f-mono);font-size:8px;letter-spacing:.1em;background:var(--orange);color:#fff;padding:2px 6px;border-radius:4px;vertical-align:super;margin-left:4px;font-style:normal;font-weight:700}
+.app-brand .role{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-top:8px}
+.app-nav{flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:2px}
+.app-nav-sec{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600;padding:14px 10px 8px}
+.app-nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;font-size:13.5px;color:rgba(255,255,255,.72);transition:all .15s}
+.app-nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+.app-nav a.active{background:rgba(255,107,53,.15);color:var(--orange)}
+.app-nav a svg{opacity:.8;width:16px;height:16px;flex-shrink:0}
+.app-user{padding:14px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px}
+.app-user .av{width:36px;height:36px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.app-user .n{font-size:13px;font-weight:600;color:#fff}
+.app-user .r{font-size:11px;color:rgba(255,255,255,.5)}
+
+.app-top{position:sticky;top:0;z-index:30;background:rgba(248,245,238,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:14px 32px;display:flex;justify-content:space-between;align-items:center}
+.app-main{padding:32px 40px 120px}
+
+.page-h{margin-bottom:24px}
+.page-h .eyebrow{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:6px}
+.page-h h1{font-family:var(--f-display);font-size:36px;font-weight:500;letter-spacing:-.025em;margin-bottom:6px}
+.page-h h1 em{font-style:italic;color:var(--marine)}
+.page-h .sub{color:var(--ink-mute);font-size:14px}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;transition:all .15s;border:1px solid transparent;cursor:pointer}
+.btn-orange{background:var(--orange);color:var(--ink);box-shadow:0 4px 12px -4px rgba(255,107,53,.5)}
+.btn-orange:hover{background:#FF8659}
+.btn-outline{background:var(--paper);border-color:var(--line);color:var(--ink)}
+.btn-outline:hover{background:var(--paper-hover);border-color:var(--sand)}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-sm{padding:7px 12px;font-size:12px}
+.btn-danger{background:var(--coral-soft);color:var(--coral);border-color:transparent}
+.btn-danger:hover{background:#ffd6d6}
+
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 10px;border-radius:999px;font-weight:600}
+.pill-coral{background:var(--coral-soft);color:var(--coral)}
+.pill-green{background:var(--green-soft);color:var(--green)}
+.pill-mute{background:var(--bg-alt);color:var(--ink-mute)}
+.pill .dot{width:6px;height:6px;border-radius:50%}
+
+.loader{padding:60px;text-align:center;color:var(--ink-mute)}
+.spin{display:inline-block;width:22px;height:22px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:14px 22px;border-radius:12px;font-size:14px;box-shadow:0 10px 30px -8px rgba(0,0,0,.3);z-index:200;transition:transform .3s;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{background:#1B5E20}
+.toast.error{background:var(--coral)}
+
+/* Top actions bar */
+.top-actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;gap:12px;flex-wrap:wrap}
+.top-actions-left{display:flex;align-items:center;gap:10px}
+
+/* Coach grid */
+.coach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+/* Coach card */
+.coach-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s}
+.coach-card:hover{box-shadow:0 8px 24px -8px rgba(14,26,43,.12)}
+.coach-card-photo{position:relative;aspect-ratio:3/4;background:var(--bg-alt);overflow:hidden;flex-shrink:0;max-height:220px}
+.coach-card-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.coach-card-photo .avatar-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-size:52px;font-weight:600;color:var(--ink-mute);background:var(--bg-alt)}
+.coach-card-badges{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.coach-card-body{padding:18px 20px;flex:1;display:flex;flex-direction:column;gap:8px}
+.coach-card-name{font-family:var(--f-display);font-size:18px;font-weight:500;letter-spacing:-.01em;line-height:1.2}
+.coach-card-role{font-size:12.5px;color:var(--ink-mute);font-weight:500}
+.coach-card-bio{font-size:13px;color:var(--ink-soft);line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.coach-card-specialties{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.specialty-tag{font-size:11px;padding:2px 9px;border-radius:999px;background:var(--sand-soft);color:var(--ink-soft);font-weight:600;border:1px solid var(--line)}
+.coach-card-meta{display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:var(--ink-mute);border-top:1px solid var(--line);padding-top:10px;margin-top:4px}
+.coach-card-actions{display:flex;gap:8px;border-top:1px solid var(--line);padding:12px 16px;background:var(--bg)}
+
+/* Empty state */
+.empty-state{padding:80px 40px;text-align:center;color:var(--ink-mute);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg)}
+.empty-state .ico{font-size:40px;margin-bottom:12px;opacity:.4}
+.empty-state h3{font-family:var(--f-display);font-size:22px;font-weight:500;margin-bottom:6px;color:var(--ink)}
+.empty-state p{font-size:14px;max-width:380px;margin:0 auto 20px}
+
+/* Modal */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(14,26,43,.55);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:20px}
+.modal-backdrop.open{display:flex}
+.modal{background:var(--paper);border-radius:var(--r-xl);width:100%;max-width:660px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 24px 60px -12px rgba(14,26,43,.3)}
+.modal-head{padding:24px 28px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.modal-head h2{font-family:var(--f-display);font-size:22px;font-weight:500;letter-spacing:-.01em}
+.modal-close{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--bg-alt);color:var(--ink-mute);border:1px solid var(--line);cursor:pointer;transition:all .15s}
+.modal-close:hover{background:var(--coral-soft);color:var(--coral);border-color:transparent}
+.modal-body{padding:24px 28px;overflow-y:auto;flex:1}
+.modal-foot{padding:16px 28px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;flex-shrink:0}
+
+/* Form fields */
+.fld{margin-bottom:16px}
+.fld label{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:7px}
+.fld input,.fld textarea,.fld select{width:100%;padding:11px 14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;font-family:var(--f-body);font-size:14px;color:var(--ink);outline:none;transition:all .15s}
+.fld textarea{min-height:90px;resize:vertical;line-height:1.55}
+.fld input:focus,.fld textarea:focus,.fld select:focus{border-color:var(--marine);box-shadow:0 0 0 3px rgba(0,0,128,.1);background:var(--paper)}
+.fld-hint{font-size:11.5px;color:var(--ink-mute);margin-top:5px;line-height:1.45}
+.fld-hint code{font-family:var(--f-mono);background:var(--bg-alt);padding:1px 5px;border-radius:3px;font-size:11px}
+.fld-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld-check{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;cursor:pointer}
+.fld-check input[type=checkbox]{width:18px;height:18px;accent-color:var(--orange);cursor:pointer}
+.fld-check .check-label{font-size:14px;color:var(--ink);font-weight:500}
+
+/* Photo preview in modal */
+.photo-preview-sm{width:80px;height:80px;border-radius:50%;overflow:hidden;background:var(--bg-alt);border:2px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-size:26px;color:var(--ink-mute)}
+.photo-preview-sm img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-input-row{display:flex;align-items:center;gap:14px}
+.photo-input-row .fld{flex:1;margin-bottom:0}
+
+/* Specialties tags input */
+.tags-preview{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;min-height:24px}
+.tags-preview .tag{font-size:11px;padding:2px 9px;border-radius:999px;background:var(--sand-soft);color:var(--ink-soft);font-weight:600;border:1px solid var(--line)}
+
+/* Responsive */
+@media(max-width:1200px){.coach-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1100px){
+  .app{grid-template-columns:1fr}
+  .app-side{display:none}
+  .app-main{padding:24px}
+  .coach-grid{grid-template-columns:repeat(2,1fr)}
+  .fld-row{grid-template-columns:1fr}
+}
+@media(max-width:720px){.coach-grid{grid-template-columns:1fr}}
+
+/* Burger mobile */
+.app-burger{display:none;width:40px;height:40px;border-radius:10px;background:var(--paper);border:1px solid var(--line);align-items:center;justify-content:center;cursor:pointer;color:var(--ink);flex-shrink:0}
+.app-burger:hover{background:var(--paper-hover);border-color:var(--sand)}
+.app-burger svg{width:18px;height:18px}
+@media(max-width:1100px){
+  .app-burger{display:flex}
+  .app-side.mobile-open{display:flex;position:fixed;top:0;left:0;bottom:0;z-index:90;width:min(280px,85vw);box-shadow:6px 0 30px -6px rgba(0,0,0,.25);animation:slideInLeft .25s ease-out}
+  .app-backdrop{display:none;position:fixed;inset:0;z-index:89;background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
+  .app-backdrop.open{display:block}
+}
+@keyframes slideInLeft{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+
+/* Responsive mobile <560px */
+@media(max-width:560px){
+  .page-h h1{font-size:26px!important;line-height:1.15!important}
+  .page-h .eyebrow{font-size:10px!important;letter-spacing:.2em!important}
+  .page-h .sub{font-size:13px!important}
+  .app-main{padding:16px 14px 90px!important}
+  .app-top{padding:10px 14px!important;gap:6px!important}
+  body{overflow-x:hidden!important}
+}
+</style>
+</head>
+<body>
+
+<script>window.IMM_REQUIRE_ROLE = 'admin';</script>
+<script type="module" src="immersium-guard.js"></script>
+<script type="module" src="js/imm-shared.js"></script>
+
+<div class="app">
+
+  <aside class="app-side">
+    <div class="app-brand">
+      <div class="name">Immer<em>sium</em> <span class="beta">BETA</span></div>
+      <div class="role">ADMIN CONSOLE</div>
+    </div>
+    <nav class="app-nav">
+      <a href="index.html" class="retour-site" style="color:rgba(255,255,255,.95);background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:8px;padding:12px 18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+        Retour au site
+      </a>
+      <a href="admin-dashboard.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Tableau de bord
+      </a>
+      <div class="app-nav-sec">Utilisateurs</div>
+      <a href="admin-users.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Utilisateurs
+      </a>
+      <a href="admin-formateurs.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Formateurs
+      </a>
+      <a href="admin-apprenants.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Apprenants
+      </a>
+      <div class="app-nav-sec">Formation</div>
+      <a href="admin-sessions.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Sessions
+      </a>
+      <a href="admin-results.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75z"/><path d="M9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625z"/><path d="M16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+        Résultats
+      </a>
+      <a href="catalogue.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+        Catalogue
+      </a>
+      <div class="app-nav-sec">Contenu</div>
+      <a href="admin-editor.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Jeux &amp; Formations
+      </a>
+      <a href="admin-simulations.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Config simulations
+      </a>
+      <a href="admin-hero.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Page d'accueil
+      </a>
+      <a href="admin-vedettes.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Vedettes accueil
+      </a>
+      <a href="admin-pages.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Pages du site
+      </a>
+      <a href="admin-faq.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        FAQ
+      </a>
+      <a href="admin-tarifs.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Tarifs &amp; Plans
+      </a>
+      <a href="admin-coaching.html" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Coaches
+      </a>
+      <div class="app-nav-sec">Commercial</div>
+      <a href="admin-promotions.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14l6-6"/><circle cx="9.5" cy="9.5" r="1.5"/><circle cx="14.5" cy="14.5" r="1.5"/><rect x="2" y="2" width="20" height="20" rx="2.18"/></svg>
+        Promotions &amp; Accès
+      </a>
+      <div class="app-nav-sec">Système</div>
+      <a href="admin-stats.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>
+        Statistiques
+      </a>
+      <a href="admin-access.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/></svg>
+        Accès &amp; API
+      </a>
+      <a href="admin-export.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+        Exporter
+      </a>
+      <a href="admin-demandes.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Demandes formation
+      </a>
+      <a href="#" onclick="IMM_SIGNOUT();return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Déconnexion
+      </a>
+    </nav>
+    <div class="app-user">
+      <div class="av" id="user-av">—</div>
+      <div><div class="n" id="user-name">Chargement…</div><div class="r">Admin</div></div>
+    </div>
+  </aside>
+
+  <div>
+    <div class="app-top">
+      <button class="app-burger" onclick="toggleAppMenu()" aria-label="Menu" style="margin-right:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div><span class="pill pill-coral"><span class="dot" style="background:currentColor"></span> Mode admin</span></div>
+      <a href="coaching.html" target="_blank" class="btn btn-ink" style="padding:8px 14px;font-size:12.5px">Voir coaching.html ↗</a>
+    </div>
+
+    <main class="app-main">
+      <div class="page-h">
+        <div class="eyebrow">
+          <span style="display:inline-flex;align-items:center;gap:4px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;width:1em;height:1em"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            Contenu
+          </span>
+        </div>
+        <h1><em>Coaches</em></h1>
+        <div class="sub">Gérez les profils de coaching affichés sur coaching.html</div>
+      </div>
+
+      <div class="top-actions">
+        <div class="top-actions-left">
+          <span id="coach-count" style="font-size:13px;color:var(--ink-mute)">Chargement…</span>
+        </div>
+        <button class="btn btn-orange" onclick="openModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Ajouter un coach
+        </button>
+      </div>
+
+      <div id="coaches-container">
+        <div class="loader">
+          <div class="spin"></div>
+          <div style="margin-top:12px">Chargement des coaches…</div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal-backdrop" id="modal-backdrop" onclick="handleBackdropClick(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-head">
+      <h2 id="modal-title">Ajouter un coach</h2>
+      <button class="modal-close" onclick="closeModal()" aria-label="Fermer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="fld-row">
+        <div class="fld">
+          <label>Nom complet <span style="color:var(--coral)">*</span></label>
+          <input type="text" id="f-name" placeholder="Ex : Sophie Martin" oninput="onNameInput(this.value)" required>
+        </div>
+        <div class="fld">
+          <label>Slug <span style="color:var(--coral)">*</span></label>
+          <input type="text" id="f-slug" placeholder="Ex : sophie-martin" required>
+          <div class="fld-hint">Identifiant unique URL, sans espaces ni accents.</div>
+        </div>
+      </div>
+
+      <div class="fld">
+        <label>Titre / Rôle</label>
+        <input type="text" id="f-role" placeholder="Ex : Coach en développement personnel">
+      </div>
+
+      <div class="fld">
+        <label>Bio</label>
+        <textarea id="f-bio" placeholder="Décrivez l'expertise et le parcours du coach…" rows="4"></textarea>
+      </div>
+
+      <div class="fld">
+        <label>Photo</label>
+        <div class="photo-input-row">
+          <div class="photo-preview-sm" id="photo-preview-sm">
+            <span id="photo-initials" style="font-family:var(--f-display);font-size:26px;color:var(--ink-mute)">?</span>
+          </div>
+          <div class="fld" style="margin-bottom:0;flex:1">
+            <input type="url" id="f-photo-url" placeholder="https://…" oninput="onPhotoUrlInput(this.value)">
+            <div class="fld-hint">URL publique de la photo du coach (Unsplash, CDN, etc.).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fld">
+        <label>Lien Calendly</label>
+        <input type="url" id="f-calendly-url" placeholder="https://calendly.com/sophie-martin">
+        <div class="fld-hint">URL du calendrier de réservation Calendly du coach.</div>
+      </div>
+
+      <div class="fld">
+        <label>Spécialités</label>
+        <input type="text" id="f-specialties" placeholder="Leadership, Gestion du stress, Communication…" oninput="renderSpecialtiesPreview(this.value)">
+        <div class="fld-hint">Séparez les spécialités par des virgules. Elles s'afficheront comme tags.</div>
+        <div class="tags-preview" id="specialties-preview"></div>
+      </div>
+
+      <div class="fld-row">
+        <div class="fld">
+          <label>Ordre d'affichage</label>
+          <input type="number" id="f-sort-order" value="0" min="0" step="1" placeholder="0">
+          <div class="fld-hint">Les coaches sont triés par ordre croissant.</div>
+        </div>
+        <div class="fld" style="display:flex;align-items:flex-end;padding-bottom:0">
+          <label class="fld-check" style="width:100%;margin-bottom:0">
+            <input type="checkbox" id="f-active" checked>
+            <span class="check-label">Coach actif (visible sur le site)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-orange" id="btn-modal-save" onclick="saveCoach()">
+        Enregistrer
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="5 13 10 18 20 7"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete confirm modal -->
+<div class="modal-backdrop" id="delete-backdrop" onclick="handleDeleteBackdropClick(event)">
+  <div class="modal" style="max-width:440px" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <h2 style="color:var(--coral)">Supprimer le coach</h2>
+      <button class="modal-close" onclick="closeDeleteModal()" aria-label="Fermer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:14px;color:var(--ink-soft);line-height:1.6">
+        Êtes-vous sûr de vouloir supprimer le coach <strong id="delete-coach-name"></strong> ?
+        Cette action est irréversible.
+      </p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeDeleteModal()">Annuler</button>
+      <button class="btn" style="background:var(--coral);color:#fff" id="btn-confirm-delete" onclick="confirmDelete()">
+        Supprimer définitivement
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// State
+// ═══════════════════════════════════════════════════════════════════
+const $ = id => document.getElementById(id);
+const sb = () => window.IMM_SUPABASE;
+let coaches = [];
+let editingId = null;
+let pendingDeleteId = null;
+
+// ═══════════════════════════════════════════════════════════════════
+// Init
+// ═══════════════════════════════════════════════════════════════════
+let _initialized = false;
+async function initPage(detail) {
+  if (_initialized) return;
+  _initialized = true;
+
+  const name = (detail && detail.name) || 'Admin';
+  $('user-name').textContent = name;
+  $('user-av').textContent = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'A';
+
+  await loadCoaches();
+}
+
+document.addEventListener('imm:ready', e => initPage(e.detail));
+
+// ═══════════════════════════════════════════════════════════════════
+// Load coaches
+// ═══════════════════════════════════════════════════════════════════
+async function loadCoaches() {
+  try {
+    const { data, error } = await sb()
+      .from('coaching_coaches')
+      .select('*')
+      .order('sort_order', { ascending: true })
+      .order('created_at', { ascending: true });
+
+    if (error) throw error;
+    coaches = data || [];
+    renderCoaches();
+  } catch (err) {
+    console.error('Erreur chargement coaches:', err);
+    $('coaches-container').innerHTML = `
+      <div class="empty-state">
+        <div class="ico">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>Erreur de chargement</h3>
+        <p>${esc(err.message)}</p>
+        <button class="btn btn-outline" onclick="loadCoaches()">Réessayer</button>
+      </div>
+    `;
+    $('coach-count').textContent = '';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Render coaches grid
+// ═══════════════════════════════════════════════════════════════════
+function renderCoaches() {
+  const total = coaches.length;
+  const active = coaches.filter(c => c.active).length;
+  $('coach-count').textContent = `${total} coach${total !== 1 ? 's' : ''} · ${active} actif${active !== 1 ? 's' : ''}`;
+
+  if (total === 0) {
+    $('coaches-container').innerHTML = `
+      <div class="empty-state">
+        <div class="ico">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Aucun coach pour le moment</h3>
+        <p>Ajoutez votre premier coach pour qu'il apparaisse sur la page coaching.</p>
+        <button class="btn btn-orange" onclick="openModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Ajouter un coach
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  const cards = coaches.map(c => renderCard(c)).join('');
+  $('coaches-container').innerHTML = `<div class="coach-grid">${cards}</div>`;
+}
+
+function renderCard(c) {
+  const specialties = Array.isArray(c.specialties) ? c.specialties : [];
+  const bioExcerpt = (c.bio || '').slice(0, 160) + ((c.bio || '').length > 160 ? '…' : '');
+  const initials = (c.name || '?').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+
+  const photoHtml = c.photo_url
+    ? `<img src="${esc(c.photo_url)}" alt="${esc(c.name || '')}" onerror="this.parentElement.innerHTML='<div class=avatar-placeholder>${esc(initials)}</div>'">`
+    : `<div class="avatar-placeholder">${esc(initials)}</div>`;
+
+  const statusBadge = c.active
+    ? `<span class="pill pill-green"><span class="dot" style="background:currentColor"></span> Actif</span>`
+    : `<span class="pill pill-mute">Inactif</span>`;
+
+  const specialtyTags = specialties.slice(0, 4).map(s =>
+    `<span class="specialty-tag">${esc(s)}</span>`
+  ).join('');
+
+  const extraCount = specialties.length > 4 ? `<span class="specialty-tag" style="background:var(--bg-alt)">+${specialties.length - 4}</span>` : '';
+
+  const calendlyBadge = c.calendly_url
+    ? `<span style="font-size:11px;padding:2px 8px;border-radius:999px;background:var(--plum-soft);color:var(--plum);font-weight:600">Calendly</span>`
+    : '';
+
+  return `
+    <div class="coach-card">
+      <div class="coach-card-photo">
+        ${photoHtml}
+        <div class="coach-card-badges">
+          ${statusBadge}
+          ${calendlyBadge}
+        </div>
+      </div>
+      <div class="coach-card-body">
+        <div>
+          <div class="coach-card-name">${esc(c.name || '—')}</div>
+          <div class="coach-card-role">${esc(c.role || '')}</div>
+        </div>
+        ${bioExcerpt ? `<div class="coach-card-bio">${esc(bioExcerpt)}</div>` : ''}
+        ${specialtyTags ? `<div class="coach-card-specialties">${specialtyTags}${extraCount}</div>` : ''}
+        <div class="coach-card-meta">
+          <span>Ordre : <strong>${c.sort_order ?? 0}</strong></span>
+          <span style="font-family:var(--f-mono);font-size:10.5px;color:var(--ink-mute)">${esc(c.slug || '')}</span>
+        </div>
+      </div>
+      <div class="coach-card-actions">
+        <button class="btn btn-outline btn-sm" style="flex:1" onclick="openModal('${esc(c.id)}')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Modifier
+        </button>
+        <button class="btn btn-danger btn-sm" onclick="openDeleteModal('${esc(c.id)}', '${esc(c.name || 'ce coach')}')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+          Supprimer
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Modal open/close
+// ═══════════════════════════════════════════════════════════════════
+function openModal(id) {
+  editingId = id || null;
+  $('modal-title').textContent = id ? 'Modifier le coach' : 'Ajouter un coach';
+
+  // Reset form
+  $('f-name').value = '';
+  $('f-slug').value = '';
+  $('f-role').value = '';
+  $('f-bio').value = '';
+  $('f-photo-url').value = '';
+  $('f-calendly-url').value = '';
+  $('f-specialties').value = '';
+  $('f-sort-order').value = '0';
+  $('f-active').checked = true;
+  updatePhotoPreview('');
+  renderSpecialtiesPreview('');
+
+  if (id) {
+    const coach = coaches.find(c => c.id === id);
+    if (coach) {
+      $('f-name').value = coach.name || '';
+      $('f-slug').value = coach.slug || '';
+      $('f-role').value = coach.role || '';
+      $('f-bio').value = coach.bio || '';
+      $('f-photo-url').value = coach.photo_url || '';
+      $('f-calendly-url').value = coach.calendly_url || '';
+      $('f-specialties').value = Array.isArray(coach.specialties) ? coach.specialties.join(', ') : '';
+      $('f-sort-order').value = coach.sort_order ?? 0;
+      $('f-active').checked = coach.active !== false;
+      updatePhotoPreview(coach.photo_url || '', coach.name || '');
+      renderSpecialtiesPreview($('f-specialties').value);
+    }
+  }
+
+  $('modal-backdrop').classList.add('open');
+  setTimeout(() => $('f-name').focus(), 80);
+}
+
+function closeModal() {
+  $('modal-backdrop').classList.remove('open');
+  editingId = null;
+}
+
+function handleBackdropClick(e) {
+  if (e.target === $('modal-backdrop')) closeModal();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Delete modal
+// ═══════════════════════════════════════════════════════════════════
+function openDeleteModal(id, name) {
+  pendingDeleteId = id;
+  $('delete-coach-name').textContent = name;
+  $('delete-backdrop').classList.add('open');
+}
+
+function closeDeleteModal() {
+  $('delete-backdrop').classList.remove('open');
+  pendingDeleteId = null;
+}
+
+function handleDeleteBackdropClick(e) {
+  if (e.target === $('delete-backdrop')) closeDeleteModal();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Form helpers
+// ═══════════════════════════════════════════════════════════════════
+function onNameInput(val) {
+  // Auto-suggest slug only when creating a new coach and slug is empty/unchanged
+  if (!editingId) {
+    $('f-slug').value = slugify(val);
+  }
+  // Update photo initials preview
+  updatePhotoPreview($('f-photo-url').value, val);
+}
+
+function onPhotoUrlInput(val) {
+  updatePhotoPreview(val, $('f-name').value);
+}
+
+function updatePhotoPreview(url, name) {
+  const preview = $('photo-preview-sm');
+  const initials = (name || '?').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || '?';
+
+  if (url) {
+    preview.innerHTML = `<img src="${esc(url)}" alt="" onerror="this.parentElement.innerHTML='<span style=font-family:var(--f-display);font-size:26px;color:var(--ink-mute)>${esc(initials)}</span>'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block">`;
+  } else {
+    preview.innerHTML = `<span style="font-family:var(--f-display);font-size:26px;color:var(--ink-mute)">${esc(initials)}</span>`;
+  }
+}
+
+function renderSpecialtiesPreview(val) {
+  const tags = val.split(',').map(s => s.trim()).filter(Boolean);
+  $('specialties-preview').innerHTML = tags.map(t =>
+    `<span class="tag">${esc(t)}</span>`
+  ).join('');
+}
+
+function slugify(str) {
+  return str
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .slice(0, 80);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Save coach (insert or update)
+// ═══════════════════════════════════════════════════════════════════
+async function saveCoach() {
+  const name = $('f-name').value.trim();
+  const slug = $('f-slug').value.trim();
+
+  if (!name) { showToast('error', 'Le nom est obligatoire.'); $('f-name').focus(); return; }
+  if (!slug) { showToast('error', 'Le slug est obligatoire.'); $('f-slug').focus(); return; }
+
+  const specialtiesRaw = $('f-specialties').value;
+  const specialties = specialtiesRaw.split(',').map(s => s.trim()).filter(Boolean);
+
+  const payload = {
+    name,
+    slug,
+    role: $('f-role').value.trim() || null,
+    bio: $('f-bio').value.trim() || null,
+    photo_url: $('f-photo-url').value.trim() || null,
+    calendly_url: $('f-calendly-url').value.trim() || null,
+    specialties: specialties.length > 0 ? specialties : [],
+    active: $('f-active').checked,
+    sort_order: parseInt($('f-sort-order').value, 10) || 0,
+  };
+
+  const btn = $('btn-modal-save');
+  btn.disabled = true;
+  btn.innerHTML = 'Enregistrement…';
+
+  try {
+    let error;
+    if (editingId) {
+      ({ error } = await sb()
+        .from('coaching_coaches')
+        .update(payload)
+        .eq('id', editingId));
+    } else {
+      ({ error } = await sb()
+        .from('coaching_coaches')
+        .insert(payload));
+    }
+
+    if (error) throw error;
+
+    showToast('success', editingId ? 'Coach mis à jour !' : 'Coach ajouté !');
+    closeModal();
+    await loadCoaches();
+  } catch (err) {
+    console.error('Erreur sauvegarde:', err);
+    showToast('error', 'Erreur : ' + (err.message || 'Inconnue'));
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Enregistrer <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="5 13 10 18 20 7"/></svg>';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Delete coach
+// ═══════════════════════════════════════════════════════════════════
+async function confirmDelete() {
+  if (!pendingDeleteId) return;
+  const btn = $('btn-confirm-delete');
+  btn.disabled = true;
+  btn.textContent = 'Suppression…';
+
+  try {
+    const { error } = await sb()
+      .from('coaching_coaches')
+      .delete()
+      .eq('id', pendingDeleteId);
+
+    if (error) throw error;
+
+    showToast('success', 'Coach supprimé.');
+    closeDeleteModal();
+    await loadCoaches();
+  } catch (err) {
+    console.error('Erreur suppression:', err);
+    showToast('error', 'Erreur : ' + (err.message || 'Inconnue'));
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Supprimer définitivement';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Keyboard shortcuts
+// ═══════════════════════════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if ($('modal-backdrop').classList.contains('open')) { closeModal(); return; }
+    if ($('delete-backdrop').classList.contains('open')) { closeDeleteModal(); return; }
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    if ($('modal-backdrop').classList.contains('open')) saveCoach();
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// Utilities
+// ═══════════════════════════════════════════════════════════════════
+function esc(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function showToast(type, msg) {
+  const t = $('toast');
+  t.className = 'toast show ' + type;
+  t.textContent = msg;
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+
+<div class="app-backdrop" id="app-backdrop" onclick="toggleAppMenu()"></div>
+<script>
+function toggleAppMenu(){const s=document.querySelector('.app-side'),b=document.getElementById('app-backdrop');if(!s)return;const o=s.classList.toggle('mobile-open');if(b)b.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const s=document.querySelector('.app-side.mobile-open');if(s)toggleAppMenu();}});
+</script>
+<script>
+// Badge BETA : lire le réglage depuis localStorage
+(function(){
+  if(localStorage.getItem('imm_beta_mode')==='false'){
+    var b=document.querySelector('.app-brand .beta');
+    if(b)b.style.display='none';
+  }
+})();
+</script>
+</body>
+</html>

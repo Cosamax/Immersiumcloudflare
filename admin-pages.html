@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pages du site — Immersium Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--f-display:'Fraunces',serif;--f-body:'Inter Tight',sans-serif;--f-mono:'JetBrains Mono',monospace;--ink:#0E1A2B;--ink-soft:#3A4A5C;--ink-mute:#8896A6;--paper:#FFFFFF;--paper-hover:#F8F6F3;--bg:#F4F1EC;--bg-alt:#EDE9E3;--line:#E2DDD5;--sand:#C8C0B4;--marine:#0047FF;--jade:#0D9488;--orange:#FF6B35;--r:8px;--r-lg:14px;--sh-lift:0 4px 24px -4px rgba(14,26,43,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--f-body);background:var(--bg);color:var(--ink);line-height:1.5}
+.app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+.app-side{background:var(--ink);color:#fff;padding:24px 16px;display:flex;flex-direction:column;gap:8px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.app-brand{padding:0 8px 16px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:8px}
+.app-brand .name{font-family:var(--f-display);font-size:22px;font-weight:500;letter-spacing:-.02em}
+.app-brand .name em{font-style:italic;color:var(--orange)}
+.app-brand .beta{font-family:var(--f-mono);font-size:8px;letter-spacing:.1em;background:var(--orange);color:#fff;padding:2px 6px;border-radius:4px;vertical-align:super;margin-left:4px;font-style:normal;font-weight:700}
+.app-brand .role{font-family:var(--f-mono);font-size:9px;letter-spacing:.15em;color:var(--marine);margin-top:2px}
+.app-nav{flex:1;display:flex;flex-direction:column;gap:2px}
+.app-nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r);color:rgba(255,255,255,.6);text-decoration:none;font-size:13px;font-weight:500;transition:all .12s}
+.app-nav a:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.9)}
+.app-nav a.active{background:var(--marine);color:#fff}
+.app-nav a svg{width:16px;height:16px;flex-shrink:0}
+.app-nav-sec{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:16px 12px 6px;text-transform:uppercase}
+.app-user{padding:12px 8px;border-top:1px solid rgba(255,255,255,.08);margin-top:auto;display:flex;align-items:center;gap:10px}
+.app-user .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#CC0033,#FF4D6D);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.app-user .n{font-size:13px;font-weight:600}
+.app-user .r{font-size:10px;color:rgba(255,255,255,.4);font-family:var(--f-mono);letter-spacing:.05em}
+.app-main{padding:32px 40px;overflow-y:auto}
+.page-h{margin-bottom:32px}
+.page-h h1{font-family:var(--f-display);font-size:32px;font-weight:500;letter-spacing:-.02em;line-height:1.2}
+.page-h h1 em{font-style:italic;color:var(--marine)}
+.page-h p{color:var(--ink-soft);margin-top:8px;font-size:14px;line-height:1.5}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;margin-bottom:20px}
+.card h3{font-family:var(--f-display);font-size:18px;font-weight:500;margin-bottom:4px}
+.card .card-desc{color:var(--ink-soft);font-size:13px;margin-bottom:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink);transition:all .15s;text-decoration:none}
+.btn:hover{background:var(--paper-hover);border-color:var(--sand)}
+.btn.primary{background:var(--marine);color:#fff;border-color:var(--marine)}
+.btn.primary:hover{background:#0040DD}
+.btn.success{background:var(--jade);color:#fff;border-color:var(--jade)}
+.btn.danger{background:#dc2626;color:#fff;border-color:#dc2626}
+.btn.sm{padding:6px 12px;font-size:12px}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:#fff;padding:14px 22px;border-radius:var(--r);font-size:13px;font-weight:500;box-shadow:var(--sh-lift);z-index:100;transform:translateY(100px);opacity:0;transition:all .3s ease}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-left:4px solid #0D9488}
+/* Tabs */
+.ptabs{display:flex;flex-wrap:wrap;gap:0;border-bottom:2px solid var(--line);margin-bottom:24px;overflow-x:auto}
+.ptab{padding:10px 16px;border:none;background:none;font-family:var(--f-body);font-size:13px;font-weight:500;color:var(--ink-mute);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.ptab.active{font-weight:600;color:var(--marine);border-bottom-color:var(--marine)}
+.ptab:hover:not(.active){color:var(--ink-soft)}
+/* Block editor */
+.block-item{border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:10px;background:var(--paper);transition:border-color .15s}
+.block-item:hover{border-color:var(--sand)}
+.block-item .block-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.block-item .block-header .block-num{font-family:var(--f-mono);font-size:11px;color:var(--ink-mute);background:var(--bg-alt);padding:2px 8px;border-radius:4px}
+.block-item .block-header .block-del{margin-left:auto;background:#fee2e2;color:#dc2626;border:none;border-radius:var(--r);padding:5px 10px;cursor:pointer;font-size:11px;font-weight:600;transition:all .15s}
+.block-item .block-header .block-del:hover{background:#fecaca}
+.block-item .block-move{display:flex;flex-direction:column;gap:2px;margin-right:4px}
+.block-item .block-move button{background:var(--bg-alt);border:none;border-radius:4px;padding:2px 6px;cursor:pointer;font-size:10px;color:var(--ink-mute);transition:all .15s}
+.block-item .block-move button:hover{background:var(--sand);color:var(--ink)}
+.field-row{margin-bottom:10px}
+.field-row label{display:block;font-size:12px;font-weight:600;color:var(--ink-mute);margin-bottom:4px}
+.field-row input,.field-row textarea,.field-row select{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:var(--r);font-family:var(--f-body);font-size:14px;background:var(--paper);color:var(--ink);box-sizing:border-box}
+.field-row textarea{resize:vertical}
+.field-row input:focus,.field-row textarea:focus{outline:none;border-color:var(--marine);box-shadow:0 0 0 3px rgba(0,71,255,.08)}
+.add-block-btn{width:100%;padding:12px;border:2px dashed var(--line);border-radius:var(--r);background:none;cursor:pointer;font-family:var(--f-body);font-size:13px;font-weight:600;color:var(--ink-mute);transition:all .15s;margin-top:8px}
+.add-block-btn:hover{border-color:var(--marine);color:var(--marine);background:rgba(0,71,255,.03)}
+.section-sep{margin:20px 0;border:none;border-top:1px solid var(--line)}
+.sec-title{font-size:14px;font-weight:600;color:var(--ink);margin:0 0 12px}
+.app-burger{display:none;width:40px;height:40px;border-radius:10px;background:var(--paper);border:1px solid var(--line);align-items:center;justify-content:center;cursor:pointer;color:var(--ink);flex-shrink:0}
+.app-top{display:flex;align-items:center;gap:12px;padding:14px 40px;background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+@media(max-width:1100px){
+  .app{grid-template-columns:1fr}
+  .app-side{display:none}
+  .app-main{padding:24px}
+  .app-burger{display:flex}
+  .app-side.mobile-open{display:flex;position:fixed;top:0;left:0;bottom:0;z-index:90;width:min(280px,85vw);box-shadow:6px 0 30px -6px rgba(0,0,0,.25)}
+  .app-backdrop{display:none;position:fixed;inset:0;z-index:89;background:rgba(14,26,43,.5);backdrop-filter:blur(3px)}
+  .app-backdrop.open{display:block}
+}
+@media(max-width:560px){
+  .page-h h1{font-size:26px!important}
+  .app-main{padding:16px 14px 90px!important}
+}
+</style>
+</head>
+<body>
+<!-- Guard admin -->
+<script>window.IMM_REQUIRE_ROLE = 'admin';</script>
+<script type="module" src="immersium-guard.js"></script>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="app-side" id="app-side">
+    <div class="app-brand">
+      <div class="name">Immer<em>sium</em> <span class="beta">BETA</span></div>
+      <div class="role">ADMIN CONSOLE</div>
+    </div>
+    <nav class="app-nav">
+      <a href="index.html" class="retour-site" style="color:rgba(255,255,255,.95);background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:8px;padding:12px 18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+        Retour au site
+      </a>
+      <div class="app-nav-sec">Gestion</div>
+      <a href="admin-dashboard.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Tableau de bord
+      </a>
+      <a href="admin-users.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Utilisateurs
+      </a>
+      <a href="admin-formateurs.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        Formateurs
+      </a>
+      <a href="admin-apprenants.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        Apprenants
+      </a>
+      <a href="admin-sessions.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Sessions
+      </a>
+      <a href="admin-results.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75z"/><path d="M9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625z"/><path d="M16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+        Resultats
+      </a>
+      <a href="catalogue.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+        Catalogue
+      </a>
+      <div class="app-nav-sec">Contenu</div>
+      <a href="admin-editor.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Jeux &amp; Formations
+      </a>
+      <a href="admin-simulations.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Config simulations
+      </a>
+      <a href="admin-hero.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Page d'accueil
+      </a>
+      <a href="admin-vedettes.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Vedettes accueil
+      </a>
+      <a href="admin-pages.html" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Pages du site
+      </a>
+      <a href="admin-faq.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        FAQ
+      </a>
+      <a href="admin-tarifs.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Tarifs &amp; Plans
+      </a>
+      <a href="admin-coaching.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Coaches
+      </a>
+            <div class="app-nav-sec">Commercial</div>
+      <a href="admin-promotions.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14l6-6"/><circle cx="9.5" cy="9.5" r="1.5"/><circle cx="14.5" cy="14.5" r="1.5"/><rect x="2" y="2" width="20" height="20" rx="2.18"/></svg>
+        Promotions &amp; Accès
+      </a>
+      <div class="app-nav-sec">Systeme</div>
+      <a href="admin-stats.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>
+        Statistiques
+      </a>
+      <a href="admin-access.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/></svg>
+        Acces &amp; API
+      </a>
+      <a href="admin-export.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+        Exporter
+      </a>
+      <a href="admin-demandes.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Demandes formation
+      </a>
+
+      <a href="#" onclick="IMM_SIGNOUT();return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Deconnexion
+      </a>
+    </nav>
+    <div class="app-user" id="app-user">
+      <div class="av">MC</div>
+      <div><div class="n">Admin</div><div class="r">Administrateur</div></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="app-main">
+    <div class="app-top" style="display:none">
+      <button class="app-burger" onclick="document.getElementById('app-side').classList.toggle('mobile-open');document.getElementById('app-backdrop').classList.toggle('open')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <span style="font-weight:600;font-size:15px">Pages du site</span>
+    </div>
+    <div id="app-backdrop" class="app-backdrop" onclick="document.getElementById('app-side').classList.remove('mobile-open');this.classList.remove('open')"></div>
+
+    <div class="page-h">
+      <h1>Pages du <em>site</em></h1>
+      <p>Modifiez le contenu de chaque page publique par blocs. Ajoutez, supprimez ou reordonnez les sections. Les modifications sont sauvegardées en base de données Supabase.</p>
+    </div>
+
+    <!-- Onglets -->
+    <div class="ptabs" id="pageTabs"></div>
+
+    <div id="pages-loading" style="display:none;padding:40px;text-align:center;color:var(--ink-mute)">
+      <svg style="animation:spin .8s linear infinite;width:22px;height:22px;display:inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg>
+      <div style="margin-top:10px;font-size:13px">Chargement du contenu…</div>
+    </div>
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+    <!-- Panneaux -->
+    <div id="panels" style="max-width:860px"></div>
+
+    <!-- Barre export/import -->
+    <div style="display:flex;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid var(--line)">
+      <button class="btn" onclick="CMS_ADMIN.exportAll()">Exporter tout (pages-content.json)</button>
+      <button class="btn" onclick="document.getElementById('importInput').click()">Importer un fichier JSON</button>
+      <input type="file" id="importInput" accept=".json" style="display:none">
+    </div>
+  </main>
+</div>
+<div id="toast" class="toast"></div>
+<script type="module" src="js/imm-shared.js"></script>
+<script>
+/* ================================================================
+   IMMERSIUM ADMIN — EDITEUR DE PAGES PAR BLOCS
+   Charge pages-content.json, permet l'edition par blocs,
+   sauvegarde en localStorage, export/import JSON.
+   ================================================================ */
+(function(){
+'use strict';
+
+var LS_KEY = 'imm_pages_content';
+var JSON_URL = 'data/pages-content.json';
+
+// ── Toast ──
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + (type || 'success');
+  setTimeout(function(){ t.className = 'toast'; }, 3000);
+}
+
+// ── Donnees ──
+var data = {};
+var defaults = {};
+
+function mergeDeep(target, source) {
+  var result = Object.assign({}, target);
+  for (var key in source) {
+    if (source.hasOwnProperty(key)) {
+      if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        result[key] = mergeDeep(result[key] || {}, source[key]);
+      } else {
+        result[key] = source[key];
+      }
+    }
+  }
+  return result;
+}
+
+async function loadDefaults(cb) {
+  // 1. Charger les défauts depuis le JSON statique
+  try {
+    var r = await fetch(JSON_URL);
+    if (r.ok) defaults = await r.json();
+  } catch(e) {
+    console.warn('[Admin Pages] JSON statique non dispo:', e);
+  }
+  data = JSON.parse(JSON.stringify(defaults));
+
+  // 2. Lire le contenu Supabase (prioritaire sur les défauts)
+  var supabase = window.IMM_SUPABASE;
+  if (supabase) {
+    try {
+      var res = await supabase.from('page_contents').select('page_id,content');
+      if (!res.error && res.data && res.data.length) {
+        res.data.forEach(function(row) {
+          data[row.page_id] = mergeDeep(data[row.page_id] || {}, row.content || {});
+        });
+        cb();
+        return;
+      }
+    } catch(e) {
+      console.warn('[Admin Pages] Supabase lecture:', e);
+    }
+  }
+
+  // 3. Fallback localStorage
+  try {
+    var raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      var overrides = JSON.parse(raw);
+      data = mergeDeep(data, overrides);
+    }
+  } catch(e2) {}
+  cb();
+}
+
+async function savePageData(page) {
+  var supabase = window.IMM_SUPABASE;
+  var pageContent = data[page] || {};
+  if (supabase) {
+    try {
+      var payload = { page_id: page, content: pageContent, updated_at: new Date().toISOString() };
+      var res = await supabase.from('page_contents').upsert(payload, { onConflict: 'page_id' });
+      if (res.error) throw new Error(res.error.message);
+      return;
+    } catch(e) {
+      console.warn('[Admin Pages] Supabase sauvegarde:', e);
+    }
+  }
+  // Fallback localStorage
+  var all = {};
+  try { all = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch(e) {}
+  all[page] = pageContent;
+  localStorage.setItem(LS_KEY, JSON.stringify(all));
+}
+
+function saveData() {
+  // Sauvegarde locale immédiate (toutes les pages d'un coup — fallback)
+  var all = {};
+  PAGES.forEach(function(p) { if (data[p.id]) all[p.id] = data[p.id]; });
+  localStorage.setItem(LS_KEY, JSON.stringify(all));
+}
+
+function get(page, key) {
+  if (data[page] && data[page][key] !== undefined) return data[page][key];
+  if (defaults[page] && defaults[page][key] !== undefined) return defaults[page][key];
+  return '';
+}
+
+function set(page, key, val) {
+  if (!data[page]) data[page] = {};
+  data[page][key] = val;
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Helpers HTML ──
+function fieldHtml(label, id, value, type, rows) {
+  type = type || 'text';
+  if (type === 'textarea') {
+    return '<div class="field-row"><label>' + esc(label) + '</label>'
+      + '<textarea id="' + id + '" rows="' + (rows||3) + '">' + esc(value) + '</textarea></div>';
+  }
+  return '<div class="field-row"><label>' + esc(label) + '</label>'
+    + '<input type="' + type + '" id="' + id + '" value="' + esc(value) + '"></div>';
+}
+
+// ── CONFIGURATION DES PAGES ──
+// Chaque page definit ses sections : champs simples et/ou blocs editables
+var PAGES = [
+  { id: 'contact', label: 'Contact', icon: 'mail' },
+  { id: 'faq', label: 'FAQ', icon: 'help' },
+  { id: 'about', label: 'Qui suis-je ?', icon: 'user' },
+  { id: 'coaching', label: 'Coaching', icon: 'award' },
+  { id: 'tarifs', label: 'Tarifs', icon: 'tag' },
+  { id: 'ugc', label: 'UGC', icon: 'star' },
+  { id: 'mentions', label: 'Mentions', icon: 'shield' },
+  { id: 'cgu', label: 'CGU', icon: 'file' },
+  { id: 'cgv', label: 'CGV', icon: 'file-text' },
+  { id: 'paiement', label: 'Paiement', icon: 'credit-card' }
+];
+
+// ── Onglets ──
+function buildTabs() {
+  var html = '';
+  PAGES.forEach(function(p, i) {
+    html += '<button class="ptab' + (i===0?' active':'') + '" onclick="CMS_ADMIN.switchTab(\'' + p.id + '\')">' + esc(p.label) + '</button>';
+  });
+  document.getElementById('pageTabs').innerHTML = html;
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll('#pageTabs .ptab').forEach(function(btn, i) {
+    var isActive = PAGES[i].id === tabId;
+    btn.className = isActive ? 'ptab active' : 'ptab';
+  });
+  PAGES.forEach(function(p) {
+    var el = document.getElementById('panel-' + p.id);
+    if (el) el.style.display = p.id === tabId ? 'block' : 'none';
+  });
+}
+
+// ── GENERATEUR DE BLOCS ──
+// Genere un editeur de liste de blocs (articles, FAQ, temoignages, etc.)
+function blockListEditor(opts) {
+  // opts: { page, key, title, desc, fields: [{name, label, type, rows}], addLabel, emptyLabel }
+  var items = get(opts.page, opts.key);
+  if (!Array.isArray(items)) items = [];
+
+  var html = '<div class="card"><h3>' + esc(opts.title) + '</h3>';
+  if (opts.desc) html += '<p class="card-desc">' + esc(opts.desc) + '</p>';
+  html += '<div id="bl-' + opts.page + '-' + opts.key + '">';
+
+  items.forEach(function(item, i) {
+    html += blockItemHtml(opts, item, i, items.length);
+  });
+
+  html += '</div>';
+  html += '<button class="add-block-btn" onclick="CMS_ADMIN.addBlock(\'' + opts.page + '\',\'' + opts.key + '\')">+ ' + esc(opts.addLabel || 'Ajouter un element') + '</button>';
+  html += '<div style="margin-top:12px"><button class="btn success" onclick="CMS_ADMIN.saveBlocks(\'' + opts.page + '\',\'' + opts.key + '\')">Enregistrer</button></div>';
+  html += '</div>';
+  return html;
+}
+
+function blockItemHtml(opts, item, i, total) {
+  var prefix = 'bl-' + opts.page + '-' + opts.key + '-' + i;
+  var html = '<div class="block-item" id="' + prefix + '-wrap">';
+  html += '<div class="block-header">';
+  html += '<div class="block-move">';
+  html += '<button onclick="CMS_ADMIN.moveBlock(\'' + opts.page + '\',\'' + opts.key + '\',' + i + ',-1)" title="Monter"' + (i===0?' disabled style="opacity:.3"':'') + '>&#9650;</button>';
+  html += '<button onclick="CMS_ADMIN.moveBlock(\'' + opts.page + '\',\'' + opts.key + '\',' + i + ',1)" title="Descendre"' + (i===total-1?' disabled style="opacity:.3"':'') + '>&#9660;</button>';
+  html += '</div>';
+  html += '<span class="block-num">#' + (i+1) + '</span>';
+  html += '<button class="block-del" onclick="CMS_ADMIN.removeBlock(\'' + opts.page + '\',\'' + opts.key + '\',' + i + ')">Supprimer</button>';
+  html += '</div>';
+
+  opts.fields.forEach(function(f) {
+    // Si l'item est une chaine simple (ex: includes_items, cv_items), utiliser directement
+    var val;
+    if (typeof item === 'string' && opts.fields.length === 1 && f.name === 'text') {
+      val = item;
+    } else {
+      val = item[f.name] !== undefined ? item[f.name] : '';
+    }
+    var fid = prefix + '-' + f.name;
+    html += fieldHtml(f.label, fid, val, f.type || 'text', f.rows);
+  });
+
+  html += '</div>';
+  return html;
+}
+
+// ── FAQ Categories (structure speciale) ──
+function faqCategoriesEditor(page, key) {
+  var cats = get(page, key);
+  if (!Array.isArray(cats)) cats = [];
+
+  var html = '<div class="card"><h3>Categories de la FAQ</h3>';
+  html += '<p class="card-desc">Organisez les questions par categories. Chaque categorie contient ses propres questions/reponses.</p>';
+  html += '<div id="faqcats-wrap">';
+
+  cats.forEach(function(cat, ci) {
+    html += '<div class="block-item" style="padding:16px;margin-bottom:16px;border:2px solid var(--line)">';
+    html += '<div class="block-header">';
+    html += '<div class="block-move">';
+    html += '<button onclick="CMS_ADMIN.moveFaqCat(' + ci + ',-1)" title="Monter"' + (ci===0?' disabled style="opacity:.3"':'') + '>&#9650;</button>';
+    html += '<button onclick="CMS_ADMIN.moveFaqCat(' + ci + ',1)" title="Descendre"' + (ci===cats.length-1?' disabled style="opacity:.3"':'') + '>&#9660;</button>';
+    html += '</div>';
+    html += '<span class="block-num">Categorie #' + (ci+1) + '</span>';
+    html += '<button class="block-del" onclick="CMS_ADMIN.removeFaqCat(' + ci + ')">Supprimer categorie</button>';
+    html += '</div>';
+    html += fieldHtml('Nom de la categorie', 'faqcat-' + ci + '-name', cat.name || '');
+
+    // Items de cette categorie
+    var items = cat.items || [];
+    html += '<div id="faqcat-' + ci + '-items" style="margin-left:16px;margin-top:12px">';
+    items.forEach(function(item, qi) {
+      html += '<div class="block-item">';
+      html += '<div class="block-header">';
+      html += '<span class="block-num">Q' + (qi+1) + '</span>';
+      html += '<button class="block-del" onclick="CMS_ADMIN.removeFaqItem(' + ci + ',' + qi + ')">Suppr.</button>';
+      html += '</div>';
+      html += fieldHtml('Question', 'faqcat-' + ci + '-q-' + qi, item.q || '');
+      html += fieldHtml('Reponse', 'faqcat-' + ci + '-a-' + qi, item.a || '', 'textarea', 3);
+      html += '</div>';
+    });
+    html += '</div>';
+    html += '<button class="add-block-btn" style="margin-left:16px;width:calc(100% - 16px)" onclick="CMS_ADMIN.addFaqItem(' + ci + ')">+ Ajouter une question</button>';
+    html += '</div>';
+  });
+
+  html += '</div>';
+  html += '<button class="add-block-btn" onclick="CMS_ADMIN.addFaqCat()">+ Ajouter une categorie</button>';
+  html += '<div style="margin-top:12px"><button class="btn success" onclick="CMS_ADMIN.saveFaqCats()">Enregistrer les categories FAQ</button></div>';
+  html += '</div>';
+  return html;
+}
+
+// ── Champs simples (groupes) ──
+function fieldsCard(title, desc, page, fields, saveId) {
+  var html = '<div class="card"><h3>' + esc(title) + '</h3>';
+  if (desc) html += '<p class="card-desc">' + esc(desc) + '</p>';
+  fields.forEach(function(f) {
+    var val = get(page, f.key);
+    html += fieldHtml(f.label, 'sf-' + page + '-' + f.key, val, f.type || 'text', f.rows);
+  });
+  html += '<button class="btn success" onclick="CMS_ADMIN.saveFields(\'' + page + '\',\'' + saveId + '\')">Enregistrer</button>';
+  html += '</div>';
+  return html;
+}
+
+// ── CONSTRUCTION DES PANNEAUX ──
+function buildPanels() {
+  var html = '';
+
+  // ── CONTACT ──
+  html += '<div id="panel-contact" style="display:block">';
+  html += fieldsCard('Informations de contact', 'Emails, telephone et adresse affiches sur la page contact.html.', 'contact', [
+    {key:'title', label:'Titre de la page'},
+    {key:'subtitle', label:'Sous-titre'},
+    {key:'email', label:'Email principal', type:'email'},
+    {key:'email_support', label:'Email support', type:'email'},
+    {key:'email_commercial', label:'Email commercial', type:'email'},
+    {key:'tel', label:'Telephone'},
+    {key:'adresse', label:'Adresse'},
+    {key:'form_name_label', label:'Label champ Nom'},
+    {key:'form_email_label', label:'Label champ Email'},
+    {key:'form_subject_label', label:'Label champ Sujet'},
+    {key:'form_message_label', label:'Label champ Message'},
+    {key:'form_button', label:'Texte du bouton'}
+  ], 'contact_fields');
+  html += '</div>';
+
+  // ── FAQ ──
+  html += '<div id="panel-faq" style="display:none">';
+  html += fieldsCard('En-tete de la FAQ', 'Titre et sous-titre affiches en haut de la page.', 'faq', [
+    {key:'title', label:'Titre'},
+    {key:'subtitle', label:'Sous-titre'},
+    {key:'cta_title', label:'Titre CTA bas de page'},
+    {key:'cta_desc', label:'Description CTA'},
+    {key:'cta_button', label:'Texte bouton CTA'}
+  ], 'faq_header');
+  html += faqCategoriesEditor('faq', 'categories');
+  html += '</div>';
+
+  // ── ABOUT ──
+  html += '<div id="panel-about" style="display:none">';
+  html += fieldsCard('En-tete', 'Titre et introduction de la page Qui suis-je.', 'about', [
+    {key:'title', label:'Titre'},
+    {key:'subtitle', label:'Sous-titre'},
+    {key:'why_title', label:'Titre section "Pourquoi"'},
+    {key:'why_desc', label:'Description', type:'textarea', rows:4},
+    {key:'cta_title', label:'Titre CTA'},
+    {key:'cta_desc', label:'Description CTA'},
+    {key:'cta_button', label:'Texte bouton CTA'}
+  ], 'about_header');
+  html += blockListEditor({
+    page:'about', key:'cv_items', title:'Lignes de CV',
+    desc:'Chaque ligne apparait dans la section CV.',
+    fields:[{name:'text', label:'Texte', type:'textarea', rows:2}],
+    addLabel:'Ajouter une ligne de CV'
+  });
+  html += fieldsCard('Principes', 'Les 3 principes non negociables.', 'about', [
+    {key:'principles_title', label:'Titre de la section'},
+    {key:'principle_1_title', label:'Principe 1 — Titre'},
+    {key:'principle_1_desc', label:'Principe 1 — Description', type:'textarea', rows:2},
+    {key:'principle_2_title', label:'Principe 2 — Titre'},
+    {key:'principle_2_desc', label:'Principe 2 — Description', type:'textarea', rows:2},
+    {key:'principle_3_title', label:'Principe 3 — Titre'},
+    {key:'principle_3_desc', label:'Principe 3 — Description', type:'textarea', rows:2}
+  ], 'about_principles');
+  html += '</div>';
+
+  // ── COACHING ──
+  html += '<div id="panel-coaching" style="display:none">';
+  html += fieldsCard('En-tete & Coach', 'Informations principales de la page coaching.', 'coaching', [
+    {key:'title', label:'Titre'},
+    {key:'subtitle', label:'Sous-titre'},
+    {key:'coach_name', label:'Nom du coach'},
+    {key:'coach_role', label:'Role'},
+    {key:'coach_exp', label:'Experience'},
+    {key:'calendly_url', label:'URL Calendly'},
+    {key:'cta_title', label:'Titre CTA'},
+    {key:'cta_button', label:'Texte bouton CTA'}
+  ], 'coaching_header');
+  html += fieldsCard('Tarifs coaching', 'Prix des sessions individuelles et packs.', 'coaching', [
+    {key:'session_unique_title', label:'Titre session unique'},
+    {key:'session_unique_price_visio', label:'Prix visio (euros/h)'},
+    {key:'session_unique_price_presential', label:'Prix presentiel (euros/h)'},
+    {key:'parcours_title', label:'Titre parcours'},
+    {key:'pack_starter', label:'Pack Starter (euros)'},
+    {key:'pack_booster', label:'Pack Booster (euros)'},
+    {key:'pack_intensif', label:'Pack Intensif (euros)'},
+    {key:'equipe_title', label:'Titre equipe'},
+    {key:'equipe_desc', label:'Description equipe'}
+  ], 'coaching_tarifs');
+  html += fieldsCard('Etapes & Experts', 'Processus et section experts.', 'coaching', [
+    {key:'steps_title', label:'Titre etapes'},
+    {key:'step_1', label:'Etape 1'},
+    {key:'step_2', label:'Etape 2'},
+    {key:'step_3', label:'Etape 3'},
+    {key:'step_4', label:'Etape 4'},
+    {key:'experts_title', label:'Titre experts'},
+    {key:'experts_desc', label:'Description experts', type:'textarea', rows:2},
+    {key:'faq_title', label:'Titre FAQ coaching'}
+  ], 'coaching_steps');
+  html += blockListEditor({
+    page:'coaching', key:'faq_items', title:'FAQ Coaching',
+    desc:'Questions frequentes specifiques au coaching.',
+    fields:[
+      {name:'q', label:'Question'},
+      {name:'a', label:'Reponse', type:'textarea', rows:3}
+    ],
+    addLabel:'Ajouter une question'
+  });
+  html += '</div>';
+
+  // ── TARIFS ──
+  html += '<div id="panel-tarifs" style="display:none">';
+  html += fieldsCard('En-tete & Formules', 'Titres et prix des formules.', 'tarifs', [
+    {key:'title', label:'Titre'},
+    {key:'subtitle', label:'Sous-titre'},
+    {key:'plan_free_title', label:'Formule gratuite — Titre'},
+    {key:'plan_free_price', label:'Prix'},
+    {key:'plan_free_desc', label:'Description'},
+    {key:'plan_solo_title', label:'Formule solo — Titre'},
+    {key:'plan_solo_price_monthly', label:'Prix mensuel'},
+    {key:'plan_solo_desc', label:'Description'},
+    {key:'plan_pass_title', label:'Pass catalogue — Titre'},
+    {key:'plan_pass_price_monthly', label:'Prix mensuel'},
+    {key:'plan_pass_price_annual', label:'Prix annuel'},
+    {key:'plan_pass_desc', label:'Description'}
+  ], 'tarifs_plans');
+  html += fieldsCard('Licences B2B', 'Tarifs professionnels.', 'tarifs', [
+    {key:'b2b_title', label:'Titre section B2B'},
+    {key:'b2b_etab_30', label:'Etablissement <= 30'},
+    {key:'b2b_etab_100', label:'Etablissement <= 100'},
+    {key:'b2b_ent_20', label:'Entreprise <= 20'},
+    {key:'b2b_formateur', label:'Formateur (euros/mois)'},
+    {key:'b2b_custom', label:'Sur mesure'}
+  ], 'tarifs_b2b');
+  html += blockListEditor({
+    page:'tarifs', key:'includes_items', title:'Ce qui est inclus',
+    desc:'Liste des avantages inclus dans chaque formule.',
+    fields:[{name:'text', label:'Avantage'}],
+    addLabel:'Ajouter un avantage'
+  });
+  html += fieldsCard('FAQ Tarifs', null, 'tarifs', [
+    {key:'faq_title', label:'Titre section FAQ'}
+  ], 'tarifs_faq_title');
+  html += blockListEditor({
+    page:'tarifs', key:'faq_items', title:'Questions frequentes Tarifs',
+    desc:'FAQ specifique a la page tarifs.',
+    fields:[
+      {name:'q', label:'Question'},
+      {name:'a', label:'Reponse', type:'textarea', rows:3}
+    ],
+    addLabel:'Ajouter une question'
+  });
+  html += '</div>';
+
+  // ── UGC ──
+  html += '<div id="panel-ugc" style="display:none">';
+  html += fieldsCard('En-tete UGC', 'Configuration de la page UGC.', 'ugc', [
+    {key:'title', label:'Titre'},
+    {key:'subtitle', label:'Sous-titre'},
+    {key:'hashtag', label:'Hashtag officiel'},
+    {key:'email', label:'Email de soumission', type:'email'},
+    {key:'cta_title', label:'Titre CTA'},
+    {key:'cta_desc', label:'Description CTA'},
+    {key:'cta_button', label:'Texte bouton CTA'}
+  ], 'ugc_header');
+  html += blockListEditor({
+    page:'ugc', key:'items', title:'Temoignages & Livrables',
+    desc:'Contenus generes par les utilisateurs affiches sur la page.',
+    fields:[
+      {name:'text', label:'Texte / Citation', type:'textarea', rows:3},
+      {name:'author', label:'Auteur'},
+      {name:'role', label:'Role / Formation'},
+      {name:'type', label:'Type (Temoignage ou Livrable)'}
+    ],
+    addLabel:'Ajouter un temoignage'
+  });
+  html += '</div>';
+
+  // ── MENTIONS ──
+  html += '<div id="panel-mentions" style="display:none">';
+  html += fieldsCard('Mentions legales', 'Informations legales affichees sur mentions.html.', 'mentions', [
+    {key:'title', label:'Titre'},
+    {key:'editeur', label:'Editeur / Raison sociale'},
+    {key:'siren', label:'SIREN'},
+    {key:'siege', label:'Siege social'},
+    {key:'email', label:'Email'},
+    {key:'tel', label:'Telephone'},
+    {key:'directeur', label:'Directeur de publication'},
+    {key:'hebergeur', label:'Hebergeur'},
+    {key:'propriete', label:'Propriete intellectuelle', type:'textarea', rows:3},
+    {key:'donnees_responsable', label:'Responsable donnees'},
+    {key:'donnees_email_dpo', label:'Email DPO', type:'email'},
+    {key:'donnees_desc', label:'Description donnees personnelles', type:'textarea', rows:3},
+    {key:'cookies_desc', label:'Description cookies', type:'textarea', rows:2},
+    {key:'credits', label:'Credits', type:'textarea', rows:2}
+  ], 'mentions_fields');
+  html += '</div>';
+
+  // ── CGU ──
+  html += '<div id="panel-cgu" style="display:none">';
+  html += fieldsCard('En-tete CGU', 'Informations generales des CGU.', 'cgu', [
+    {key:'title', label:'Titre'},
+    {key:'version', label:'Version'},
+    {key:'date', label:'Date de mise a jour'},
+    {key:'editeur', label:'Editeur'},
+    {key:'siren', label:'SIREN'},
+    {key:'adresse', label:'Adresse'},
+    {key:'email', label:'Email', type:'email'},
+    {key:'dpo_email', label:'Email DPO', type:'email'}
+  ], 'cgu_header');
+  html += blockListEditor({
+    page:'cgu', key:'articles', title:'Articles des CGU',
+    desc:'Chaque article est un bloc titre + contenu. Vous pouvez ajouter, supprimer ou reordonner les articles.',
+    fields:[
+      {name:'title', label:'Titre de l\'article'},
+      {name:'content', label:'Contenu', type:'textarea', rows:4}
+    ],
+    addLabel:'Ajouter un article'
+  });
+  html += '</div>';
+
+  // ── CGV ──
+  html += '<div id="panel-cgv" style="display:none">';
+  html += fieldsCard('En-tete CGV', 'Informations generales des CGV.', 'cgv', [
+    {key:'title', label:'Titre'},
+    {key:'version', label:'Version'},
+    {key:'date_vigueur', label:'Date d\'entree en vigueur'},
+    {key:'date_maj', label:'Date de mise a jour'},
+    {key:'nom', label:'Nom commercial'},
+    {key:'exploitant', label:'Exploitant'},
+    {key:'siege', label:'Siege social'},
+    {key:'siret', label:'SIRET'},
+    {key:'ape', label:'Code APE'},
+    {key:'email', label:'Email', type:'email'},
+    {key:'site', label:'Site web'}
+  ], 'cgv_header');
+  html += blockListEditor({
+    page:'cgv', key:'articles', title:'Articles des CGV',
+    desc:'Chaque article est un bloc titre + contenu.',
+    fields:[
+      {name:'title', label:'Titre de l\'article'},
+      {name:'content', label:'Contenu', type:'textarea', rows:4}
+    ],
+    addLabel:'Ajouter un article'
+  });
+  html += fieldsCard('Tarifs CGV', 'Grille tarifaire mentionnee dans les CGV.', 'cgv', [
+    {key:'tarifs.solo_monthly', label:'Solo mensuel (euros/mois)'},
+    {key:'tarifs.solo_annual', label:'Solo annuel (euros/an)'},
+    {key:'tarifs.reduit_monthly', label:'Reduit (euros/mois)'},
+    {key:'tarifs.visio', label:'Visio coaching (euros/h)'},
+    {key:'tarifs.presential', label:'Presentiel coaching (euros/h)'},
+    {key:'tarifs.starter', label:'Pack Starter (euros)'},
+    {key:'tarifs.booster', label:'Pack Booster (euros)'},
+    {key:'tarifs.intensif', label:'Pack Intensif (euros)'},
+    {key:'tarifs.cfa', label:'Tarif CFA'},
+    {key:'tarifs.entreprise', label:'Tarif Entreprise'},
+    {key:'tarifs.formateur', label:'Formateur (euros/mois)'}
+  ], 'cgv_tarifs');
+  html += '</div>';
+
+  // ── PAIEMENT ──
+  html += '<div id="panel-paiement" style="display:none">';
+  html += fieldsCard('Page de paiement — En-tete', 'Textes affiches dans la barre securisee et le formulaire.', 'paiement', [
+    {key:'brand_name', label:'Nom affiche (barre securisee)'},
+    {key:'secure_label', label:'Label securite'},
+    {key:'form_title', label:'Titre du formulaire'},
+    {key:'form_subtitle', label:'Sous-titre du formulaire'},
+    {key:'security_note', label:'Note de securite (bas du formulaire)', type:'textarea', rows:2}
+  ], 'paiement_header');
+  html += fieldsCard('Facturation', 'Textes de la section informations de facturation.', 'paiement', [
+    {key:'billing_title', label:'Titre section facturation'},
+    {key:'billing_subtitle', label:'Sous-titre facturation'}
+  ], 'paiement_billing');
+  html += fieldsCard('Recapitulatif de commande', 'Textes du panneau recapitulatif a droite.', 'paiement', [
+    {key:'summary_title', label:'Titre recapitulatif'},
+    {key:'summary_subtitle', label:'Sous-titre recapitulatif'},
+    {key:'plan_name', label:'Nom du plan affiche'},
+    {key:'plan_desc', label:'Description du plan', type:'textarea', rows:2},
+    {key:'reduction_label', label:'Label reduction'},
+    {key:'stripe_note', label:'Note Stripe', type:'textarea', rows:2}
+  ], 'paiement_summary');
+  html += fieldsCard('Offres disponibles', 'Noms et prix des offres affichees dans le selecteur.', 'paiement', [
+    {key:'offer1_name', label:'Offre 1 — Nom'},
+    {key:'offer1_price', label:'Offre 1 — Prix'},
+    {key:'offer2_name', label:'Offre 2 — Nom'},
+    {key:'offer2_price', label:'Offre 2 — Prix'},
+    {key:'offer3_name', label:'Offre 3 — Nom'},
+    {key:'offer3_price', label:'Offre 3 — Prix'}
+  ], 'paiement_offers');
+  html += '</div>';
+
+  document.getElementById('panels').innerHTML = html;
+}
+
+// ── ACTIONS ──
+
+// Sauvegarder des champs simples
+async function saveFields(page, groupId) {
+  var prefix = 'sf-' + page + '-';
+  document.querySelectorAll('[id^="' + prefix + '"]').forEach(function(el) {
+    var key = el.id.replace(prefix, '');
+    var val = el.value;
+    if (key.indexOf('.') !== -1) {
+      var parts = key.split('.');
+      if (!data[page]) data[page] = {};
+      if (!data[page][parts[0]]) data[page][parts[0]] = {};
+      data[page][parts[0]][parts[1]] = val;
+    } else {
+      set(page, key, val);
+    }
+  });
+  await savePageData(page);
+  showToast('Enregistré avec succès');
+}
+
+// Sauvegarder des blocs
+async function saveBlocks(page, key) {
+  var container = document.getElementById('bl-' + page + '-' + key);
+  if (!container) return;
+  var items = [];
+  var blockEls = container.querySelectorAll('.block-item');
+  var fieldNames = getBlockFields(page, key);
+  blockEls.forEach(function(blockEl, i) {
+    var item = {};
+    fieldNames.forEach(function(f) {
+      var el = document.getElementById('bl-' + page + '-' + key + '-' + i + '-' + f);
+      if (el) item[f] = el.value;
+    });
+    if (fieldNames.length === 1 && fieldNames[0] === 'text') {
+      items.push(item.text || '');
+    } else {
+      items.push(item);
+    }
+  });
+  set(page, key, items);
+  await savePageData(page);
+  showToast('Blocs enregistrés');
+}
+
+function getBlockFields(page, key) {
+  // Retourne les noms de champs pour un bloc donne
+  var map = {
+    'about.cv_items': ['text'],
+    'coaching.faq_items': ['q','a'],
+    'tarifs.includes_items': ['text'],
+    'tarifs.faq_items': ['q','a'],
+    'ugc.items': ['text','author','role','type'],
+    'cgu.articles': ['title','content'],
+    'cgv.articles': ['title','content']
+  };
+  return map[page + '.' + key] || ['text'];
+}
+
+async function addBlock(page, key) {
+  var items = get(page, key);
+  if (!Array.isArray(items)) items = [];
+  var fieldNames = getBlockFields(page, key);
+  var newItem = {};
+  fieldNames.forEach(function(f) { newItem[f] = ''; });
+  if (fieldNames.length === 1 && fieldNames[0] === 'text') {
+    items.push('');
+  } else {
+    items.push(newItem);
+  }
+  set(page, key, items);
+  await savePageData(page);
+  rebuildCurrentPanel(page);
+}
+
+async function removeBlock(page, key, index) {
+  var items = get(page, key);
+  if (!Array.isArray(items)) return;
+  saveBlocksQuiet(page, key);
+  items = get(page, key);
+  items.splice(index, 1);
+  set(page, key, items);
+  await savePageData(page);
+  rebuildCurrentPanel(page);
+}
+
+async function moveBlock(page, key, index, dir) {
+  saveBlocksQuiet(page, key);
+  var items = get(page, key);
+  if (!Array.isArray(items)) return;
+  var newIndex = index + dir;
+  if (newIndex < 0 || newIndex >= items.length) return;
+  var temp = items[index];
+  items[index] = items[newIndex];
+  items[newIndex] = temp;
+  set(page, key, items);
+  await savePageData(page);
+  rebuildCurrentPanel(page);
+}
+
+function saveBlocksQuiet(page, key) {
+  var container = document.getElementById('bl-' + page + '-' + key);
+  if (!container) return;
+  var items = [];
+  var blockEls = container.querySelectorAll('.block-item');
+  var fieldNames = getBlockFields(page, key);
+  blockEls.forEach(function(blockEl, i) {
+    var item = {};
+    fieldNames.forEach(function(f) {
+      var el = document.getElementById('bl-' + page + '-' + key + '-' + i + '-' + f);
+      if (el) item[f] = el.tagName === 'TEXTAREA' ? el.value : el.value;
+    });
+    if (fieldNames.length === 1 && fieldNames[0] === 'text') {
+      items.push(item.text || '');
+    } else {
+      items.push(item);
+    }
+  });
+  set(page, key, items);
+}
+
+// ── FAQ Categories ──
+async function saveFaqCats() {
+  var cats = [];
+  var catWraps = document.querySelectorAll('#faqcats-wrap > .block-item');
+  catWraps.forEach(function(catEl, ci) {
+    var nameEl = document.getElementById('faqcat-' + ci + '-name');
+    var cat = { name: nameEl ? nameEl.value : '', items: [] };
+    var qEls = catEl.querySelectorAll('[id^="faqcat-' + ci + '-q-"]');
+    qEls.forEach(function(qEl, qi) {
+      var aEl = document.getElementById('faqcat-' + ci + '-a-' + qi);
+      cat.items.push({ q: qEl.value, a: aEl ? aEl.value : '' });
+    });
+    cats.push(cat);
+  });
+  set('faq', 'categories', cats);
+  await savePageData('faq');
+  showToast('Catégories FAQ enregistrées');
+}
+
+async function addFaqCat() {
+  saveFaqCatsQuiet();
+  var cats = get('faq', 'categories');
+  if (!Array.isArray(cats)) cats = [];
+  cats.push({ name: 'Nouvelle catégorie', items: [] });
+  set('faq', 'categories', cats);
+  await savePageData('faq');
+  rebuildCurrentPanel('faq');
+}
+
+async function removeFaqCat(ci) {
+  saveFaqCatsQuiet();
+  var cats = get('faq', 'categories');
+  if (!Array.isArray(cats)) return;
+  cats.splice(ci, 1);
+  set('faq', 'categories', cats);
+  await savePageData('faq');
+  rebuildCurrentPanel('faq');
+}
+
+async function moveFaqCat(ci, dir) {
+  saveFaqCatsQuiet();
+  var cats = get('faq', 'categories');
+  if (!Array.isArray(cats)) return;
+  var ni = ci + dir;
+  if (ni < 0 || ni >= cats.length) return;
+  var temp = cats[ci];
+  cats[ci] = cats[ni];
+  cats[ni] = temp;
+  set('faq', 'categories', cats);
+  await savePageData('faq');
+  rebuildCurrentPanel('faq');
+}
+
+async function addFaqItem(ci) {
+  saveFaqCatsQuiet();
+  var cats = get('faq', 'categories');
+  if (!Array.isArray(cats) || !cats[ci]) return;
+  cats[ci].items.push({ q: '', a: '' });
+  set('faq', 'categories', cats);
+  await savePageData('faq');
+  rebuildCurrentPanel('faq');
+}
+
+async function removeFaqItem(ci, qi) {
+  saveFaqCatsQuiet();
+  var cats = get('faq', 'categories');
+  if (!Array.isArray(cats) || !cats[ci]) return;
+  cats[ci].items.splice(qi, 1);
+  set('faq', 'categories', cats);
+  await savePageData('faq');
+  rebuildCurrentPanel('faq');
+}
+
+function saveFaqCatsQuiet() {
+  var cats = [];
+  var catWraps = document.querySelectorAll('#faqcats-wrap > .block-item');
+  catWraps.forEach(function(catEl, ci) {
+    var nameEl = document.getElementById('faqcat-' + ci + '-name');
+    var cat = { name: nameEl ? nameEl.value : '', items: [] };
+    var qEls = catEl.querySelectorAll('[id^="faqcat-' + ci + '-q-"]');
+    qEls.forEach(function(qEl, qi) {
+      var aEl = document.getElementById('faqcat-' + ci + '-a-' + qi);
+      cat.items.push({ q: qEl.value, a: aEl ? aEl.value : '' });
+    });
+    cats.push(cat);
+  });
+  set('faq', 'categories', cats);
+}
+
+// ── Rebuild ──
+function rebuildCurrentPanel(page) {
+  buildPanels();
+  switchTab(page);
+}
+
+// ── Export / Import ──
+function exportAll() {
+  var exportData = {};
+  PAGES.forEach(function(p) { if (data[p.id]) exportData[p.id] = data[p.id]; });
+  var blob = new Blob([JSON.stringify(exportData, null, 2)], {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'pages-content.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('Fichier pages-content.json téléchargé');
+}
+
+function importAll(fileInput) {
+  var file = fileInput.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = async function(ev) {
+    try {
+      var imported = JSON.parse(ev.target.result);
+      data = mergeDeep(data, imported);
+      var pages = Object.keys(imported);
+      for (var i = 0; i < pages.length; i++) {
+        await savePageData(pages[i]);
+      }
+      buildPanels();
+      switchTab(PAGES[0].id);
+      showToast('Import réussi — ' + pages.length + ' pages importées');
+    } catch(err) {
+      showToast('Erreur : fichier JSON invalide', '');
+    }
+  };
+  reader.readAsText(file);
+  fileInput.value = '';
+}
+
+// ── API publique ──
+window.CMS_ADMIN = {
+  switchTab: switchTab,
+  saveFields: saveFields,
+  saveBlocks: saveBlocks,
+  addBlock: addBlock,
+  removeBlock: removeBlock,
+  moveBlock: moveBlock,
+  saveFaqCats: saveFaqCats,
+  addFaqCat: addFaqCat,
+  removeFaqCat: removeFaqCat,
+  moveFaqCat: moveFaqCat,
+  addFaqItem: addFaqItem,
+  removeFaqItem: removeFaqItem,
+  exportAll: exportAll
+};
+
+// ── Init ──
+var _pagesInitialized = false;
+async function init() {
+  if (_pagesInitialized) return;
+  _pagesInitialized = true;
+  var loadingEl = document.getElementById('pages-loading');
+  if (loadingEl) loadingEl.style.display = 'block';
+  await loadDefaults(function() {});
+  buildTabs();
+  buildPanels();
+  if (loadingEl) loadingEl.style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('importInput').addEventListener('change', function(e) {
+    importAll(e.target);
+  });
+  var topBar = document.querySelector('.app-top');
+  if (topBar && window.innerWidth <= 1100) topBar.style.display = 'flex';
+});
+
+document.addEventListener('imm:ready', function(e) {
+  var u = document.getElementById('app-user');
+  if (u && e.detail && e.detail.name) {
+    var i = e.detail.name.split(' ').map(function(w){ return w[0]; }).join('').toUpperCase().slice(0,2);
+    u.querySelector('.av').textContent = i;
+    u.querySelector('.n').textContent = e.detail.name;
+  }
+  init();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    if (!_pagesInitialized && window.IMM_SUPABASE) init();
+  }, 400);
+});
+
+})();
+</script>
+<script>
+// Badge BETA : lire le réglage depuis localStorage
+(function(){
+  if(localStorage.getItem('imm_beta_mode')==='false'){
+    var b=document.querySelector('.app-brand .beta');
+    if(b)b.style.display='none';
+  }
+})();
+</script>
+</body>
+</html>

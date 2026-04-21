@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tarifs — Immersium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/shared.css">
+<style>
+.page-hero { padding: 120px 0 70px; background: var(--ink); color: #fff; position: relative; overflow: hidden; }
+.page-hero::before { content: ""; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(255,107,53,.2) 0%, transparent 65%); pointer-events: none; }
+.page-hero .eyebrow { color: var(--orange); }
+.page-hero h1 { color: #fff; }
+.page-hero h1 em { color: var(--orange); }
+.page-hero .lede { color: rgba(255,255,255,.7); }
+
+.toggle-row { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; }
+.toggle-pill { display: flex; background: var(--bg-alt); border: 1px solid var(--line); border-radius: 999px; padding: 4px; gap: 4px; }
+.toggle-pill button { padding: 8px 20px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink-soft); transition: all .2s; }
+.toggle-pill button.active { background: var(--ink); color: #fff; }
+.save-badge { background: var(--orange-soft); color: var(--marine); padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.plan-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 36px 32px; position: relative; transition: all .2s; }
+.plan-card:hover { box-shadow: var(--sh-lift); }
+.plan-card.featured { border-color: var(--orange); background: var(--ink); color: #fff; }
+.plan-card.featured .pop-label { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--orange); color: var(--ink); padding: 5px 16px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.plan-name { font-family: var(--f-display); font-size: 15px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 8px; }
+.plan-desc { font-size: 13px; color: var(--ink-soft); margin-bottom: 24px; }
+.plan-card.featured .plan-desc { color: rgba(255,255,255,.6); }
+.plan-price { font-family: var(--f-display); font-size: 56px; font-weight: 500; letter-spacing: -.03em; line-height: 1; }
+.plan-card.featured .plan-price { color: var(--orange); }
+.plan-price sup { font-size: 24px; vertical-align: top; margin-top: 12px; }
+.plan-price sub { font-size: 16px; opacity: .6; }
+.plan-per { font-size: 12px; color: var(--ink-mute); margin: 6px 0 28px; }
+.plan-card.featured .plan-per { color: rgba(255,255,255,.5); }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; }
+.plan-features li .check { color: var(--orange); font-weight: 700; flex-shrink: 0; }
+.plan-features li.off { opacity: .4; }
+.plan-features li.off .check { color: var(--ink-mute); }
+.plan-card.featured .plan-features li { color: rgba(255,255,255,.85); }
+
+.compare-section { margin-top: 80px; }
+.compare-table { width: 100%; border-collapse: collapse; margin-top: 32px; }
+.compare-table th { padding: 16px 20px; text-align: left; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-mute); border-bottom: 2px solid var(--line); }
+.compare-table th:not(:first-child) { text-align: center; }
+.compare-table td { padding: 16px 20px; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.compare-table td:not(:first-child) { text-align: center; }
+.compare-table tr:hover td { background: var(--bg-alt); }
+.compare-table .yes { color: var(--orange); font-weight: 700; }
+.compare-table .no { color: var(--ink-mute); }
+.compare-table .plan-head { font-family: var(--f-display); font-size: 18px; font-weight: 500; }
+
+.faq-list { display: flex; flex-direction: column; gap: 12px; margin-top: 40px; }
+.faq-item { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+.faq-q { padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-weight: 600; font-size: 15px; gap: 16px; transition: background .15s; }
+.faq-q:hover { background: var(--bg-alt); }
+.faq-q .chev { width: 20px; height: 20px; flex-shrink: 0; color: var(--ink-mute); transition: transform .2s; }
+.faq-item.open .faq-q .chev { transform: rotate(180deg); }
+.faq-a { padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s; }
+.faq-item.open .faq-a { max-height: 300px; padding: 0 24px 20px; }
+.faq-a p { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
+
+@media(max-width:900px) { .pricing-grid { grid-template-columns: 1fr; } .compare-table { font-size: 12px; } }
+</style>
+</head>
+<body class="has-pub-nav">
+
+<nav class="pub-nav">
+  <div class="pub-nav-inner">
+    <a href="index.html" class="pub-brand"><span class="name">Immer<em>sium</em></span><span class="pub-beta">BETA</span></a>
+    <div class="pub-links">
+      <a href="index.html">Accueil</a>
+      <div class="pub-nav-item-cat"><a href="catalogue.html">Catalogue<span class="chev">▾</span></a><div class="pub-cat-panel" onclick="event.stopPropagation()"><div class="pub-cat-header"></div><div class="pub-cat-grid"></div><div class="pub-cat-footer"></div></div></div>
+      <a href="coaching.html">Coaching</a>
+      <a href="tarifs.html" class="active">Tarifs</a>
+      <a href="about.html">À propos</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="pub-burger" onclick="toggleDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="pub-cta">
+      <a href="login.html" class="btn btn-ghost nav-login-btn">Connexion</a>
+      <a href="dashboard.html" class="btn btn-ghost nav-dash-btn" style="display:none">Mon espace →</a>
+      <a href="login.html?mode=signup" class="btn btn-jade nav-cta-btn">Essayer gratuitement →</a>
+    </div>
+  </div>
+</nav>
+<div class="pub-drawer" id="pub-drawer" onclick="if(event.target===this) toggleDrawer()"><div class="pub-drawer-panel"><div class="pub-drawer-head"><div class="pub-brand"><span class="name">Immer<em>sium</em></span></div><button class="pub-drawer-close" onclick="toggleDrawer()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><nav class="pub-drawer-links"><a href="index.html">Accueil<span class="arr">→</span></a><a href="catalogue.html">Catalogue<span class="arr">→</span></a><a href="coaching.html">Coaching<span class="arr">→</span></a><a href="tarifs.html" class="active">Tarifs<span class="arr">→</span></a><a href="contact.html">Contact<span class="arr">→</span></a></nav><div class="pub-drawer-cta"><a href="login.html" class="btn btn-outline">Connexion</a><a href="login.html?mode=signup" class="btn btn-jade">Essayer →</a></div></div></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Tarifs transparents</div>
+    <h1>Simple. <em>Juste</em>. Accessible.</h1>
+    <p class="lede" style="margin-top:16px">Premier défi toujours gratuit. Pas de carte bancaire pour commencer. Des formules pour tous les profils.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="toggle-row">
+      <div class="toggle-pill">
+        <button class="active" id="btn-individuel" onclick="switchBilling('individuel')">Particulier</button>
+        <button id="btn-b2b" onclick="switchBilling('b2b')">B2B / CFA</button>
+      </div>
+      <div class="save-badge">Économisez 20% avec l'annuel</div>
+    </div>
+
+    <div id="pricing-individuel">
+      <div class="pricing-grid" id="grid-individuel">
+        <div style="text-align:center;padding:40px;color:var(--ink-mute);grid-column:1/-1">Chargement…</div>
+      </div>
+    </div>
+
+    <div id="pricing-b2b" style="display:none">
+      <div class="pricing-grid" id="grid-b2b"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="eyebrow">Questions fréquentes</div>
+    <h2>Tout ce que vous voulez <em>savoir</em>.</h2>
+    <div class="faq-list" id="tarifs-faq">
+      <div style="text-align:center;padding:20px;color:var(--ink-mute)">Chargement…</div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--ink);padding:60px 0;margin-top:80px">
+  <div class="container" style="text-align:center">
+    <h2 style="color:#fff;max-width:600px;margin:0 auto 16px">Un doute ? <em style="color:var(--orange)">Parlez-nous.</em></h2>
+    <p style="color:rgba(255,255,255,.65);font-size:16px;margin-bottom:28px">Notre équipe répond sous 24h.</p>
+    <a href="contact.html" class="btn btn-jade btn-lg">Contacter l'équipe</a>
+  </div>
+</section>
+
+<footer class="pub-footer">
+  <div class="container">
+    <div class="pub-footer-top">
+      <div class="pub-footer-brand"><div class="name">Immer<em>sium</em></div><div class="tag">Learn by doing · Caraïbes</div><p>15 simulations. 315 défis. 100% pratique.</p></div>
+      <div class="pub-footer-col"><h4>Produit</h4><ul><li><a href="catalogue.html">Catalogue</a></li><li><a href="coaching.html">Coaching</a></li><li><a href="tarifs.html">Tarifs</a></li></ul></div>
+      <div class="pub-footer-col"><h4>Aide</h4><ul><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="pub-footer-col"><h4>Légal</h4><ul><li><a href="mentions.html">Mentions légales</a></li><li><a href="cgu.html">CGU</a></li></ul></div>
+    </div>
+    <div class="pub-footer-bottom"><div>© 2026 Immersium</div><div>Guadeloupe 🌴</div></div>
+  </div>
+</footer>
+
+<script type="module" src="js/imm-shared.js"></script>
+<script src="js/imm-catalog.js"></script>
+<script type="module">
+import { supabase } from './js/imm-shared.js';
+
+window.switchBilling = function(type) {
+  document.getElementById('pricing-individuel').style.display = type === 'individuel' ? '' : 'none';
+  document.getElementById('pricing-b2b').style.display = type === 'b2b' ? '' : 'none';
+  document.getElementById('btn-individuel').classList.toggle('active', type === 'individuel');
+  document.getElementById('btn-b2b').classList.toggle('active', type === 'b2b');
+};
+
+function renderPlan(p) {
+  const features = Array.isArray(p.features) ? p.features : [];
+  const hasPrice = !isNaN(parseFloat(p.price_label));
+  const priceHtml = hasPrice
+    ? `<div class="plan-price"><sup>€</sup>${p.price_label}<sub>${p.price_sublabel}</sub></div>`
+    : `<div class="plan-price" style="font-size:36px">${p.price_label}</div>`;
+  return `
+    <div class="plan-card${p.featured ? ' featured' : ''}">
+      ${p.badge_label ? `<div class="pop-label">${p.badge_label}</div>` : ''}
+      <div class="plan-name">${p.name}</div>
+      <div class="plan-desc">${p.description}</div>
+      ${priceHtml}
+      <div class="plan-per">${p.period_label}</div>
+      <ul class="plan-features">
+        ${features.map(f => `<li${f.included ? '' : ' class="off"'}><span class="check">${f.included ? '✓' : '✗'}</span> ${f.label}</li>`).join('')}
+      </ul>
+      <a href="${p.cta_href}" class="btn ${p.featured ? 'btn-jade' : p.sort_order === 3 && p.tier === 'individuel' ? 'btn-primary' : 'btn-outline'}" style="width:100%;justify-content:center">${p.cta_label}</a>
+    </div>
+  `;
+}
+
+async function loadPricing() {
+  const { data, error } = await supabase
+    .from('pricing_plans')
+    .select('*')
+    .eq('active', true)
+    .order('sort_order');
+
+  if (error || !data) return;
+
+  const indiv = data.filter(p => p.tier === 'individuel');
+  const b2b = data.filter(p => p.tier === 'b2b');
+
+  document.getElementById('grid-individuel').innerHTML = indiv.map(renderPlan).join('') || '<p>Aucun plan disponible.</p>';
+  document.getElementById('grid-b2b').innerHTML = b2b.map(renderPlan).join('') || '<p>Aucun plan disponible.</p>';
+}
+
+async function loadFaqTarifs() {
+  const { data } = await supabase
+    .from('faq_items')
+    .select('*')
+    .eq('active', true)
+    .eq('category', 'Abonnements & paiement')
+    .order('sort_order');
+
+  const el = document.getElementById('tarifs-faq');
+  if (!data || data.length === 0) { el.innerHTML = ''; return; }
+  el.innerHTML = data.map(item => `
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">
+        ${item.question}
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="faq-a"><p>${item.answer}</p></div>
+    </div>
+  `).join('');
+}
+
+loadPricing();
+loadFaqTarifs();
+</script>
+</body>
+</html>

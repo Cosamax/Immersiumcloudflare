@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mon espace — Immersium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/shared.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { background: #F7F6F3; color: #1a1a1a; font-family: 'Inter Tight', sans-serif; }
+
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: #fff; border-bottom: 1px solid #E8E5DF;
+  height: 56px; display: flex; align-items: center;
+  padding: 0 32px; gap: 24px;
+}
+.topbar-brand { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; color: #1a1a1a; text-decoration: none; flex-shrink: 0; }
+.topbar-brand em { font-style: italic; color: #FF6B35; }
+.topbar-links { display: flex; align-items: center; gap: 4px; flex: 1; }
+.topbar-links a { padding: 6px 11px; border-radius: 7px; font-size: 13px; font-weight: 500; color: #6b6b6b; text-decoration: none; transition: all .15s; }
+.topbar-links a:hover { background: #F0EDE8; color: #1a1a1a; }
+.topbar-links a.active { color: #1a1a1a; font-weight: 600; }
+.topbar-user { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.topbar-avatar { width: 32px; height: 32px; border-radius: 50%; background: #1a1a1a; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.topbar-name { font-size: 13px; color: #6b6b6b; font-weight: 500; }
+.topbar-signout { font-size: 12px; color: #9b9b9b; cursor: pointer; padding: 4px 8px; border-radius: 6px; border: none; background: none; }
+.topbar-signout:hover { background: #F0EDE8; color: #1a1a1a; }
+
+.page { max-width: 1100px; margin: 0 auto; padding: 80px 32px 80px; }
+
+.welcome { margin-bottom: 36px; }
+.welcome h1 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 500; color: #1a1a1a; line-height: 1.2; }
+.welcome h1 em { font-style: italic; color: #FF6B35; }
+.welcome p { font-size: 14px; color: #6b6b6b; margin-top: 6px; }
+
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 44px; }
+.stat { background: #fff; border: 1px solid #E8E5DF; border-radius: 12px; padding: 20px 22px; }
+.stat-val { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 500; color: #1a1a1a; line-height: 1; }
+.stat-lbl { font-size: 12px; color: #9b9b9b; margin-top: 5px; }
+
+.section-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; color: #1a1a1a; margin-bottom: 16px; }
+.section-title em { font-style: italic; color: #FF6B35; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.section-header a { font-size: 12px; color: #6b6b6b; font-weight: 500; text-decoration: none; }
+.section-header a:hover { color: #1a1a1a; }
+
+.prog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 44px; }
+.prog-card { background: #fff; border: 1px solid #E8E5DF; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: inherit; transition: border-color .15s, box-shadow .15s, transform .15s; }
+.prog-card:hover { border-color: #d0ccc5; box-shadow: 0 4px 16px rgba(0,0,0,.06); transform: translateY(-2px); }
+.prog-card-top { display: flex; align-items: center; gap: 12px; }
+.prog-card-icon { width: 38px; height: 38px; border-radius: 9px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Fraunces', serif; font-weight: 500; font-size: 12px; }
+.prog-card-name { font-weight: 600; font-size: 14px; color: #1a1a1a; }
+.prog-card-domain { font-size: 11px; color: #9b9b9b; margin-top: 2px; }
+.prog-bar-track { background: #F0EDE8; border-radius: 999px; height: 5px; overflow: hidden; }
+.prog-bar-fill { height: 100%; border-radius: 999px; background: #FF6B35; transition: width .5s; }
+.prog-card-meta { display: flex; justify-content: space-between; font-size: 11px; color: #9b9b9b; }
+
+.empty-state { background: #fff; border: 1px dashed #E8E5DF; border-radius: 12px; padding: 48px; text-align: center; grid-column: 1/-1; }
+.empty-state h3 { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; margin-bottom: 8px; }
+.empty-state p { font-size: 13px; color: #6b6b6b; margin-bottom: 20px; }
+.btn-start { display: inline-block; background: #1a1a1a; color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; }
+.btn-start:hover { background: #333; }
+
+.rec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.rec-card { background: #fff; border: 1px solid #E8E5DF; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: border-color .15s, box-shadow .15s, transform .15s; }
+.rec-card:hover { border-color: #d0ccc5; box-shadow: 0 4px 16px rgba(0,0,0,.06); transform: translateY(-2px); }
+.rec-card-header { height: 72px; display: flex; align-items: flex-end; padding: 10px 12px; }
+.rec-card-num { font-size: 9px; opacity: .7; letter-spacing: .15em; text-transform: uppercase; color: #fff; margin-bottom: 2px; }
+.rec-card-name { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; color: #fff; line-height: 1; }
+.rec-card-body { padding: 10px 12px; flex: 1; }
+.rec-card-domain { font-size: 10px; color: #FF6B35; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 4px; }
+.rec-card-desc { font-size: 11px; color: #6b6b6b; line-height: 1.5; }
+
+@media(max-width: 900px) { .stats-row, .prog-grid { grid-template-columns: repeat(2, 1fr); } .rec-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 520px) { .stats-row { grid-template-columns: repeat(2, 1fr); } .prog-grid, .rec-grid { grid-template-columns: 1fr; } .page { padding: 72px 16px 60px; } .topbar { padding: 0 16px; } .topbar-name { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="index.html" class="topbar-brand">Immer<em>sium</em></a>
+  <nav class="topbar-links">
+    <a href="dashboard.html" class="active">Tableau de bord</a>
+    <a href="catalogue.html">Simulations</a>
+    <a href="coaching.html">Coaching</a>
+  </nav>
+  <div class="topbar-user">
+    <div class="topbar-avatar" id="dash-avatar">?</div>
+    <span class="topbar-name" id="dash-name"></span>
+    <button class="topbar-signout" onclick="immSignOut()">Déconnexion</button>
+  </div>
+</header>
+
+<main class="page">
+  <div class="welcome">
+    <h1>Bonjour, <em id="welcome-name">…</em></h1>
+    <p>Voici votre progression sur Immersium.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat"><div class="stat-val" id="stat-started">0</div><div class="stat-lbl">Simulations démarrées</div></div>
+    <div class="stat"><div class="stat-val" id="stat-completed">0</div><div class="stat-lbl">Simulations terminées</div></div>
+    <div class="stat"><div class="stat-val" id="stat-score">0</div><div class="stat-lbl">Points cumulés</div></div>
+    <div class="stat"><div class="stat-val" id="stat-certs">0</div><div class="stat-lbl">Certificats obtenus</div></div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Mes <em>simulations</em></div>
+    <a href="catalogue.html">Tout le catalogue →</a>
+  </div>
+  <div class="prog-grid" id="progress-grid">
+    <div class="empty-state">
+      <h3>Aucune simulation démarrée</h3>
+      <p>Choisissez une simulation dans le catalogue pour commencer.</p>
+      <a href="catalogue.html" class="btn-start">Voir le catalogue →</a>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:44px">
+    <div class="section-title">Simulations <em>recommandées</em></div>
+    <a href="catalogue.html">Toutes →</a>
+  </div>
+  <div class="rec-grid" id="rec-grid"></div>
+</main>
+
+<script type="module">
+import { supabase } from './js/imm-shared.js';
+
+async function init() {
+  const adminData = sessionStorage.getItem('imm-admin');
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (!session && !adminData) { window.location.href = 'login.html'; return; }
+
+  let fullName, firstName, initials;
+
+  if (adminData) {
+    const admin = JSON.parse(adminData);
+    fullName = admin.username || 'Admin';
+    firstName = fullName;
+    initials = fullName.slice(0, 2).toUpperCase();
+  } else {
+    const user = session.user;
+    fullName = user.user_metadata?.full_name || user.email || 'Apprenant';
+    firstName = fullName.split(' ')[0];
+    initials = fullName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+  }
+
+  document.getElementById('dash-avatar').textContent = initials;
+  document.getElementById('dash-name').textContent = fullName;
+  document.getElementById('welcome-name').textContent = firstName;
+
+  if (adminData && !session) {
+    loadRecs([]);
+    return;
+  }
+
+  const { data: progData } = await supabase
+    .from('user_progress')
+    .select('*')
+    .eq('user_id', user.id);
+
+  const progs = progData || [];
+  const completed = progs.filter(p => p.completed).length;
+  const totalScore = progs.reduce((s, p) => s + (p.score || 0), 0);
+
+  document.getElementById('stat-started').textContent = progs.length;
+  document.getElementById('stat-completed').textContent = completed;
+  document.getElementById('stat-score').textContent = totalScore;
+  document.getElementById('stat-certs').textContent = completed;
+
+  if (progs.length > 0) {
+    const catalog = window.IMM_CATALOG || {};
+    const grid = document.getElementById('progress-grid');
+    const cards = progs.map(p => {
+      const info = catalog[p.game_id];
+      if (!info) return '';
+      const pct = Math.round(((p.challenge_num - 1) / 21) * 100);
+      return `
+        <a class="prog-card" href="game.html?game=${p.game_id}">
+          <div class="prog-card-top">
+            <div class="prog-card-icon" style="background:${info.color}">${info.num}</div>
+            <div>
+              <div class="prog-card-name">${info.name}</div>
+              <div class="prog-card-domain">${info.domain}</div>
+            </div>
+          </div>
+          <div class="prog-bar-track"><div class="prog-bar-fill" style="width:${pct}%"></div></div>
+          <div class="prog-card-meta">
+            <span>Défi ${p.challenge_num} / 21</span>
+            <span>${p.score || 0} pts</span>
+          </div>
+        </a>`;
+    }).filter(Boolean).join('');
+    if (cards) grid.innerHTML = cards;
+  }
+
+  loadRecs(progs.map(p => p.game_id));
+}
+
+function loadRecs(startedIds) {
+  const catalog = window.IMM_CATALOG || {};
+  const recs = Object.entries(catalog).filter(([id]) => !startedIds.includes(id)).slice(0, 4);
+  const grid = document.getElementById('rec-grid');
+  grid.innerHTML = recs.map(([id, info]) => `
+    <a class="rec-card" href="game.html?game=${id}">
+      <div class="rec-card-header" style="background:${info.color}">
+        <div>
+          <div class="rec-card-num">N° ${info.num}</div>
+          <div class="rec-card-name">${info.name}</div>
+        </div>
+      </div>
+      <div class="rec-card-body">
+        <div class="rec-card-domain">${info.domain}</div>
+        <div class="rec-card-desc">${info.desc}</div>
+      </div>
+    </a>`).join('');
+}
+
+init();
+</script>
+<script src="js/imm-catalog.js"></script>
+</body>
+</html>

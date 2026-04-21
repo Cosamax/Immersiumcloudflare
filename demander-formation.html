@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demander une formation — Immersium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/shared.css">
+<style>
+.page-hero { padding: 120px 0 70px; background: var(--ink); color: #fff; position: relative; overflow: hidden; }
+.page-hero::before { content: ""; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(255,107,53,.2) 0%, transparent 65%); pointer-events: none; }
+.page-hero .eyebrow { color: var(--orange); }
+.page-hero h1 { color: #fff; }
+.page-hero h1 em { color: var(--orange); }
+.page-hero .lede { color: rgba(255,255,255,.7); margin-top: 16px; font-size: 17px; }
+
+.page-meta { display: flex; gap: 24px; margin-top: 28px; flex-wrap: wrap; }
+.page-meta-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: rgba(255,255,255,.6); }
+.page-meta-item strong { color: #fff; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
+
+.form-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 40px; }
+.form-card h3 { font-size: 26px; margin-bottom: 6px; }
+.form-card .form-sub { color: var(--ink-soft); font-size: 14px; margin-bottom: 28px; }
+
+.barometer { margin-top: 60px; }
+.barometer-header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+
+.req-list { display: flex; flex-direction: column; gap: 12px; }
+.req-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px 24px; display: flex; align-items: center; gap: 20px; transition: border-color .15s, box-shadow .15s; }
+.req-card:hover { border-color: var(--sand); box-shadow: var(--sh-lift); }
+.req-rank { font-family: var(--f-display); font-style: italic; font-size: 28px; color: var(--sand-soft); line-height: 1; min-width: 36px; text-align: center; }
+.req-rank.top { color: var(--orange); }
+.req-body { flex: 1; min-width: 0; }
+.req-body h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.req-body p { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+.req-cat { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--marine); background: rgba(0,0,128,.07); border-radius: 4px; padding: 2px 8px; margin-bottom: 6px; }
+.req-vote { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 56px; }
+.req-vote-btn { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--line); background: var(--bg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; font-size: 18px; color: var(--ink-soft); }
+.req-vote-btn:hover:not(:disabled) { border-color: var(--orange); color: var(--orange); background: rgba(255,107,53,.06); }
+.req-vote-btn.voted { border-color: var(--orange); color: var(--orange); background: rgba(255,107,53,.1); }
+.req-vote-btn:disabled { opacity: .45; cursor: not-allowed; }
+.req-vote-count { font-family: var(--f-display); font-size: 20px; font-weight: 600; color: var(--ink); line-height: 1; }
+.req-vote-label { font-size: 11px; color: var(--ink-mute); }
+
+.login-gate { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
+.login-gate p { font-size: 14px; color: var(--ink-soft); margin: 0; }
+.login-gate strong { color: var(--ink); }
+
+.bar-empty { text-align: center; padding: 40px; color: var(--ink-mute); font-size: 15px; }
+
+@media(max-width:900px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body class="has-pub-nav">
+
+<nav class="pub-nav">
+  <div class="pub-nav-inner">
+    <a href="index.html" class="pub-brand"><span class="name">Immer<em>sium</em></span><span class="pub-beta">BETA</span></a>
+    <div class="pub-links">
+      <a href="index.html">Accueil</a>
+      <div class="pub-nav-item-cat"><a href="catalogue.html">Catalogue<span class="chev">▾</span></a><div class="pub-cat-panel" onclick="event.stopPropagation()"><div class="pub-cat-header"></div><div class="pub-cat-grid"></div><div class="pub-cat-footer"></div></div></div>
+      <a href="coaching.html">Coaching</a><a href="tarifs.html">Tarifs</a>
+      <a href="demander-formation.html" class="active">Demander</a>
+      <a href="about.html">À propos</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a>
+    </div>
+    <button class="pub-burger" onclick="toggleDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="pub-cta"><a href="login.html" class="btn btn-ghost nav-login-btn">Connexion</a><a href="dashboard.html" class="btn btn-ghost nav-dash-btn" style="display:none">Mon espace →</a><a href="catalogue.html" class="btn btn-jade nav-cta-btn">Essayer →</a></div>
+  </div>
+</nav>
+<div class="pub-drawer" id="pub-drawer" onclick="if(event.target===this) toggleDrawer()"><div class="pub-drawer-panel"><div class="pub-drawer-head"><div class="pub-brand"><span class="name">Immer<em>sium</em></span></div><button class="pub-drawer-close" onclick="toggleDrawer()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><nav class="pub-drawer-links"><a href="index.html">Accueil<span class="arr">→</span></a><a href="catalogue.html">Catalogue<span class="arr">→</span></a><a href="tarifs.html">Tarifs<span class="arr">→</span></a><a href="demander-formation.html" class="active">Demander<span class="arr">→</span></a><a href="contact.html">Contact<span class="arr">→</span></a></nav><div class="pub-drawer-cta"><a href="login.html" class="btn btn-outline">Connexion</a><a href="catalogue.html" class="btn btn-jade">Essayer →</a></div></div></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Une formation vous manque ?</div>
+    <h1>Demandez-la.</h1>
+    <p class="lede">Votre catalogue ne contient pas encore la formation dont vous avez besoin ? Dites-nous laquelle. Les demandes les plus votées sont mises en production en priorité.</p>
+    <div class="page-meta">
+      <div class="page-meta-item"><strong>2 minutes</strong><span>pour soumettre</span></div>
+      <div class="page-meta-item"><strong>Notification automatique</strong><span>quand publiée</span></div>
+      <div class="page-meta-item"><strong>Vote possible</strong><span>sur les demandes existantes</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+
+      <div class="form-card">
+        <h3>Faire ma <em>demande</em></h3>
+        <p class="form-sub">Décrivez la formation que vous aimeriez voir sur Immersium.</p>
+
+        <div id="form-success" class="alert alert-success" style="display:none;margin-bottom:20px">Demande envoyée ! Nous en prenons note et vous notifions quand elle est publiée.</div>
+        <div id="form-error" class="alert alert-error" style="display:none;margin-bottom:20px">Une erreur s'est produite. Réessayez ou contactez-nous.</div>
+        <div id="form-login-required" class="alert" style="display:none;margin-bottom:20px;background:var(--sand-soft);border:1px solid rgba(201,169,110,.4);color:var(--ink)">Vous devez être <a href="login.html" style="color:var(--orange);font-weight:600">connecté</a> pour soumettre une demande.</div>
+
+        <form id="req-form" onsubmit="submitRequest(event)">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div class="fld">
+              <label>Titre de la formation *</label>
+              <input type="text" id="r-title" required placeholder="ex. Marketing digital pour PME caribéennes" maxlength="120">
+            </div>
+            <div class="fld">
+              <label>Description courte *</label>
+              <textarea id="r-desc" required rows="3" placeholder="Quel est votre besoin ? Quel public ? Quel contexte ?"></textarea>
+            </div>
+            <div class="fld">
+              <label>Domaine</label>
+              <select id="r-cat">
+                <option value="Marketing">Marketing</option>
+                <option value="Commerce">Commerce / Vente</option>
+                <option value="Management">Management</option>
+                <option value="Gestion">Gestion / Finance</option>
+                <option value="Communication">Communication</option>
+                <option value="Numérique">Numérique</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-jade btn-lg" id="r-submit" style="justify-content:center">Faire ma demande →</button>
+          </div>
+        </form>
+      </div>
+
+      <div>
+        <div style="background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;margin-bottom:32px">
+          <p style="font-size:14px;color:var(--ink-soft);line-height:1.65;margin:0">Les demandes les plus votées sont mises en production en priorité. Chaque compte ne peut voter qu'une seule fois par demande. Cela garantit l'honnêteté du baromètre.</p>
+        </div>
+        <div style="background:var(--sand-soft);border:1px solid rgba(201,169,110,.3);border-radius:var(--r-lg);padding:20px">
+          <p style="font-size:13px;color:var(--ink-soft);margin:0;line-height:1.6"><strong style="color:var(--ink)">Notification automatique :</strong> Dès qu'une formation que vous avez demandée ou votée est publiée dans le catalogue, vous recevez un email.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="container barometer">
+    <div class="barometer-header">
+      <div>
+        <div class="eyebrow">Baromètre</div>
+        <h2>Les formations les plus <em>demandées</em></h2>
+        <p style="color:var(--ink-soft);font-size:15px;margin-top:8px">Top 10 des formations souhaitées par la communauté. Votez <strong>+1</strong> sur celles qui vous intéressent — plus une demande monte, plus elle a de chances d'être produite.</p>
+      </div>
+    </div>
+
+    <div id="login-gate-bar" class="login-gate" style="display:none">
+      <p><strong>Connectez-vous pour voter</strong> — Chaque compte ne peut voter qu'une seule fois par demande. Cela garantit l'honnêteté du baromètre.</p>
+      <a href="login.html" class="btn btn-jade">Se connecter →</a>
+    </div>
+
+    <div id="req-list" class="req-list">
+      <div class="bar-empty">Chargement du baromètre…</div>
+    </div>
+  </div>
+</section>
+
+<footer class="pub-footer">
+  <div class="container">
+    <div class="pub-footer-top">
+      <div class="pub-footer-brand"><div class="name">Immer<em>sium</em></div><div class="tag">Learn by doing · Caraïbes</div><p>8 simulations. 168 défis. 100% pratique.</p></div>
+      <div class="pub-footer-col"><h4>Produit</h4><ul><li><a href="catalogue.html">Catalogue</a></li><li><a href="coaching.html">Coaching</a></li><li><a href="tarifs.html">Tarifs</a></li></ul></div>
+      <div class="pub-footer-col"><h4>Aide</h4><ul><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="pub-footer-col"><h4>Légal</h4><ul><li><a href="mentions.html">Mentions légales</a></li><li><a href="cgu.html">CGU</a></li></ul></div>
+    </div>
+    <div class="pub-footer-bottom"><div>© 2026 Immersium</div><div>Guadeloupe 🌴</div></div>
+  </div>
+</footer>
+
+<script type="module" src="js/imm-shared.js"></script>
+<script src="js/imm-catalog.js"></script>
+<script type="module">
+import { supabase } from './js/imm-shared.js';
+
+let currentUser = null;
+let userVotes = new Set();
+
+supabase.auth.getSession().then(({ data: { session } }) => {
+  (async () => {
+    currentUser = session?.user ?? null;
+    await loadBarometer();
+    updateFormUI();
+  })();
+});
+
+supabase.auth.onAuthStateChange((event, session) => {
+  (async () => {
+    currentUser = session?.user ?? null;
+    await loadBarometer();
+    updateFormUI();
+  })();
+});
+
+function updateFormUI() {
+  const gate = document.getElementById('login-gate-bar');
+  gate.style.display = currentUser ? 'none' : 'flex';
+}
+
+async function loadBarometer() {
+  const list = document.getElementById('req-list');
+  list.innerHTML = '<div class="bar-empty">Chargement…</div>';
+
+  const { data: requests, error } = await supabase
+    .from('formation_requests')
+    .select('*')
+    .order('vote_count', { ascending: false })
+    .limit(10);
+
+  if (error || !requests) {
+    list.innerHTML = '<div class="bar-empty">Impossible de charger le baromètre.</div>';
+    return;
+  }
+
+  if (requests.length === 0) {
+    list.innerHTML = '<div class="bar-empty">Aucune demande pour l\'instant. Soyez le premier !</div>';
+    return;
+  }
+
+  if (currentUser) {
+    const { data: votes } = await supabase
+      .from('formation_votes')
+      .select('request_id')
+      .eq('user_id', currentUser.id);
+    userVotes = new Set((votes || []).map(v => v.request_id));
+  } else {
+    userVotes = new Set();
+  }
+
+  list.innerHTML = requests.map((r, i) => {
+    const voted = userVotes.has(r.id);
+    const rank = i + 1;
+    return `
+      <div class="req-card" data-id="${r.id}">
+        <div class="req-rank${rank <= 3 ? ' top' : ''}">${rank}</div>
+        <div class="req-body">
+          <div class="req-cat">${escHtml(r.category)}</div>
+          <h4>${escHtml(r.title)}</h4>
+          <p>${escHtml(r.description)}</p>
+        </div>
+        <div class="req-vote">
+          <button class="req-vote-btn${voted ? ' voted' : ''}" onclick="toggleVote('${r.id}', this)" ${!currentUser ? 'disabled title="Connectez-vous pour voter"' : ''} aria-label="${voted ? 'Retirer mon vote' : 'Voter pour cette demande'}">
+            +1
+          </button>
+          <div class="req-vote-count" id="vc-${r.id}">${r.vote_count}</div>
+          <div class="req-vote-label">vote${r.vote_count !== 1 ? 's' : ''}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+window.toggleVote = async function(requestId, btn) {
+  if (!currentUser) return;
+  btn.disabled = true;
+
+  const voted = btn.classList.contains('voted');
+  const countEl = document.getElementById('vc-' + requestId);
+  let count = parseInt(countEl.textContent, 10);
+
+  if (voted) {
+    const { error } = await supabase
+      .from('formation_votes')
+      .delete()
+      .eq('request_id', requestId)
+      .eq('user_id', currentUser.id);
+    if (!error) {
+      btn.classList.remove('voted');
+      userVotes.delete(requestId);
+      count = Math.max(0, count - 1);
+      countEl.textContent = count;
+    }
+  } else {
+    const { error } = await supabase
+      .from('formation_votes')
+      .insert({ request_id: requestId, user_id: currentUser.id });
+    if (!error) {
+      btn.classList.add('voted');
+      userVotes.add(requestId);
+      count = count + 1;
+      countEl.textContent = count;
+    }
+  }
+
+  btn.disabled = false;
+};
+
+window.submitRequest = async function(e) {
+  e.preventDefault();
+  document.getElementById('form-success').style.display = 'none';
+  document.getElementById('form-error').style.display = 'none';
+  document.getElementById('form-login-required').style.display = 'none';
+
+  if (!currentUser) {
+    document.getElementById('form-login-required').style.display = 'flex';
+    return;
+  }
+
+  const btn = document.getElementById('r-submit');
+  btn.disabled = true;
+  btn.textContent = 'Envoi…';
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('full_name')
+    .eq('id', currentUser.id)
+    .maybeSingle();
+
+  const authorName = profile?.full_name?.split(' ')[0] || 'Membre';
+
+  const { error } = await supabase.from('formation_requests').insert([{
+    title: document.getElementById('r-title').value.trim(),
+    description: document.getElementById('r-desc').value.trim(),
+    category: document.getElementById('r-cat').value,
+    user_id: currentUser.id,
+    author_name: authorName,
+    vote_count: 0,
+    status: 'pending'
+  }]);
+
+  if (error) {
+    document.getElementById('form-error').style.display = 'flex';
+  } else {
+    document.getElementById('form-success').style.display = 'flex';
+    document.getElementById('req-form').reset();
+    await loadBarometer();
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Faire ma demande →';
+};
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

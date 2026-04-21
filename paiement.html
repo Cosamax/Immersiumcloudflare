@@ -1,0 +1,674 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paiement — Immersium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ====== immersium-shared.css ====== */
+:root{
+  --bg:#F8F5EE;          --bg-alt:#F2EDE0;
+  --paper:#FFFDF7;       --paper-hover:#FFFBEF;
+  --ink:#0E1A2B;         --ink-soft:#2A3749;    --ink-mute:#6B7685;
+  --line:#E8E0CE;        --line-soft:#F0E9D9;
+  --cobalt:#0131B4;      --cobalt-dark:#00005C;
+  --orange:#FF6B35;      --marine:#0131B4;      --orange-soft:#FFE4D4;
+  --amber:#D97706;       --amber-soft:#FED7AA;
+  --coral:#D32F2F;       --coral-soft:#FFEBEE;
+  --plum:#7C3AED;        --plum-soft:#EDE9FE;
+  --sand:#C9A96E;        --sand-soft:#F5E6C8;
+  --p-cobalt:#D6D6F0;
+  --jade:#0D9668;        --jade-soft:#D1FAE5;
+  --r-sm:8px; --r:12px; --r-lg:18px; --r-xl:24px;
+  --sh-1:0 1px 0 rgba(14,26,43,.04), 0 0 0 1px var(--line);
+  --sh-2:0 2px 10px rgba(14,26,43,.05), 0 0 0 1px var(--line);
+  --sh-lift:0 20px 40px -16px rgba(14,26,43,.14), 0 4px 10px rgba(14,26,43,.04);
+  --f-display:"Fraunces", Georgia, serif;
+  --f-body:"Inter Tight", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--f-body);
+  background:var(--bg);
+  color:var(--ink);
+  font-size:14px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"ss01","cv11";
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.055  0 0 0 0 0.102  0 0 0 0 0.169  0 0 0 0.03 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+button,a{font:inherit;color:inherit;text-decoration:none;border:none;background:none;cursor:pointer}
+svg{display:block}
+.mono{font-family:var(--f-mono);font-feature-settings:"tnum"}
+
+/* ═══════════════════════════════════════════════════
+   PUBLIC NAVBAR
+   ═══════════════════════════════════════════════════ */
+.pub-nav{position:sticky;top:0;z-index:50;background:rgba(14,26,43,.96);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+.pub-nav-inner{max-width:1240px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.pub-brand{display:flex;align-items:baseline;gap:10px}
+.pub-brand .num{font-family:var(--f-display);font-style:italic;font-size:10.5px;color:var(--orange);letter-spacing:.18em;font-weight:500}
+.pub-brand .name{font-family:var(--f-display);font-size:22px;font-weight:500;letter-spacing:-.02em;color:#fff}
+.pub-brand .name em{font-style:italic;color:var(--orange);font-weight:500}
+.pub-brand .pub-beta{font-family:var(--f-mono);font-size:8px;letter-spacing:.1em;background:var(--orange);color:#fff;padding:2px 6px;border-radius:4px;font-style:normal;font-weight:700;align-self:center}
+.pub-links{display:flex;align-items:center;gap:4px}
+.pub-links a{padding:8px 14px;border-radius:10px;font-size:13.5px;font-weight:500;color:rgba(255,255,255,.7);transition:background .15s,color .15s}
+.pub-links a:hover{background:rgba(255,255,255,.08);color:#fff}
+.pub-links a.active{color:#fff;font-weight:600}
+.pub-cta{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-size:13px;
+  font-weight:600;transition:background .15s,transform .08s,box-shadow .15s;border:1px solid transparent;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.8)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-jade{background:var(--orange);color:var(--ink);box-shadow:0 4px 12px -4px rgba(255,107,53,.5)}
+.btn-jade:hover{background:#FF8659}
+.btn-outline{background:var(--paper);border-color:var(--line);color:var(--ink)}
+.btn-outline:hover{background:var(--paper-hover);border-color:var(--sand)}
+.btn-orange{background:var(--orange);color:#fff}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:#1a2940}
+
+/* ═══════════════════════════════════════════════════
+   PAIEMENT — LAYOUT 2 COLONNES
+   ═══════════════════════════════════════════════════ */
+.pay-page{max-width:1060px;margin:0 auto;padding:40px 32px 80px}
+
+/* Header bar */
+.pay-header{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);margin-bottom:28px}
+.pay-header .brand{font-family:var(--f-display);font-size:18px;font-weight:500;color:var(--ink)}
+.pay-header .secure{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--jade);font-weight:600}
+.pay-header .secure svg{width:16px;height:16px}
+
+/* Grid 2 colonnes */
+.pay-grid{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start}
+
+/* ── Colonne gauche : formulaire ── */
+.pay-form-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px 28px;box-shadow:var(--sh-2)}
+.pay-form-card h2{font-family:var(--f-display);font-size:22px;font-weight:500;margin-bottom:6px}
+.pay-form-card .sub{font-size:13.5px;color:var(--ink-mute);margin-bottom:24px}
+
+/* Méthodes de paiement */
+.pay-methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.pay-m{padding:18px 16px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg);cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.pay-m:hover{border-color:var(--sand);background:var(--paper-hover)}
+.pay-m.selected{border-color:var(--cobalt);background:var(--p-cobalt)}
+.pay-m .ic{width:40px;height:30px;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--ink)}
+.pay-m .ic svg{width:28px;height:28px}
+.pay-m .label{font-size:13px;font-weight:600;color:var(--ink)}
+
+/* Badges cartes */
+.card-badges{display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:12px;color:var(--ink-mute)}
+.card-badges .badge{padding:3px 8px;border:1px solid var(--line);border-radius:4px;font-family:var(--f-mono);font-size:10px;font-weight:700;color:var(--ink-soft);background:var(--bg)}
+
+/* Champs formulaire */
+.fld{margin-bottom:16px}
+.fld label{display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.fld input{width:100%;padding:12px 14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;font-family:var(--f-body);font-size:14.5px;color:var(--ink);outline:none;transition:all .15s}
+.fld input:focus{border-color:var(--cobalt);box-shadow:0 0 0 3px rgba(0,0,128,.1)}
+.fld-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld .input-wrap{position:relative}
+.fld .input-wrap input{padding-right:40px}
+.fld .input-wrap .ic-right{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--ink-mute)}
+.fld .input-wrap .ic-right svg{width:18px;height:18px}
+
+.pay-note{display:flex;gap:10px;align-items:flex-start;padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);font-size:12.5px;color:var(--ink-mute);line-height:1.5;margin-top:20px}
+.pay-note svg{width:16px;height:16px;flex-shrink:0;margin-top:1px;color:var(--jade)}
+
+/* ── Section facturation ── */
+.billing-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;box-shadow:var(--sh-2);margin-top:20px}
+.billing-card h3{font-family:var(--f-display);font-size:18px;font-weight:500;margin-bottom:4px}
+.billing-card .sub{font-size:13px;color:var(--ink-mute);margin-bottom:20px}
+
+/* ── Colonne droite : récapitulatif ── */
+.pay-summary{background:var(--ink);color:#fff;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-lift)}
+.pay-summary-head{padding:22px 24px;background:var(--jade);color:#fff}
+.pay-summary-head h3{font-family:var(--f-display);font-size:18px;font-weight:600;margin-bottom:2px}
+.pay-summary-head p{font-size:13px;opacity:.85}
+.pay-summary-body{padding:24px}
+
+.plan-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.plan-badge{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);margin-bottom:8px}
+.plan-name{font-family:var(--f-display);font-size:20px;font-weight:500}
+.plan-price{font-family:var(--f-display);font-size:24px;font-weight:600;color:var(--orange)}
+.plan-desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:20px}
+
+.summary-line{display:flex;justify-content:space-between;padding:8px 0;font-size:13.5px;color:rgba(255,255,255,.7);border-bottom:1px solid rgba(255,255,255,.08)}
+.summary-line:last-of-type{border-bottom:none}
+.summary-total{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0 0;margin-top:12px;border-top:1px dashed rgba(255,255,255,.2)}
+.summary-total .lbl{font-size:14px;color:rgba(255,255,255,.7)}
+.summary-total .val{font-family:var(--f-display);font-size:28px;font-weight:600;color:#fff}
+
+.stripe-note{display:flex;gap:8px;align-items:flex-start;padding:14px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;margin-top:20px}
+.stripe-note svg{width:16px;height:16px;flex-shrink:0;margin-top:1px;color:var(--jade)}
+
+/* Code promo */
+.promo-section{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1)}
+.promo-section h4{font-size:13px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:10px}
+.promo-row{display:flex;gap:8px}
+.promo-row input{flex:1;padding:10px 14px;border:1px solid rgba(255,255,255,.15);border-radius:var(--r);background:rgba(255,255,255,.06);color:#fff;font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.promo-row input:focus{outline:none;border-color:var(--jade)}
+.promo-row input::placeholder{color:rgba(255,255,255,.3);text-transform:none;letter-spacing:0;font-family:var(--f-body)}
+.promo-row button{padding:10px 18px;border-radius:var(--r);background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);font-size:13px;font-weight:600;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:all .15s;white-space:nowrap}
+.promo-row button:hover{background:rgba(255,255,255,.15);color:#fff}
+.promo-msg{font-size:12px;margin-top:8px;padding:8px 12px;border-radius:8px;display:none}
+.promo-msg.success{display:block;background:rgba(13,150,104,.15);color:#4ADE80;border:1px solid rgba(13,150,104,.3)}
+.promo-msg.error{display:block;background:rgba(220,38,38,.15);color:#FCA5A5;border:1px solid rgba(220,38,38,.3)}
+.promo-applied{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(13,150,104,.12);border:1px solid rgba(13,150,104,.3);border-radius:var(--r);margin-top:8px}
+.promo-applied .pa-code{font-family:var(--f-mono);font-weight:600;color:#4ADE80;font-size:13px}
+.promo-applied .pa-val{font-size:12px;color:rgba(255,255,255,.7)}
+.promo-applied .pa-remove{color:#FCA5A5;cursor:pointer;font-size:12px;text-decoration:underline}
+
+/* Changer d'offre */
+.offer-section{margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1)}
+.offer-section h4{font-size:13px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:12px}
+.offer-opt{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border:1px solid rgba(255,255,255,.12);border-radius:var(--r);cursor:pointer;transition:all .15s;margin-bottom:8px}
+.offer-opt:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.04)}
+.offer-opt.selected{border-color:var(--jade);background:rgba(13,150,104,.12)}
+.offer-opt .name{font-size:13.5px;color:rgba(255,255,255,.85)}
+.offer-opt .price{font-family:var(--f-mono);font-size:13px;font-weight:600;color:rgba(255,255,255,.7)}
+.offer-opt.selected .price{color:var(--jade)}
+
+/* Bouton payer */
+.pay-btn{width:100%;padding:16px;background:var(--orange);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:24px}
+.pay-btn:hover{background:#FF8659;transform:translateY(-1px);box-shadow:0 8px 20px -6px rgba(255,107,53,.4)}
+.pay-btn svg{width:18px;height:18px}
+.pay-secure{text-align:center;margin-top:14px;font-size:12px;color:var(--ink-mute);display:flex;align-items:center;justify-content:center;gap:6px}
+.pay-secure svg{width:14px;height:14px}
+
+/* ═══════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════ */
+.pub-footer{background:var(--ink);color:rgba(255,255,255,.75);padding:60px 0 32px;margin-top:0;position:relative;overflow:hidden}
+.pub-footer::before{content:"";position:absolute;top:-140px;right:-80px;width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,107,53,.15) 0%,transparent 65%);pointer-events:none}
+.pub-footer .container{position:relative}
+.pub-footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08)}
+.pub-footer-brand .name{font-family:var(--f-display);font-size:26px;font-weight:500;color:#fff;letter-spacing:-.02em}
+.pub-footer-brand .name em{font-style:italic;color:var(--orange);font-weight:500}
+.pub-footer-brand .tag{margin-top:8px;font-size:10.5px;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:600}
+.pub-footer-brand p{margin-top:14px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.6);max-width:320px}
+.pub-footer-col h4{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:14px}
+.pub-footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.pub-footer-col a{font-size:13px;color:rgba(255,255,255,.7);transition:color .15s}
+.pub-footer-col a:hover{color:var(--orange)}
+.pub-footer-bottom{padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(255,255,255,.4)}
+.container{max-width:1240px;margin:0 auto;padding:0 32px}
+
+/* ═══════════════════════════════════════════════════
+   BURGER MOBILE
+   ═══════════════════════════════════════════════════ */
+.pub-burger{display:none;width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);cursor:pointer;align-items:center;justify-content:center;transition:all .15s;padding:0;color:#fff}
+.pub-burger:hover{background:rgba(255,255,255,.15)}
+.pub-burger svg{width:18px;height:18px}
+.pub-drawer{display:none;position:fixed;inset:0;z-index:100;background:rgba(14,26,43,.6);backdrop-filter:blur(4px);opacity:0;transition:opacity .2s;pointer-events:none}
+.pub-drawer.open{display:block;opacity:1;pointer-events:auto}
+.pub-drawer-panel{position:absolute;top:0;right:0;width:min(340px,90vw);height:100%;background:var(--paper);box-shadow:-20px 0 40px -10px rgba(14,26,43,.25);transform:translateX(100%);transition:transform .25s ease-out;display:flex;flex-direction:column;overflow-y:auto}
+.pub-drawer.open .pub-drawer-panel{transform:translateX(0)}
+.pub-drawer-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.pub-drawer-close{width:36px;height:36px;border-radius:10px;background:var(--bg-alt);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink)}
+.pub-drawer-close:hover{background:var(--paper-hover)}
+.pub-drawer-links{padding:14px 12px;flex:1;display:flex;flex-direction:column;gap:2px}
+.pub-drawer-links a{padding:13px 14px;border-radius:10px;font-size:15px;font-weight:500;color:var(--ink-soft);display:flex;align-items:center;justify-content:space-between}
+.pub-drawer-links a:hover{background:var(--bg-alt);color:var(--ink)}
+.pub-drawer-links a .arr{opacity:.35;font-size:14px}
+.pub-drawer-section{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;padding:16px 14px 8px;margin-top:6px}
+.pub-drawer-cta{padding:16px 18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px;background:var(--bg-alt)}
+.pub-drawer-cta .btn{justify-content:center;padding:14px}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+@media(max-width:960px){
+  .pub-burger{display:flex}
+  .pub-nav-inner .pub-cta{display:none}
+  .pub-links{display:none}
+  .pub-nav-inner{padding:14px 20px}
+  .pay-grid{grid-template-columns:1fr}
+  .pay-page{padding:24px 20px 60px}
+  .pub-footer-top{grid-template-columns:1fr 1fr;gap:28px}
+}
+@media(max-width:600px){
+  .pay-header{flex-direction:column;gap:8px;text-align:center}
+  .pay-methods{grid-template-columns:1fr 1fr}
+  .fld-row{grid-template-columns:1fr 1fr}
+  .pub-nav-inner{padding:12px 18px!important}
+  .pub-brand .name{font-size:19px!important}
+  .pub-brand .num{font-size:9.5px!important}
+  .pub-footer{padding:40px 0 24px!important}
+  .pub-footer-top{grid-template-columns:1fr!important;gap:24px!important}
+  .pub-footer-bottom{flex-direction:column!important;gap:8px!important;text-align:center!important}
+  input{font-size:16px!important}
+  .container{padding:0 18px!important}
+}
+@media(max-width:380px){
+  .pub-brand .name{font-size:17px!important}
+  .pub-brand .num{display:none!important}
+  .pay-methods{grid-template-columns:1fr}
+}
+</style>
+</head><body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="pub-nav"><div class="pub-nav-inner">
+  <a href="index.html" class="pub-brand">
+    <span class="name">Immer<em>sium</em></span>
+    <span class="pub-beta">BETA</span>
+  </a>
+  <div class="pub-links">
+    <a href="index.html">Accueil</a>
+    <a href="coaching.html">Coaching</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="paiement.html" class="active">Paiement</a>
+    <a href="login.html">Se connecter</a>
+  </div>
+  <button class="pub-burger" onclick="toggleDrawer()" aria-label="Ouvrir le menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="pub-cta">
+    <a href="login.html" class="btn btn-ghost">Connexion</a>
+    <a href="catalogue.html" class="btn btn-jade">Essayer gratuitement →</a>
+  </div>
+</div></nav>
+
+<!-- ═══ DRAWER MOBILE ═══ -->
+<div class="pub-drawer" id="pub-drawer" onclick="if(event.target===this) toggleDrawer()">
+  <div class="pub-drawer-panel">
+    <div class="pub-drawer-head">
+      <div class="pub-brand"><span class="name">Immer<em>sium</em></span></div>
+      <button class="pub-drawer-close" onclick="toggleDrawer()" aria-label="Fermer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <nav class="pub-drawer-links">
+      <div class="pub-drawer-section">Navigation</div>
+      <a href="index.html">Accueil<span class="arr">→</span></a>
+      <a href="catalogue.html">Catalogue<span class="arr">→</span></a>
+      <a href="coaching.html">Coaching<span class="arr">→</span></a>
+      <a href="tarifs.html">Tarifs<span class="arr">→</span></a>
+      <a href="about.html">À propos<span class="arr">→</span></a>
+      <a href="faq.html">FAQ<span class="arr">→</span></a>
+      <a href="contact.html">Contact<span class="arr">→</span></a>
+    </nav>
+    <div class="pub-drawer-cta">
+      <a href="login.html" class="btn btn-outline">Connexion</a>
+      <a href="catalogue.html" class="btn btn-orange">Essayer gratuitement →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleDrawer(){
+  const d=document.getElementById('pub-drawer');
+  if(d.classList.contains('open')){d.classList.remove('open');document.body.style.overflow=''}
+  else{d.classList.add('open');document.body.style.overflow='hidden'}
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const d=document.getElementById('pub-drawer');if(d&&d.classList.contains('open'))toggleDrawer()}});
+</script>
+
+<!-- ═══ CONTENU PAIEMENT ═══ -->
+<div class="pay-page">
+
+  <!-- Header sécurisé -->
+  <div class="pay-header">
+    <div class="brand" data-cms="paiement.brand_name">Immersium.fr</div>
+    <div class="secure">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <span data-cms="paiement.secure_label">Paiement 100 % sécurisé</span>
+    </div>
+  </div>
+
+  <div class="pay-grid">
+
+    <!-- ══ COLONNE GAUCHE : Formulaire ══ -->
+    <div>
+      <div class="pay-form-card">
+        <h2 data-cms="paiement.form_title">Choisissez votre mode de paiement</h2>
+        <p class="sub" data-cms="paiement.form_subtitle">Tous les paiements sont chiffrés et sécurisés SSL.</p>
+
+        <!-- Méthodes -->
+        <div class="pay-methods" id="pay-methods">
+          <div class="pay-m selected" data-method="card" onclick="selectMethod(this)">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+            <div class="label">Carte bancaire</div>
+          </div>
+          <div class="pay-m" data-method="paypal" onclick="selectMethod(this)">
+            <div class="ic" style="font-family:var(--f-display);font-size:16px;font-weight:700">PayPal</div>
+            <div class="label">PayPal</div>
+          </div>
+          <div class="pay-m" data-method="virement" onclick="selectMethod(this)">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+            <div class="label">Virement bancaire</div>
+          </div>
+          <div class="pay-m" data-method="mobile" onclick="selectMethod(this)">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="3" width="12" height="18" rx="2"/><line x1="6" y1="7" x2="18" y2="7"/><line x1="6" y1="17" x2="18" y2="17"/></svg></div>
+            <div class="label">Paiement mobile</div>
+          </div>
+        </div>
+
+        <!-- Badges cartes -->
+        <div class="card-badges" id="card-fields">
+          <span>Cartes acceptées :</span>
+          <span class="badge">VISA</span>
+          <span class="badge">MC</span>
+          <span class="badge">AMEX</span>
+          <span class="badge">Maestro</span>
+        </div>
+
+        <!-- Champs CB -->
+        <div class="fld">
+          <label>Nom sur la carte</label>
+          <input type="text" placeholder="Jean Dupont">
+        </div>
+        <div class="fld">
+          <label>Numéro de carte</label>
+          <div class="input-wrap">
+            <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+            <span class="ic-right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span>
+          </div>
+        </div>
+        <div class="fld-row">
+          <div class="fld">
+            <label>Date d'expiration</label>
+            <input type="text" placeholder="MM / AA">
+          </div>
+          <div class="fld">
+            <label>Code de sécurité (CVV)</label>
+            <div class="input-wrap">
+              <input type="text" placeholder="•••" maxlength="4">
+              <span class="ic-right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pay-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          <span data-cms="paiement.security_note">Vos données bancaires sont chiffrées et traitées par Stripe. Immersium n'y a jamais accès.</span>
+        </div>
+      </div>
+
+      <!-- Facturation -->
+      <div class="billing-card">
+        <h3 data-cms="paiement.billing_title">Informations de facturation</h3>
+        <p class="sub" data-cms="paiement.billing_subtitle">Ces informations figureront sur votre facture.</p>
+        <div class="fld-row">
+          <div class="fld"><label>Prénom</label><input type="text" placeholder="Prénom"></div>
+          <div class="fld"><label>Nom</label><input type="text" placeholder="Nom"></div>
+        </div>
+        <div class="fld"><label>Email</label><input type="email" placeholder="votre@email.com"></div>
+        <div class="fld"><label>Adresse</label><input type="text" placeholder="12 rue des Palmiers"></div>
+        <div class="fld-row">
+          <div class="fld"><label>Code postal</label><input type="text" placeholder="97100"></div>
+          <div class="fld"><label>Ville</label><input type="text" placeholder="Basse-Terre"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ COLONNE DROITE : Récapitulatif ══ -->
+    <div>
+      <div class="pay-summary">
+        <div class="pay-summary-head">
+          <h3 data-cms="paiement.summary_title">Récapitulatif de commande</h3>
+          <p data-cms="paiement.summary_subtitle">Vérifiez votre commande avant de payer</p>
+        </div>
+        <div class="pay-summary-body">
+          <div class="plan-badge" id="plan-badge">Paiement unique</div>
+          <div class="plan-row">
+            <div>
+              <div class="plan-name" id="plan-name" data-cms="paiement.plan_name">Une simulation</div>
+            </div>
+            <div class="plan-price" id="plan-price">49 €</div>
+          </div>
+          <div class="plan-desc" id="plan-desc" data-cms="paiement.plan_desc">Accès complet au catalogue + suivi de progression + certificats</div>
+
+          <div class="summary-line"><span>Sous-total</span><span id="subtotal">49 €</span></div>
+          <div class="summary-line"><span data-cms="paiement.reduction_label">Réduction première période</span><span id="reduction">— 0,00 €</span></div>
+          <div class="summary-line"><span>TVA (20 %)</span><span>incluse</span></div>
+
+          <div class="summary-total">
+            <span class="lbl">Total aujourd'hui</span>
+            <span class="val" id="total-price">49 €</span>
+          </div>
+
+          <div class="stripe-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span data-cms="paiement.stripe_note">Paiement sécurisé par Stripe. Vos données ne sont jamais stockées sur nos serveurs.</span>
+          </div>
+
+          <!-- Code promo -->
+          <div class="promo-section">
+            <h4>Code promo</h4>
+            <div class="promo-row" id="promo-input-row">
+              <input type="text" id="promo-input" placeholder="Entrez votre code promo" maxlength="20">
+              <button onclick="applyPromo()">Appliquer</button>
+            </div>
+            <div class="promo-msg" id="promo-msg"></div>
+            <div class="promo-applied" id="promo-applied" style="display:none">
+              <div><span class="pa-code" id="pa-code"></span> <span class="pa-val" id="pa-val"></span></div>
+              <span class="pa-remove" onclick="removePromo()">Retirer</span>
+            </div>
+          </div>
+
+          <!-- Changer d'offre -->
+          <div class="offer-section" id="offers-container">
+            <h4>Changer d'offre</h4>
+            <div class="offer-opt selected" data-plan="solo" data-price="49 €" data-badge="Paiement unique" onclick="selectOffer(this)">
+              <span class="name" data-cms="paiement.offer1_name">Solo mensuel</span>
+              <span class="price" data-cms="paiement.offer1_price">9,90 €/mois</span>
+            </div>
+            <div class="offer-opt" data-plan="pass" data-price="249 €" data-badge="Paiement unique" onclick="selectOffer(this)">
+              <span class="name" data-cms="paiement.offer2_name">Solo annuel — 2 mois offerts</span>
+              <span class="price" data-cms="paiement.offer2_price">79 €/an</span>
+            </div>
+            <div class="offer-opt" data-plan="free" data-price="0 €" data-badge="Gratuit" onclick="selectOffer(this)">
+              <span class="name" data-cms="paiement.offer3_name">Solo réduit — étudiant</span>
+              <span class="price" data-cms="paiement.offer3_price">4,90 €/mois</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bouton payer -->
+      <button class="pay-btn" id="pay-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <span>Payer 49 € en toute sécurité</span>
+      </button>
+      <div class="pay-secure">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Paiement sécurisé par Stripe · 3D Secure · Données chiffrées
+      </div>
+    </div>
+
+  </div><!-- /pay-grid -->
+</div><!-- /pay-page -->
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="pub-footer"><div class="container">
+  <div class="pub-footer-top">
+    <div class="pub-footer-brand">
+      <div class="name">Immer<em>sium</em></div>
+      <div class="tag">LEARN BY DOING · CARAÏBES</div>
+      <p>La plateforme pédagogique qui remplace les cours par des missions.</p>
+    </div>
+    <div class="pub-footer-col"><h4>Produit</h4><ul>
+      <li><a href="catalogue.html">Catalogue</a></li>
+      <li><a href="coaching.html">Coaching</a></li>
+      <li><a href="tarifs.html">Tarifs</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="demander-formation.html">Demander une formation</a></li>
+    </ul></div>
+    <div class="pub-footer-col"><h4>Support</h4><ul>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html">Support</a></li>
+    </ul></div>
+    <div class="pub-footer-col"><h4>Légal</h4><ul>
+      <li><a href="mentions.html">Mentions légales</a></li>
+      <li><a href="cgu.html">CGU</a></li>
+      <li><a href="cgv.html">CGV</a></li>
+    </ul></div>
+  </div>
+  <div class="pub-footer-bottom">
+    <span>© 2026 Immersium · Tous droits réservés.</span>
+    <span>Fait avec soin en Guadeloupe ☼</span>
+  </div>
+</div></footer>
+
+<script>
+/* Sélection méthode de paiement */
+function selectMethod(el){
+  document.querySelectorAll('.pay-m').forEach(m=>m.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+/* Sélection d'offre */
+var currentPromo = null;
+
+function selectOffer(el){
+  document.querySelectorAll('.offer-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  updatePrices();
+}
+
+function getBasePrice(){
+  var sel = document.querySelector('.offer-opt.selected');
+  if(!sel) return 0;
+  var raw = sel.dataset.price.replace(/[^0-9.]/g,'').replace(',','.');
+  return parseFloat(raw) || 0;
+}
+
+function updatePrices(){
+  var sel = document.querySelector('.offer-opt.selected');
+  if(!sel) return;
+  var basePrice = getBasePrice();
+  var badge = sel.dataset.badge;
+  var discount = 0;
+  var discountLabel = '— 0,00 €';
+
+  if(currentPromo){
+    if(currentPromo.type === 'free'){
+      discount = basePrice;
+    } else if(currentPromo.type === 'percent'){
+      discount = basePrice * (currentPromo.value / 100);
+    } else if(currentPromo.type === 'amount'){
+      discount = Math.min(currentPromo.value, basePrice);
+    }
+    discountLabel = '— ' + discount.toFixed(2).replace('.',',') + ' €';
+  }
+
+  var finalPrice = Math.max(0, basePrice - discount);
+  var priceStr = finalPrice % 1 === 0 ? finalPrice + ' €' : finalPrice.toFixed(2).replace('.',',') + ' €';
+  var baseStr = basePrice % 1 === 0 ? basePrice + ' €' : basePrice.toFixed(2).replace('.',',') + ' €';
+
+  document.getElementById('plan-price').textContent = baseStr;
+  document.getElementById('subtotal').textContent = baseStr;
+  document.getElementById('reduction').textContent = discountLabel;
+  document.getElementById('total-price').textContent = priceStr;
+  document.getElementById('plan-badge').textContent = badge;
+  document.querySelector('#pay-btn span').textContent = finalPrice === 0 ? 'Accéder gratuitement' : 'Payer ' + priceStr + ' en toute sécurité';
+}
+
+/* Code promo */
+function applyPromo(){
+  var code = document.getElementById('promo-input').value.trim().toUpperCase();
+  var msg = document.getElementById('promo-msg');
+  var applied = document.getElementById('promo-applied');
+
+  if(!code){ msg.className='promo-msg error'; msg.textContent='Veuillez entrer un code promo.'; return; }
+
+  var promos = JSON.parse(localStorage.getItem('imm_promo_codes') || '[]');
+  var promo = promos.find(function(p){ return p.code === code && p.active; });
+
+  if(!promo){
+    msg.className='promo-msg error'; msg.textContent='Code promo invalide ou expiré.';
+    applied.style.display='none'; return;
+  }
+
+  // Vérifier expiration
+  var now = new Date().toISOString().split('T')[0];
+  if(promo.expire && promo.expire < now){
+    msg.className='promo-msg error'; msg.textContent='Ce code promo a expiré.';
+    applied.style.display='none'; return;
+  }
+  if(promo.start && promo.start > now){
+    msg.className='promo-msg error'; msg.textContent='Ce code promo n\'est pas encore actif.';
+    applied.style.display='none'; return;
+  }
+
+  // Vérifier utilisations max
+  if(promo.maxUses && promo.uses >= promo.maxUses){
+    msg.className='promo-msg error'; msg.textContent='Ce code promo a atteint son nombre maximum d\'utilisations.';
+    applied.style.display='none'; return;
+  }
+
+  // Vérifier cible
+  var sel = document.querySelector('.offer-opt.selected');
+  if(sel && promo.target !== 'all' && sel.dataset.plan !== promo.target){
+    msg.className='promo-msg error'; msg.textContent='Ce code n\'est pas applicable à cette offre.';
+    applied.style.display='none'; return;
+  }
+
+  // Appliquer
+  currentPromo = promo;
+  msg.className='promo-msg success';
+  var valTxt = promo.type === 'free' ? '(Gratuit)' : promo.type === 'percent' ? '(-' + promo.value + '%)' : '(-' + promo.value + ' €)';
+  msg.textContent='Code appliqué avec succès !';
+  document.getElementById('pa-code').textContent = promo.code;
+  document.getElementById('pa-val').textContent = valTxt;
+  applied.style.display = 'flex';
+  document.getElementById('promo-input-row').style.display = 'none';
+
+  updatePrices();
+}
+
+function removePromo(){
+  currentPromo = null;
+  document.getElementById('promo-msg').className = 'promo-msg';
+  document.getElementById('promo-applied').style.display = 'none';
+  document.getElementById('promo-input-row').style.display = 'flex';
+  document.getElementById('promo-input').value = '';
+  updatePrices();
+}
+
+/* Beta toggle */
+(function(){
+  if(localStorage.getItem('imm_beta_mode')==='false'){
+    var b=document.querySelector('.pub-brand .pub-beta');
+    if(b)b.style.display='none';
+  }
+})();
+
+</script>
+
+<!-- CMS runtime -->
+<script type="module" src="immersium-cms.js"></script>
+
+<!-- Pré-sélection du plan depuis l'URL (après CMS) -->
+<script>
+var PLANS={
+  solo:{name:'Une simulation',desc:'Accès complet à une simulation au choix. Les 21 défis, le certificat, le support.',price:'49 €',badge:'Paiement unique'},
+  pass:{name:'Pass catalogue',desc:'Toutes les simulations, tous les défis, tous les certificats. Débloqué pendant 12 mois.',price:'249 €',badge:'Paiement unique'},
+  free:{name:'Découverte',desc:'Testez Immersium sans engagement. Un défi par simulation, toujours gratuit.',price:'0 €',badge:'Gratuit'}
+};
+/* Délai pour s'exécuter après le CMS runtime */
+setTimeout(function(){
+  var params=new URLSearchParams(window.location.search);
+  var planId=params.get('plan');
+  if(planId && PLANS[planId]){
+    var opt=document.querySelector('.offer-opt[data-plan="'+planId+'"]');
+    if(opt){
+      selectOffer(opt);
+      var p=PLANS[planId];
+      document.getElementById('plan-name').textContent=p.name;
+      document.getElementById('plan-desc').textContent=p.desc;
+    }
+  }
+},100);
+</script>
+</body></html>

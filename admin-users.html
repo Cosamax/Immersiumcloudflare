@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Utilisateurs — Immersium Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter+Tight:wght@300..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0E1A2B;--ink-soft:#3D4F63;--ink-mute:#8896A6;--paper:#FDFAF5;--paper-hover:#F7F3EC;--bg-alt:#F3EFE8;--line:#E2DDD4;--sand:#D4CFC6;--marine:#024AFF;--orange:#FF6B00;--coral:#CC0033;--coral-soft:rgba(204,0,51,.08);--jade:#0D9488;--jade-soft:rgba(13,148,136,.08);--f-display:'Fraunces',serif;--f-body:'Inter Tight',sans-serif;--f-mono:'JetBrains Mono',monospace;--r:10px;--r-lg:14px;--sh-lift:0 8px 30px -6px rgba(14,26,43,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--f-body);background:var(--bg-alt);color:var(--ink);-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}button{font:inherit;cursor:pointer;border:none;background:none}
+.app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+.app-side{background:var(--ink);color:#fff;padding:24px 16px;display:flex;flex-direction:column;gap:8px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.app-brand{padding:0 8px 16px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:8px}
+.app-brand .name{font-family:var(--f-display);font-size:22px;font-weight:500;letter-spacing:-.02em}
+.app-brand .name em{font-style:italic;color:var(--orange)}
+.app-brand .beta{font-family:var(--f-mono);font-size:8px;letter-spacing:.1em;background:var(--orange);color:#fff;padding:2px 6px;border-radius:4px;vertical-align:super;margin-left:4px;font-style:normal;font-weight:700}
+.app-brand .role{font-family:var(--f-mono);font-size:9px;letter-spacing:.15em;color:var(--marine);margin-top:2px}
+.app-nav{flex:1;display:flex;flex-direction:column;gap:2px}
+.app-nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r);color:rgba(255,255,255,.6);font-size:13px;font-weight:500;transition:all .12s}
+.app-nav a:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.9)}
+.app-nav a.active{background:var(--marine);color:#fff}
+.app-nav a svg{width:16px;height:16px;flex-shrink:0}
+.app-nav-sec{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:16px 12px 6px;text-transform:uppercase}
+.app-user{padding:12px 8px;border-top:1px solid rgba(255,255,255,.08);margin-top:auto;display:flex;align-items:center;gap:10px}
+.app-user .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#CC0033,#FF4D6D);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.app-user .n{font-size:13px;font-weight:600}
+.app-user .r{font-size:10px;color:rgba(255,255,255,.4);font-family:var(--f-mono)}
+.app-main{padding:32px 40px;overflow-y:auto}
+.page-h{margin-bottom:32px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.page-h-left h1{font-family:var(--f-display);font-size:32px;font-weight:500;letter-spacing:-.02em;line-height:1.2}
+.page-h-left h1 em{font-style:italic;color:var(--marine)}
+.page-h-left p{color:var(--ink-soft);margin-top:8px;font-size:14px}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:32px}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 24px}
+.kpi .value{font-family:var(--f-display);font-size:36px;font-weight:500}
+.kpi .label{font-size:12px;color:var(--ink-mute);margin-top:4px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;margin-bottom:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink);transition:all .15s}
+.btn:hover{background:var(--paper-hover);border-color:var(--sand)}
+.btn.primary{background:var(--marine);color:#fff;border-color:var(--marine)}
+.btn.primary:hover{background:#0040DD}
+.btn.sm{padding:6px 12px;font-size:12px}
+.btn.danger{background:var(--coral-soft);color:var(--coral);border-color:transparent}
+.filter-bar{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;align-items:center}
+.filter-bar select,.filter-bar input{padding:8px 12px;border:1px solid var(--line);border-radius:var(--r);font-size:13px;font-family:var(--f-body);background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s}
+.filter-bar select:focus,.filter-bar input:focus{border-color:var(--marine)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 14px;background:var(--bg-alt);border-bottom:1px solid var(--line);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-mute)}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--paper-hover)}
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:600;font-family:var(--f-mono)}
+.badge.admin{background:rgba(2,74,255,.1);color:var(--marine)}
+.badge.user{background:var(--bg-alt);color:var(--ink-mute)}
+.badge.active{background:var(--jade-soft);color:var(--jade)}
+.badge.inactive{background:var(--bg-alt);color:var(--ink-mute)}
+.av-sm{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--marine),#4D7AFF);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(14,26,43,.5);backdrop-filter:blur(4px);z-index:50;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px;max-width:520px;width:90%;max-height:90vh;overflow-y:auto;box-shadow:var(--sh-lift)}
+.modal h2{font-family:var(--f-display);font-size:22px;font-weight:500;margin-bottom:20px}
+.modal h2 em{font-style:italic;color:var(--marine)}
+.form-row{margin-bottom:16px}
+.form-row label{display:block;font-size:12px;font-weight:600;margin-bottom:6px;color:var(--ink-soft)}
+.form-row input,.form-row select{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:var(--r);font-size:13px;font-family:var(--f-body);background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s}
+.form-row input:focus,.form-row select:focus{border-color:var(--marine)}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.empty-state{text-align:center;padding:60px 20px;color:var(--ink-mute)}
+.empty-state h3{font-family:var(--f-display);font-size:22px;color:var(--ink-soft);margin-bottom:8px}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:#fff;padding:14px 22px;border-radius:var(--r);font-size:13px;font-weight:500;box-shadow:var(--sh-lift);z-index:100;transform:translateY(100px);opacity:0;transition:all .3s}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-left:4px solid var(--jade)}
+.toast.error{border-left:4px solid var(--coral)}
+@media(max-width:1100px){.app{grid-template-columns:1fr}.app-side{display:none}.app-main{padding:24px}}
+@media(max-width:700px){table thead{display:none}td{display:block;padding:6px 14px}td::before{content:attr(data-label);font-size:10px;font-weight:700;text-transform:uppercase;color:var(--ink-mute);display:block;margin-bottom:2px}tr{display:block;border-bottom:1px solid var(--line);padding:10px 0}}
+</style>
+</head>
+<body>
+<script>window.IMM_REQUIRE_ROLE = 'admin';</script>
+<script type="module" src="immersium-guard.js"></script>
+<div class="app">
+  <aside class="app-side" id="app-side">
+    <div class="app-brand">
+      <div class="name">Immer<em>sium</em> <span class="beta">BETA</span></div>
+      <div class="role">ADMIN CONSOLE</div>
+    </div>
+    <nav class="app-nav">
+      <a href="index.html" style="color:rgba(255,255,255,.95);background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:8px;padding:12px 18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+        Retour au site
+      </a>
+      <a href="admin-dashboard.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Tableau de bord
+      </a>
+      <div class="app-nav-sec">Utilisateurs</div>
+      <a href="admin-users.html" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Utilisateurs
+      </a>
+      <a href="admin-formateurs.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Formateurs
+      </a>
+      <a href="admin-apprenants.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Apprenants
+      </a>
+      <div class="app-nav-sec">Formation</div>
+      <a href="admin-sessions.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Sessions
+      </a>
+      <a href="admin-results.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75z"/><path d="M9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625z"/><path d="M16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+        Résultats
+      </a>
+      <div class="app-nav-sec">Contenu</div>
+      <a href="admin-editor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Jeux &amp; Formations</a>
+      <a href="admin-simulations.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Config simulations</a>
+      <a href="admin-hero.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Page d'accueil</a>
+      <a href="admin-vedettes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Vedettes accueil</a>
+      <a href="admin-pages.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Pages du site</a>
+      <a href="admin-faq.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        FAQ
+      </a>
+      <a href="admin-tarifs.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Tarifs &amp; Plans
+      </a>
+      <a href="admin-coaching.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Coaches
+      </a>
+      <div class="app-nav-sec">Commercial</div>
+      <a href="admin-promotions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14l6-6"/><circle cx="9.5" cy="9.5" r="1.5"/><circle cx="14.5" cy="14.5" r="1.5"/><rect x="2" y="2" width="20" height="20" rx="2.18"/></svg>Promotions &amp; Accès</a>
+      <div class="app-nav-sec">Système</div>
+      <a href="admin-stats.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>Statistiques</a>
+      <a href="admin-access.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/></svg>Accès &amp; API</a>
+      <a href="admin-export.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Exporter</a>
+      <a href="admin-demandes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Demandes formation</a>
+      <a href="#" onclick="IMM_SIGNOUT();return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Déconnexion</a>
+    </nav>
+    <div class="app-user" id="app-user">
+      <div class="av">A</div>
+      <div><div class="n">Admin</div><div class="r">Administrateur</div></div>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <div class="page-h">
+      <div class="page-h-left">
+        <h1>Gestion des <em>utilisateurs</em></h1>
+        <p>Tous les comptes inscrits sur la plateforme Immersium.</p>
+      </div>
+      <button class="btn primary" onclick="openNewModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nouvel utilisateur
+      </button>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi"><div class="value" id="kpi-total">—</div><div class="label">Total comptes</div></div>
+      <div class="kpi"><div class="value" id="kpi-admins">—</div><div class="label">Administrateurs</div></div>
+      <div class="kpi"><div class="value" id="kpi-recent">—</div><div class="label">Inscrits ce mois</div></div>
+    </div>
+
+    <div class="card">
+      <div class="filter-bar">
+        <select id="filter-role" onchange="applyFilters()">
+          <option value="">Tous les rôles</option>
+          <option value="admin">Administrateurs</option>
+          <option value="user">Utilisateurs</option>
+        </select>
+        <input type="text" id="filter-search" placeholder="Rechercher par nom ou email…" oninput="applyFilters()" style="flex:1;min-width:180px">
+      </div>
+      <div id="users-loading" style="text-align:center;padding:40px;color:var(--ink-mute);font-size:14px">Chargement…</div>
+      <div id="users-table" style="display:none;overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Utilisateur</th>
+              <th>Plan</th>
+              <th>Rôle</th>
+              <th>Inscrit le</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="users-tbody"></tbody>
+        </table>
+      </div>
+      <div id="users-empty" class="empty-state" style="display:none">
+        <h3>Aucun utilisateur</h3>
+        <p>Les comptes inscrits apparaîtront ici.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <h2 id="modal-title">Nouvel <em>utilisateur</em></h2>
+    <input type="hidden" id="edit-id">
+    <div class="form-row">
+      <label>Nom complet</label>
+      <input type="text" id="f-firstname" placeholder="Prénom Nom">
+    </div>
+    <div class="form-row">
+      <label>Organisation</label>
+      <input type="text" id="f-lastname" placeholder="Entreprise ou école">
+    </div>
+    <div class="form-row">
+      <label>Plan</label>
+      <input type="text" id="f-email" placeholder="free, pro, entreprise…">
+    </div>
+    <div class="form-row">
+      <label>Rôle</label>
+      <select id="f-role">
+        <option value="user">Utilisateur</option>
+        <option value="admin">Administrateur</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">Annuler</button>
+      <button class="btn primary" onclick="saveUser()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script type="module" src="js/imm-shared.js"></script>
+<script>
+var allUsers = [];
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function showToast(msg, type){ var t=document.getElementById('toast'); t.textContent=msg; t.className='toast show '+(type||''); setTimeout(function(){ t.className='toast'; },3000); }
+
+function nameInitials(name){ var parts=(name||'').trim().split(' '); return ((parts[0]?parts[0][0]:'')+( parts[1]?parts[1][0]:'')).toUpperCase()||'?'; }
+
+function renderTable(data){
+  var tbody=document.getElementById('users-tbody');
+  var table=document.getElementById('users-table');
+  var empty=document.getElementById('users-empty');
+  if(!data.length){ table.style.display='none'; empty.style.display=''; return; }
+  table.style.display=''; empty.style.display='none';
+  tbody.innerHTML=data.map(function(u){
+    var name=(u.full_name||'').trim()||'—';
+    var org=u.organization?'<div style="font-size:11px;color:var(--ink-mute)">'+esc(u.organization)+'</div>':'';
+    var date=u.created_at?new Date(u.created_at).toLocaleDateString('fr-FR'):'—';
+    var role=u.role||'user';
+    var plan=u.plan?'<span class="badge user" style="margin-left:6px">'+esc(u.plan)+'</span>':'';
+    return '<tr>'
+      +'<td data-label="Utilisateur"><div style="display:flex;align-items:center;gap:10px"><div class="av-sm">'+nameInitials(u.full_name)+'</div><div><div style="font-weight:600">'+esc(name)+'</div>'+org+'</div></div></td>'
+      +'<td data-label="Plan">'+plan+'</td>'
+      +'<td data-label="Rôle"><span class="badge '+role+'">'+role+'</span></td>'
+      +'<td data-label="Inscrit le">'+date+'</td>'
+      +'<td data-label="Actions"><button class="btn sm" onclick="editUser(\''+u.id+'\')">Modifier</button></td>'
+      +'</tr>';
+  }).join('');
+}
+
+window.applyFilters = function(){
+  var role=document.getElementById('filter-role').value;
+  var search=document.getElementById('filter-search').value.toLowerCase();
+  var filtered=allUsers.filter(function(u){
+    if(role && u.role!==role) return false;
+    var name=(u.full_name||'').toLowerCase();
+    var org=(u.organization||'').toLowerCase();
+    if(search && !name.includes(search) && !org.includes(search)) return false;
+    return true;
+  });
+  renderTable(filtered);
+};
+
+window.openNewModal = function(){
+  document.getElementById('modal-title').innerHTML='Nouvel <em>utilisateur</em>';
+  document.getElementById('edit-id').value='';
+  document.getElementById('f-firstname').value='';
+  document.getElementById('f-lastname').value='';
+  document.getElementById('f-email').value='';
+  document.getElementById('f-role').value='user';
+  document.getElementById('modal-overlay').classList.add('open');
+};
+
+window.editUser = function(id){
+  var u=allUsers.find(function(x){ return x.id===id; });
+  if(!u) return;
+  document.getElementById('modal-title').innerHTML='Modifier <em>l\'utilisateur</em>';
+  document.getElementById('edit-id').value=u.id;
+  document.getElementById('f-firstname').value=u.full_name||'';
+  document.getElementById('f-lastname').value=u.organization||'';
+  document.getElementById('f-email').value=u.plan||'';
+  document.getElementById('f-role').value=u.role||'user';
+  document.getElementById('modal-overlay').classList.add('open');
+};
+
+window.closeModal = function(){ document.getElementById('modal-overlay').classList.remove('open'); };
+
+window.saveUser = async function(){
+  var supabase=window.IMM_SUPABASE;
+  if(!supabase){ showToast('Connexion non disponible','error'); return; }
+  var id=document.getElementById('edit-id').value;
+  var payload={
+    full_name: document.getElementById('f-firstname').value.trim(),
+    organization: document.getElementById('f-lastname').value.trim(),
+    plan: document.getElementById('f-email').value.trim()||null,
+    role: document.getElementById('f-role').value,
+    updated_at: new Date().toISOString()
+  };
+  var result;
+  if(id){
+    result=await supabase.from('profiles').update(payload).eq('id',id);
+  } else {
+    showToast('Créer un compte nécessite l\'invitation Supabase Auth','error'); return;
+  }
+  if(result.error){ showToast('Erreur : '+result.error.message,'error'); return; }
+  showToast('Utilisateur mis à jour','success');
+  closeModal();
+  loadData();
+};
+
+async function loadData(){
+  var supabase=window.IMM_SUPABASE;
+  if(!supabase) return;
+  var res=await supabase.from('profiles').select('*').order('created_at',{ascending:false});
+  document.getElementById('users-loading').style.display='none';
+  if(res.error||!res.data){ document.getElementById('users-empty').style.display=''; return; }
+  allUsers=res.data;
+  document.getElementById('kpi-total').textContent=allUsers.length;
+  document.getElementById('kpi-admins').textContent=allUsers.filter(function(u){return u.role==='admin';}).length;
+  var thisMonth=new Date(); thisMonth.setDate(1); thisMonth.setHours(0,0,0,0);
+  document.getElementById('kpi-recent').textContent=allUsers.filter(function(u){ return u.created_at && new Date(u.created_at)>=thisMonth; }).length;
+  renderTable(allUsers);
+}
+
+document.addEventListener('imm:ready', function(e){
+  var u=document.getElementById('app-user');
+  if(u&&e.detail&&e.detail.name){
+    var initials=e.detail.name.split(' ').map(function(w){return w[0];}).join('').toUpperCase().slice(0,2);
+    u.querySelector('.av').textContent=initials;
+    u.querySelector('.n').textContent=e.detail.name;
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    if(window.IMM_SUPABASE){ loadData(); }
+    else{ document.addEventListener('imm:ready', function(){ loadData(); }); }
+  }, 300);
+});
+</script>
+</body>
+</html>

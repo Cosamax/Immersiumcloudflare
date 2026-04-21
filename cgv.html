@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CGV — Immersium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#F8F5EE;          --bg-alt:#F2EDE0;
+  --paper:#FFFDF7;       --paper-hover:#FFFBEF;
+  --ink:#0E1A2B;         --ink-soft:#2A3749;    --ink-mute:#6B7685;
+  --line:#E8E0CE;        --line-soft:#F0E9D9;
+  --cobalt:#0131B4;      --cobalt-dark:#00005C;
+  --orange:#FF6B35;        --marine:#0131B4;   --orange-soft:#FFE4D4;
+  --amber:#D97706;       --amber-soft:#FED7AA;
+  --coral:#D32F2F;       --coral-soft:#FFEBEE;
+  --plum:#7C3AED;        --plum-soft:#EDE9FE;
+  --sand:#C9A96E;        --sand-soft:#F5E6C8;
+  --p-cobalt:#D6D6F0;
+  --r-sm:8px; --r:12px; --r-lg:18px; --r-xl:24px;
+  --sh-1:0 1px 0 rgba(14,26,43,.04), 0 0 0 1px var(--line);
+  --sh-2:0 2px 10px rgba(14,26,43,.05), 0 0 0 1px var(--line);
+  --sh-lift:0 20px 40px -16px rgba(14,26,43,.14), 0 4px 10px rgba(14,26,43,.04);
+  --f-display:"Fraunces", Georgia, serif;
+  --f-body:"Inter Tight", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--f-body);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11";}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.5;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.055  0 0 0 0 0.102  0 0 0 0 0.169  0 0 0 0.03 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
+button,a{font:inherit;color:inherit;text-decoration:none;border:none;background:none;cursor:pointer}
+svg{display:block}
+.hidden{display:none!important}
+.pub-nav{position:sticky;top:0;z-index:50;background:rgba(14,26,43,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+.pub-nav-inner{max-width:1240px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.pub-brand{display:flex;align-items:baseline;gap:10px}
+.pub-brand .name{font-family:var(--f-display);font-size:22px;font-weight:500;letter-spacing:-.02em;color:#fff}
+.pub-brand .name em{font-style:italic;color:var(--orange);font-weight:500}
+.pub-brand .pub-beta{font-family:var(--f-mono);font-size:8px;letter-spacing:.1em;background:var(--orange);color:#fff;padding:2px 6px;border-radius:4px;font-style:normal;font-weight:700;align-self:center}
+.pub-links{display:flex;align-items:center;gap:4px}
+.pub-links a{padding:8px 14px;border-radius:10px;font-size:13.5px;font-weight:500;color:rgba(255,255,255,.7);transition:background .15s,color .15s}
+.pub-links a:hover{background:rgba(255,255,255,.08);color:#fff}
+.pub-cta{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;transition:background .15s,transform .08s,box-shadow .15s;border:1px solid transparent;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-jade{background:var(--orange);color:var(--ink);box-shadow:0 4px 12px -4px rgba(255,107,53,.5)}
+.btn-jade:hover{background:#FF8659}
+.btn-outline{background:var(--paper);border-color:var(--line);color:var(--ink)}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.8)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.container{max-width:1240px;margin:0 auto;padding:0 32px}
+h1,.h1{font-family:var(--f-display);font-size:56px;font-weight:500;letter-spacing:-.025em;line-height:1.05}
+h1 em,.h1 em{font-style:italic;color:var(--marine);font-weight:500}
+.pub-footer{background:var(--ink);color:rgba(255,255,255,.75);padding:60px 0 32px;margin-top:80px;position:relative;overflow:hidden}
+.pub-footer::before{content:"";position:absolute;top:-140px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,.15) 0%,transparent 65%);pointer-events:none}
+.pub-footer .container{position:relative}
+.pub-footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08)}
+.pub-footer-brand .name{font-family:var(--f-display);font-size:26px;font-weight:500;color:#fff;letter-spacing:-.02em}
+.pub-footer-brand .name em{font-style:italic;color:var(--orange);font-weight:500}
+.pub-footer-brand .tag{margin-top:8px;font-size:10.5px;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:600}
+.pub-footer-brand p{margin-top:14px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.6);max-width:320px}
+.pub-footer-col h4{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:14px}
+.pub-footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.pub-footer-col a{font-size:13px;color:rgba(255,255,255,.7);transition:color .15s}
+.pub-footer-col a:hover{color:var(--orange)}
+.pub-footer-bottom{padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(255,255,255,.4)}
+@media(max-width:960px){.container{padding:0 20px}.pub-nav-inner{padding:14px 20px}.pub-links{display:none}h1,.h1{font-size:40px}.pub-footer-top{grid-template-columns:1fr 1fr;gap:28px}}
+
+.legal-head{padding:60px 0 36px;border-bottom:1px solid var(--line)}
+.legal-head .num{font-family:var(--f-display);font-style:italic;font-size:11px;color:var(--sand);letter-spacing:.3em;margin-bottom:12px}
+.legal-head h1{font-size:48px;margin-bottom:14px}
+.legal-head .date{font-size:13px;color:var(--ink-mute);font-family:var(--f-mono)}
+.legal-body{padding:48px 0;max-width:780px;margin:0 auto;font-size:14.5px;line-height:1.75;color:var(--ink-soft)}
+.legal-body h2{font-family:var(--f-display);font-size:24px;font-weight:500;letter-spacing:-.01em;color:var(--ink);margin:40px 0 14px;padding-top:12px;border-top:1px solid var(--line)}
+.legal-body h2:first-child{margin-top:0;border-top:none;padding-top:0}
+.legal-body h3{font-family:var(--f-display);font-size:18px;font-weight:500;color:var(--ink);margin:26px 0 10px}
+.legal-body p{margin-bottom:14px}
+.legal-body ul{margin:12px 0 18px 24px}
+.legal-body li{margin-bottom:6px}
+.legal-body strong{color:var(--ink);font-weight:600}
+.legal-toc{padding:20px 24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);margin-bottom:36px}
+.legal-toc h4{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:12px}
+.legal-toc ol{list-style:decimal inside;font-size:13px;color:var(--ink-soft)}
+.legal-toc li{padding:3px 0}
+.legal-toc a{color:var(--cobalt)}
+.legal-toc a:hover{text-decoration:underline}
+
+.pub-burger{display:none;width:40px;height:40px;border-radius:10px;background:var(--paper);border:1px solid var(--line);cursor:pointer;align-items:center;justify-content:center;transition:all .15s;padding:0;color:var(--ink)}
+.pub-burger svg{width:18px;height:18px}
+.pub-drawer{display:none;position:fixed;inset:0;z-index:100;background:rgba(14,26,43,.6);backdrop-filter:blur(4px);opacity:0;transition:opacity .2s;pointer-events:none}
+.pub-drawer.open{display:block;opacity:1;pointer-events:auto}
+.pub-drawer-panel{position:absolute;top:0;right:0;width:min(340px,90vw);height:100%;background:var(--paper);box-shadow:-20px 0 40px -10px rgba(14,26,43,.25);transform:translateX(100%);transition:transform .25s ease-out;display:flex;flex-direction:column;overflow-y:auto}
+.pub-drawer.open .pub-drawer-panel{transform:translateX(0)}
+.pub-drawer-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.pub-drawer-close{width:36px;height:36px;border-radius:10px;background:var(--bg-alt);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink)}
+.pub-drawer-links{padding:14px 12px;flex:1;display:flex;flex-direction:column;gap:2px}
+.pub-drawer-links a{padding:13px 14px;border-radius:10px;font-size:15px;font-weight:500;color:var(--ink-soft);display:flex;align-items:center;justify-content:space-between}
+.pub-drawer-links a:hover{background:var(--bg-alt);color:var(--ink)}
+.pub-drawer-links a .arr{opacity:.35;font-size:14px}
+.pub-drawer-section{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;padding:16px 14px 8px;margin-top:6px}
+.pub-drawer-cta{padding:16px 18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px;background:var(--bg-alt)}
+.pub-drawer-cta .btn{justify-content:center;padding:14px}
+@media(max-width:960px){.pub-burger{display:flex}.pub-nav-inner .pub-cta{display:none}}
+
+.pub-nav-item-cat{position:relative}
+.pub-nav-item-cat > a{display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+.pub-nav-item-cat > a .chev{transition:transform .2s;display:inline-block;font-size:10px;opacity:.6}
+.pub-cat-panel{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-8px);min-width:860px;max-width:96vw;background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 50px -12px rgba(14,26,43,.2),0 8px 20px -6px rgba(14,26,43,.08);padding:24px 24px 20px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:60}
+.pub-nav-item-cat.open .pub-cat-panel{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.pub-cat-panel::before{content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%) rotate(45deg);width:14px;height:14px;background:var(--paper);border-top:1px solid var(--line);border-left:1px solid var(--line);border-radius:3px 0 0 0}
+.pub-cat-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.pub-cat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px 22px}
+.pub-cat-col > .cat-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--orange)}
+.pub-cat-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.pub-cat-col li a{display:flex;align-items:baseline;gap:8px;padding:5px 6px;border-radius:5px;font-size:12.5px;color:var(--ink-soft);transition:all .1s}
+.pub-cat-col li a:hover{background:var(--bg-alt);color:var(--marine)}
+.pub-cat-footer{display:flex;gap:6px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.pub-cat-footer a{padding:5px 11px;border-radius:999px;font-size:11.5px;font-weight:600;background:var(--bg-alt);color:var(--ink-soft);display:inline-flex;align-items:center;gap:4px;transition:all .12s}
+.pub-cat-footer a:hover{background:var(--orange-soft);color:var(--marine)}
+@media(hover:hover) and (min-width:961px){
+  .pub-nav-item-cat:hover > a .chev{transform:rotate(180deg)}
+  .pub-nav-item-cat:hover .pub-cat-panel,.pub-nav-item-cat:focus-within .pub-cat-panel{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+}
+@media(max-width:960px){.pub-nav-item-cat .pub-cat-panel{display:none}.pub-nav-item-cat > a .chev{display:none}}
+</style>
+</head><body class="has-pub-nav">
+<nav class="pub-nav"><div class="pub-nav-inner">
+  <a href="index.html" class="pub-brand"><span class="name">Immer<em>sium</em></span><span class="pub-beta">BETA</span></a>
+  <div class="pub-links">
+    <a href="index.html">Accueil</a><div class="pub-nav-item-cat">
+      <a href="catalogue.html">Catalogue<span class="chev">▾</span></a>
+      <div class="pub-cat-panel" onclick="event.stopPropagation()">
+        <div class="pub-cat-header"></div>
+        <div class="pub-cat-grid"></div>
+        <div class="pub-cat-footer"></div>
+      </div>
+    </div><a href="coaching.html">Coaching</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="demander-formation.html">Demander</a><a href="about.html">À propos</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a>
+  </div>
+  <button class="pub-burger" onclick="toggleDrawer()" aria-label="Ouvrir le menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="pub-cta">
+    <a href="login.html" class="btn btn-ghost">Connexion</a>
+    <a href="catalogue.html" class="btn btn-jade">Essayer gratuitement →</a>
+  </div>
+</div></nav>
+<div class="pub-drawer" id="pub-drawer" onclick="if(event.target===this) toggleDrawer()">
+  <div class="pub-drawer-panel">
+    <div class="pub-drawer-head">
+      <div class="pub-brand"><span class="name">Immer<em>sium</em></span></div>
+      <button class="pub-drawer-close" onclick="toggleDrawer()" aria-label="Fermer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <nav class="pub-drawer-links">
+      <div class="pub-drawer-section">Navigation</div>
+      <a href="index.html">Accueil<span class="arr">→</span></a>
+      <a href="catalogue.html">Catalogue<span class="arr">→</span></a>
+      <a href="coaching.html">Coaching<span class="arr">→</span></a>
+      <a href="tarifs.html">Tarifs<span class="arr">→</span></a>
+      <a href="demander-formation.html">Demander une formation<span class="arr">→</span></a>
+      <a href="about.html">À propos<span class="arr">→</span></a>
+      <a href="faq.html">FAQ<span class="arr">→</span></a>
+      <a href="contact.html">Contact<span class="arr">→</span></a>
+      <div class="pub-drawer-section">Légal</div>
+      <a href="mentions.html">Mentions légales<span class="arr">→</span></a>
+      <a href="cgu.html">CGU<span class="arr">→</span></a>
+      <a href="cgv.html">CGV<span class="arr">→</span></a>
+    </nav>
+    <div class="pub-drawer-cta">
+      <a href="login.html" class="btn btn-outline">Connexion</a>
+      <a href="catalogue.html" class="btn btn-jade">Essayer gratuitement →</a>
+    </div>
+  </div>
+</div>
+<script>
+function toggleDrawer() {
+  const d = document.getElementById('pub-drawer');
+  const isOpen = d.classList.contains('open');
+  if (isOpen) { d.classList.remove('open'); document.body.style.overflow = ''; }
+  else { d.classList.add('open'); document.body.style.overflow = 'hidden'; }
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { const d = document.getElementById('pub-drawer'); if (d && d.classList.contains('open')) toggleDrawer(); } });
+</script>
+
+<section class="legal-head"><div class="container">
+  <div class="num">N° 10 — Conditions Générales de Vente</div>
+  <h1 data-cms-html="cgv.title">Conditions <em>de vente</em>.</h1>
+  <div class="date" data-cms="cgv.date">Dernière mise à jour : 15 avril 2026</div>
+</div></section>
+<section class="container legal-body" data-cms-articles="cgv.articles">
+  <div class="legal-toc"><h4>Sommaire</h4><ol><li><a href="#v1">Objet</a></li><li><a href="#v2">Prix</a></li><li><a href="#v3">Commande</a></li><li><a href="#v4">Modalités de paiement</a></li><li><a href="#v5">Accès après paiement</a></li><li><a href="#v6">Facturation</a></li><li><a href="#v7">Droit de rétractation</a></li><li><a href="#v8">Remboursement</a></li><li><a href="#v9">Garanties</a></li><li><a href="#v10">Propriété intellectuelle</a></li><li><a href="#v11">Litiges</a></li></ol></div>
+
+<h2 id="v1">1. Objet</h2>
+<p>Les présentes Conditions Générales de Vente (CGV) régissent la vente des abonnements et formules payantes de la plateforme <strong>Immersium</strong>, éditée par MxC Formation. Toute commande implique l'acceptation sans réserve des présentes CGV.</p>
+
+<h2 id="v2">2. Prix</h2>
+<p>Les prix sont indiqués <strong>hors taxes (HT)</strong> sur la page Tarifs. La TVA française de 20% est appliquée à toutes les commandes sauf exonération légalement applicable.</p>
+<p>Les prix sont fermes et définitifs au moment de la commande. Les modifications tarifaires ultérieures ne s'appliquent pas aux commandes déjà passées.</p>
+
+<h2 id="v3">3. Commande</h2>
+<p>La commande s'effectue en ligne via le site immersium.fr. Le processus comprend : sélection de la formule, création ou connexion au compte, saisie des informations de facturation, paiement. Un email de confirmation récapitule la commande.</p>
+
+<h2 id="v4">4. Modalités de paiement</h2>
+<p>Les moyens de paiement acceptés sont :</p>
+<ul>
+  <li>Carte bancaire (Visa, MasterCard, American Express) via Stripe</li>
+  <li>Paiement en 3 fois sans frais (pour les commandes supérieures à 200€)</li>
+  <li>Virement bancaire (pour les commandes B2B)</li>
+  <li>Prise en charge OPCO (sur devis)</li>
+</ul>
+<p>Les transactions sont sécurisées par le standard 3D Secure. Aucune donnée de carte bancaire n'est stockée sur nos serveurs.</p>
+
+<h2 id="v5">5. Accès après paiement</h2>
+<p>L'accès au service est débloqué immédiatement après confirmation du paiement. La durée d'accès est de 12 mois à compter de la date d'achat pour les plans Simulation et Pass catalogue.</p>
+
+<h2 id="v6">6. Facturation</h2>
+<p>Une facture électronique PDF est émise automatiquement après chaque paiement et envoyée par email. Elle est également accessible depuis le dashboard utilisateur à tout moment.</p>
+
+<h2 id="v7">7. Droit de rétractation</h2>
+<p>Conformément à l'article L. 221-18 du Code de la consommation, le client particulier dispose d'un <strong>délai de 14 jours calendaires</strong> à compter du jour de la commande pour exercer son droit de rétractation, sous réserve de <strong>n'avoir complété pas plus de 3 défis</strong>.</p>
+<p>Pour exercer ce droit, envoyez un email à contact@immersium.fr en précisant votre numéro de commande et votre volonté de rétractation.</p>
+<p>Conformément à l'article L. 221-28-13° du même code, le droit de rétractation ne peut être exercé si la prestation a été pleinement exécutée avant la fin du délai (complétude de la simulation).</p>
+
+<h2 id="v8">8. Remboursement</h2>
+<p>En cas de rétractation valide, le remboursement est effectué sur le moyen de paiement d'origine dans un délai maximum de 14 jours après réception de la demande.</p>
+
+<h2 id="v9">9. Garanties</h2>
+<p>Immersium garantit la conformité du service à la description publiée sur le site. L'éditeur s'engage à corriger dans un délai raisonnable tout dysfonctionnement signalé par l'utilisateur via le support.</p>
+<p>Aucune garantie de résultat professionnel n'est attachée à l'obtention d'un certificat Immersium.</p>
+
+<h2 id="v10">10. Propriété intellectuelle</h2>
+<p>L'achat d'un accès à Immersium confère un droit d'usage personnel et non transférable. Il ne confère aucun droit de reproduction, de diffusion ou d'exploitation commerciale des contenus.</p>
+
+<h2 id="v11">11. Litiges</h2>
+<p>En cas de litige, une solution amiable sera recherchée avant toute action judiciaire. Le client consommateur peut également saisir gratuitement le médiateur de la consommation compétent. À défaut, les tribunaux de Basse-Terre seront seuls compétents.</p>
+
+</section>
+<footer class="pub-footer"><div class="container">
+  <div class="pub-footer-top">
+    <div class="pub-footer-brand">
+      <div class="name">Immer<em>sium</em></div>
+      <div class="tag">Learn by doing · Caraïbes</div>
+      <p>La plateforme pédagogique qui remplace les cours par des missions.</p>
+    </div>
+    <div class="pub-footer-col"><h4>Produit</h4><ul><li><a href="catalogue.html">Catalogue</a></li><li><a href="coaching.html">Coaching</a></li><li><a href="tarifs.html">Tarifs</a></li><li><a href="about.html">À propos</a></li><li><a href="demander-formation.html">Demander une formation</a></li></ul></div>
+    <div class="pub-footer-col"><h4>Aide</h4><ul><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li><li><a href="tickets.html">Support</a></li></ul></div>
+    <div class="pub-footer-col"><h4>Légal</h4><ul><li><a href="mentions.html">Mentions légales</a></li><li><a href="cgu.html">CGU</a></li><li><a href="cgv.html">CGV</a></li></ul></div>
+  </div>
+  <div class="pub-footer-bottom"><div>© 2026 Immersium · Tous droits réservés</div><div>Fait avec soin en Guadeloupe</div></div>
+</div></footer>
+
+<script>
+(function(){
+  const items = document.querySelectorAll('.pub-nav-item-cat');
+  const canHover = window.matchMedia('(hover: hover)').matches;
+  items.forEach(it => {
+    const link = it.querySelector(':scope > a');
+    if (!link) return;
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 960) return;
+      if (canHover) return;
+      e.preventDefault();
+      items.forEach(o => { if (o !== it) o.classList.remove('open'); });
+      it.classList.toggle('open');
+    });
+  });
+  document.addEventListener('click', (e) => { items.forEach(it => { if (!it.contains(e.target)) it.classList.remove('open'); }); });
+})();
+</script>
+<script src="js/imm-catalog.js"></script>
+</body></html>

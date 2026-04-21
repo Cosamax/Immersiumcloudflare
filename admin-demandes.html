@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demandes formation — Immersium Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter+Tight:wght@300..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0E1A2B;--ink-soft:#3D4F63;--ink-mute:#8896A6;--paper:#FDFAF5;--paper-hover:#F7F3EC;--bg-alt:#F3EFE8;--line:#E2DDD4;--sand:#D4CFC6;--marine:#024AFF;--orange:#FF6B00;--coral:#CC0033;--coral-soft:rgba(204,0,51,.08);--jade:#0D9488;--jade-soft:rgba(13,148,136,.08);--f-display:'Fraunces',serif;--f-body:'Inter Tight',sans-serif;--f-mono:'JetBrains Mono',monospace;--r:10px;--r-lg:14px;--sh-lift:0 8px 30px -6px rgba(14,26,43,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--f-body);background:var(--bg-alt);color:var(--ink);-webkit-font-smoothing:antialiased}
+.app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+.app-side{background:var(--ink);color:#fff;padding:24px 16px;display:flex;flex-direction:column;gap:8px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.app-brand{padding:0 8px 16px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:8px}
+.app-brand .name{font-family:var(--f-display);font-size:22px;font-weight:500;letter-spacing:-.02em}
+.app-brand .name em{font-style:italic;color:var(--orange)}
+.app-brand .beta{font-family:var(--f-mono);font-size:8px;letter-spacing:.1em;background:var(--orange);color:#fff;padding:2px 6px;border-radius:4px;vertical-align:super;margin-left:4px;font-style:normal;font-weight:700}
+.app-brand .role{font-family:var(--f-mono);font-size:9px;letter-spacing:.15em;color:var(--marine);margin-top:2px}
+.app-nav{flex:1;display:flex;flex-direction:column;gap:2px}
+.app-nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r);color:rgba(255,255,255,.6);text-decoration:none;font-size:13px;font-weight:500;transition:all .12s}
+.app-nav a:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.9)}
+.app-nav a.active{background:var(--marine);color:#fff}
+.app-nav a svg{width:16px;height:16px;flex-shrink:0}
+.app-nav-sec{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,.25);padding:16px 12px 6px;text-transform:uppercase}
+.app-user{padding:12px 8px;border-top:1px solid rgba(255,255,255,.08);margin-top:auto;display:flex;align-items:center;gap:10px}
+.app-user .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#CC0033,#FF4D6D);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.app-user .n{font-size:13px;font-weight:600}
+.app-user .r{font-size:10px;color:rgba(255,255,255,.4);font-family:var(--f-mono);letter-spacing:.05em}
+.app-main{padding:32px 40px;overflow-y:auto}
+.page-h{margin-bottom:32px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.page-h-left h1{font-family:var(--f-display);font-size:32px;font-weight:500;letter-spacing:-.02em;line-height:1.2}
+.page-h-left h1 em{font-style:italic;color:var(--marine)}
+.page-h-left p{color:var(--ink-soft);margin-top:8px;font-size:14px;line-height:1.5}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;margin-bottom:20px}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:32px}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 24px}
+.kpi .value{font-family:var(--f-display);font-size:36px;font-weight:500;color:var(--ink)}
+.kpi .label{font-size:12px;color:var(--ink-mute);margin-top:4px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink);transition:all .15s;text-decoration:none}
+.btn:hover{background:var(--paper-hover);border-color:var(--sand)}
+.btn.primary{background:var(--marine);color:#fff;border-color:var(--marine)}
+.btn.primary:hover{background:#0040DD}
+.btn.danger{background:var(--coral);color:#fff;border-color:var(--coral)}
+.btn.sm{padding:6px 12px;font-size:12px}
+.filter-bar{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;align-items:center}
+.filter-bar select,.filter-bar input{padding:8px 12px;border:1px solid var(--line);border-radius:var(--r);font-size:13px;font-family:var(--f-body);background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s}
+.filter-bar select:focus,.filter-bar input:focus{border-color:var(--marine)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 14px;background:var(--bg-alt);border-bottom:1px solid var(--line);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-mute)}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--paper-hover)}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;font-family:var(--f-mono);letter-spacing:.04em}
+.badge.new{background:rgba(2,74,255,.1);color:var(--marine)}
+.badge.read{background:rgba(13,148,136,.1);color:var(--jade)}
+.badge.replied{background:rgba(13,148,136,.15);color:var(--jade)}
+.badge.archived{background:var(--bg-alt);color:var(--ink-mute)}
+.badge.formation{background:rgba(255,107,0,.1);color:var(--orange)}
+.badge.contact{background:rgba(14,26,43,.08);color:var(--ink-soft)}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(14,26,43,.5);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--paper);border-radius:var(--r-lg);padding:32px;width:min(600px,95vw);max-height:85vh;overflow-y:auto;box-shadow:var(--sh-lift)}
+.modal h2{font-family:var(--f-display);font-size:24px;font-weight:500;margin-bottom:4px}
+.modal h2 em{font-style:italic;color:var(--marine)}
+.modal-close{float:right;background:none;border:none;cursor:pointer;color:var(--ink-mute);padding:4px}
+.fld{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.fld label{font-size:12px;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.05em}
+.fld input,.fld select,.fld textarea{padding:10px 14px;border:1px solid var(--line);border-radius:var(--r);font-size:14px;font-family:var(--f-body);background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s;resize:vertical}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--marine)}
+.fld textarea{min-height:120px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:#fff;padding:14px 20px;border-radius:var(--r);font-size:13px;font-weight:500;z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.msg-preview{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r);padding:16px;font-size:13px;color:var(--ink-soft);line-height:1.6;white-space:pre-wrap;max-height:200px;overflow-y:auto;font-family:var(--f-mono);font-size:12px}
+.meta-row{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.meta-item{display:flex;flex-direction:column;gap:2px}
+.meta-item .ml{font-size:11px;color:var(--ink-mute);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.meta-item .mv{font-size:14px;font-weight:500}
+.tab-bar{display:flex;gap:2px;margin-bottom:24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:4px;width:fit-content}
+.tab-bar button{padding:7px 18px;border-radius:8px;border:none;background:none;font-size:13px;font-weight:500;cursor:pointer;color:var(--ink-mute);transition:all .15s;font-family:var(--f-body)}
+.tab-bar button.active{background:var(--ink);color:#fff}
+.empty{text-align:center;padding:48px 24px;color:var(--ink-mute);font-size:14px}
+</style>
+</head>
+<body>
+<script>window.IMM_REQUIRE_ROLE='admin'</script>
+<script type="module" src="js/imm-shared.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+<div class="app">
+  <aside class="app-side">
+    <div class="app-brand">
+      <div class="name">Immer<em>sium</em><span class="beta">ADMIN</span></div>
+      <div class="role" id="side-role">ADMINISTRATEUR</div>
+    </div>
+    <nav class="app-nav">
+      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Retour au site</a>
+      <a href="admin-dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Tableau de bord</a>
+      <div class="app-nav-sec">Utilisateurs</div>
+      <a href="admin-users.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Utilisateurs</a>
+      <a href="admin-formateurs.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/><path d="M9 12l2 2 4-4"/></svg>Formateurs</a>
+      <a href="admin-apprenants.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Apprenants</a>
+      <div class="app-nav-sec">Formation</div>
+      <a href="admin-sessions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Sessions</a>
+      <a href="admin-results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Résultats</a>
+      <div class="app-nav-sec">Contenu</div>
+      <a href="admin-editor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Jeux &amp; Formations</a>
+      <a href="admin-simulations.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>Config simulations</a>
+      <a href="admin-hero.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Page d'accueil</a>
+      <a href="admin-vedettes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Vedettes accueil</a>
+      <a href="admin-pages.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Pages du site</a>
+      <a href="admin-faq.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        FAQ
+      </a>
+      <a href="admin-tarifs.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Tarifs &amp; Plans
+      </a>
+      <a href="admin-coaching.html" class="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Coaches
+      </a>
+      <div class="app-nav-sec">Commercial</div>
+      <a href="admin-promotions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>Promotions &amp; Accès</a>
+      <div class="app-nav-sec">Système</div>
+      <a href="admin-stats.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Statistiques</a>
+      <a href="admin-access.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Accès &amp; API</a>
+      <a href="admin-export.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Exporter</a>
+      <a href="admin-demandes.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Demandes formation</a>
+      <a href="#" onclick="IMM_SIGNOUT()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Déconnexion</a>
+    </nav>
+    <div class="app-user">
+      <div class="av" id="side-av">A</div>
+      <div><div class="n" id="side-name">Admin</div><div class="r">ADMIN</div></div>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <div class="page-h">
+      <div class="page-h-left">
+        <h1>Demandes <em>formation</em></h1>
+        <p>Messages et demandes reçus via le formulaire public</p>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi"><div class="value" id="kpi-total">—</div><div class="label">Total messages</div></div>
+      <div class="kpi"><div class="value" id="kpi-new">—</div><div class="label">Non lus</div></div>
+      <div class="kpi"><div class="value" id="kpi-formation">—</div><div class="label">Demandes formation</div></div>
+      <div class="kpi"><div class="value" id="kpi-contact">—</div><div class="label">Contacts généraux</div></div>
+    </div>
+
+    <div class="tab-bar">
+      <button class="active" onclick="setTab('all',this)">Tous</button>
+      <button onclick="setTab('new',this)">Non lus</button>
+      <button onclick="setTab('formation-b2b',this)">Formation B2B</button>
+      <button onclick="setTab('contact',this)">Contact</button>
+      <button onclick="setTab('archived',this)">Archivés</button>
+    </div>
+
+    <div class="filter-bar">
+      <input type="text" id="search" placeholder="Rechercher nom, email…" oninput="applyFilters()" style="flex:1;min-width:200px">
+    </div>
+
+    <div class="card" style="padding:0;overflow:hidden">
+      <table>
+        <thead>
+          <tr>
+            <th>Expéditeur</th>
+            <th>Sujet</th>
+            <th>Message (aperçu)</th>
+            <th>Date</th>
+            <th>Statut</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="msgs-body">
+          <tr><td colspan="6" class="empty">Chargement…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- Modal detail -->
+<div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <h2 id="m-title">Demande <em>formation</em></h2>
+    <p style="color:var(--ink-mute);font-size:13px;margin-top:4px;margin-bottom:20px" id="m-sub"></p>
+
+    <div class="meta-row" id="m-meta"></div>
+
+    <div class="fld">
+      <label>Message complet</label>
+      <div class="msg-preview" id="m-msg"></div>
+    </div>
+
+    <div class="fld">
+      <label>Statut</label>
+      <select id="m-status" onchange="updateStatus()">
+        <option value="new">Non lu</option>
+        <option value="read">Lu</option>
+        <option value="replied">Répondu</option>
+        <option value="archived">Archivé</option>
+      </select>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn danger sm" onclick="deleteMsg()">Supprimer</button>
+      <button class="btn sm" onclick="closeModal()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let allMsgs = [];
+let currentMsg = null;
+let currentTab = 'all';
+
+document.addEventListener('imm:ready', async (e) => {
+  const u = e.detail;
+  if (u) {
+    const n = u.user_metadata?.full_name || u.email || 'Admin';
+    document.getElementById('side-name').textContent = n;
+    document.getElementById('side-av').textContent = n[0].toUpperCase();
+  }
+  await loadMsgs();
+});
+
+async function loadMsgs() {
+  const db = window.IMM_SUPABASE;
+  if (!db) return;
+  const { data, error } = await db.from('contact_messages').select('*').order('created_at', { ascending: false });
+  if (error) { showToast('Erreur chargement: ' + error.message); return; }
+  allMsgs = data || [];
+  updateKPIs();
+  applyFilters();
+}
+
+function updateKPIs() {
+  document.getElementById('kpi-total').textContent = allMsgs.length;
+  document.getElementById('kpi-new').textContent = allMsgs.filter(m => !m.status || m.status === 'new').length;
+  document.getElementById('kpi-formation').textContent = allMsgs.filter(m => m.subject === 'formation-b2b').length;
+  document.getElementById('kpi-contact').textContent = allMsgs.filter(m => m.subject !== 'formation-b2b').length;
+}
+
+function setTab(tab, btn) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-bar button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function applyFilters() {
+  const search = document.getElementById('search').value.toLowerCase();
+  let filtered = allMsgs;
+
+  if (currentTab === 'new') filtered = filtered.filter(m => !m.status || m.status === 'new');
+  else if (currentTab === 'formation-b2b') filtered = filtered.filter(m => m.subject === 'formation-b2b');
+  else if (currentTab === 'contact') filtered = filtered.filter(m => m.subject !== 'formation-b2b');
+  else if (currentTab === 'archived') filtered = filtered.filter(m => m.status === 'archived');
+
+  if (search) {
+    filtered = filtered.filter(m =>
+      (m.first_name || '').toLowerCase().includes(search) ||
+      (m.last_name || '').toLowerCase().includes(search) ||
+      (m.email || '').toLowerCase().includes(search) ||
+      (m.message || '').toLowerCase().includes(search)
+    );
+  }
+
+  renderTable(filtered);
+}
+
+function subjectLabel(s) {
+  if (s === 'formation-b2b') return '<span class="badge formation">Formation B2B</span>';
+  return '<span class="badge contact">Contact</span>';
+}
+
+function statusBadge(s) {
+  const map = { new: ['new','Non lu'], read: ['read','Lu'], replied: ['replied','Répondu'], archived: ['archived','Archivé'] };
+  const [cls, label] = map[s] || ['new','Non lu'];
+  return `<span class="badge ${cls}">${label}</span>`;
+}
+
+function renderTable(rows) {
+  const tbody = document.getElementById('msgs-body');
+  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty">Aucun message trouvé</td></tr>'; return; }
+  tbody.innerHTML = rows.map(m => {
+    const name = [m.first_name, m.last_name].filter(Boolean).join(' ') || '—';
+    const preview = (m.message || '').replace(/\n/g,' ').substring(0, 80) + ((m.message||'').length > 80 ? '…' : '');
+    const date = m.created_at ? new Date(m.created_at).toLocaleDateString('fr-FR') : '—';
+    return `<tr>
+      <td><strong>${name}</strong><br><small style="color:var(--ink-mute)">${m.email || ''}</small></td>
+      <td>${subjectLabel(m.subject)}</td>
+      <td style="max-width:260px;color:var(--ink-soft)">${preview}</td>
+      <td style="white-space:nowrap;color:var(--ink-mute);font-size:12px">${date}</td>
+      <td>${statusBadge(m.status || 'new')}</td>
+      <td><button class="btn sm" onclick="openMsg('${m.id}')">Voir →</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function openMsg(id) {
+  currentMsg = allMsgs.find(m => m.id === id);
+  if (!currentMsg) return;
+  const name = [currentMsg.first_name, currentMsg.last_name].filter(Boolean).join(' ') || '—';
+  document.getElementById('m-title').innerHTML = `Message de <em>${name}</em>`;
+  document.getElementById('m-sub').textContent = `Reçu le ${currentMsg.created_at ? new Date(currentMsg.created_at).toLocaleString('fr-FR') : '—'}`;
+  document.getElementById('m-msg').textContent = currentMsg.message || '(vide)';
+  document.getElementById('m-status').value = currentMsg.status || 'new';
+
+  const meta = [
+    { label: 'Email', value: currentMsg.email || '—' },
+    { label: 'Sujet', value: currentMsg.subject || '—' },
+    { label: 'Téléphone', value: currentMsg.phone || '—' }
+  ].filter(i => i.value !== '—');
+
+  document.getElementById('m-meta').innerHTML = meta.map(i => `<div class="meta-item"><div class="ml">${i.label}</div><div class="mv">${i.value}</div></div>`).join('');
+  document.getElementById('modal-bg').classList.add('open');
+
+  if (!currentMsg.status || currentMsg.status === 'new') {
+    markStatus(id, 'read');
+  }
+}
+
+async function markStatus(id, status) {
+  const db = window.IMM_SUPABASE;
+  if (!db) return;
+  await db.from('contact_messages').update({ status }).eq('id', id);
+  const m = allMsgs.find(x => x.id === id);
+  if (m) m.status = status;
+  updateKPIs();
+  applyFilters();
+}
+
+async function updateStatus() {
+  if (!currentMsg) return;
+  const status = document.getElementById('m-status').value;
+  await markStatus(currentMsg.id, status);
+  showToast('Statut mis à jour');
+}
+
+async function deleteMsg() {
+  if (!currentMsg) return;
+  if (!confirm('Supprimer ce message définitivement ?')) return;
+  const db = window.IMM_SUPABASE;
+  if (!db) return;
+  const { error } = await db.from('contact_messages').delete().eq('id', currentMsg.id);
+  if (error) { showToast('Erreur: ' + error.message); return; }
+  allMsgs = allMsgs.filter(m => m.id !== currentMsg.id);
+  closeModal();
+  updateKPIs();
+  applyFilters();
+  showToast('Message supprimé');
+}
+
+function closeModal() {
+  document.getElementById('modal-bg').classList.remove('open');
+  currentMsg = null;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mentions légales — Immersium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/shared.css">
+<style>
+.legal-hero { padding: 110px 0 48px; background: var(--ink); color: #fff; }
+.legal-hero h1 { color: #fff; font-size: 48px; }
+.legal-hero .eyebrow { color: var(--orange); }
+.legal-body { max-width: 800px; padding: 60px 0 80px; }
+.legal-body h2 { font-size: 24px; margin: 40px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.legal-body p, .legal-body li { font-size: 14px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 10px; }
+.legal-body ul { padding-left: 20px; margin-bottom: 16px; }
+.legal-body strong { color: var(--ink); }
+</style>
+</head>
+<body class="has-pub-nav">
+<nav class="pub-nav">
+  <div class="pub-nav-inner">
+    <a href="index.html" class="pub-brand"><span class="name">Immer<em>sium</em></span><span class="pub-beta">BETA</span></a>
+    <div class="pub-links"><a href="index.html">Accueil</a><a href="catalogue.html">Catalogue</a><a href="contact.html">Contact</a></div>
+    <button class="pub-burger" onclick="toggleDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="pub-cta"><a href="login.html" class="btn btn-ghost">Connexion</a></div>
+  </div>
+</nav>
+<div class="pub-drawer" id="pub-drawer" onclick="if(event.target===this) toggleDrawer()"><div class="pub-drawer-panel"><div class="pub-drawer-head"><div class="pub-brand"><span class="name">Immer<em>sium</em></span></div><button class="pub-drawer-close" onclick="toggleDrawer()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><nav class="pub-drawer-links"><a href="index.html">Accueil<span class="arr">→</span></a><a href="catalogue.html">Catalogue<span class="arr">→</span></a></nav><div class="pub-drawer-cta"><a href="login.html" class="btn btn-outline">Connexion</a></div></div></div>
+
+<section class="legal-hero"><div class="container"><div class="eyebrow">Légal</div><h1>Mentions légales</h1></div></section>
+<div class="container"><div class="legal-body">
+  <h2>Éditeur du site</h2>
+  <p><strong>Immersium SAS</strong><br>ZA de Jarry — Baie-Mahault<br>97122 Guadeloupe, France<br>SIRET : 123 456 789 00010<br>Email : <a href="mailto:hello@immersium.app" style="color:var(--marine)">hello@immersium.app</a></p>
+  <h2>Directeur de la publication</h2>
+  <p>Kévin Dabo, CEO et co-fondateur d'Immersium SAS.</p>
+  <h2>Hébergement</h2>
+  <p>Ce site est hébergé par <strong>Supabase Inc.</strong> (base de données et authentification) et des services de distribution de contenu conformes au RGPD et localisés en Union Européenne.</p>
+  <h2>Propriété intellectuelle</h2>
+  <p>L'ensemble des contenus présents sur le site Immersium (textes, images, simulations, données, logotypes) sont protégés par le droit d'auteur et appartiennent à Immersium SAS ou font l'objet de licences d'utilisation. Toute reproduction, même partielle, est strictement interdite sans autorisation préalable écrite.</p>
+  <h2>Données personnelles</h2>
+  <p>Immersium SAS collecte et traite des données personnelles dans le respect du Règlement Général sur la Protection des Données (RGPD). Vous disposez d'un droit d'accès, de rectification, de suppression et de portabilité de vos données. Pour exercer ces droits, contactez-nous à <a href="mailto:privacy@immersium.app" style="color:var(--marine)">privacy@immersium.app</a>.</p>
+  <h2>Cookies</h2>
+  <p>Le site utilise des cookies fonctionnels nécessaires au bon fonctionnement de la plateforme (session d'authentification). Aucun cookie publicitaire ou de tracking tiers n'est utilisé.</p>
+  <h2>Liens hypertextes</h2>
+  <p>Le site Immersium peut contenir des liens vers des sites tiers. Immersium SAS décline toute responsabilité quant au contenu de ces sites.</p>
+  <p style="margin-top:40px;font-size:12px;color:var(--ink-mute)">Dernière mise à jour : Janvier 2026</p>
+</div></div>
+
+<footer class="pub-footer">
+  <div class="container">
+    <div class="pub-footer-top">
+      <div class="pub-footer-brand"><div class="name">Immer<em>sium</em></div><div class="tag">Learn by doing · Caraïbes</div></div>
+      <div class="pub-footer-col"><h4>Légal</h4><ul><li><a href="mentions.html">Mentions légales</a></li><li><a href="cgu.html">CGU</a></li><li><a href="cgv.html">CGV</a></li></ul></div>
+    </div>
+    <div class="pub-footer-bottom"><div>© 2026 Immersium</div></div>
+  </div>
+</footer>
+<script type="module" src="js/imm-shared.js"></script>
+</body>
+</html>

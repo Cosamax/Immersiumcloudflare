@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact — Immersium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#F8F5EE;          --bg-alt:#F2EDE0;
+  --paper:#FFFDF7;       --paper-hover:#FFFBEF;
+  --ink:#0E1A2B;         --ink-soft:#2A3749;    --ink-mute:#6B7685;
+  --line:#E8E0CE;        --line-soft:#F0E9D9;
+  --cobalt:#0131B4;      --cobalt-dark:#00005C;
+  --orange:#FF6B35;        --marine:#0131B4;   --orange-soft:#FFE4D4;
+  --amber:#D97706;       --amber-soft:#FED7AA;
+  --coral:#D32F2F;       --coral-soft:#FFEBEE;
+  --plum:#7C3AED;        --plum-soft:#EDE9FE;
+  --sand:#C9A96E;        --sand-soft:#F5E6C8;
+  --p-cobalt:#D6D6F0;
+  --r-sm:8px; --r:12px; --r-lg:18px; --r-xl:24px;
+  --sh-1:0 1px 0 rgba(14,26,43,.04), 0 0 0 1px var(--line);
+  --sh-2:0 2px 10px rgba(14,26,43,.05), 0 0 0 1px var(--line);
+  --sh-lift:0 20px 40px -16px rgba(14,26,43,.14), 0 4px 10px rgba(14,26,43,.04);
+  --f-display:"Fraunces", Georgia, serif;
+  --f-body:"Inter Tight", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--f-body);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11";}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.5;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.055  0 0 0 0 0.102  0 0 0 0 0.169  0 0 0 0.03 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
+button,a{font:inherit;color:inherit;text-decoration:none;border:none;background:none;cursor:pointer}
+svg{display:block}
+.hidden{display:none!important}
+.pub-nav{position:sticky;top:0;z-index:50;background:rgba(14,26,43,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+.pub-nav-inner{max-width:1240px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.pub-brand{display:flex;align-items:baseline;gap:10px}
+.pub-brand .name{font-family:var(--f-display);font-size:22px;font-weight:500;letter-spacing:-.02em;color:#fff}
+.pub-brand .name em{font-style:italic;color:var(--orange);font-weight:500}
+.pub-brand .pub-beta{font-family:var(--f-mono);font-size:8px;letter-spacing:.1em;background:var(--orange);color:#fff;padding:2px 6px;border-radius:4px;font-style:normal;font-weight:700;align-self:center}
+.pub-links{display:flex;align-items:center;gap:4px}
+.pub-links a{padding:8px 14px;border-radius:10px;font-size:13.5px;font-weight:500;color:rgba(255,255,255,.7);transition:background .15s,color .15s}
+.pub-links a:hover{background:rgba(255,255,255,.08);color:#fff}
+.pub-cta{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;transition:background .15s,transform .08s,box-shadow .15s;border:1px solid transparent;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-jade{background:var(--orange);color:var(--ink);box-shadow:0 4px 12px -4px rgba(255,107,53,.5)}
+.btn-jade:hover{background:#FF8659}
+.btn-outline{background:var(--paper);border-color:var(--line);color:var(--ink)}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.8)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.container{max-width:1240px;margin:0 auto;padding:0 32px}
+h1,.h1{font-family:var(--f-display);font-size:56px;font-weight:500;letter-spacing:-.025em;line-height:1.05}
+h1 em,.h1 em{font-style:italic;color:var(--marine);font-weight:500}
+.pub-footer{background:var(--ink);color:rgba(255,255,255,.75);padding:60px 0 32px;margin-top:80px;position:relative;overflow:hidden}
+.pub-footer::before{content:"";position:absolute;top:-140px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,.15) 0%,transparent 65%);pointer-events:none}
+.pub-footer .container{position:relative}
+.pub-footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08)}
+.pub-footer-brand .name{font-family:var(--f-display);font-size:26px;font-weight:500;color:#fff;letter-spacing:-.02em}
+.pub-footer-brand .name em{font-style:italic;color:var(--orange);font-weight:500}
+.pub-footer-brand .tag{margin-top:8px;font-size:10.5px;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:600}
+.pub-footer-brand p{margin-top:14px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.6);max-width:320px}
+.pub-footer-col h4{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:14px}
+.pub-footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.pub-footer-col a{font-size:13px;color:rgba(255,255,255,.7);transition:color .15s}
+.pub-footer-col a:hover{color:var(--orange)}
+.pub-footer-bottom{padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(255,255,255,.4)}
+@media(max-width:960px){.container{padding:0 20px}.pub-nav-inner{padding:14px 20px}.pub-links{display:none}h1,.h1{font-size:40px}.pub-footer-top{grid-template-columns:1fr 1fr;gap:28px}}
+
+.pub-burger{display:none;width:40px;height:40px;border-radius:10px;background:var(--paper);border:1px solid var(--line);cursor:pointer;align-items:center;justify-content:center;transition:all .15s;padding:0;color:var(--ink)}
+.pub-burger svg{width:18px;height:18px}
+.pub-drawer{display:none;position:fixed;inset:0;z-index:100;background:rgba(14,26,43,.6);backdrop-filter:blur(4px);opacity:0;transition:opacity .2s;pointer-events:none}
+.pub-drawer.open{display:block;opacity:1;pointer-events:auto}
+.pub-drawer-panel{position:absolute;top:0;right:0;width:min(340px,90vw);height:100%;background:var(--paper);box-shadow:-20px 0 40px -10px rgba(14,26,43,.25);transform:translateX(100%);transition:transform .25s ease-out;display:flex;flex-direction:column;overflow-y:auto}
+.pub-drawer.open .pub-drawer-panel{transform:translateX(0)}
+.pub-drawer-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.pub-drawer-close{width:36px;height:36px;border-radius:10px;background:var(--bg-alt);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink)}
+.pub-drawer-links{padding:14px 12px;flex:1;display:flex;flex-direction:column;gap:2px}
+.pub-drawer-links a{padding:13px 14px;border-radius:10px;font-size:15px;font-weight:500;color:var(--ink-soft);display:flex;align-items:center;justify-content:space-between}
+.pub-drawer-links a:hover{background:var(--bg-alt);color:var(--ink)}
+.pub-drawer-links a .arr{opacity:.35;font-size:14px}
+.pub-drawer-section{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;padding:16px 14px 8px;margin-top:6px}
+.pub-drawer-cta{padding:16px 18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px;background:var(--bg-alt)}
+.pub-drawer-cta .btn{justify-content:center;padding:14px}
+@media(max-width:960px){.pub-burger{display:flex}.pub-nav-inner .pub-cta{display:none}}
+
+.pub-nav-item-cat{position:relative}
+.pub-nav-item-cat > a{display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+.pub-nav-item-cat > a .chev{transition:transform .2s;display:inline-block;font-size:10px;opacity:.6}
+.pub-cat-panel{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-8px);min-width:860px;max-width:96vw;background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 50px -12px rgba(14,26,43,.2),0 8px 20px -6px rgba(14,26,43,.08);padding:24px 24px 20px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:60}
+.pub-nav-item-cat.open .pub-cat-panel{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.pub-cat-panel::before{content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%) rotate(45deg);width:14px;height:14px;background:var(--paper);border-top:1px solid var(--line);border-left:1px solid var(--line);border-radius:3px 0 0 0}
+.pub-cat-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.pub-cat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px 22px}
+.pub-cat-col > .cat-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--orange)}
+.pub-cat-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.pub-cat-col li a{display:flex;align-items:baseline;gap:8px;padding:5px 6px;border-radius:5px;font-size:12.5px;color:var(--ink-soft);transition:all .1s}
+.pub-cat-col li a:hover{background:var(--bg-alt);color:var(--marine)}
+.pub-cat-footer{display:flex;gap:6px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.pub-cat-footer a{padding:5px 11px;border-radius:999px;font-size:11.5px;font-weight:600;background:var(--bg-alt);color:var(--ink-soft);display:inline-flex;align-items:center;gap:4px;transition:all .12s}
+.pub-cat-footer a:hover{background:var(--orange-soft);color:var(--marine)}
+@media(hover:hover) and (min-width:961px){
+  .pub-nav-item-cat:hover > a .chev{transform:rotate(180deg)}
+  .pub-nav-item-cat:hover .pub-cat-panel,.pub-nav-item-cat:focus-within .pub-cat-panel{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+}
+@media(max-width:960px){.pub-nav-item-cat .pub-cat-panel{display:none}.pub-nav-item-cat > a .chev{display:none}}
+
+/* Contact page styles */
+.contact-head{padding:60px 0 48px;border-bottom:1px solid var(--line)}
+.contact-head .eyebrow{font-family:var(--f-mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:16px}
+.contact-head h1{margin-bottom:16px}
+.contact-head .sub{font-size:16px;color:var(--ink-soft);max-width:560px;line-height:1.65}
+
+.contact-layout{display:grid;grid-template-columns:1fr 400px;gap:56px;padding:60px 0;align-items:start}
+
+/* Form */
+.contact-form-wrap{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);padding:40px}
+.contact-form-wrap h2{font-family:var(--f-display);font-size:26px;font-weight:500;letter-spacing:-.01em;margin-bottom:6px}
+.contact-form-wrap .form-sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:28px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.form-group label{font-size:12px;font-weight:600;color:var(--ink-soft);letter-spacing:.04em}
+.form-group input,.form-group select,.form-group textarea{font-family:var(--f-body);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:11px 14px;width:100%;transition:border-color .15s,box-shadow .15s;outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,107,53,.12)}
+.form-group textarea{resize:vertical;min-height:120px;line-height:1.55}
+.form-group select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%236B7685' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.form-consent{display:flex;align-items:flex-start;gap:10px;margin-bottom:20px}
+.form-consent input[type="checkbox"]{width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:var(--orange)}
+.form-consent label{font-size:12.5px;color:var(--ink-soft);line-height:1.55}
+.form-consent a{color:var(--cobalt);text-decoration:underline}
+.form-submit{width:100%;justify-content:center;padding:14px;font-size:14px}
+.form-success{display:none;padding:20px;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r);text-align:center;font-size:14px;color:var(--ink-soft)}
+.form-success strong{color:var(--ink)}
+
+/* Info sidebar */
+.contact-sidebar{display:flex;flex-direction:column;gap:16px}
+.info-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px}
+.info-card .ic-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.info-card .ic-icon{width:36px;height:36px;border-radius:10px;background:var(--orange-soft);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.info-card .ic-title{font-family:var(--f-display);font-size:16px;font-weight:500;color:var(--ink)}
+.info-card .ic-body{font-size:13.5px;color:var(--ink-soft);line-height:1.65}
+.info-card .ic-body strong{color:var(--ink);font-weight:600}
+.info-card .ic-body a{color:var(--cobalt)}
+.info-card .ic-body a:hover{text-decoration:underline}
+.info-card .ic-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.info-card .ic-list li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink-soft)}
+.info-card .ic-list .label{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);width:60px;flex-shrink:0;padding-top:1px}
+
+.map-card{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.map-placeholder{height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--ink-mute)}
+.map-placeholder .mp-icon{font-size:28px}
+.map-placeholder p{font-size:12.5px;font-weight:600;letter-spacing:.05em}
+.map-footer{padding:14px 18px;font-size:12.5px;color:var(--ink-soft);border-top:1px solid var(--line)}
+.map-footer strong{color:var(--ink)}
+
+.channels-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.channel-item{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:4px}
+.channel-item .ch-name{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute)}
+.channel-item .ch-val{font-size:13px;font-weight:600;color:var(--ink)}
+.channel-item .ch-note{font-size:11.5px;color:var(--ink-mute)}
+
+@media(max-width:960px){
+  .contact-layout{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .channels-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body class="has-pub-nav">
+<nav class="pub-nav"><div class="pub-nav-inner">
+  <a href="index.html" class="pub-brand"><span class="name">Immer<em>sium</em></span><span class="pub-beta">BETA</span></a>
+  <div class="pub-links">
+    <a href="index.html">Accueil</a>
+    <div class="pub-nav-item-cat">
+      <a href="catalogue.html">Catalogue<span class="chev">▾</span></a>
+      <div class="pub-cat-panel" onclick="event.stopPropagation()">
+        <div class="pub-cat-header"></div>
+        <div class="pub-cat-grid"></div>
+        <div class="pub-cat-footer"></div>
+      </div>
+    </div>
+    <a href="coaching.html">Coaching</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="demander-formation.html">Demander</a>
+    <a href="about.html">À propos</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <button class="pub-burger" onclick="toggleDrawer()" aria-label="Ouvrir le menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="pub-cta">
+    <a href="login.html" class="btn btn-ghost">Connexion</a>
+    <a href="catalogue.html" class="btn btn-jade">Essayer gratuitement →</a>
+  </div>
+</div></nav>
+
+<div class="pub-drawer" id="pub-drawer" onclick="if(event.target===this) toggleDrawer()">
+  <div class="pub-drawer-panel">
+    <div class="pub-drawer-head">
+      <div class="pub-brand"><span class="name">Immer<em>sium</em></span></div>
+      <button class="pub-drawer-close" onclick="toggleDrawer()" aria-label="Fermer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <nav class="pub-drawer-links">
+      <div class="pub-drawer-section">Navigation</div>
+      <a href="index.html">Accueil<span class="arr">→</span></a>
+      <a href="catalogue.html">Catalogue<span class="arr">→</span></a>
+      <a href="coaching.html">Coaching<span class="arr">→</span></a>
+      <a href="tarifs.html">Tarifs<span class="arr">→</span></a>
+      <a href="demander-formation.html">Demander une formation<span class="arr">→</span></a>
+      <a href="about.html">À propos<span class="arr">→</span></a>
+      <a href="faq.html">FAQ<span class="arr">→</span></a>
+      <a href="contact.html">Contact<span class="arr">→</span></a>
+      <div class="pub-drawer-section">Légal</div>
+      <a href="mentions.html">Mentions légales<span class="arr">→</span></a>
+      <a href="cgu.html">CGU<span class="arr">→</span></a>
+      <a href="cgv.html">CGV<span class="arr">→</span></a>
+    </nav>
+    <div class="pub-drawer-cta">
+      <a href="login.html" class="btn btn-outline">Connexion</a>
+      <a href="catalogue.html" class="btn btn-jade">Essayer gratuitement →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleDrawer() {
+  const d = document.getElementById('pub-drawer');
+  const isOpen = d.classList.contains('open');
+  if (isOpen) { d.classList.remove('open'); document.body.style.overflow = ''; }
+  else { d.classList.add('open'); document.body.style.overflow = 'hidden'; }
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { const d = document.getElementById('pub-drawer'); if (d && d.classList.contains('open')) toggleDrawer(); } });
+</script>
+
+<!-- Header -->
+<section class="contact-head">
+  <div class="container">
+    <div class="eyebrow">Nous contacter</div>
+    <h1>Écrivez-<em>nous</em>.</h1>
+    <p class="sub">Une question sur la plateforme, un projet de formation, une demande de coaching ou de partenariat ? Notre équipe vous répond sous 48h ouvrées.</p>
+  </div>
+</section>
+
+<!-- Main layout -->
+<div class="container">
+  <div class="contact-layout">
+
+    <!-- Form -->
+    <div class="contact-form-wrap">
+      <h2>Envoyer un message</h2>
+      <p class="form-sub">Tous les champs marqués d'un * sont obligatoires.</p>
+      <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prenom">Prénom *</label>
+            <input type="text" id="prenom" name="prenom" placeholder="Marie" required>
+          </div>
+          <div class="form-group">
+            <label for="nom">Nom *</label>
+            <input type="text" id="nom" name="nom" placeholder="Dupont" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Adresse email *</label>
+          <input type="email" id="email" name="email" placeholder="marie.dupont@exemple.fr" required>
+        </div>
+        <div class="form-group">
+          <label for="organisation">Organisation / Entreprise</label>
+          <input type="text" id="organisation" name="organisation" placeholder="MxC Formation (optionnel)">
+        </div>
+        <div class="form-group">
+          <label for="sujet">Sujet *</label>
+          <select id="sujet" name="sujet" required>
+            <option value="" disabled selected>Choisissez un sujet...</option>
+            <option value="question-plateforme">Question sur la plateforme</option>
+            <option value="coaching">Demande de coaching</option>
+            <option value="formation-sur-mesure">Formation sur mesure / Devis</option>
+            <option value="partenariat">Partenariat / CFA / OPCO</option>
+            <option value="support-technique">Support technique</option>
+            <option value="presse">Presse / Médias</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea id="message" name="message" placeholder="Décrivez votre demande en quelques lignes..." required></textarea>
+        </div>
+        <div class="form-consent">
+          <input type="checkbox" id="rgpd" name="rgpd" required>
+          <label for="rgpd">J'accepte que mes données soient traitées par Immersium / MxC Formation afin de répondre à ma demande, conformément à la <a href="mentions.html">politique de confidentialité</a>.</label>
+        </div>
+        <button type="submit" class="btn btn-jade form-submit">Envoyer le message →</button>
+      </form>
+      <div class="form-success" id="form-success">
+        <strong>Message envoyé !</strong><br>Merci pour votre message. Notre équipe vous répondra dans les 48h ouvrées.
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="contact-sidebar">
+
+      <!-- Coordonnées -->
+      <div class="info-card">
+        <div class="ic-head">
+          <div class="ic-icon">📍</div>
+          <div class="ic-title">Coordonnées</div>
+        </div>
+        <div class="ic-body">
+          <ul class="ic-list">
+            <li><span class="label">Société</span><span>MxC Formation<br><small>SAS au capital de 1 000 €</small></span></li>
+            <li><span class="label">Adresse</span><span>Basse-Terre, Guadeloupe<br>971 — France</span></li>
+            <li><span class="label">Email</span><span><a href="mailto:contact@immersium.fr">contact@immersium.fr</a></span></li>
+            <li><span class="label">SIRET</span><span>En cours d'immatriculation</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Carte -->
+      <div class="map-card">
+        <div class="map-placeholder">
+          <div class="mp-icon">🗺</div>
+          <p>Basse-Terre, Guadeloupe</p>
+        </div>
+        <div class="map-footer"><strong>Guadeloupe</strong> — Département et région d'outre-mer, France</div>
+      </div>
+
+      <!-- Autres canaux -->
+      <div class="info-card">
+        <div class="ic-head">
+          <div class="ic-icon">💬</div>
+          <div class="ic-title">Autres canaux</div>
+        </div>
+        <div class="channels-grid">
+          <div class="channel-item">
+            <div class="ch-name">Email</div>
+            <div class="ch-val">contact@<br>immersium.fr</div>
+            <div class="ch-note">Réponse sous 48h</div>
+          </div>
+          <div class="channel-item">
+            <div class="ch-name">Support</div>
+            <div class="ch-val"><a href="tickets.html" style="color:var(--cobalt)">Ouvrir un ticket</a></div>
+            <div class="ch-note">Pour les bugs & pannes</div>
+          </div>
+          <div class="channel-item">
+            <div class="ch-name">LinkedIn</div>
+            <div class="ch-val">Immersium</div>
+            <div class="ch-note">Actualités produit</div>
+          </div>
+          <div class="channel-item">
+            <div class="ch-name">Coaching</div>
+            <div class="ch-val"><a href="coaching.html" style="color:var(--cobalt)">Voir les formules</a></div>
+            <div class="ch-note">RDV personnalisé</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horaires -->
+      <div class="info-card">
+        <div class="ic-head">
+          <div class="ic-icon">🕐</div>
+          <div class="ic-title">Disponibilité</div>
+        </div>
+        <div class="ic-body">
+          <ul class="ic-list">
+            <li><span class="label">Lun–Ven</span><span>9h – 17h (heure Guadeloupe)<br><small>UTC−4 / UTC−5 en hiver</small></span></li>
+            <li><span class="label">Support</span><span>Tickets traités sous 24–48h ouvrées</span></li>
+            <li><span class="label">Coaching</span><span>Créneaux flexibles, adaptés aux DROM-COM</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer class="pub-footer"><div class="container">
+  <div class="pub-footer-top">
+    <div class="pub-footer-brand">
+      <div class="name">Immer<em>sium</em></div>
+      <div class="tag">Learn by doing · Caraïbes</div>
+      <p>La plateforme pédagogique qui remplace les cours par des missions.</p>
+    </div>
+    <div class="pub-footer-col"><h4>Produit</h4><ul><li><a href="catalogue.html">Catalogue</a></li><li><a href="coaching.html">Coaching</a></li><li><a href="tarifs.html">Tarifs</a></li><li><a href="about.html">À propos</a></li><li><a href="demander-formation.html">Demander une formation</a></li></ul></div>
+    <div class="pub-footer-col"><h4>Aide</h4><ul><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li><li><a href="tickets.html">Support</a></li></ul></div>
+    <div class="pub-footer-col"><h4>Légal</h4><ul><li><a href="mentions.html">Mentions légales</a></li><li><a href="cgu.html">CGU</a></li><li><a href="cgv.html">CGV</a></li></ul></div>
+  </div>
+  <div class="pub-footer-bottom"><div>© 2026 Immersium · Tous droits réservés</div><div>Fait avec soin en Guadeloupe</div></div>
+</div></footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+  form.style.display = 'none';
+  success.style.display = 'block';
+}
+(function(){
+  const items = document.querySelectorAll('.pub-nav-item-cat');
+  const canHover = window.matchMedia('(hover: hover)').matches;
+  items.forEach(it => {
+    const link = it.querySelector(':scope > a');
+    if (!link) return;
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 960) return;
+      if (canHover) return;
+      e.preventDefault();
+      items.forEach(o => { if (o !== it) o.classList.remove('open'); });
+      it.classList.toggle('open');
+    });
+  });
+  document.addEventListener('click', (e) => { items.forEach(it => { if (!it.contains(e.target)) it.classList.remove('open'); }); });
+})();
+</script>
+<script src="js/imm-catalog.js"></script>
+</body>
+</html>

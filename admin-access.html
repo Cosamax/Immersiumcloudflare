@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Accès & API — Immersium Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F8F5EE;--bg-alt:#F2EDE0;--paper:#FFFDF7;--paper-hover:#FFFBEF;
+  --ink:#0E1A2B;--ink-soft:#2A3749;--ink-mute:#6B7685;
+  --line:#E8E0CE;--marine:#0131B4;--orange:#FF6B35;--orange-soft:#FFE4D4;
+  --sand:#C9A96E;--coral:#D32F2F;--coral-soft:#FFEBEE;
+  --green:#1B5E20;--green-soft:#E8F5E9;--blue:#1565C0;--blue-soft:#E3F2FD;
+  --amber:#7C4D00;--amber-soft:#FFF8E1;
+  --r:12px;--r-lg:18px;--r-xl:24px;
+  --f-display:"Fraunces",Georgia,serif;
+  --f-body:"Inter Tight",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f-body);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,a{font:inherit;color:inherit;text-decoration:none;border:none;background:none;cursor:pointer}
+
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.app-side{background:var(--ink);color:rgba(255,255,255,.82);position:sticky;top:0;height:100vh;overflow:auto;display:flex;flex-direction:column}
+.app-brand{padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.app-brand .name{font-family:var(--f-display);font-size:22px;font-weight:500;letter-spacing:-.02em;color:#fff}
+.app-brand .name em{font-style:italic;color:var(--orange)}
+.app-brand .beta{font-family:var(--f-mono);font-size:8px;letter-spacing:.1em;background:var(--orange);color:#fff;padding:2px 6px;border-radius:4px;vertical-align:super;margin-left:4px;font-style:normal;font-weight:700}
+.app-brand .role{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-top:8px}
+.app-nav{flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:2px}
+.app-nav-sec{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600;padding:14px 10px 8px}
+.app-nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;font-size:13.5px;color:rgba(255,255,255,.72);transition:all .15s}
+.app-nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+.app-nav a.active{background:rgba(255,107,53,.15);color:var(--orange)}
+.app-nav a svg{opacity:.8;width:16px;height:16px;flex-shrink:0}
+.app-user{padding:14px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px}
+.app-user .av{width:36px;height:36px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.app-user .n{font-size:13px;font-weight:600;color:#fff}
+.app-user .r{font-size:11px;color:rgba(255,255,255,.5)}
+
+.app-top{position:sticky;top:0;z-index:30;background:rgba(248,245,238,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:14px 32px;display:flex;justify-content:space-between;align-items:center}
+.app-main{padding:32px 40px 120px;max-width:900px}
+
+.page-h{margin-bottom:28px}
+.page-h .eyebrow{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:6px}
+.page-h h1{font-family:var(--f-display);font-size:36px;font-weight:500;letter-spacing:-.025em;margin-bottom:6px}
+.page-h h1 em{font-style:italic;color:var(--marine)}
+.page-h .sub{color:var(--ink-mute);font-size:14px}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;margin-bottom:20px}
+.card-h{margin-bottom:18px}
+.card-h h2{font-family:var(--f-display);font-size:20px;font-weight:500;letter-spacing:-.01em;margin-bottom:4px}
+.card-h h2 em{font-style:italic;color:var(--marine)}
+.card-h .desc{font-size:13px;color:var(--ink-mute);line-height:1.55}
+
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 10px;border-radius:999px;font-weight:600}
+.pill-coral{background:var(--coral-soft);color:var(--coral)}
+.pill-green{background:var(--green-soft);color:var(--green)}
+.pill-mute{background:var(--bg-alt);color:var(--ink-mute)}
+.pill-amber{background:var(--amber-soft);color:var(--amber)}
+.pill .dot{width:6px;height:6px;border-radius:50%}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;transition:all .15s;border:1px solid transparent;cursor:pointer}
+.btn-orange{background:var(--orange);color:var(--ink);box-shadow:0 4px 12px -4px rgba(255,107,53,.5)}
+.btn-orange:hover{background:#FF8659}
+.btn-orange:disabled{opacity:.5;cursor:not-allowed}
+.btn-outline{background:var(--paper);border-color:var(--line);color:var(--ink)}
+.btn-outline:hover{background:var(--paper-hover);border-color:var(--sand)}
+.btn-sm{padding:7px 12px;font-size:12px}
+.btn-ghost{background:transparent;color:var(--ink-mute)}
+.btn-ghost:hover{background:var(--bg-alt);color:var(--ink)}
+
+.fld{margin-bottom:16px}
+.fld label{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:7px}
+.fld input,.fld select,.fld textarea{width:100%;padding:11px 14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;font-family:var(--f-body);font-size:14px;color:var(--ink);outline:none;transition:all .15s}
+.fld input:focus,.fld select:focus{border-color:var(--marine);box-shadow:0 0 0 3px rgba(0,0,128,.1);background:var(--paper)}
+.fld-hint{font-size:11.5px;color:var(--ink-mute);margin-top:5px}
+.fld input[type="password"]{font-family:var(--f-mono);letter-spacing:.08em}
+
+.key-group{display:flex;gap:8px;align-items:stretch}
+.key-group input{flex:1;border-radius:10px 0 0 10px;border-right:none}
+.key-group input:focus{z-index:1}
+.key-group .eye-btn{background:var(--bg);border:1px solid var(--line);border-left:none;border-radius:0 10px 10px 0;padding:0 14px;color:var(--ink-mute);transition:all .15s;flex-shrink:0}
+.key-group .eye-btn:hover{color:var(--ink);background:var(--paper-hover)}
+
+.info-box{background:var(--blue-soft);border:1px solid rgba(21,101,192,.2);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--blue);line-height:1.55;margin-bottom:16px;display:flex;gap:10px}
+.warn-box{background:var(--amber-soft);border:1px solid rgba(124,77,0,.2);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--amber);line-height:1.55;margin-bottom:16px;display:flex;gap:10px}
+.success-box{background:var(--green-soft);border:1px solid rgba(27,94,32,.2);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--green);line-height:1.55;margin-bottom:0;display:flex;gap:10px}
+
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);gap:12px}
+.setting-row:last-child{border-bottom:none}
+.setting-row .info .name{font-size:13.5px;font-weight:600}
+.setting-row .info .desc{font-size:12px;color:var(--ink-mute);margin-top:3px}
+.toggle{position:relative;width:46px;height:26px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:var(--line);border-radius:999px;cursor:pointer;transition:background .2s}
+.toggle input:checked+.toggle-track{background:var(--marine)}
+.toggle-track::after{content:'';position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.toggle input:checked+.toggle-track::after{transform:translateX(20px)}
+
+.status-row{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg-alt);border:1px solid var(--line);border-radius:10px;margin-bottom:10px;font-size:13px}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.status-dot.ok{background:var(--green)}
+.status-dot.err{background:var(--coral)}
+.status-dot.unknown{background:var(--ink-mute)}
+
+.model-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.model-card{border:2px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;transition:all .15s;position:relative}
+.model-card:hover{border-color:var(--marine);background:var(--blue-soft)}
+.model-card.selected{border-color:var(--marine);background:var(--blue-soft)}
+.model-card .m-name{font-weight:700;font-size:13px;margin-bottom:3px}
+.model-card .m-desc{font-size:12px;color:var(--ink-mute)}
+.model-card .m-badge{position:absolute;top:10px;right:10px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--amber-soft);color:var(--amber)}
+.model-card.selected .m-desc{color:var(--blue)}
+.model-card input[type="radio"]{position:absolute;opacity:0;width:0;height:0}
+
+.test-area{background:var(--bg-alt);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px}
+.test-area textarea{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-family:var(--f-body);font-size:13px;color:var(--ink);outline:none;resize:vertical;min-height:80px;transition:border-color .15s}
+.test-area textarea:focus{border-color:var(--marine)}
+.test-result{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:13px;line-height:1.6;margin-top:10px;color:var(--ink-soft);min-height:60px;white-space:pre-wrap;font-family:var(--f-mono)}
+.score-bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:8px 0}
+.score-fill{height:100%;border-radius:999px;background:var(--marine);transition:width .6s}
+
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:14px 22px;border-radius:12px;font-size:14px;box-shadow:0 10px 30px -8px rgba(0,0,0,.3);z-index:200;transition:transform .3s;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{background:var(--green)}
+.toast.error{background:var(--coral)}
+
+.spin{display:inline-block;width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.app-burger{display:none;width:40px;height:40px;border-radius:10px;background:var(--paper);border:1px solid var(--line);align-items:center;justify-content:center;cursor:pointer;color:var(--ink);flex-shrink:0}
+@media(max-width:1100px){
+  .app{grid-template-columns:1fr}
+  .app-side{display:none}
+  .app-main{padding:24px}
+  .app-burger{display:flex}
+  .app-side.mobile-open{display:flex;position:fixed;top:0;left:0;bottom:0;z-index:90;width:min(280px,85vw);box-shadow:6px 0 30px -6px rgba(0,0,0,.25)}
+  .app-backdrop{display:none;position:fixed;inset:0;z-index:89;background:rgba(14,26,43,.5)}
+  .app-backdrop.open{display:block}
+  .model-grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .page-h h1{font-size:26px}
+  .app-main{padding:16px 14px 90px}
+}
+</style>
+</head>
+<body>
+
+<script>window.IMM_REQUIRE_ROLE = 'admin';</script>
+<script type="module" src="immersium-guard.js"></script>
+<script type="module" src="js/imm-shared.js"></script>
+
+<div class="app">
+  <aside class="app-side">
+    <div class="app-brand">
+      <div class="name">Immer<em>sium</em> <span class="beta">BETA</span></div>
+      <div class="role">ADMIN CONSOLE</div>
+    </div>
+    <nav class="app-nav">
+      <a href="index.html" style="color:rgba(255,255,255,.95);background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:8px;padding:12px 18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+        Retour au site
+      </a>
+      <a href="admin-dashboard.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Tableau de bord
+      </a>
+      <div class="app-nav-sec">Utilisateurs</div>
+      <a href="admin-users.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Utilisateurs
+      </a>
+      <a href="admin-formateurs.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Formateurs
+      </a>
+      <a href="admin-apprenants.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Apprenants
+      </a>
+      <div class="app-nav-sec">Formation</div>
+      <a href="admin-sessions.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Sessions
+      </a>
+      <a href="admin-results.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75z"/><path d="M9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625z"/><path d="M16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+        Résultats
+      </a>
+      <a href="catalogue.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+        Catalogue
+      </a>
+      <div class="app-nav-sec">Contenu</div>
+      <a href="admin-editor.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Jeux &amp; Formations
+      </a>
+      <a href="admin-simulations.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Config simulations
+      </a>
+      <a href="admin-hero.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Page d'accueil
+      </a>
+      <a href="admin-vedettes.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Vedettes accueil
+      </a>
+      <a href="admin-pages.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Pages du site
+      </a>
+      <a href="admin-faq.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        FAQ
+      </a>
+      <a href="admin-tarifs.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Tarifs &amp; Plans
+      </a>
+      <a href="admin-coaching.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Coaches
+      </a>
+      <div class="app-nav-sec">Commercial</div>
+      <a href="admin-promotions.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14l6-6"/><circle cx="9.5" cy="9.5" r="1.5"/><circle cx="14.5" cy="14.5" r="1.5"/><rect x="2" y="2" width="20" height="20" rx="2.18"/></svg>
+        Promotions &amp; Accès
+      </a>
+      <div class="app-nav-sec">Système</div>
+      <a href="admin-stats.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>
+        Statistiques
+      </a>
+      <a href="admin-access.html" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/></svg>
+        Accès &amp; API
+      </a>
+      <a href="admin-export.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+        Exporter
+      </a>
+      <a href="admin-demandes.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Demandes formation
+      </a>
+      <a href="#" onclick="IMM_SIGNOUT();return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Déconnexion
+      </a>
+    </nav>
+    <div class="app-user">
+      <div class="av" id="user-av">—</div>
+      <div><div class="n" id="user-name">Chargement…</div><div class="r">Admin</div></div>
+    </div>
+  </aside>
+
+  <div>
+    <div class="app-top">
+      <button class="app-burger" onclick="toggleAppMenu()" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div><span class="pill pill-coral"><span class="dot" style="background:currentColor"></span> Mode admin</span></div>
+      <div></div>
+    </div>
+
+    <main class="app-main">
+      <div class="page-h">
+        <div class="eyebrow">Système</div>
+        <h1>Accès <em>&amp; API</em></h1>
+        <div class="sub">Configuration de l'intelligence artificielle et des paramètres de la plateforme.</div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════ -->
+      <!-- SECTION : CLÉ API ANTHROPIC                    -->
+      <!-- ═══════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="card-h">
+          <h2>Clé <em>API Anthropic</em></h2>
+          <div class="desc">Utilisée pour la correction automatique des réponses libres des apprenants. La clé est stockée de façon sécurisée en base de données et n'est jamais exposée côté client.</div>
+        </div>
+
+        <div class="info-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>La clé API est transmise via une Edge Function sécurisée. Elle n'apparaît jamais dans le code front-end. Obtenez votre clé sur <strong>console.anthropic.com</strong>.</span>
+        </div>
+
+        <div id="api-status-row" class="status-row" style="margin-bottom:16px">
+          <div class="status-dot unknown" id="status-dot"></div>
+          <span id="status-text">Vérification en cours…</span>
+        </div>
+
+        <div class="fld">
+          <label>Clé API Anthropic <span style="color:var(--coral)">*</span></label>
+          <div class="key-group">
+            <input type="password" id="anthropic-key" placeholder="sk-ant-api03-…" autocomplete="off" spellcheck="false">
+            <button class="eye-btn" onclick="toggleKeyVisibility()" id="eye-btn" title="Afficher/masquer">
+              <svg id="eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="fld-hint">Format : <span style="font-family:var(--f-mono)">sk-ant-api03-…</span></div>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-orange" id="btn-save-key" onclick="saveApiKey()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Enregistrer la clé
+          </button>
+          <button class="btn btn-outline" onclick="clearApiKey()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+            Effacer la clé
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════ -->
+      <!-- SECTION : MODÈLE IA                            -->
+      <!-- ═══════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="card-h">
+          <h2>Modèle <em>IA</em></h2>
+          <div class="desc">Choisissez le modèle Claude utilisé pour les corrections. Haiku est rapide et économique, Sonnet offre une meilleure qualité de feedback.</div>
+        </div>
+
+        <div class="model-grid" id="model-grid">
+          <label class="model-card selected" onclick="selectModel('claude-3-5-haiku-20241022', this)">
+            <input type="radio" name="model" value="claude-3-5-haiku-20241022" checked>
+            <div class="m-name">Claude 3.5 Haiku</div>
+            <div class="m-desc">Rapide, économique — idéal pour les corrections à volume élevé</div>
+            <div class="m-badge">Recommandé</div>
+          </label>
+          <label class="model-card" onclick="selectModel('claude-sonnet-4-5', this)">
+            <input type="radio" name="model" value="claude-sonnet-4-5">
+            <div class="m-name">Claude Sonnet 4.5</div>
+            <div class="m-desc">Qualité supérieure — feedback plus nuancé et pédagogique</div>
+          </label>
+          <label class="model-card" onclick="selectModel('claude-opus-4-5', this)">
+            <input type="radio" name="model" value="claude-opus-4-5">
+            <div class="m-name">Claude Opus 4.5</div>
+            <div class="m-desc">Meilleure qualité disponible — pour les évaluations critiques</div>
+          </label>
+          <label class="model-card" onclick="selectModel('claude-3-5-sonnet-20241022', this)">
+            <input type="radio" name="model" value="claude-3-5-sonnet-20241022">
+            <div class="m-name">Claude 3.5 Sonnet</div>
+            <div class="m-desc">Modèle équilibré — bon compromis qualité / coût</div>
+          </label>
+        </div>
+
+        <div style="margin-top:16px">
+          <button class="btn btn-orange" onclick="saveModel()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="5 13 10 18 20 7"/></svg>
+            Enregistrer le modèle
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════ -->
+      <!-- SECTION : TEST DE L'IA                         -->
+      <!-- ═══════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="card-h">
+          <h2>Tester <em>la correction IA</em></h2>
+          <div class="desc">Envoyez une réponse de test pour vérifier que la clé API fonctionne correctement et voir la qualité du feedback généré.</div>
+        </div>
+
+        <div class="test-area">
+          <div style="font-size:12px;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Réponse apprenant à corriger</div>
+          <textarea id="test-prompt" placeholder="Exemple : Comment gérez-vous un conflit entre deux collaborateurs ? Expliquez votre approche…">En cas de conflit entre deux collaborateurs, j'organise d'abord des entretiens individuels pour comprendre la situation de chaque côté, puis je réunis les deux parties pour un échange constructif en fixant des règles de communication claires.</textarea>
+          <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+            <button class="btn btn-outline" id="btn-test" onclick="testAI()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Lancer le test
+            </button>
+            <span id="test-status" style="font-size:12px;color:var(--ink-mute)"></span>
+          </div>
+
+          <div id="test-result-area" style="display:none;margin-top:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <div style="font-size:12px;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em">Résultat</div>
+              <div id="score-badge" style="font-family:var(--f-mono);font-size:13px;font-weight:700"></div>
+            </div>
+            <div class="score-bar"><div class="score-fill" id="score-fill" style="width:0%"></div></div>
+            <div class="test-result" id="test-result"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════ -->
+      <!-- SECTION : RÉGLAGES PLATEFORME                  -->
+      <!-- ═══════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="card-h">
+          <h2>Réglages <em>plateforme</em></h2>
+          <div class="desc">Options de configuration générale d'Immersium.</div>
+        </div>
+
+        <div class="setting-row">
+          <div class="info">
+            <div class="name">Mode BETA</div>
+            <div class="desc">Afficher le badge BETA dans l'interface admin</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="toggle-beta" onchange="saveSetting('beta_mode', this.checked ? 'true' : 'false')"><div class="toggle-track"></div></label>
+        </div>
+
+        <div class="setting-row">
+          <div class="info">
+            <div class="name">Correction IA activée</div>
+            <div class="desc">Activer la correction automatique des réponses libres par Claude</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="toggle-ai" onchange="saveSetting('ai_correction_enabled', this.checked ? 'true' : 'false')"><div class="toggle-track"></div></label>
+        </div>
+
+        <div class="setting-row">
+          <div class="info">
+            <div class="name">Mode maintenance</div>
+            <div class="desc">Restreindre l'accès public à la plateforme (les admins conservent l'accès)</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="toggle-maint" onchange="saveSetting('maintenance_mode', this.checked ? 'true' : 'false')"><div class="toggle-track"></div></label>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="app-backdrop" id="app-backdrop" onclick="toggleAppMenu()"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const sb = () => window.IMM_SUPABASE;
+
+let settings = {};
+let keyVisible = false;
+
+async function initPage(detail) {
+  const name = (detail && detail.name) || 'Admin';
+  $('user-name').textContent = name;
+  $('user-av').textContent = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2) || 'A';
+  await loadSettings();
+}
+
+document.addEventListener('imm:ready', e => initPage(e.detail));
+
+async function loadSettings() {
+  try {
+    const { data, error } = await sb().from('app_settings').select('key, value');
+    if (error) throw error;
+    settings = {};
+    (data || []).forEach(r => { settings[r.key] = r.value; });
+    applySettings();
+    checkApiKeyStatus();
+  } catch(err) {
+    showToast('error', 'Impossible de charger les paramètres');
+  }
+}
+
+function applySettings() {
+  const hasKey = settings['anthropic_api_key'] && settings['anthropic_api_key'].trim() !== '';
+  if (hasKey) {
+    $('anthropic-key').value = settings['anthropic_api_key'].substring(0, 12) + '…';
+    $('anthropic-key').dataset.hasKey = 'true';
+  }
+
+  const model = settings['ai_model'] || 'claude-3-5-haiku-20241022';
+  document.querySelectorAll('.model-card').forEach(card => {
+    const radio = card.querySelector('input[type="radio"]');
+    const isSelected = radio && radio.value === model;
+    card.classList.toggle('selected', isSelected);
+    if (radio) radio.checked = isSelected;
+  });
+
+  $('toggle-beta').checked = settings['beta_mode'] !== 'false';
+  $('toggle-ai').checked = settings['ai_correction_enabled'] !== 'false';
+  $('toggle-maint').checked = settings['maintenance_mode'] === 'true';
+}
+
+function checkApiKeyStatus() {
+  const hasKey = settings['anthropic_api_key'] && settings['anthropic_api_key'].trim().startsWith('sk-ant');
+  const dot = $('status-dot');
+  const text = $('status-text');
+  if (hasKey) {
+    dot.className = 'status-dot ok';
+    text.textContent = 'Clé API configurée — la correction IA est opérationnelle';
+  } else if (settings['anthropic_api_key'] && settings['anthropic_api_key'].trim() !== '') {
+    dot.className = 'status-dot unknown';
+    text.textContent = 'Clé enregistrée — format non reconnu (attendu : sk-ant-…)';
+  } else {
+    dot.className = 'status-dot err';
+    text.textContent = 'Aucune clé configurée — la correction IA est désactivée';
+  }
+}
+
+function toggleKeyVisibility() {
+  keyVisible = !keyVisible;
+  const input = $('anthropic-key');
+  input.type = keyVisible ? 'text' : 'password';
+  $('eye-icon').innerHTML = keyVisible
+    ? '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+    : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+}
+
+async function saveApiKey() {
+  const rawVal = $('anthropic-key').value.trim();
+  const hasKeyPrev = $('anthropic-key').dataset.hasKey === 'true';
+
+  if (!rawVal || (hasKeyPrev && rawVal.endsWith('…'))) {
+    showToast('error', 'Saisissez une clé API Anthropic complète');
+    return;
+  }
+
+  const btn = $('btn-save-key');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Enregistrement…';
+  try {
+    await upsertSetting('anthropic_api_key', rawVal);
+    settings['anthropic_api_key'] = rawVal;
+    $('anthropic-key').dataset.hasKey = 'true';
+    checkApiKeyStatus();
+    showToast('success', 'Clé API enregistrée');
+  } catch(err) {
+    showToast('error', 'Erreur : ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Enregistrer la clé';
+  }
+}
+
+async function clearApiKey() {
+  if (!confirm('Effacer la clé API Anthropic ? La correction IA sera désactivée.')) return;
+  try {
+    await upsertSetting('anthropic_api_key', '');
+    settings['anthropic_api_key'] = '';
+    $('anthropic-key').value = '';
+    $('anthropic-key').dataset.hasKey = '';
+    checkApiKeyStatus();
+    showToast('success', 'Clé API effacée');
+  } catch(err) {
+    showToast('error', 'Erreur : ' + err.message);
+  }
+}
+
+function selectModel(value, card) {
+  document.querySelectorAll('.model-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  const radio = card.querySelector('input[type="radio"]');
+  if (radio) radio.checked = true;
+}
+
+async function saveModel() {
+  const checked = document.querySelector('input[name="model"]:checked');
+  if (!checked) return;
+  try {
+    await upsertSetting('ai_model', checked.value);
+    settings['ai_model'] = checked.value;
+    showToast('success', 'Modèle enregistré : ' + checked.value);
+  } catch(err) {
+    showToast('error', 'Erreur : ' + err.message);
+  }
+}
+
+async function saveSetting(key, value) {
+  try {
+    await upsertSetting(key, value);
+    settings[key] = value;
+    if (key === 'beta_mode') {
+      document.querySelectorAll('.beta').forEach(b => b.style.display = value === 'false' ? 'none' : '');
+    }
+    showToast('success', 'Paramètre mis à jour');
+  } catch(err) {
+    showToast('error', 'Erreur : ' + err.message);
+    const toggle = document.querySelector(`#toggle-${key.replace('_mode','').replace('_enabled','').replace('ai_correction','ai')}`);
+    if (toggle) toggle.checked = !toggle.checked;
+  }
+}
+
+async function upsertSetting(key, value) {
+  const { error } = await sb()
+    .from('app_settings')
+    .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+  if (error) throw error;
+}
+
+async function testAI() {
+  const prompt = $('test-prompt').value.trim();
+  if (!prompt) { showToast('error', 'Saisissez une réponse à corriger'); return; }
+
+  const btn = $('btn-test');
+  btn.disabled = true;
+  $('test-status').innerHTML = '<span class="spin"></span> Correction en cours…';
+  $('test-result-area').style.display = 'none';
+
+  const url = `${window.IMM_SUPABASE.supabaseUrl}/functions/v1/anthropic-proxy`;
+  try {
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${window.IMM_SUPABASE.supabaseKey}`,
+      },
+      body: JSON.stringify({ prompt })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Erreur API');
+
+    $('test-status').textContent = 'Correction reçue !';
+    $('test-result-area').style.display = '';
+
+    let parsed = null;
+    try { parsed = JSON.parse(data.text); } catch(e) {}
+
+    if (parsed && typeof parsed.score === 'number') {
+      $('score-badge').textContent = `${parsed.score}/100 — ${parsed.mention || ''}`;
+      $('score-fill').style.width = parsed.score + '%';
+      $('score-fill').style.background = parsed.score >= 70 ? 'var(--green)' : parsed.score >= 40 ? 'var(--amber)' : 'var(--coral)';
+      let txt = '';
+      if (parsed.feedback) txt += parsed.feedback + '\n\n';
+      if (parsed.points_forts?.length) txt += 'Points forts :\n' + parsed.points_forts.map(p => '+ ' + p).join('\n') + '\n\n';
+      if (parsed.axes_amelioration?.length) txt += 'Axes d\'amélioration :\n' + parsed.axes_amelioration.map(p => '- ' + p).join('\n');
+      $('test-result').textContent = txt.trim();
+    } else {
+      $('score-badge').textContent = '';
+      $('score-fill').style.width = '0%';
+      $('test-result').textContent = data.text;
+    }
+  } catch(err) {
+    $('test-status').textContent = 'Erreur';
+    $('test-result-area').style.display = '';
+    $('score-badge').textContent = '';
+    $('score-fill').style.width = '0%';
+    $('test-result').textContent = 'Erreur : ' + err.message;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function showToast(type, msg) {
+  const t = $('toast');
+  t.className = 'toast show ' + type;
+  t.textContent = msg;
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function toggleAppMenu(){
+  const s = document.querySelector('.app-side');
+  const b = $('app-backdrop');
+  if (!s) return;
+  const o = s.classList.toggle('mobile-open');
+  if (b) b.classList.toggle('open', o);
+  document.body.style.overflow = o ? 'hidden' : '';
+}
+
+(function(){
+  if (localStorage.getItem('imm_beta_mode') === 'false') {
+    const b = document.querySelector('.app-brand .beta');
+    if (b) b.style.display = 'none';
+  }
+})();
+</script>
+</body>
+</html>
