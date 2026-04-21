@@ -101,6 +101,42 @@
 .comm-vocal .comm-header{background:rgba(245,158,11,.06);color:#D97706}
 .comm-vocal .comm-icon{background:rgba(245,158,11,.12);color:#D97706}
 
+/* ── Knowledge base ── */
+.kb-list { display: flex; flex-direction: column; gap: 16px; }
+.kb-card {
+  background: linear-gradient(135deg, #F8FAFF 0%, #F0F4FF 100%);
+  border: 1px solid #C7D7FF; border-radius: var(--r-lg); overflow: hidden;
+}
+.kb-card-head { padding: 14px 20px 10px; border-bottom: 1px solid #C7D7FF; display: flex; align-items: center; gap: 10px; }
+.kb-card-head h3 { font-size: 15px; font-weight: 700; color: #1E3A8A; margin: 0; }
+.kb-tag { padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: #DBEAFE; color: #1E40AF; }
+.kb-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+.kb-row { display: grid; grid-template-columns: 90px 1fr; gap: 10px; align-items: baseline; }
+.kb-row-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #64748B; padding-top: 2px; }
+.kb-row-content { font-size: 14px; color: var(--ink); line-height: 1.6; }
+.kb-row-content strong { color: #1E3A8A; }
+
+/* ── Progress steps within challenge ── */
+.phase-steps {
+  display: flex; align-items: center; gap: 0; margin-bottom: 28px;
+}
+.phase-step {
+  display: flex; align-items: center; flex: 1;
+}
+.phase-step-dot {
+  width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--ink-mute); flex-shrink: 0;
+  transition: all .25s;
+}
+.phase-step.done .phase-step-dot { background: #16A34A; border-color: #16A34A; color: #fff; }
+.phase-step.active .phase-step-dot { background: var(--cobalt); border-color: var(--cobalt); color: #fff; }
+.phase-step-line { flex: 1; height: 2px; background: var(--line); margin: 0 4px; transition: background .25s; }
+.phase-step.done + .phase-step .phase-step-line,
+.phase-step.done .phase-step-line { background: #16A34A; }
+.phase-step-label { font-size: 10px; color: var(--ink-mute); text-align: center; margin-top: 4px; }
+.phase-step-wrap { display: flex; flex-direction: column; align-items: center; }
+
 /* DOCUMENT */
 .game-doc{padding:24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);margin-bottom:28px;font-size:14px;line-height:1.65;color:var(--ink-soft);max-height:400px;overflow-y:auto}
 .game-doc h3,.game-doc h4{color:var(--ink);margin:16px 0 8px}
@@ -430,6 +466,72 @@
     const m = String(rawId).match(/(\d+)$/);
     return m ? parseInt(m[1]) : null;
   }
+
+  // ─── Accéder aux données brutes d'un défi (incluant knowledge_notions) ──
+  function getChallengeRaw(idx) {
+    const ch = flatChallenges[idx - 1];
+    if (!ch) return null;
+    const num = extractNum(ch.rawId);
+    if (num === null) return null;
+    const key1 = `${gameId}_ch${num}`;
+    const key2 = String(ch.rawId);
+    const key3 = `ch${num}`;
+    return challengesData[key1] || challengesData[key2] || challengesData[key3] || null;
+  }
+
+  // ─── Obtenir les knowledge_notions d'un défi ──────────────────────
+  function getKnowledgeNotions(idx) {
+    const raw = getChallengeRaw(idx);
+    if (!raw) return [];
+    const kn = raw.knowledge_notions;
+    if (Array.isArray(kn) && kn.length > 0) return kn;
+    return [];
+  }
+
+  // ─── Rendu des cartes de notions ──────────────────────────────────
+  function renderKnowledgeBase(kb) {
+    if (!kb || kb.length === 0) return '';
+    return `<div class="kb-list">${kb.map(k => `
+      <div class="kb-card">
+        <div class="kb-card-head">
+          <span class="kb-tag">Notion</span>
+          <h3>${esc(k.title)}</h3>
+        </div>
+        <div class="kb-body">
+          ${k.definition ? `<div class="kb-row"><div class="kb-row-label">D\u00e9finition</div><div class="kb-row-content">${esc(k.definition)}</div></div>` : ''}
+          ${k.analogy ? `<div class="kb-row"><div class="kb-row-label">Analogie</div><div class="kb-row-content">${esc(k.analogy)}</div></div>` : ''}
+          ${k.example ? `<div class="kb-row"><div class="kb-row-label">Exemple</div><div class="kb-row-content">${esc(k.example)}</div></div>` : ''}
+        </div>
+      </div>`).join('')}</div>`;
+  }
+
+  // ─── Stepper de progression dans un défi ───────────────────────────
+  function buildPhaseSteps(hasKB, totalQ, currentPhase, currentQIdx) {
+    const steps = [];
+    if (hasKB) steps.push({ id: 'knowledge', label: 'Notions' });
+    for (let i = 1; i <= totalQ; i++) {
+      steps.push({ id: `q${i}`, label: `Question ${i}` });
+    }
+
+    const currentId = currentPhase === 'knowledge' ? 'knowledge' : `q${currentQIdx}`;
+    const currentStepIdx = steps.findIndex(s => s.id === currentId);
+
+    return `<div class="phase-steps">${steps.map((s, i) => {
+      const isDone = i < currentStepIdx;
+      const isActive = i === currentStepIdx;
+      return `
+        <div class="phase-step ${isDone ? 'done' : isActive ? 'active' : ''}">
+          ${i > 0 ? `<div class="phase-step-line"></div>` : ''}
+          <div class="phase-step-wrap">
+            <div class="phase-step-dot">${isDone ? '\u2713' : i + 1}</div>
+            <div class="phase-step-label">${s.label}</div>
+          </div>
+        </div>`;
+    }).join('')}</div>`;
+  }
+
+  // ─── Variable pour suivre la phase courante ────────────────────────
+  let currentPhase = 'knowledge'; // 'knowledge' or 'questions'
 
   // ─── Trouver les données d'un défi par index séquentiel ──────────
   function getChallengeData(idx) {
@@ -845,6 +947,11 @@
     const firstQ = questions[0];
     const challengeTitle = firstQ.t || (chInfo ? chInfo.title : 'Défi ' + idx);
     const challengeColor = firstQ.c || gameColor;
+    const knowledgeNotions = getKnowledgeNotions(idx);
+    const hasKB = knowledgeNotions.length > 0;
+
+    // Determine initial phase
+    currentPhase = hasKB ? 'knowledge' : 'questions';
 
     let html = '';
 
@@ -858,6 +965,32 @@
         <span>${questions.length} question${questions.length > 1 ? 's' : ''}</span>
       </div>
     </div>`;
+
+    // ─── STEPPER ──────────────────────────────────────────────────
+    html += buildPhaseSteps(hasKB, questions.length, 'knowledge', 1);
+
+    // ─── KNOWLEDGE BASE (Notions à connaître) ────────────────────
+    if (hasKB) {
+      const kbHtml = renderKnowledgeBase(knowledgeNotions);
+      html += `<div id="knowledge-section">
+        <div style="padding:24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);margin-bottom:28px">
+          <div style="margin-bottom:16px">
+            <span style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--ink);color:#fff;font-family:var(--f-mono)">Base de connaissances</span>
+          </div>
+          <h2 style="font-size:18px;color:var(--ink-soft);font-weight:500;margin-bottom:20px">Lisez ces notions avant de répondre aux questions</h2>
+          <div style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--ink-mute);margin-bottom:16px">Notions à connaître</div>
+          ${kbHtml}
+          <div style="display:flex;justify-content:flex-end;margin-top:24px">
+            <button class="btn btn-primary" onclick="showQuestions(${idx})" style="background:#16A34A">
+              Commencer le défi →
+            </button>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // ─── QUESTIONS SECTION (hidden initially if KB exists) ────────
+    html += `<div id="questions-section" style="${hasKB ? 'display:none' : ''}">`;
 
     // Communications AVANT (from first question's comms_before)
     if (firstQ.comms_before) {
@@ -960,6 +1093,9 @@
       </button>
     </div>`;
 
+    // Close questions-section div
+    html += `</div>`;
+
     content.innerHTML = html;
     content.scrollTop = 0;
 
@@ -971,6 +1107,28 @@
 
     // Update toolbox
     renderToolbox(questions, challengeColor);
+  }
+
+  // ─── Fonction pour passer des notions aux questions ────────────────
+  window.showQuestions = function(idx) {
+    currentPhase = 'questions';
+    const kbSection = document.getElementById('knowledge-section');
+    const qSection = document.getElementById('questions-section');
+    if (kbSection) kbSection.style.display = 'none';
+    if (qSection) qSection.style.display = 'block';
+
+    // Update stepper to show Q1 as active
+    const questions = getChallengeData(idx);
+    const knowledgeNotions = getKnowledgeNotions(idx);
+    const hasKB = knowledgeNotions.length > 0;
+    const stepperContainer = document.querySelector('.phase-steps');
+    if (stepperContainer) {
+      stepperContainer.outerHTML = buildPhaseSteps(hasKB, questions ? questions.length : 0, 'questions', 1);
+    }
+
+    // Scroll to top
+    const content = document.getElementById('game-content');
+    if (content) content.scrollTop = 0;
   }
 
   // ═══════════════════════════════════════════════════════════════════
