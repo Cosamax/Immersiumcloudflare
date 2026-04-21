@@ -440,7 +440,87 @@
     const key1 = `${gameId}_ch${num}`;
     const key2 = String(ch.rawId);
     const key3 = `ch${num}`;
-    return challengesData[key1] || challengesData[key2] || challengesData[key3] || null;
+    const raw = challengesData[key1] || challengesData[key2] || challengesData[key3] || null;
+    if (!raw) return null;
+
+    // If raw is already an array (old format), return as-is
+    if (Array.isArray(raw)) return raw;
+
+    // New format: { scenario, questions } → transform to expected array
+    const scenario = raw.scenario || '';
+    const rawQuestions = raw.questions || [];
+    if (rawQuestions.length === 0) return null;
+
+    return rawQuestions.map((rq, qi) => {
+      const transformed = {
+        type: rq.type || 'mcq',
+        q: rq.question || '',
+        explanation: rq.explanation || '',
+        points: rq.points || 10
+      };
+
+      // Attach scenario to first question
+      if (qi === 0 && scenario) {
+        transformed.sc = scenario;
+      }
+
+      const opts = rq.options || [];
+      const qType = transformed.type;
+
+      if (qType === 'mcq') {
+        // MCQ: options → opts with {t, ok, fb}
+        const correctIdx = typeof rq.correct_answer === 'number' ? rq.correct_answer : -1;
+        transformed.opts = opts.map((o, oi) => ({
+          t: o.text || '',
+          ok: o.correct === true || oi === correctIdx,
+          fb: o.feedback || ''
+        }));
+      } else if (qType === 'checkbox') {
+        // Checkbox: options → opts with {t, ok, fb}
+        transformed.opts = opts.map(o => ({
+          t: o.text || '',
+          ok: o.correct === true,
+          fb: o.feedback || ''
+        }));
+      } else if (qType === 'ordering') {
+        // Ordering: options → items (array of text strings)
+        // Items are provided in the correct order already
+        transformed.items = opts.map(o => o.text || '');
+        // The solution is the original order (indices)
+        transformed.solution = opts.map((_, i) => i);
+      } else if (qType === 'matching') {
+        // Matching: options come in pairs (pair_1 left, pair_1 right, pair_2 left, etc.)
+        // Group by pair id
+        const pairMap = {};
+        opts.forEach(o => {
+          const pairId = o.id || '';
+          if (!pairMap[pairId]) pairMap[pairId] = [];
+          pairMap[pairId].push(o.text || '');
+        });
+        transformed.pairs = Object.values(pairMap).map(texts => ({
+          left: texts[0] || '',
+          right: texts[1] || ''
+        }));
+      } else if (qType === 'tuto') {
+        // Tuto: may have opts for MCQ after video
+        if (opts.length > 0) {
+          transformed.opts = opts.map(o => ({
+            t: o.text || '',
+            ok: o.correct === true,
+            fb: o.feedback || ''
+          }));
+        }
+      } else if (qType === 'tool') {
+        // Tool: free text response
+        // toolUrl and toolInstruction may come from options or question text
+      } else if (qType === 'screenshot') {
+        // Screenshot: free text/upload response
+      } else if (qType === 'free') {
+        // Free text response
+      }
+
+      return transformed;
+    });
   }
 
   // ─── Mise à jour titre + bannière ────────────────────────────────
