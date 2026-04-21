@@ -459,6 +459,13 @@
         points: rq.points || 10
       };
 
+      // Pass through metadata fields if present
+      if (rq.ytUrl) transformed.ytUrl = rq.ytUrl;
+      if (rq.placeholder) transformed.placeholder = rq.placeholder;
+      if (rq.aiPrompt) transformed.aiPrompt = rq.aiPrompt;
+      if (rq.toolUrl) transformed.toolUrl = rq.toolUrl;
+      if (rq.toolInstruction) transformed.toolInstruction = rq.toolInstruction;
+
       // Attach scenario to first question
       if (qi === 0 && scenario) {
         transformed.sc = scenario;
@@ -483,23 +490,36 @@
           fb: o.feedback || ''
         }));
       } else if (qType === 'ordering') {
-        // Ordering: options → items (array of text strings)
-        // Items are provided in the correct order already
+        // Ordering: options have text and order (correct position)
         transformed.items = opts.map(o => o.text || '');
-        // The solution is the original order (indices)
-        transformed.solution = opts.map((_, i) => i);
+        // Build solution: the correct order based on 'order' field
+        if (opts.length > 0 && opts[0].order !== undefined) {
+          // Create array of indices sorted by their 'order' value
+          const indexed = opts.map((o, i) => ({ idx: i, order: o.order }));
+          indexed.sort((a, b) => a.order - b.order);
+          transformed.solution = indexed.map(x => x.idx);
+        } else {
+          transformed.solution = opts.map((_, i) => i);
+        }
       } else if (qType === 'matching') {
-        // Matching: options come in pairs (pair_1 left, pair_1 right, pair_2 left, etc.)
-        // Group by pair id
+        // Matching: options come in pairs with term/definition or text fields
         const pairMap = {};
         opts.forEach(o => {
           const pairId = o.id || '';
-          if (!pairMap[pairId]) pairMap[pairId] = [];
-          pairMap[pairId].push(o.text || '');
+          if (!pairMap[pairId]) pairMap[pairId] = { left: '', right: '' };
+          if (o.term !== undefined) {
+            pairMap[pairId].left = o.term;
+          } else if (o.definition !== undefined) {
+            pairMap[pairId].right = o.definition;
+          } else if (o.text) {
+            // Fallback: first text is left, second is right
+            if (!pairMap[pairId].left) pairMap[pairId].left = o.text;
+            else pairMap[pairId].right = o.text;
+          }
         });
-        transformed.pairs = Object.values(pairMap).map(texts => ({
-          left: texts[0] || '',
-          right: texts[1] || ''
+        transformed.pairs = Object.values(pairMap).map(p => ({
+          left: p.left || '',
+          right: p.right || ''
         }));
       } else if (qType === 'tuto') {
         // Tuto: may have opts for MCQ after video
