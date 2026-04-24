@@ -3208,10 +3208,11 @@ async function renderEditorSim(el) {
     <div style="text-align:center;padding:40px;color:var(--ink-mute)">Chargement de ${gameId.toUpperCase()}…</div>
   </div>`;
 
-  // Charger simulation + challenges (pour la liste de défis)
-  const [simRes, chalRes] = await Promise.all([
+  // Charger simulation + challenges + questions (pour la liste de défis)
+  const [simRes, chalRes, questRes] = await Promise.all([
     sb.from('simulations').select('*').eq('game_id', gameId).single(),
-    sb.from('challenges').select('challenge_num,challenge_title,session_name,question_index').eq('game_id', gameId).order('challenge_num').order('question_index')
+    sb.from('challenges').select('*').eq('game_id', gameId).order('challenge_num'),
+    sb.from('questions').select('challenge_num,question_index').eq('game_id', gameId).order('challenge_num')
   ]);
 
   if (simRes.error || !simRes.data) {
@@ -3219,21 +3220,25 @@ async function renderEditorSim(el) {
     return;
   }
   const sim = simRes.data;
-  const challenges = chalRes.data || [];
-  editorState.cache.challenges[gameId] = challenges;
+  const challengeRows = chalRes.data || [];
+  const questionRows = questRes.data || [];
+  editorState.cache.challenges[gameId] = challengeRows;
 
-  // Regrouper les questions par défi
+  // Regrouper les questions par défi en utilisant les deux sources
   const byChal = {};
-  challenges.forEach(c => {
-    if (!byChal[c.challenge_num]) {
-      byChal[c.challenge_num] = {
-        num: c.challenge_num,
-        title: c.challenge_title || `Défi ${c.challenge_num}`,
-        session: c.session_name || '',
-        questions: []
-      };
+  challengeRows.forEach(c => {
+    byChal[c.challenge_num] = {
+      num: c.challenge_num,
+      title: c.challenge_title || c.title || `Défi ${c.challenge_num}`,
+      session: c.session_name || c.session_num || '',
+      questions: []
+    };
+  });
+  questionRows.forEach(q => {
+    if (!byChal[q.challenge_num]) {
+      byChal[q.challenge_num] = { num: q.challenge_num, title: `Défi ${q.challenge_num}`, session: '', questions: [] };
     }
-    byChal[c.challenge_num].questions.push(c.question_index);
+    byChal[q.challenge_num].questions.push(q.question_index);
   });
   const chalList = Object.values(byChal).sort((a, b) => a.num - b.num);
 
@@ -3619,19 +3624,31 @@ async function renderEditorChallenge(el) {
 
   el.innerHTML = `<div class="wrap">${editorBreadcrumb()}<div style="padding:40px;color:var(--ink-mute);text-align:center">Chargement…</div></div>`;
 
-  const { data: questions, error } = await sb
-    .from('challenges')
-    .select('*')
-    .eq('game_id', gameId)
-    .eq('challenge_num', cn)
-    .order('question_index');
+  // Charger le challenge, les questions et les notions séparément
+  const [chalRes, questRes, notionsRes] = await Promise.all([
+    sb.from('challenges').select('*').eq('game_id', gameId).eq('challenge_num', cn).single(),
+    sb.from('questions').select('*').eq('game_id', gameId).eq('challenge_num', cn).order('question_index'),
+    sb.from('knowledge_notions').select('*').eq('game_id', gameId).eq('challenge_num', cn)
+  ]);
 
-  if (error || !questions || questions.length === 0) {
-    el.innerHTML = `<div class="wrap">${editorBreadcrumb()}<div style="padding:40px;color:#DC2626">${error?.message || 'Aucune question trouvée'}</div></div>`;
+  const challenge = chalRes.data;
+  const questions = questRes.data || [];
+  const notions = notionsRes.data || [];
+
+  if (!challenge && questions.length === 0) {
+    el.innerHTML = `<div class="wrap">${editorBreadcrumb()}<div style="padding:40px;color:#DC2626">Aucune donnée trouvée pour ce défi</div></div>`;
     return;
   }
 
-  const firstQ = questions[0];
+  // Attacher les notions aux questions (par challenge_num)
+  questions.forEach(q => {
+    q.knowledge_notions = notions;
+    q.challenge_title = challenge ? (challenge.challenge_title || challenge.title) : '';
+    q.session_name = challenge ? (challenge.session_name || challenge.session_num) : '';
+    q.scenario = challenge ? challenge.scenario : '';
+  });
+
+  const firstQ = questions.length > 0 ? questions[0] : { challenge_title: challenge?.title || '', session_name: challenge?.session_num || '' };
 
   el.innerHTML = `<div class="wrap">
     ${editorBreadcrumb()}
@@ -3699,16 +3716,18 @@ async function renderEditorChallenge(el) {
 
 window.saveChallengeInfo = async function() {
   const sb = window.IMM_SUPABASE;
+  // Utiliser les noms de colonnes D1 (title, session_num)
+  // Inclure challenge_num dans le payload pour que le Worker puisse filtrer
   const payload = {
-    challenge_title: document.getElementById('chal-title').value.trim() || null,
-    session_name: document.getElementById('chal-session').value.trim() || null,
+    title: document.getElementById('chal-title').value.trim() || null,
+    session_num: document.getElementById('chal-session').value.trim() || null,
+    challenge_num: editorState.challengeNum,
   };
   try {
     const { error } = await sb
       .from('challenges')
       .update(payload)
-      .eq('game_id', editorState.gameId)
-      .eq('challenge_num', editorState.challengeNum);
+      .eq('game_id', editorState.gameId);
     if (error) throw error;
     showToast('Infos du défi mises à jour', 'success');
   } catch (e) {
@@ -3725,18 +3744,28 @@ async function renderEditorQuestion(el) {
 
   el.innerHTML = `<div class="wrap">${editorBreadcrumb()}<div style="padding:40px;color:var(--ink-mute);text-align:center">Chargement…</div></div>`;
 
-  const { data: q, error } = await sb
-    .from('challenges')
-    .select('*')
-    .eq('game_id', gameId)
-    .eq('challenge_num', challengeNum)
-    .eq('question_index', questionIndex)
-    .single();
+  // Charger la question, le challenge (pour le scénario) et les notions
+  const [questRes, chalRes, notionsRes] = await Promise.all([
+    sb.from('questions').select('*').eq('game_id', gameId).eq('challenge_num', challengeNum).eq('question_index', questionIndex).single(),
+    sb.from('challenges').select('*').eq('game_id', gameId).eq('challenge_num', challengeNum).single(),
+    sb.from('knowledge_notions').select('*').eq('game_id', gameId).eq('challenge_num', challengeNum)
+  ]);
 
-  if (error || !q) {
-    el.innerHTML = `<div class="wrap">${editorBreadcrumb()}<div style="padding:40px;color:#DC2626">${error?.message || 'Question introuvable'}</div></div>`;
+  const q = questRes.data;
+  const challenge = chalRes.data;
+  const notions = notionsRes.data || [];
+
+  if (!q) {
+    el.innerHTML = `<div class="wrap">${editorBreadcrumb()}<div style="padding:40px;color:#DC2626">${questRes.error?.message || 'Question introuvable'}</div></div>`;
     return;
   }
+
+  // Enrichir la question avec les données du challenge et les notions
+  q.scenario = challenge?.scenario || '';
+  q.challenge_title = challenge?.title || challenge?.challenge_title || '';
+  q.session_name = challenge?.session_num || challenge?.session_name || '';
+  q.knowledge_notions = notions;
+  q.prompt = q.prompt || q.question || '';
 
   // Parser les JSONB qui pourraient être des strings
   ['options', 'options_detailed', 'correct_answer', 'pairs', 'knowledge_notions',
@@ -4200,14 +4229,62 @@ window.saveQuestion = async function() {
     payload.expected_description = document.getElementById('q-expected')?.value.trim() || null;
   }
 
+  // Séparer les données: question vs challenge vs notions
+  const questionPayload = {
+    type: payload.type,
+    question: payload.question,
+    explanation: payload.explanation,
+    points: payload.points,
+    options: payload.options,
+    correct_answer: payload.correct_answer,
+  };
+
+  // Sauvegarder le scénario dans le challenge si modifié
+  const scenarioPayload = {};
+  if (payload.scenario !== undefined) scenarioPayload.scenario = payload.scenario;
+
+  // Extraire les notions pour sauvegarde séparée
+  const notionsData = payload.knowledge_notions || [];
+
   try {
-    const { error } = await sb
-      .from('challenges')
-      .update(payload)
-      .eq('game_id', q.game_id)
-      .eq('challenge_num', q.challenge_num)
-      .eq('question_index', q.question_index);
-    if (error) throw error;
+    // 1. Sauvegarder la question via PATCH /api/questions/:id
+    const { error: qErr } = await sb
+      .from('questions')
+      .update(questionPayload)
+      .eq('id', q.id);
+    if (qErr) throw qErr;
+
+    // 2. Sauvegarder le scénario dans le challenge si modifié
+    if (Object.keys(scenarioPayload).length > 0) {
+      await sb.from('challenges').update(scenarioPayload)
+        .eq('game_id', q.game_id)
+        .eq('challenge_num', q.challenge_num);
+    }
+
+    // 3. Sauvegarder les notions: supprimer les anciennes et recréer
+    if (notionsData.length > 0 || (q.knowledge_notions && q.knowledge_notions.length > 0)) {
+      // Supprimer les notions existantes
+      const existingNotions = Array.isArray(q.knowledge_notions) ? q.knowledge_notions : [];
+      for (const n of existingNotions) {
+        if (n.id) {
+          await sb.from('knowledge_notions').delete().eq('id', n.id);
+        }
+      }
+      // Créer les nouvelles notions
+      for (let i = 0; i < notionsData.length; i++) {
+        const n = notionsData[i];
+        await sb.from('knowledge_notions').insert({
+          game_id: q.game_id,
+          challenge_num: q.challenge_num,
+          title: n.title || '',
+          definition: n.definition || '',
+          analogy: n.analogy || '',
+          example: n.example || '',
+          sort_order: i + 1,
+        });
+      }
+    }
+
     showToast(`Question ${q.question_index} sauvegardée`, 'success');
   } catch (e) {
     console.error('[ADMIN] saveQuestion:', e);
@@ -4659,9 +4736,9 @@ async function renderPages(el) {
   </div>`;
 
   const sb = window.IMM_SUPABASE;
-  const { data, error } = await sb.from('editorial_pages').select('*').order('slug');
+  const { data, error } = await sb.from('site_pages').select('*').order('slug');
   if (error) {
-    const missing = (error.message || '').toLowerCase().includes('editorial_pages') || error.code === '42P01';
+    const missing = (error.message || '').toLowerCase().includes('pages') || error.code === '42P01';
     el.innerHTML = `<div class="wrap"><div class="card" style="padding:30px;max-width:620px">
       <h3 style="margin-bottom:10px">${missing ? 'Table non initialisée' : 'Erreur'}</h3>
       <p style="font-size:13px;color:var(--ink-mute)">${missing ? 'Lance <code>sql/09-site-content.sql</code> dans Supabase.' : escapeHtml(error.message)}</p>
@@ -4758,7 +4835,7 @@ window.savePage = async function() {
   };
   if (!payload.title) { showToast('Le titre est obligatoire', 'error'); return; }
   try {
-    const { error } = await sb.from('editorial_pages').update(payload).eq('slug', slug);
+    const { error } = await sb.from('site_pages').update(payload).eq('slug', slug);
     if (error) throw error;
     showToast('Page mise à jour', 'success');
     closePageModal();

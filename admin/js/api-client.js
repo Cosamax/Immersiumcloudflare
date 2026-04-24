@@ -52,6 +52,26 @@
   // ── In-memory cache for client-side filtering ──
   const cache = {};
 
+  // Column aliases: map D1 column names to what app.js expects
+  const COLUMN_ALIASES = {
+    challenges: { title: 'challenge_title', session_num: 'session_name' },
+    questions: { options: 'options' },  // options_json is already parsed by API
+  };
+
+  function applyColumnAliases(table, rows) {
+    const aliases = COLUMN_ALIASES[table];
+    if (!aliases) return rows;
+    return rows.map(row => {
+      const out = { ...row };
+      for (const [src, dst] of Object.entries(aliases)) {
+        if (src in out && !(dst in out)) {
+          out[dst] = out[src];
+        }
+      }
+      return out;
+    });
+  }
+
   async function fetchTable(table, params = {}) {
     const endpoint = getEndpoint(table);
     let url = API_BASE + endpoint;
@@ -62,8 +82,10 @@
       const resp = await fetch(url);
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const json = await resp.json();
-      const data = json.data || [];
-      cache[table] = Array.isArray(data) ? data : [data];
+      let data = json.data || [];
+      if (!Array.isArray(data)) data = [data];
+      data = applyColumnAliases(table, data);
+      cache[table] = data;
       return cache[table];
     } catch (e) {
       console.warn(`[API] Error fetching ${table}:`, e.message);
@@ -259,8 +281,18 @@
         }
 
         try {
-          // Fetch from API
-          const allData = await fetchTable(tableName, filterParams.role ? { role: filterParams.role } : {});
+          // Pass relevant filterParams as query parameters to the API
+          const apiParams = {};
+          for (const [k, v] of Object.entries(filterParams)) {
+            if (['game_id', 'challenge_num', 'session_id', 'user_id', 'role', 'page_id', 'status', 'type'].includes(k)) {
+              apiParams[k] = v;
+            }
+          }
+          if (orderField) {
+            apiParams.order = orderField;
+            if (!orderAsc) apiParams.order_dir = 'desc';
+          }
+          const allData = await fetchTable(tableName, apiParams);
           let result = [...allData];
 
           // Apply client-side filters

@@ -40,16 +40,25 @@
 .editor-panel-head h2{font-family:var(--f-display);font-size:22px;font-weight:500}
 .editor-panel-head h2 em{font-style:italic;color:var(--marine)}
 .editor-panel .sub{font-size:13px;color:var(--ink-mute);margin-bottom:20px}
+/* Tabs */
+.ed-tabs{display:flex;gap:0;border-bottom:2px solid var(--line);margin-bottom:20px}
+.ed-tab{padding:10px 20px;font-size:13px;font-weight:600;color:var(--ink-mute);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.ed-tab:hover{color:var(--ink-soft)}
+.ed-tab.active{color:var(--marine);border-bottom-color:var(--marine)}
+.ed-tab .badge{font-family:var(--f-mono);font-size:10px;background:var(--bg-alt);border:1px solid var(--line);padding:1px 6px;border-radius:999px;margin-left:6px}
+.ed-tab.active .badge{background:rgba(2,74,255,.08);border-color:rgba(2,74,255,.15);color:var(--marine)}
 .ch-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
 .challenge-card{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r);padding:18px;transition:border-color .15s}
 .challenge-card:hover{border-color:var(--sand)}
 .challenge-card .ch-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:8px}
-.ch-meta{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.ch-meta{display:flex;align-items:center;gap:8px;flex:1;min-width:0;flex-wrap:wrap}
 .ch-num{font-family:var(--f-mono);font-size:11px;font-weight:700;color:var(--ink-mute);white-space:nowrap}
 .ch-type-badge{font-family:var(--f-mono);font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap}
 .ch-type-badge.qcm{background:rgba(2,74,255,.08);color:var(--marine)}
 .ch-type-badge.open{background:rgba(13,148,136,.1);color:var(--jade)}
 .ch-type-badge.vrai_faux{background:rgba(217,119,6,.1);color:var(--amber)}
+.ch-type-badge.scenario{background:rgba(255,107,0,.1);color:var(--orange)}
+.ch-type-badge.notion{background:rgba(139,92,246,.1);color:#7C3AED}
 .ch-actions{display:flex;gap:6px;flex-shrink:0}
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink);transition:all .15s}
 .btn:hover{background:var(--paper-hover);border-color:var(--sand)}.btn.primary{background:var(--marine);color:#fff;border-color:var(--marine)}.btn.primary:hover{background:#0040DD}.btn.sm{padding:6px 12px;font-size:12px}.btn.xs{padding:4px 10px;font-size:11px}.btn.danger-xs{padding:4px 10px;font-size:11px;background:var(--coral-soft);color:var(--coral);border-color:transparent}
@@ -58,12 +67,14 @@
 .form-row input,.form-row textarea,.form-row select{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:var(--r);font-size:13px;font-family:var(--f-body);background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s;resize:vertical}
 .form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:var(--marine)}
 .form-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-cols-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 .options-block{margin-top:12px}
 .options-block .opt-head{font-size:11px;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-.option-row{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:8px;margin-bottom:6px}
-.option-row .opt-letter{font-family:var(--f-mono);font-size:12px;font-weight:700;color:var(--ink-mute);text-align:center}
-.option-row input[type=text]{padding:7px 10px}
-.option-row input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--jade)}
+.option-row{display:grid;grid-template-columns:28px 1fr auto;align-items:start;gap:8px;margin-bottom:10px;padding:10px;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r)}
+.option-row .opt-letter{font-family:var(--f-mono);font-size:12px;font-weight:700;color:var(--ink-mute);text-align:center;padding-top:8px}
+.option-row input[type=text],.option-row textarea{padding:7px 10px;width:100%}
+.option-row input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--jade);margin-top:8px}
+.option-row .opt-fields{display:flex;flex-direction:column;gap:6px}
 .add-opt-btn{font-size:12px;color:var(--marine);font-weight:600;display:inline-flex;align-items:center;gap:4px;margin-top:4px;padding:4px 0;border:none;background:none;cursor:pointer}
 .expl-block{margin-top:12px;padding:12px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r)}
 .expl-block label{display:block;font-size:11px;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
@@ -73,14 +84,20 @@
 .stat-chip{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;background:var(--bg-alt);border:1px solid var(--line);color:var(--ink-soft)}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:#fff;padding:14px 22px;border-radius:var(--r);font-size:13px;font-weight:500;box-shadow:var(--sh-lift);z-index:100;transform:translateY(100px);opacity:0;transition:all .3s}
 .toast.show{transform:translateY(0);opacity:1}.toast.success{border-left:4px solid var(--jade)}.toast.error{border-left:4px solid var(--coral)}
-.saving-dot{width:7px;height:7px;border-radius:50%;background:var(--jade);display:inline-block;opacity:0;transition:opacity .3s}
-.saving-dot.active{opacity:1}
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(14,26,43,.5);backdrop-filter:blur(4px);z-index:50;align-items:center;justify-content:center}
+.modal-box{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px;max-width:700px;width:95%;max-height:90vh;overflow-y:auto;box-shadow:var(--sh-lift)}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.modal-head h2{font-family:var(--f-display);font-size:22px;font-weight:500}
+.modal-head h2 em{font-style:italic;color:var(--marine)}
+.modal-close{width:32px;height:32px;border-radius:8px;background:var(--bg-alt);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.modal-foot{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
 @media(max-width:1100px){.app{grid-template-columns:1fr}.app-side{display:none}.app-main{padding:24px}.editor-layout{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <script>window.IMM_REQUIRE_ROLE = 'admin';</script>
-<script type="module" src="immersium-guard.js"></script>
+<script src="immersium-guard.js"></script>
 <div class="app">
   <aside class="app-side" id="app-side">
     <div class="app-brand"><div class="name">Immer<em>sium</em> <span class="beta">BETA</span></div><div class="role">ADMIN CONSOLE</div></div>
@@ -95,7 +112,7 @@
       <a href="admin-sessions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Sessions</a>
       <a href="admin-results.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75z"/><path d="M9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625z"/><path d="M16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>Résultats</a>
       <div class="app-nav-sec">Contenu</div>
-      <a href="admin-editor.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Jeux &amp; Formations</a>
+      <a href="admin-editor.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Éditeur de jeux</a>
       <a href="admin-simulations.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Config simulations</a>
       <a href="admin-hero.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Page d'accueil</a>
       <a href="admin-vedettes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Vedettes accueil</a>
@@ -118,7 +135,7 @@
   <main class="app-main">
     <div class="page-h">
       <h1>Éditeur de <em>jeux</em></h1>
-      <p>Sélectionnez une simulation et éditez ses défis et questions.</p>
+      <p>Sélectionnez une simulation et éditez ses questions, scénarios et notions pédagogiques.</p>
     </div>
 
     <div class="editor-layout">
@@ -128,64 +145,55 @@
           <span id="game-count" style="font-family:var(--f-mono);font-size:11px;color:var(--ink-mute)"></span>
         </div>
         <div id="game-items">
-          <div style="padding:20px;text-align:center;color:var(--ink-mute);font-size:13px">Chargement…</div>
+          <div style="padding:20px;text-align:center;color:var(--ink-mute);font-size:13px">Chargement...</div>
         </div>
       </div>
 
       <div class="editor-panel" id="editor-panel">
         <div class="empty-panel">
           <h3>Sélectionnez un jeu</h3>
-          <p>Choisissez une simulation dans la liste pour voir et éditer ses défis.</p>
+          <p>Choisissez une simulation dans la liste pour voir et éditer ses contenus.</p>
         </div>
       </div>
     </div>
   </main>
 </div>
 
-<div class="modal-overlay" id="ch-modal" onclick="if(event.target===this)closeChModal()" style="display:none;position:fixed;inset:0;background:rgba(14,26,43,.5);backdrop-filter:blur(4px);z-index:50;align-items:center;justify-content:center">
-  <div style="background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px;max-width:640px;width:95%;max-height:90vh;overflow-y:auto;box-shadow:var(--sh-lift)">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
-      <h2 id="ch-modal-title" style="font-family:var(--f-display);font-size:22px;font-weight:500">Nouveau <em style="font-style:italic;color:var(--marine)">défi</em></h2>
-      <button onclick="closeChModal()" style="width:32px;height:32px;border-radius:8px;background:var(--bg-alt);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+<!-- MODAL QUESTION -->
+<div class="modal-overlay" id="q-modal" onclick="if(event.target===this)closeQModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="q-modal-title">Nouvelle <em>question</em></h2>
+      <button class="modal-close" onclick="closeQModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
-
-    <input type="hidden" id="ch-id">
+    <input type="hidden" id="q-id">
     <div class="form-cols" style="margin-bottom:12px">
-      <div class="form-row" style="margin:0">
-        <label>Type de question</label>
-        <select id="ch-type" onchange="toggleTypeFields()">
+      <div class="form-row" style="margin:0"><label>Type de question</label>
+        <select id="q-type" onchange="toggleQTypeFields()">
           <option value="qcm">QCM (choix multiple)</option>
           <option value="open">Question ouverte</option>
           <option value="vrai_faux">Vrai / Faux</option>
         </select>
       </div>
-      <div class="form-row" style="margin:0">
-        <label>Numéro (#)</label>
-        <input type="number" id="ch-num" min="1" placeholder="1">
+      <div class="form-row" style="margin:0"><label>Défi # (challenge_num)</label>
+        <input type="number" id="q-challenge-num" min="1" placeholder="1">
       </div>
     </div>
     <div class="form-cols" style="margin-bottom:12px">
-      <div class="form-row" style="margin:0">
-        <label>Points</label>
-        <input type="number" id="ch-points" min="1" max="20" value="5">
+      <div class="form-row" style="margin:0"><label>Index question</label>
+        <input type="number" id="q-index" min="0" placeholder="0">
       </div>
-      <div class="form-row" style="margin:0">
-        <label>Actif</label>
-        <select id="ch-active">
-          <option value="true">Oui</option>
-          <option value="false">Non</option>
-        </select>
+      <div class="form-row" style="margin:0"><label>Points</label>
+        <input type="number" id="q-points" min="1" max="100" value="5">
       </div>
     </div>
     <div class="form-row">
       <label>Question / Énoncé</label>
-      <textarea id="ch-question" rows="3" placeholder="Entrez la question posée à l'apprenant…"></textarea>
+      <textarea id="q-question" rows="3" placeholder="Entrez la question posée à l'apprenant..."></textarea>
     </div>
 
-    <div id="options-block" class="options-block">
-      <div class="opt-head">Options de réponse <span style="font-weight:400;color:var(--ink-mute)">(cocher la bonne réponse)</span></div>
+    <div id="qcm-block" class="options-block">
+      <div class="opt-head">Options de réponse <span style="font-weight:400;color:var(--ink-mute)">(cocher la/les bonne(s) réponse(s))</span></div>
       <div id="options-list"></div>
       <button class="add-opt-btn" onclick="addOption()">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -207,56 +215,169 @@
 
     <div class="expl-block" style="margin-top:14px">
       <label>Explication / Correction</label>
-      <textarea id="ch-explanation" rows="4" placeholder="Expliquez pourquoi cette réponse est correcte…" style="width:100%;border:none;background:transparent;font-size:13px;font-family:var(--f-body);color:var(--ink);outline:none;resize:vertical;padding:0"></textarea>
+      <textarea id="q-explanation" rows="4" placeholder="Expliquez pourquoi cette réponse est correcte..." style="width:100%;border:none;background:transparent;font-size:13px;font-family:var(--f-body);color:var(--ink);outline:none;resize:vertical;padding:0"></textarea>
     </div>
 
-    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)">
-      <button class="btn" onclick="closeChModal()">Annuler</button>
-      <button class="btn primary" onclick="saveChallenge()">Enregistrer</button>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeQModal()">Annuler</button>
+      <button class="btn primary" onclick="saveQuestion()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SCENARIO (challenge) -->
+<div class="modal-overlay" id="sc-modal" onclick="if(event.target===this)closeScModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="sc-modal-title">Modifier le <em>scénario</em></h2>
+      <button class="modal-close" onclick="closeScModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <input type="hidden" id="sc-id">
+    <input type="hidden" id="sc-game-id">
+    <input type="hidden" id="sc-challenge-num">
+    <div class="form-cols" style="margin-bottom:12px">
+      <div class="form-row" style="margin:0"><label>Titre du défi</label>
+        <input type="text" id="sc-title" placeholder="Ex: Accueil du patient">
+      </div>
+      <div class="form-row" style="margin:0"><label>Défi # (challenge_num)</label>
+        <input type="number" id="sc-num" min="1" disabled>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Scénario narratif</label>
+      <textarea id="sc-scenario" rows="8" placeholder="Décrivez le contexte narratif de ce défi..."></textarea>
+    </div>
+    <div class="form-cols" style="margin-bottom:12px">
+      <div class="form-row" style="margin:0"><label>Durée (minutes)</label>
+        <input type="number" id="sc-duration" min="1" max="120" value="15">
+      </div>
+      <div class="form-row" style="margin:0"><label>Score maximum</label>
+        <input type="number" id="sc-max-score" min="1" max="1000" value="100">
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeScModal()">Annuler</button>
+      <button class="btn primary" onclick="saveScenario()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NOTION -->
+<div class="modal-overlay" id="no-modal" onclick="if(event.target===this)closeNoModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="no-modal-title">Modifier la <em>notion</em></h2>
+      <button class="modal-close" onclick="closeNoModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <input type="hidden" id="no-id">
+    <div class="form-row">
+      <label>Titre de la notion</label>
+      <input type="text" id="no-title" placeholder="Ex: Communication non-verbale">
+    </div>
+    <div class="form-row">
+      <label>Définition</label>
+      <textarea id="no-definition" rows="4" placeholder="Définition claire et concise..."></textarea>
+    </div>
+    <div class="form-row">
+      <label>Analogie</label>
+      <textarea id="no-analogy" rows="3" placeholder="Une analogie pour faciliter la compréhension..."></textarea>
+    </div>
+    <div class="form-row">
+      <label>Exemple</label>
+      <textarea id="no-example" rows="3" placeholder="Un exemple concret..."></textarea>
+    </div>
+    <div class="form-cols" style="margin-bottom:12px">
+      <div class="form-row" style="margin:0"><label>Défi # (challenge_num)</label>
+        <input type="number" id="no-challenge-num" min="1" value="1">
+      </div>
+      <div class="form-row" style="margin:0"><label>Ordre d'affichage</label>
+        <input type="number" id="no-sort-order" min="0" value="0">
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeNoModal()">Annuler</button>
+      <button class="btn primary" onclick="saveNotion()">Enregistrer</button>
     </div>
   </div>
 </div>
 
 <div id="toast" class="toast"></div>
-<script type="module" src="js/imm-shared.js"></script>
+<script src="js/imm-api.js"></script>
 <script>
 var allSims = [];
 var currentGame = null;
-var challenges = [];
-var editingChallenge = null;
-var optionIdCounter = 0;
+var questions = [];
+var scenarios = [];
+var notions = [];
+var editingQuestion = null;
+var activeTab = 'questions';
 
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function showToast(msg,type){ var t=document.getElementById('toast'); t.textContent=msg; t.className='toast show '+(type||''); setTimeout(function(){t.className='toast';},3000); }
 
+/* ============================================================
+   GAME LIST
+   ============================================================ */
 function renderGameList(){
   document.getElementById('game-count').textContent=allSims.length+' simulations';
   document.getElementById('game-items').innerHTML=allSims.map(function(s){
-    var cntStr = '';
-    var cnt = challenges && currentGame && currentGame.game_id === s.game_id ? challenges.length : null;
-    if(cnt !== null) cntStr = ' · '+cnt+' en base';
-    return '<div class="game-item'+(currentGame&&currentGame.game_id===s.game_id?' active':'')+'" onclick="selectGame(\''+s.game_id+'\')">'
+    return '<div class="game-item'+(currentGame&&currentGame.game_id===s.game_id?' active':'')+'" onclick="selectGame(\''+esc(s.game_id)+'\')">'
       +'<div class="gname">'+esc(s.name||s.game_id)+'</div>'
-      +'<div class="gdomain">'+esc(s.domain||'')+(s.challenge_count?' · '+s.challenge_count+' prévus':'')+esc(cntStr)+'</div>'
+      +'<div class="gdomain">'+esc(s.domain||'')+(s.challenge_count?' \u00b7 '+s.challenge_count+' d\u00e9fis':'')+'</div>'
       +'</div>';
   }).join('');
 }
 
+/* ============================================================
+   SELECT GAME — load all 3 data sets
+   ============================================================ */
 window.selectGame = async function(gameId){
   currentGame=allSims.find(function(s){return s.game_id===gameId;});
   if(!currentGame) return;
   renderGameList();
   var panel=document.getElementById('editor-panel');
-  panel.innerHTML='<div style="text-align:center;padding:40px;color:var(--ink-mute)">Chargement des défis…</div>';
-  var supabase=window.IMM_SUPABASE;
-  if(supabase){
-    var res=await supabase.from('challenges').select('*').eq('game_id',gameId).order('num');
-    challenges=res.data||[];
-  } else { challenges=[]; }
-  renderGameList();
+  panel.innerHTML='<div style="text-align:center;padding:40px;color:var(--ink-mute)">Chargement des donn\u00e9es...</div>';
+  var sb=window.IMM_SUPABASE;
+  if(!sb){ panel.innerHTML='<div class="empty-panel"><h3>Erreur</h3><p>Client API non disponible.</p></div>'; return; }
+
+  // Load questions
+  var qRes=await sb.from('questions').select('*').eq('game_id',gameId).order('question_index');
+  var rawQ=qRes.data||[];
+  questions=rawQ.map(function(q){
+    var typeMap={'mcq':'qcm','open':'open','free':'open','vrai_faux':'vrai_faux','true_false':'vrai_faux','tool':'open','screenshot':'open','tuto':'open','checkbox':'qcm','matching':'qcm','ordering':'qcm'};
+    return {
+      id:q.id, game_id:q.game_id, challenge_num:q.challenge_num,
+      question_index:q.question_index||0,
+      type:typeMap[q.type]||q.type||'qcm',
+      question:q.question||'', options:q.options||[],
+      explanation:q.explanation||'', points:q.points||5,
+      active:q.active!==false, correct_answer:q.correct_answer||'',
+      _raw:q
+    };
+  });
+
+  // Load scenarios (challenges)
+  var scRes=await sb.from('challenges').select('*').eq('game_id',gameId).order('challenge_num');
+  scenarios=scRes.data||[];
+
+  // Load notions
+  var noRes=await sb.from('knowledge_notions').select('*').eq('game_id',gameId).order('sort_order');
+  notions=noRes.data||[];
+
   renderEditor();
 };
 
+/* ============================================================
+   TABS
+   ============================================================ */
+window.switchTab = function(tab){
+  activeTab=tab;
+  renderEditor();
+};
+
+/* ============================================================
+   RENDER EDITOR (main panel)
+   ============================================================ */
 function typeLabel(t){
   if(t==='qcm') return 'QCM';
   if(t==='open') return 'Ouverte';
@@ -266,85 +387,175 @@ function typeLabel(t){
 
 function renderEditor(){
   var panel=document.getElementById('editor-panel');
-  var qcmCount=challenges.filter(function(c){return c.type==='qcm';}).length;
-  var openCount=challenges.filter(function(c){return c.type==='open';}).length;
-  var vfCount=challenges.filter(function(c){return c.type==='vrai_faux';}).length;
-
   var html='<div class="editor-panel-head">'
-    +'<h2>'+esc(currentGame.name||currentGame.game_id)+' <em>— défis</em></h2>'
-    +'<button class="btn primary sm" onclick="openNewChallenge()">'
-    +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
-    +'Nouveau défi</button>'
+    +'<h2>'+esc(currentGame.name||currentGame.game_id)+'</h2>'
     +'</div>'
-    +'<div class="sub">'+esc(currentGame.domain||'')+(currentGame.challenge_count?' · '+currentGame.challenge_count+' prévus':'')+'</div>'
-    +'<div class="stats-row">'
-    +'<div class="stat-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'+challenges.length+' défis en base</div>'
-    +(qcmCount?'<div class="stat-chip" style="background:rgba(2,74,255,.06);border-color:rgba(2,74,255,.12);color:var(--marine)">'+qcmCount+' QCM</div>':'')
-    +(openCount?'<div class="stat-chip" style="background:rgba(13,148,136,.08);border-color:rgba(13,148,136,.15);color:var(--jade)">'+openCount+' Ouvertes</div>':'')
-    +(vfCount?'<div class="stat-chip" style="background:rgba(217,119,6,.08);border-color:rgba(217,119,6,.15);color:var(--amber)">'+vfCount+' Vrai/Faux</div>':'')
+    +'<div class="sub">'+esc(currentGame.domain||'')+'</div>';
+
+  // Tabs
+  html+='<div class="ed-tabs">'
+    +'<div class="ed-tab'+(activeTab==='questions'?' active':'')+'" onclick="switchTab(\'questions\')">Questions <span class="badge">'+questions.length+'</span></div>'
+    +'<div class="ed-tab'+(activeTab==='scenarios'?' active':'')+'" onclick="switchTab(\'scenarios\')">Sc\u00e9narios <span class="badge">'+scenarios.length+'</span></div>'
+    +'<div class="ed-tab'+(activeTab==='notions'?' active':'')+'" onclick="switchTab(\'notions\')">Notions <span class="badge">'+notions.length+'</span></div>'
     +'</div>';
 
-  if(!challenges.length){
-    html+='<div class="empty-panel"><h3>Aucun défi</h3><p>Cette simulation n\'a pas encore de défis en base.<br>Cliquez sur "Nouveau défi" pour commencer.</p></div>';
-  } else {
-    html+='<div class="ch-list">'+challenges.map(function(c,i){
-      var type=c.type||'qcm';
-      var optCount=(c.options&&c.options.length)||0;
-      var correctOpt=c.options?c.options.filter(function(o){return o.correct;}).length:0;
-      var preview=c.question?c.question.substring(0,120)+(c.question.length>120?'…':''):'—';
-      return '<div class="challenge-card">'
-        +'<div class="ch-header">'
-        +'<div class="ch-meta">'
-        +'<span class="ch-num">Défi #'+esc(String(c.num||i+1))+'</span>'
-        +'<span class="ch-type-badge '+esc(type)+'">'+typeLabel(type)+'</span>'
-        +(c.points?'<span style="font-size:11px;color:var(--ink-mute);font-family:var(--f-mono)">'+c.points+'pts</span>':'')
-        +(c.active===false?'<span style="font-size:10px;background:var(--coral-soft);color:var(--coral);padding:2px 8px;border-radius:999px;font-weight:600">Inactif</span>':'')
-        +'</div>'
-        +'<div class="ch-actions">'
-        +'<button class="btn xs" onclick="editChallenge(\''+esc(String(c.id))+'\')">Modifier</button>'
-        +'<button class="btn danger-xs" onclick="deleteChallenge(\''+esc(String(c.id))+'\')">Suppr.</button>'
-        +'</div>'
-        +'</div>'
-        +'<p style="font-size:13px;color:var(--ink-soft);line-height:1.5;margin-bottom:'+(type==='qcm'||type==='vrai_faux'?'10px':'0')+'">'+esc(preview)+'</p>'
-        +(type==='qcm'&&optCount?'<div style="font-size:11px;color:var(--ink-mute);font-family:var(--f-mono)">'+optCount+' options · '+correctOpt+' bonne(s)</div>':'')
-        +(c.explanation?'<div style="margin-top:8px;padding:8px 10px;background:var(--jade-soft);border-radius:6px;font-size:12px;color:var(--jade);font-weight:500">Explication enregistrée</div>':'')
-        +'</div>';
-    }).join('')+'</div>';
-  }
+  if(activeTab==='questions') html+=renderQuestionsTab();
+  else if(activeTab==='scenarios') html+=renderScenariosTab();
+  else if(activeTab==='notions') html+=renderNotionsTab();
 
   panel.innerHTML=html;
 }
 
+/* ============================================================
+   QUESTIONS TAB
+   ============================================================ */
+function renderQuestionsTab(){
+  var qcmCount=questions.filter(function(c){return c.type==='qcm';}).length;
+  var openCount=questions.filter(function(c){return c.type==='open';}).length;
+  var vfCount=questions.filter(function(c){return c.type==='vrai_faux';}).length;
+
+  var html='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">'
+    +'<div class="stats-row" style="margin:0">'
+    +'<div class="stat-chip">'+questions.length+' questions</div>'
+    +(qcmCount?'<div class="stat-chip" style="background:rgba(2,74,255,.06);border-color:rgba(2,74,255,.12);color:var(--marine)">'+qcmCount+' QCM</div>':'')
+    +(openCount?'<div class="stat-chip" style="background:rgba(13,148,136,.08);border-color:rgba(13,148,136,.15);color:var(--jade)">'+openCount+' Ouvertes</div>':'')
+    +(vfCount?'<div class="stat-chip" style="background:rgba(217,119,6,.08);border-color:rgba(217,119,6,.15);color:var(--amber)">'+vfCount+' Vrai/Faux</div>':'')
+    +'</div>'
+    +'<button class="btn primary sm" onclick="openNewQuestion()">'
+    +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+    +'Nouvelle question</button>'
+    +'</div>';
+
+  if(!questions.length){
+    html+='<div class="empty-panel"><h3>Aucune question</h3><p>Cette simulation n\'a pas encore de questions en base.</p></div>';
+  } else {
+    html+='<div class="ch-list">'+questions.map(function(c,i){
+      var type=c.type||'qcm';
+      var optCount=(c.options&&c.options.length)||0;
+      var correctOpt=c.options?c.options.filter(function(o){return o.correct;}).length:0;
+      var preview=c.question?c.question.substring(0,120)+(c.question.length>120?'\u2026':''):'\u2014';
+      var hasFeedback=c.options&&c.options.some(function(o){return o.feedback;});
+      return '<div class="challenge-card">'
+        +'<div class="ch-header">'
+        +'<div class="ch-meta">'
+        +'<span class="ch-num">D\u00e9fi #'+esc(String(c.challenge_num||'?'))+' \u00b7 Q'+(c.question_index+1)+'</span>'
+        +'<span class="ch-type-badge '+esc(type)+'">'+typeLabel(type)+'</span>'
+        +(c.points?'<span style="font-size:11px;color:var(--ink-mute);font-family:var(--f-mono)">'+c.points+'pts</span>':'')
+        +'</div>'
+        +'<div class="ch-actions">'
+        +'<button class="btn xs" onclick="editQuestion('+c.id+')">Modifier</button>'
+        +'<button class="btn danger-xs" onclick="deleteQuestion('+c.id+')">Suppr.</button>'
+        +'</div>'
+        +'</div>'
+        +'<p style="font-size:13px;color:var(--ink-soft);line-height:1.5;margin-bottom:'+(type==='qcm'||type==='vrai_faux'?'10px':'0')+'">'+esc(preview)+'</p>'
+        +(type==='qcm'&&optCount?'<div style="font-size:11px;color:var(--ink-mute);font-family:var(--f-mono)">'+optCount+' options \u00b7 '+correctOpt+' bonne(s)'+(hasFeedback?' \u00b7 feedbacks \u2713':'')+'</div>':'')
+        +(c.explanation?'<div style="margin-top:8px;padding:8px 10px;background:var(--jade-soft);border-radius:6px;font-size:12px;color:var(--jade);font-weight:500">Explication enregistr\u00e9e</div>':'')
+        +'</div>';
+    }).join('')+'</div>';
+  }
+  return html;
+}
+
+/* ============================================================
+   SCENARIOS TAB
+   ============================================================ */
+function renderScenariosTab(){
+  var html='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">'
+    +'<div class="stats-row" style="margin:0"><div class="stat-chip" style="background:rgba(255,107,0,.06);border-color:rgba(255,107,0,.12);color:var(--orange)">'+scenarios.length+' sc\u00e9narios</div></div>'
+    +'</div>';
+
+  if(!scenarios.length){
+    html+='<div class="empty-panel"><h3>Aucun sc\u00e9nario</h3><p>Aucun d\u00e9fi/challenge n\'est d\u00e9fini pour cette simulation.</p></div>';
+  } else {
+    html+='<div class="ch-list">'+scenarios.map(function(sc){
+      var preview=sc.scenario?sc.scenario.substring(0,200)+(sc.scenario.length>200?'\u2026':''):'\u2014 Pas de sc\u00e9nario';
+      return '<div class="challenge-card">'
+        +'<div class="ch-header">'
+        +'<div class="ch-meta">'
+        +'<span class="ch-num">D\u00e9fi #'+esc(String(sc.challenge_num))+'</span>'
+        +'<span class="ch-type-badge scenario">'+esc(sc.title||'Sans titre')+'</span>'
+        +(sc.duration_min?'<span style="font-size:11px;color:var(--ink-mute);font-family:var(--f-mono)">'+sc.duration_min+' min</span>':'')
+        +(sc.max_score?'<span style="font-size:11px;color:var(--ink-mute);font-family:var(--f-mono)">'+sc.max_score+' pts max</span>':'')
+        +'</div>'
+        +'<div class="ch-actions">'
+        +'<button class="btn xs" onclick="editScenario('+sc.id+')">Modifier</button>'
+        +'</div>'
+        +'</div>'
+        +'<p style="font-size:13px;color:var(--ink-soft);line-height:1.5">'+esc(preview)+'</p>'
+        +'</div>';
+    }).join('')+'</div>';
+  }
+  return html;
+}
+
+/* ============================================================
+   NOTIONS TAB
+   ============================================================ */
+function renderNotionsTab(){
+  var html='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">'
+    +'<div class="stats-row" style="margin:0"><div class="stat-chip" style="background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.15);color:#7C3AED">'+notions.length+' notions</div></div>'
+    +'<button class="btn primary sm" onclick="openNewNotion()">'
+    +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+    +'Nouvelle notion</button>'
+    +'</div>';
+
+  if(!notions.length){
+    html+='<div class="empty-panel"><h3>Aucune notion</h3><p>Aucune notion p\u00e9dagogique n\'est d\u00e9finie pour cette simulation.</p></div>';
+  } else {
+    html+='<div class="ch-list">'+notions.map(function(n){
+      var defPreview=n.definition?n.definition.substring(0,150)+(n.definition.length>150?'\u2026':''):'\u2014';
+      return '<div class="challenge-card">'
+        +'<div class="ch-header">'
+        +'<div class="ch-meta">'
+        +'<span class="ch-num">D\u00e9fi #'+esc(String(n.challenge_num||'?'))+'</span>'
+        +'<span class="ch-type-badge notion">'+esc(n.title||'Sans titre')+'</span>'
+        +'</div>'
+        +'<div class="ch-actions">'
+        +'<button class="btn xs" onclick="editNotion('+n.id+')">Modifier</button>'
+        +'<button class="btn danger-xs" onclick="deleteNotion('+n.id+')">Suppr.</button>'
+        +'</div>'
+        +'</div>'
+        +'<p style="font-size:13px;color:var(--ink-soft);line-height:1.5">'+esc(defPreview)+'</p>'
+        +(n.analogy?'<div style="margin-top:6px;font-size:11px;color:var(--ink-mute)"><strong>Analogie :</strong> '+esc(n.analogy.substring(0,100))+'</div>':'')
+        +(n.example?'<div style="margin-top:4px;font-size:11px;color:var(--ink-mute)"><strong>Exemple :</strong> '+esc(n.example.substring(0,100))+'</div>':'')
+        +'</div>';
+    }).join('')+'</div>';
+  }
+  return html;
+}
+
+/* ============================================================
+   QUESTION MODAL — Open / Edit / Save / Delete
+   ============================================================ */
 var localOptions = [];
 
-window.openNewChallenge = function(){
-  editingChallenge=null;
-  document.getElementById('ch-modal-title').innerHTML='Nouveau <em style="font-style:italic;color:var(--marine)">défi</em>';
-  document.getElementById('ch-id').value='';
-  document.getElementById('ch-type').value='qcm';
-  var nextNum=challenges.length?Math.max.apply(null,challenges.map(function(c){return c.num||0;}))+1:1;
-  document.getElementById('ch-num').value=nextNum;
-  document.getElementById('ch-points').value=5;
-  document.getElementById('ch-active').value='true';
-  document.getElementById('ch-question').value='';
-  document.getElementById('ch-explanation').value='';
-  localOptions=[{id:'a',text:'',correct:true},{id:'b',text:'',correct:false},{id:'c',text:'',correct:false},{id:'d',text:'',correct:false}];
-  document.getElementById('ch-modal').style.display='flex';
-  toggleTypeFields();
+window.openNewQuestion = function(){
+  editingQuestion=null;
+  document.getElementById('q-modal-title').innerHTML='Nouvelle <em>question</em>';
+  document.getElementById('q-id').value='';
+  document.getElementById('q-type').value='qcm';
+  document.getElementById('q-challenge-num').value=1;
+  document.getElementById('q-index').value=questions.length;
+  document.getElementById('q-points').value=5;
+  document.getElementById('q-question').value='';
+  document.getElementById('q-explanation').value='';
+  localOptions=[{id:'a',text:'',correct:true,feedback:''},{id:'b',text:'',correct:false,feedback:''},{id:'c',text:'',correct:false,feedback:''},{id:'d',text:'',correct:false,feedback:''}];
+  document.getElementById('q-modal').style.display='flex';
+  toggleQTypeFields();
 };
 
-window.editChallenge = function(id){
-  var c=challenges.find(function(x){return String(x.id)===id;});
+window.editQuestion = function(id){
+  var c=questions.find(function(x){return x.id===id;});
   if(!c) return;
-  editingChallenge=c;
-  document.getElementById('ch-modal-title').innerHTML='Modifier le <em style="font-style:italic;color:var(--marine)">défi</em>';
-  document.getElementById('ch-id').value=c.id;
-  document.getElementById('ch-type').value=c.type||'qcm';
-  document.getElementById('ch-num').value=c.num||'';
-  document.getElementById('ch-points').value=c.points||5;
-  document.getElementById('ch-active').value=String(c.active!==false);
-  document.getElementById('ch-question').value=c.question||'';
-  document.getElementById('ch-explanation').value=c.explanation||'';
+  editingQuestion=c;
+  document.getElementById('q-modal-title').innerHTML='Modifier la <em>question</em>';
+  document.getElementById('q-id').value=c.id;
+  document.getElementById('q-type').value=c.type||'qcm';
+  document.getElementById('q-challenge-num').value=c.challenge_num||1;
+  document.getElementById('q-index').value=c.question_index||0;
+  document.getElementById('q-points').value=c.points||5;
+  document.getElementById('q-question').value=c.question||'';
+  document.getElementById('q-explanation').value=c.explanation||'';
   if(c.type==='vrai_faux'){
     var correctOpt=c.options&&c.options.find(function(o){return o.correct;});
     var isTrue=correctOpt&&(correctOpt.id==='vrai'||correctOpt.text==='Vrai');
@@ -352,20 +563,18 @@ window.editChallenge = function(id){
     document.getElementById('vf-faux').checked=!isTrue;
     localOptions=c.options||[];
   } else {
-    localOptions=(c.options||[]).map(function(o){return Object.assign({},o);});
-    if(!localOptions.length) localOptions=[{id:'a',text:'',correct:true},{id:'b',text:'',correct:false}];
+    localOptions=(c.options||[]).map(function(o){return {id:o.id||'',text:o.text||'',correct:!!o.correct,feedback:o.feedback||''};});
+    if(!localOptions.length) localOptions=[{id:'a',text:'',correct:true,feedback:''},{id:'b',text:'',correct:false,feedback:''}];
   }
-  document.getElementById('ch-modal').style.display='flex';
-  toggleTypeFields();
+  document.getElementById('q-modal').style.display='flex';
+  toggleQTypeFields();
 };
 
-window.closeChModal = function(){
-  document.getElementById('ch-modal').style.display='none';
-};
+window.closeQModal = function(){ document.getElementById('q-modal').style.display='none'; };
 
-window.toggleTypeFields = function(){
-  var type=document.getElementById('ch-type').value;
-  document.getElementById('options-block').style.display=(type==='qcm'?'':'none');
+window.toggleQTypeFields = function(){
+  var type=document.getElementById('q-type').value;
+  document.getElementById('qcm-block').style.display=(type==='qcm'?'':'none');
   document.getElementById('vf-block').style.display=(type==='vrai_faux'?'':'none');
   if(type==='qcm') renderOptionsList();
 };
@@ -373,7 +582,7 @@ window.toggleTypeFields = function(){
 window.addOption = function(){
   var letters=['a','b','c','d','e','f','g','h'];
   var nextId=letters[localOptions.length]||String(localOptions.length+1);
-  localOptions.push({id:nextId,text:'',correct:false});
+  localOptions.push({id:nextId,text:'',correct:false,feedback:''});
   renderOptionsList();
 };
 
@@ -381,86 +590,207 @@ function renderOptionsList(){
   var html='';
   localOptions.forEach(function(opt,i){
     html+='<div class="option-row">'
-      +'<span class="opt-letter">'+opt.id.toUpperCase()+'</span>'
-      +'<input type="text" value="'+esc(opt.text)+'" placeholder="Option '+opt.id.toUpperCase()+'…" oninput="localOptions['+i+'].text=this.value">'
-      +'<input type="checkbox" title="Correcte" '+(opt.correct?'checked':'')+' onchange="setCorrect('+i+',this.checked)">'
+      +'<span class="opt-letter">'+esc((opt.id||String.fromCharCode(97+i)).toUpperCase())+'</span>'
+      +'<div class="opt-fields">'
+      +'<input type="text" value="'+esc(opt.text)+'" placeholder="Texte de l\'option..." oninput="localOptions['+i+'].text=this.value">'
+      +'<textarea rows="2" placeholder="Feedback (explication affich\u00e9e apr\u00e8s r\u00e9ponse)..." oninput="localOptions['+i+'].feedback=this.value" style="font-size:12px;border:1px solid var(--line);border-radius:var(--r);padding:7px 10px;font-family:var(--f-body);background:var(--paper);color:var(--ink-soft);resize:vertical">'+esc(opt.feedback||'')+'</textarea>'
+      +'</div>'
+      +'<input type="checkbox" title="Correcte" '+(opt.correct?'checked':'')+' onchange="localOptions['+i+'].correct=this.checked">'
       +'</div>';
   });
   document.getElementById('options-list').innerHTML=html;
 }
 
-window.setCorrect = function(idx,val){
-  localOptions[idx].correct=val;
-};
-
-window.saveChallenge = async function(){
-  var supabase=window.IMM_SUPABASE;
-  if(!supabase||!currentGame){ showToast('Connexion non disponible','error'); return; }
-  var type=document.getElementById('ch-type').value;
-  var question=document.getElementById('ch-question').value.trim();
+window.saveQuestion = async function(){
+  var sb=window.IMM_SUPABASE;
+  if(!sb||!currentGame){ showToast('Connexion non disponible','error'); return; }
+  var type=document.getElementById('q-type').value;
+  var question=document.getElementById('q-question').value.trim();
   if(!question){ showToast('La question est requise','error'); return; }
 
   var options=[];
   if(type==='qcm'){
-    options=localOptions.filter(function(o){return o.text.trim();});
+    options=localOptions.filter(function(o){return o.text.trim();}).map(function(o){
+      return {id:o.id,text:o.text.trim(),correct:!!o.correct,feedback:(o.feedback||'').trim()};
+    });
     if(!options.length){ showToast('Ajoutez au moins une option','error'); return; }
   } else if(type==='vrai_faux'){
     var isTrue=document.getElementById('vf-vrai').checked;
-    options=[
-      {id:'vrai',text:'Vrai',correct:isTrue},
-      {id:'faux',text:'Faux',correct:!isTrue}
-    ];
+    options=[{id:'vrai',text:'Vrai',correct:isTrue,feedback:''},{id:'faux',text:'Faux',correct:!isTrue,feedback:''}];
   }
+
+  var typeMapReverse={'qcm':'mcq','open':'free','vrai_faux':'vrai_faux'};
+  var apiType=typeMapReverse[type]||type;
+  var correctAnswer='';
+  options.forEach(function(o){ if(o.correct) correctAnswer=o.id||''; });
 
   var payload={
     game_id: currentGame.game_id,
-    type: type,
-    num: parseInt(document.getElementById('ch-num').value)||1,
-    points: parseInt(document.getElementById('ch-points').value)||5,
-    active: document.getElementById('ch-active').value==='true',
+    challenge_num: parseInt(document.getElementById('q-challenge-num').value)||1,
+    question_index: parseInt(document.getElementById('q-index').value)||0,
+    type: apiType,
+    points: parseInt(document.getElementById('q-points').value)||5,
     question: question,
     options: options,
-    explanation: document.getElementById('ch-explanation').value.trim()||null
+    correct_answer: correctAnswer,
+    explanation: document.getElementById('q-explanation').value.trim()||''
   };
 
-  var id=document.getElementById('ch-id').value;
+  var id=document.getElementById('q-id').value;
   var res;
   if(id){
-    res=await supabase.from('challenges').update(payload).eq('id',id);
+    res=await sb.from('questions').update(payload).eq('id',parseInt(id));
   } else {
-    res=await supabase.from('challenges').insert(payload);
+    res=await sb.from('questions').insert(payload);
   }
-  if(res.error){ showToast('Erreur : '+res.error.message,'error'); return; }
-  showToast(id?'Défi mis à jour':'Défi créé','success');
-  closeChModal();
+  if(res.error){ showToast('Erreur : '+(res.error.message||JSON.stringify(res.error)),'error'); return; }
+  showToast(id?'Question mise \u00e0 jour':'Question cr\u00e9\u00e9e','success');
+  closeQModal();
   await selectGame(currentGame.game_id);
 };
 
-window.deleteChallenge = async function(id){
-  if(!confirm('Supprimer ce défi ? Cette action est irréversible.')) return;
-  var supabase=window.IMM_SUPABASE;
-  if(!supabase) return;
-  var res=await supabase.from('challenges').delete().eq('id',id);
-  if(res.error){ showToast('Erreur : '+res.error.message,'error'); return; }
-  challenges=challenges.filter(function(c){return String(c.id)!==id;});
-  renderEditor();
-  showToast('Défi supprimé','success');
+window.deleteQuestion = async function(id){
+  if(!confirm('Supprimer cette question ? Cette action est irr\u00e9versible.')) return;
+  var sb=window.IMM_SUPABASE;
+  if(!sb) return;
+  var res=await sb.from('questions').delete().eq('id',id);
+  if(res.error){ showToast('Erreur','error'); return; }
+  showToast('Question supprim\u00e9e','success');
+  await selectGame(currentGame.game_id);
 };
 
+/* ============================================================
+   SCENARIO MODAL — Edit / Save
+   ============================================================ */
+window.editScenario = function(id){
+  var sc=scenarios.find(function(x){return x.id===id;});
+  if(!sc) return;
+  document.getElementById('sc-modal-title').innerHTML='Modifier le <em>sc\u00e9nario</em> \u2014 D\u00e9fi #'+sc.challenge_num;
+  document.getElementById('sc-id').value=sc.id;
+  document.getElementById('sc-game-id').value=sc.game_id;
+  document.getElementById('sc-challenge-num').value=sc.challenge_num;
+  document.getElementById('sc-title').value=sc.title||'';
+  document.getElementById('sc-num').value=sc.challenge_num;
+  document.getElementById('sc-scenario').value=sc.scenario||'';
+  document.getElementById('sc-duration').value=sc.duration_min||15;
+  document.getElementById('sc-max-score').value=sc.max_score||100;
+  document.getElementById('sc-modal').style.display='flex';
+};
+
+window.closeScModal = function(){ document.getElementById('sc-modal').style.display='none'; };
+
+window.saveScenario = async function(){
+  var sb=window.IMM_SUPABASE;
+  if(!sb||!currentGame){ showToast('Connexion non disponible','error'); return; }
+  var gameId=document.getElementById('sc-game-id').value;
+  var chNum=parseInt(document.getElementById('sc-challenge-num').value);
+  var payload={
+    title: document.getElementById('sc-title').value.trim(),
+    scenario: document.getElementById('sc-scenario').value.trim(),
+    duration_min: parseInt(document.getElementById('sc-duration').value)||15,
+    max_score: parseInt(document.getElementById('sc-max-score').value)||100,
+    challenge_num: chNum
+  };
+
+  // Use the generic PATCH /api/challenges/:game_id with challenge_num in body
+  var res=await sb.from('challenges').update(payload).eq('game_id',gameId);
+  if(res.error){ showToast('Erreur : '+(res.error.message||JSON.stringify(res.error)),'error'); return; }
+  showToast('Sc\u00e9nario mis \u00e0 jour','success');
+  closeScModal();
+  await selectGame(currentGame.game_id);
+};
+
+/* ============================================================
+   NOTION MODAL — New / Edit / Save / Delete
+   ============================================================ */
+window.openNewNotion = function(){
+  document.getElementById('no-modal-title').innerHTML='Nouvelle <em>notion</em>';
+  document.getElementById('no-id').value='';
+  document.getElementById('no-title').value='';
+  document.getElementById('no-definition').value='';
+  document.getElementById('no-analogy').value='';
+  document.getElementById('no-example').value='';
+  document.getElementById('no-challenge-num').value=1;
+  document.getElementById('no-sort-order').value=notions.length;
+  document.getElementById('no-modal').style.display='flex';
+};
+
+window.editNotion = function(id){
+  var n=notions.find(function(x){return x.id===id;});
+  if(!n) return;
+  document.getElementById('no-modal-title').innerHTML='Modifier la <em>notion</em>';
+  document.getElementById('no-id').value=n.id;
+  document.getElementById('no-title').value=n.title||'';
+  document.getElementById('no-definition').value=n.definition||'';
+  document.getElementById('no-analogy').value=n.analogy||'';
+  document.getElementById('no-example').value=n.example||'';
+  document.getElementById('no-challenge-num').value=n.challenge_num||1;
+  document.getElementById('no-sort-order').value=n.sort_order||0;
+  document.getElementById('no-modal').style.display='flex';
+};
+
+window.closeNoModal = function(){ document.getElementById('no-modal').style.display='none'; };
+
+window.saveNotion = async function(){
+  var sb=window.IMM_SUPABASE;
+  if(!sb||!currentGame){ showToast('Connexion non disponible','error'); return; }
+  var payload={
+    game_id: currentGame.game_id,
+    challenge_num: parseInt(document.getElementById('no-challenge-num').value)||1,
+    title: document.getElementById('no-title').value.trim(),
+    definition: document.getElementById('no-definition').value.trim(),
+    analogy: document.getElementById('no-analogy').value.trim(),
+    example: document.getElementById('no-example').value.trim(),
+    sort_order: parseInt(document.getElementById('no-sort-order').value)||0
+  };
+
+  var id=document.getElementById('no-id').value;
+  var res;
+  if(id){
+    res=await sb.from('knowledge_notions').update(payload).eq('id',parseInt(id));
+  } else {
+    res=await sb.from('knowledge_notions').insert(payload);
+  }
+  if(res.error){ showToast('Erreur : '+(res.error.message||JSON.stringify(res.error)),'error'); return; }
+  showToast(id?'Notion mise \u00e0 jour':'Notion cr\u00e9\u00e9e','success');
+  closeNoModal();
+  await selectGame(currentGame.game_id);
+};
+
+window.deleteNotion = async function(id){
+  if(!confirm('Supprimer cette notion ? Cette action est irr\u00e9versible.')) return;
+  var sb=window.IMM_SUPABASE;
+  if(!sb) return;
+  var res=await sb.from('knowledge_notions').delete().eq('id',id);
+  if(res.error){ showToast('Erreur','error'); return; }
+  showToast('Notion supprim\u00e9e','success');
+  await selectGame(currentGame.game_id);
+};
+
+/* ============================================================
+   INIT
+   ============================================================ */
 async function loadData(){
-  var supabase=window.IMM_SUPABASE;
-  if(!supabase) return;
-  var res=await supabase.from('simulations').select('game_id,name,domain,challenge_count').order('sort_order');
+  var sb=window.IMM_SUPABASE;
+  if(!sb) return;
+  var res=await sb.from('simulations').select('game_id,name,domain,challenge_count').order('sort_order');
   allSims=res.data||[];
   renderGameList();
 }
 
 document.addEventListener('imm:ready', function(e){
   var u=document.getElementById('app-user');
-  if(u&&e.detail&&e.detail.name){ var i=e.detail.name.split(' ').map(function(w){return w[0];}).join('').toUpperCase().slice(0,2); u.querySelector('.av').textContent=i; u.querySelector('.n').textContent=e.detail.name; }
+  if(u&&e.detail&&e.detail.name){
+    var i=e.detail.name.split(' ').map(function(w){return w[0];}).join('').toUpperCase().slice(0,2);
+    u.querySelector('.av').textContent=i;
+    u.querySelector('.n').textContent=e.detail.name;
+  }
 });
 document.addEventListener('DOMContentLoaded', function(){
-  setTimeout(function(){ if(window.IMM_SUPABASE){ loadData(); } else{ document.addEventListener('imm:ready', function(){ loadData(); }); } }, 300);
+  setTimeout(function(){
+    if(window.IMM_SUPABASE){ loadData(); }
+    else{ document.addEventListener('imm:ready', function(){ loadData(); }); }
+  }, 300);
 });
 </script>
 </body>

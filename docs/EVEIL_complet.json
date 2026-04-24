@@ -1,0 +1,2031 @@
+{
+  "title": "EVEIL",
+  "subtitle": "IA en Entreprise",
+  "color": "#0131B4",
+  "challenges": 21,
+  "sessions": [
+    {
+      "title": "Session 1",
+      "challenges": [
+        {
+          "id": "eveil_ch1",
+          "title": "C'est quoi l'IA en 2026 sans jargon ni peur"
+        },
+        {
+          "id": "eveil_ch2",
+          "title": "L'IA pour gérer ses emails : trier, résumer, répondre"
+        },
+        {
+          "id": "eveil_ch3",
+          "title": "L'IA pour la recherche rapide et la préparation pro"
+        },
+        {
+          "id": "eveil_ch4",
+          "title": "L'IA dans Excel et les tableaux - analyser et commenter"
+        },
+        {
+          "id": "eveil_ch5",
+          "title": "L'IA pour lire, trier et analyser des documents"
+        },
+        {
+          "id": "eveil_ch6",
+          "title": "L'IA pour synthétiser - CR de réunions, docs, rapports"
+        },
+        {
+          "id": "eveil_ch7",
+          "title": "Ce que l'IA ne fait pas bien - limites et vérification"
+        },
+        {
+          "id": "eveil_ch8",
+          "title": "Créer des modèles de réponse intelligents avec l'IA"
+        },
+        {
+          "id": "eveil_ch9",
+          "title": "L'IA pour synthétiser des rapports complexes"
+        },
+        {
+          "id": "eveil_ch10",
+          "title": "L'IA pour créer des présentations et visuels"
+        },
+        {
+          "id": "eveil_ch11",
+          "title": "L'IA pour rédiger des documents professionnels"
+        },
+        {
+          "id": "eveil_ch12",
+          "title": "L'IA pour surveiller et résumer les actualités du secteur"
+        },
+        {
+          "id": "eveil_ch13",
+          "title": "L'IA pour les tâches RH du quotidien"
+        },
+        {
+          "id": "eveil_ch14",
+          "title": "Automatiser une tâche répétitive simple avec Make"
+        },
+        {
+          "id": "eveil_ch15",
+          "title": "Construire des prompts qui donnent de bons résultats"
+        },
+        {
+          "id": "eveil_ch16",
+          "title": "Mettre en place une veille IA automatisée"
+        },
+        {
+          "id": "eveil_ch17",
+          "title": "L'IA pour analyser et visualiser des données complexes"
+        },
+        {
+          "id": "eveil_ch18",
+          "title": "L'IA pour rédiger tous types de communications pro"
+        },
+        {
+          "id": "eveil_ch19",
+          "title": "L'IA pour gérer son agenda, ses priorités et ses notes"
+        },
+        {
+          "id": "eveil_ch20",
+          "title": "Utiliser l'IA de façon responsable en entreprise"
+        },
+        {
+          "id": "eveil_ch21",
+          "title": "MISSION FINALE — Mon plan d'adoption IA"
+        }
+      ]
+    }
+  ],
+  "challenges_data": {
+    "eveil_ch1": {
+      "scenario": "Bravo pour avoir exploré ce premier aperçu de l'IA ! Maintenant, à vous de jouer. L'IA, en mots simples, c'est quoi ?",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Léa vous met au défi de choisir la définition la plus simple et juste de l'Intelligence Artificielle. Laquelle choisissez-vous ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "La capacité d'une machine à imiter l'intelligence humaine pour apprendre, raisonner et résoudre des problèmes.",
+              "correct": true,
+              "feedback": "Exactement ! C'est la définition la plus claire et la plus juste. L'IA n'est pas une conscience, mais un ensemble de techniques qui permettent à une machine de réaliser des tâches qui demanderaient de l'intelligence si un humain les faisait."
+            },
+            {
+              "id": "opt_2",
+              "text": "Un programme informatique complexe qui peut répondre à n'importe quelle question instantanément.",
+              "correct": false,
+              "feedback": "Pas tout à fait. Une IA est spécialisée dans des tâches précises. Elle n'a pas une connaissance universelle et instantanée. C'est un outil entraîné sur des données spécifiques."
+            },
+            {
+              "id": "opt_3",
+              "text": "Un robot physique qui peut penser et ressentir des émotions comme un être humain.",
+              "correct": false,
+              "feedback": "C'est une image de science-fiction ! La très grande majorité des IA sont des logiciels, pas des robots. Et surtout, elles ne ressentent aucune émotion. Elles peuvent les simuler, mais pas les vivre."
+            },
+            {
+              "id": "opt_4",
+              "text": "Un super-ordinateur qui contrôle tout le réseau internet mondial pour nous surveiller.",
+              "correct": false,
+              "feedback": "Attention aux idées reçues ! C'est une vision très anxiogène et fausse. Les IA sont des outils développés par des humains pour des usages précis, et non une entité unique qui contrôlerait tout."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Face à un collègue qui se plaint de passer trop de temps à trier ses emails, quelle application concrète de l'IA pourriez-vous lui suggérer ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Utiliser une fonction de sa messagerie qui classe automatiquement les emails par priorité et par catégorie.",
+              "correct": true,
+              "feedback": "Excellente suggestion ! C'est un exemple parfait d'une IA simple, intégrée et très efficace pour gagner en productivité au quotidien. Pas besoin de technologies complexes !"
+            },
+            {
+              "id": "opt_2",
+              "text": "Lui conseiller de créer des dizaines de règles manuelles pour trier chaque expéditeur.",
+              "correct": false,
+              "feedback": "C'est une solution, mais elle n'est pas 'intelligente'. Elle est fastidieuse à mettre en place et à maintenir, contrairement à une IA qui apprend et s'adapte seule."
+            },
+            {
+              "id": "opt_3",
+              "text": "Lui dire d'engager un assistant pour lire et trier ses emails à sa place.",
+              "correct": false,
+              "feedback": "Ce serait efficace, mais ce n'est pas une solution basée sur l'IA ! L'idée est de voir comment la technologie peut l'assister directement."
+            },
+            {
+              "id": "opt_4",
+              "text": "Proposer de développer un robot qui lirait ses emails à voix haute toute la journée.",
+              "correct": false,
+              "feedback": "C'est une vision un peu futuriste et pas très pratique ! Les solutions d'IA actuelles sont beaucoup plus discrètes et intégrées à nos outils existants."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Message Teams de Marc : \"Salut, je dois expliquer à un nouveau collaborateur ce qu’est l’IA en 2026, mais sans jargon technique ni inquiétude. Peux-tu me rédiger une explication simple et accessible ?\"",
+          "points": 10,
+          "question": "Message Teams de Marc : \"Salut, je dois expliquer à un nouveau collaborateur ce qu’est l’IA en 2026, mais sans jargon technique ni inquiétude. Peux-tu me rédiger une explication simple et accessible ?\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "C'est quoi l'IA en 2026 sans jargon ni peur",
+          "definition": "L'intelligence artificielle, ou IA, c'est une technologie qui aide les ordinateurs à apprendre et à faire des tâches comme les humains, sans qu'on ait besoin de leur dire chaque détail. En entreprise, elle sert à traiter des informations rapidement pour aider à prendre de meilleures décisions. C'est un outil qui facilite le travail, pas quelque chose de compliqué ou dangereux.",
+          "analogy": "C'est comme un assistant personnel qui apprend à vous connaître pour mieux vous aider chaque jour, sans que vous ayez à lui expliquer tout ce que vous faites. Il observe, comprend et propose des solutions pour vous simplifier la vie.",
+          "example": "Sophie travaille dans une entreprise de vente en ligne. Grâce à l'IA, son système analyse chaque jour les commandes et les préférences des clients pour suggérer les produits les plus populaires. Un matin, l'outil indique à Sophie que les ventes de t-shirts bleus ont augmenté de 20% en une semaine. Elle utilise cette information pour commander plus de stock et préparer une promotion ciblée, ce qui augmente les ventes et la satisfaction des clients."
+        }
+      ],
+      "title": "C'est quoi l'IA en 2026 sans jargon ni peur"
+    },
+    "eveil_ch2": {
+      "scenario": "Bonjour ! Je suis Léa Fontaine, votre tutrice pour ce module. Nous croulons tous sous les emails, n'est-ce pas ? C'est une vraie charge mentale ! Heureusement, l'Intelligence Artificielle peut nous aider à y voir plus clair. Aujourd'hui, nous allons découvrir ensemble comment l'IA peut devenir votre meilleure alliée pour trier, résumer et même répondre à vos emails. C'est parti ?",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "D'après les informations présentées, quel est le principal avantage de l'Intelligence Artificielle pour la gestion des emails ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Supprimer définitivement tous les emails jugés inutiles sans aucune intervention de l'utilisateur.",
+              "correct": false,
+              "feedback": "Incorrect. L'IA est un assistant, elle suggère des actions (comme archiver ou classer) mais ne prend généralement pas de décisions aussi radicales sans votre accord. Le but est de vous aider, pas de vous faire perdre des informations."
+            },
+            {
+              "id": "opt_2",
+              "text": "Répondre automatiquement à tous les emails à votre place en imitant parfaitement votre style d'écriture.",
+              "correct": false,
+              "feedback": "Incorrect. Bien que l'IA puisse suggérer des brouillons de réponse, elle n'est pas encore conçue pour répondre à *tous* les emails de manière autonome. Son rôle est de vous faire gagner du temps, pas de se substituer complètement à vous."
+            },
+            {
+              "id": "opt_3",
+              "text": "Transformer votre boîte de réception en un espace de travail organisé en automatisant le tri et la priorisation des messages.",
+              "correct": true,
+              "feedback": "Exactement ! C'est le cœur de sa valeur ajoutée : l'IA agit comme un filtre intelligent qui vous libère des tâches répétitives et vous permet de vous concentrer sur les communications qui comptent vraiment."
+            },
+            {
+              "id": "opt_4",
+              "text": "Uniquement traduire les emails reçus dans une autre langue, sans proposer d'autres fonctionnalités.",
+              "correct": false,
+              "feedback": "Incorrect. La traduction est une des nombreuses fonctionnalités que peut proposer une IA, mais son potentiel pour la gestion d'emails est bien plus large, incluant surtout le tri, le résumé et l'aide à la rédaction."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Face à une boîte de réception pleine, quelle serait l'action la plus judicieuse à demander à une IA pour commencer ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "\"Supprime tous les emails qui ont plus de deux jours.\"",
+              "correct": false,
+              "feedback": "Ce serait risqué ! Vous pourriez perdre des informations importantes. L'IA est plus subtile, elle aide à trier avant de prendre des actions définitives."
+            },
+            {
+              "id": "opt_2",
+              "text": "\"Trie les emails par ordre alphabétique de l'expéditeur.\"",
+              "correct": false,
+              "feedback": "C'est une façon de faire, mais ce n'est pas la plus efficace. L'IA peut faire bien mieux en analysant le contenu et le contexte pour déterminer ce qui est vraiment important pour vous."
+            },
+            {
+              "id": "opt_3",
+              "text": "\"Identifie et regroupe les emails par type : newsletters, notifications, et conversations directes.\"",
+              "correct": true,
+              "feedback": "Très bonne approche ! C'est la première étape idéale. En séparant le \"bruit\" (newsletters, notifications) des vraies conversations, vous pouvez déjà vous concentrer sur ce qui nécessite une action de votre part."
+            },
+            {
+              "id": "opt_4",
+              "text": "\"Réponds 'Je suis de retour' à tous les emails.\"",
+              "correct": false,
+              "feedback": "Oh non, surtout pas ! Cela créerait encore plus de confusion et de messages à traiter. L'IA doit simplifier votre travail, pas le compliquer."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Email de Sophie : « Bonjour, on reçoit tellement d’e-mails chaque jour que c’est compliqué de tout suivre. Peux-tu me faire une note claire pour l’équipe RH sur comment l’IA peut nous aider à trier, résumer et répondre automatiquement aux e-mails ? Merci ! »",
+          "points": 10,
+          "question": "Email de Sophie : « Bonjour, on reçoit tellement d’e-mails chaque jour que c’est compliqué de tout suivre. Peux-tu me faire une note claire pour l’équipe RH sur comment l’IA peut nous aider à trier, résumer et répondre automatiquement aux e-mails ? Merci ! »"
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'IA pour trier et gérer vos e-mails",
+          "definition": "L'IA pour les emails, c'est un assistant intelligent intégré à votre messagerie. Il apprend de vos habitudes pour classer, prioriser et vous aider à traiter vos messages plus vite.",
+          "analogy": "C'est comme avoir un secrétaire personnel qui lirait votre courrier avant vous. Il mettrait les factures dans un bac, les lettres importantes sur votre bureau avec un post-it \"Urgent\", et jetterait les publicités.",
+          "example": "Vous recevez 50 emails dans la nuit. Au réveil, l'IA a déjà créé un dossier \"Newsletter\" avec 20 emails promotionnels, mis en évidence 3 emails de votre manager comme \"Prioritaires\" et archivé 5 notifications automatiques que vous ne lisez jamais. Simulation : Votre boîte de réception De : Marc DUPONT Objet : Urgent : Compte-rendu réunion Stratégie Q3 Bonjour, Peux-tu me relire et me donner ton avis sur le compte-rendu ci-joint avant 11h ? C'est pour le CODIR de cet après-midi. Merci ! De : Newsletter \"SuperProductif\" Objet : 🚀 5 astuces pour booster votre concentration Découvrez nos conseils exclusifs pour rester focus toute la journée et atteindre vos objectifs..."
+        }
+      ],
+      "title": "L'IA pour gérer ses emails : trier, résumer, répondre"
+    },
+    "eveil_ch3": {
+      "scenario": "Léa FONTAINE vous envoie un message sur Teams :\n\"Bonjour ! J'ai une mission pour toi qui tombe un peu au dernier moment. Un nouveau concurrent, 'Innovatech', vient de lancer un produit qui pourrait nous intéresser. J'ai une réunion à ce sujet dans une heure et j'aimerais que tu te renseignes rapidement sur eux. Utilise notre nouvel outil de recherche basé sur l'IA pour synthétiser les informations clés. C'est l'occasion parfaite de le tester en conditions réelles ! Concentre-toi sur leur produit principal, leur cible et leur stratégie de prix. On en parle juste après. Merci pour ta réactivité !\"",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Vous ouvrez l'outil d'IA. Quelle est la meilleure première action pour répondre efficacement à la demande de Léa ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Lancer une recherche avec les mots-clés : \"Innovatech produit cible prix\".",
+              "correct": false,
+              "feedback": "C'est un bon début, mais c'est une approche de moteur de recherche classique. Avec un outil d'IA, on peut être beaucoup plus précis et lui demander de faire le travail de synthèse pour nous. Pense à lui parler comme à un assistant."
+            },
+            {
+              "id": "opt_2",
+              "text": "Demander à l'IA : \"Fais-moi un résumé complet sur l'entreprise Innovatech\".",
+              "correct": false,
+              "feedback": "C'est un peu trop large. Vous risquez d'avoir un résumé très long et pas forcément axé sur les points précis demandés par Léa. Le temps presse, il faut être plus directif."
+            },
+            {
+              "id": "opt_3",
+              "text": "Formuler la demande : \"Agis comme un analyste marché. Synthétise en 3 points clés les informations sur le nouveau produit d'Innovatech, sa clientèle cible et sa stratégie de prix.\"",
+              "correct": true,
+              "feedback": "Excellent ! C'est la meilleure approche. Vous donnez un rôle à l'IA ('analyste marché'), un format de réponse ('3 points clés') et des instructions précises. Vous maximisez vos chances d'obtenir une réponse rapide et pertinente."
+            },
+            {
+              "id": "opt_4",
+              "text": "Copier-coller le message de Léa directement dans l'outil d'IA.",
+              "correct": false,
+              "feedback": "C'est une idée intéressante, mais l'IA pourrait être confuse par les éléments de politesse ou le contexte informel du message. Il est toujours préférable de reformuler une instruction claire et concise."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Quelle est la meilleure réponse à donner à Léa, démontrant une bonne compréhension des limites de l'IA ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "\"Oui, absolument. C'est l'IA qui l'a généré, donc c'est forcément juste. Je te l'envoie tel quel.\"",
+              "correct": false,
+              "feedback": "Attention, c'est un réflexe dangereux. L'IA peut faire des erreurs, mal interpréter une source ou omettre une information cruciale. La confiance aveugle n'est jamais une bonne stratégie."
+            },
+            {
+              "id": "opt_2",
+              "text": "\"C'est une excellente base. J'ai vérifié les 2 points les plus importants en consultant les sources que l'IA a utilisées. Le tout me semble cohérent et fiable pour ta réunion.\"",
+              "correct": true,
+              "feedback": "Parfait ! Vous utilisez l'IA comme un formidable point de départ pour gagner du temps, mais vous gardez votre esprit critique en vérifiant les informations clés. C'est la collaboration homme-machine idéale."
+            },
+            {
+              "id": "opt_3",
+              "text": "\"Je ne suis pas sûr... Je vais tout recommencer avec un moteur de recherche classique pour être certain de ne rien manquer.\"",
+              "correct": false,
+              "feedback": "Ce n'est pas très productif. Vous perdez tout le bénéfice de l'IA qui est de vous faire gagner du temps. Le but n'est pas de refaire le travail, mais de le valider intelligemment."
+            },
+            {
+              "id": "opt_4",
+              "text": "\"Je vais demander à l'IA de vérifier elle-même si ses informations sont correctes.\"",
+              "correct": false,
+              "feedback": "C'est ce qu'on appelle un raisonnement circulaire. Si l'IA a fait une erreur, il y a peu de chances qu'elle s'en rende compte en lui posant la question. La vérification doit venir d'une source externe, idéalement humaine."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Message Slack de Léa Fontaine : « Bonjour ! J’ai vu cette vidéo https://www.youtube.com/watch?v=b0ZG_Y3OvTs qui explique comment utiliser l’IA en entreprise. Peux-tu me faire un résumé rapide de ses conseils pour préparer un benchmark face à 'Innovatech' ? »",
+          "points": 10,
+          "question": "Message Slack de Léa Fontaine : « Bonjour ! On doit préparer un benchmark face à Innovatech pour la réunion de vendredi. Peux-tu me rédiger une méthode claire en 4-5 étapes pour utiliser l'IA afin d'analyser rapidement leur offre, comparer avec la nôtre, et identifier nos points forts ? J'ai besoin de quelque chose de concret et actionnable. »"
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "La recherche d'informations assistée par l'IA",
+          "definition": "Une recherche IA, c'est comme demander à un assistant très rapide de lire des milliers de pages sur internet et de vous en faire un résumé sur mesure, en quelques secondes.",
+          "analogy": "C'est comme avoir un super-pouvoir pour vos recherches. Au lieu de chercher une aiguille (l'info) dans une botte de foin (internet), vous demandez à un aimant magique d'aller la chercher pour vous.",
+          "example": "Plutôt que de taper \"recettes gâteau chocolat\", vous demandez : \"Donne-moi une recette facile de gâteau au chocolat sans beurre, prête en moins de 30 minutes\". L'IA comprend votre besoin et vous donne une réponse directe."
+        }
+      ],
+      "title": "L'IA pour la recherche rapide et la préparation pro"
+    },
+    "eveil_ch4": {
+      "scenario": "Bonjour ! Aujourd'hui, on va voir comment l'IA peut devenir votre meilleure alliée avec les chiffres, même si vous n'êtes pas un expert. Fini les formules compliquées pour comprendre vos données. Prêt(e) à laisser l'IA travailler pour vous ?",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Léa vous montre un petit tableau de ventes mensuelles. Quelle est la première action la plus simple pour utiliser l'IA afin d'obtenir une analyse rapide de ce tableau dans un outil comme Excel ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Commencer à écrire des formules complexes comme SOMME.SI.ENS.",
+              "correct": false,
+              "feedback": "C'est une méthode traditionnelle efficace, mais l'IA nous propose justement une voie plus directe et sans code pour une première analyse."
+            },
+            {
+              "id": "opt_2",
+              "text": "Sélectionner le tableau et chercher un bouton nommé 'Analyser les données' ou 'Idées'.",
+              "correct": true,
+              "feedback": "Exactement ! C'est la porte d'entrée vers l'analyse assistée par l'IA. C'est simple, direct et très puissant pour une première exploration."
+            },
+            {
+              "id": "opt_3",
+              "text": "Exporter les données pour les importer dans un logiciel de Business Intelligence.",
+              "correct": false,
+              "feedback": "C'est une option très puissante, mais bien trop complexe pour une simple demande d'analyse rapide. L'IA intégrée au tableur est là pour éviter cette étape."
+            },
+            {
+              "id": "opt_4",
+              "text": "Trier manuellement chaque colonne pour essayer de repérer des schémas.",
+              "correct": false,
+              "feedback": "C'est une bonne habitude d'exploration, mais c'est précisément ce que l'IA peut automatiser pour vous faire gagner un temps précieux."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "L'IA vous a généré un graphique montrant les ventes par catégorie de produit. Quelle est la meilleure façon de commenter ce graphique dans un email à votre manager ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Copier-coller le graphique sans aucun texte explicatif.",
+              "correct": false,
+              "feedback": "Juste une image ne suffit pas. Votre manager attend de vous une interprétation, une conclusion. L'IA vous aide à analyser, mais le commentaire reste votre valeur ajoutée."
+            },
+            {
+              "id": "opt_2",
+              "text": "Décrire le graphique en une phrase simple et directe, en mettant en avant l'information principale.",
+              "correct": true,
+              "feedback": "Parfait ! C'est exactement ça. L'IA fournit le visuel, vous fournissez le sens. Par exemple : 'Voici les ventes par catégorie, on voit que les 'Produits A' dominent nettement'."
+            },
+            {
+              "id": "opt_3",
+              "text": "Expliquer en détail la méthode statistique utilisée par l'IA pour créer le graphique.",
+              "correct": false,
+              "feedback": "N'oubliez pas le ton 'Débutant' et 'jamais technique'. Votre manager veut une information concrète, pas un cours de statistiques. Restez simple et direct."
+            },
+            {
+              "id": "opt_4",
+              "text": "Dire que le graphique n'est pas fiable car c'est une IA qui l'a fait.",
+              "correct": false,
+              "feedback": "Au contraire, ces outils sont conçus pour être fiables sur des analyses descriptives simples. Il faut leur faire confiance pour ce type de tâche et s'appuyer dessus."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Réunion avec Thomas, votre collègue IT : « On va bientôt intégrer de l’IA dans Excel pour analyser nos tableaux de bord. Pourrais-tu me préparer un petit brief pour l’équipe, expliquant comment cette IA peut simplifier la lecture et le commentaire des chiffres ? »",
+          "points": 10,
+          "question": "Réunion avec Thomas, votre collègue IT : « On va bientôt intégrer de l’IA dans Excel pour analyser nos tableaux de bord. Pourrais-tu me préparer un petit brief pour l’équipe, expliquant comment cette IA peut simplifier la lecture et le commentaire des chiffres ? »"
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'IA dans les tableurs et l'analyse de données",
+          "definition": "L'intelligence artificielle dans les tableurs, c'est un assistant intégré à votre feuille de calcul (comme Excel ou Google Sheets) qui peut analyser vos données, repérer des tendances et créer des graphiques automatiquement, sans que vous ayez besoin de connaître des formules complexes.",
+          "analogy": "C'est comme avoir un comptable personnel qui regarde vos chiffres et vous dit : « Attention, vos dépenses de fournitures ont augmenté de 20% ce mois-ci » ou « Voici un graphique qui montre l'évolution de vos ventes ». Vous n'avez qu'à poser la question.",
+          "example": "Marie, assistante de gestion, reçoit chaque mois un fichier Excel avec les dépenses de 5 services. Au lieu de créer manuellement des tableaux croisés dynamiques, elle demande à l'IA intégrée : « Montre-moi les 3 postes de dépenses qui ont le plus augmenté ce trimestre ». En quelques secondes, l'IA lui affiche un graphique clair avec les chiffres clés."
+        }
+      ],
+      "title": "L'IA dans Excel et les tableaux - analyser et commenter"
+    },
+    "eveil_ch5": {
+      "scenario": "Léa vous présente le cas de Marc, un chef de projet qui croule sous les documents. A vous de bien cerner le problème !",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "D'après la situation décrite, quel est le principal problème rencontré par l'équipe de Marc ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "L'équipe passe un temps fou à vérifier manuellement un grand volume de documents complexes.",
+              "correct": true,
+              "feedback": "Exactement ! Le problème n'est pas le nombre de dossiers en soi, mais le temps et l'effort nécessaires pour les traiter manuellement."
+            },
+            {
+              "id": "opt_2",
+              "text": "Le chef de projet, Marc, veut remplacer son équipe par une IA.",
+              "correct": false,
+              "feedback": "Pas tout à fait. Marc cherche une solution pour aider son équipe à être plus efficace, pas pour la remplacer. L'IA est un outil au service de l'humain."
+            },
+            {
+              "id": "opt_3",
+              "text": "L'équipe manque de compétences pour analyser les réponses.",
+              "correct": false,
+              "feedback": "Le mail de Marc ne mentionne pas un manque de compétences, mais plutôt un manque de temps à cause d'une tâche répétitive et chronophage."
+            },
+            {
+              "id": "opt_4",
+              "text": "Les dossiers de candidature sont trop longs.",
+              "correct": false,
+              "feedback": "La longueur des dossiers contribue au problème, mais le vrai souci est le processus de traitement manuel de ces documents, quel que soit leur volume."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Quel serait le principal bénéfice à utiliser une IA pour aider l'équipe de Marc ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Éliminer complètement le besoin d'intervention humaine.",
+              "correct": false,
+              "feedback": "Attention, l'IA est un assistant. Elle automatise le premier tri, mais la validation finale et la décision restent entre les mains de l'équipe."
+            },
+            {
+              "id": "opt_2",
+              "text": "Accélérer radicalement le tri initial pour que l'équipe se concentre sur les dossiers qualifiés.",
+              "correct": true,
+              "feedback": "C'est exactement ça ! L'IA décharge l'équipe des tâches à faible valeur ajoutée et leur libère du temps pour l'analyse et la prise de décision."
+            },
+            {
+              "id": "opt_3",
+              "text": "Rédiger automatiquement les réponses aux candidats non retenus.",
+              "correct": false,
+              "feedback": "Bien que ce soit techniquement possible avec d'autres types d'IA, ce n'est pas le bénéfice principal recherché pour résoudre le problème de Marc."
+            },
+            {
+              "id": "opt_4",
+              "text": "Améliorer l'ambiance de travail en réduisant le stress.",
+              "correct": false,
+              "feedback": "C'est une conséquence positive possible, mais le bénéfice direct et principal est le gain de productivité et d'efficacité."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Message Teams de Marc : \"Je croule sous les documents pour notre projet et je n’ai pas le temps de tout lire. Peux-tu m’expliquer comment l’IA pourrait m’aider à trier et analyser rapidement ces fichiers ?\"",
+          "points": 10,
+          "question": "Message Teams de Marc : \"Je croule sous les documents pour notre projet et je n’ai pas le temps de tout lire. Peux-tu m’expliquer comment l’IA pourrait m’aider à trier et analyser rapidement ces fichiers ?\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'IA pour le traitement et la traduction de textes",
+          "definition": "L'intelligence artificielle aide à lire rapidement beaucoup de documents. Elle peut organiser ces documents en groupes selon leur contenu. Elle peut aussi trouver les informations importantes pour aider les personnes à mieux comprendre et gagner du temps.",
+          "analogy": "C'est comme avoir un assistant qui lit toutes tes lettres, les met dans des piles différentes selon le sujet, et te dit ce qui est important à retenir. Cela évite de passer des heures à tout lire soi-même.",
+          "example": "Marc est chef de projet dans une entreprise qui reçoit chaque jour plus de 200 emails et rapports. Grâce à l'IA, tous ces documents sont lus automatiquement, triés par thème comme finance, ressources humaines ou planning. L'IA souligne aussi les chiffres clés et les points importants. Marc peut ainsi rapidement prendre des décisions sans lire chaque document en détail, ce qui améliore son efficacité et réduit son stress."
+        }
+      ],
+      "title": "L'IA pour lire, trier et analyser des documents"
+    },
+    "eveil_ch6": {
+      "scenario": "Léa vous interpelle : \"Alors, prêt(e) à tester votre flair pour déceler le potentiel de l'IA ? Voyons si vous savez quand dégainer votre nouvel outil de synthèse !\"",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Parmi les tâches suivantes, laquelle est la plus pertinente pour utiliser une IA de synthèse ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Rédiger une réponse à un email client.",
+              "correct": false,
+              "feedback": "Incorrect. C'est une tâche de rédaction, pas de synthèse. L'IA peut aider, mais ce n'est pas le meilleur usage de la synthèse."
+            },
+            {
+              "id": "opt_2",
+              "text": "Extraire les décisions clés d'un compte rendu de 10 pages.",
+              "correct": true,
+              "feedback": "Excellent ! C'est exactement le type de situation où l'IA de synthèse vous fait gagner un temps précieux."
+            },
+            {
+              "id": "opt_3",
+              "text": "Créer un logo pour un nouveau projet.",
+              "correct": false,
+              "feedback": "Incorrect. La création de logo relève de la génération d'images par IA, pas de la synthèse de texte."
+            },
+            {
+              "id": "opt_4",
+              "text": "Corriger les fautes d'orthographe d'un rapport.",
+              "correct": false,
+              "feedback": "Incorrect. C'est une tâche de correction, pas de synthèse. Des outils existent pour cela, mais ce n'est pas le but de la synthèse."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Vous donnez à une IA le compte rendu d'une réunion. Quel type d'instruction (prompt) est la plus efficace pour obtenir un bon résumé ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Résume.",
+              "correct": false,
+              "feedback": "Pas assez précis. L'IA pourrait vous donner un résumé trop long, trop court, ou passer à côté de l'essentiel. Soyez plus directif !"
+            },
+            {
+              "id": "opt_2",
+              "text": "Fais un résumé de ce texte en 5 points clés, en listant les décisions prises et les prochaines étapes.",
+              "correct": true,
+              "feedback": "Parfait ! C'est un prompt précis et directif. Vous guidez l'IA pour obtenir exactement ce dont vous avez besoin."
+            },
+            {
+              "id": "opt_3",
+              "text": "Analyse ce document et dis-moi ce que tu en penses.",
+              "correct": false,
+              "feedback": "Trop vague. L'IA n'a pas d'opinion. Elle a besoin d'instructions claires sur ce que vous attendez comme résultat."
+            },
+            {
+              "id": "opt_4",
+              "text": "Peux-tu me dire qui a dit quoi ?",
+              "correct": false,
+              "feedback": "Utile, mais ce n'est pas une synthèse. C'est une extraction d'information. La synthèse va plus loin en réorganisant les idées."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Léa Fontaine en réunion : « On va tester un outil d’IA pour synthétiser les comptes rendus et rapports. Peux-tu me rédiger un court guide indiquant dans quelles situations il est vraiment utile de l’utiliser ? »",
+          "points": 10,
+          "question": "Léa Fontaine en réunion : « On a testé un outil d'IA pour synthétiser nos comptes rendus de réunion, et franchement c'est prometteur. Mais l'équipe hésite encore. Peux-tu me rédiger un court guide pratique expliquant comment utiliser l'IA spécifiquement pour les CR de réunions : quoi enregistrer, comment structurer le résumé, et quels pièges éviter ? »"
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'IA pour synthétiser les comptes rendus de réunions",
+          "definition": "L'IA peut lire rapidement beaucoup d'informations comme des réunions, documents ou rapports, puis résumer les points importants. Cela permet de gagner du temps et de bien comprendre l'essentiel sans tout relire. C'est un outil qui aide à mieux organiser et partager l'information.",
+          "analogy": "C'est comme demander à un ami de confiance de te raconter en quelques phrases ce qui s'est passé pendant une longue conversation. Il retient l'essentiel pour que tu comprennes vite sans écouter toute la discussion.",
+          "example": "Dans une entreprise, Sophie assiste à une réunion avec 10 collègues pour discuter d'un nouveau projet. Après la réunion, elle utilise un logiciel d'IA qui transforme l'enregistrement audio en un résumé clair, listant les décisions prises et les prochaines étapes avec les noms des responsables. Le rapport généré fait trois paragraphes au lieu de 20 pages de notes, ce qui permet à toute l'équipe de rester informée rapidement et de se concentrer sur leurs tâches."
+        }
+      ],
+      "title": "L'IA pour synthétiser - CR de réunions, docs, rapports"
+    },
+    "eveil_ch7": {
+      "scenario": "Léa vous dit : 'J'ai demandé à une IA le nom du premier homme à avoir marché sur Mars. Elle m'a répondu avec assurance : Neil Armstrong, le 12 juillet 1976. C'est très précis... mais complètement faux ! Cela illustre un piège courant.'",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Face à une réponse très détaillée et bien rédigée fournie par une IA, quel est le réflexe le plus important à adopter ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Faire une confiance aveugle à la réponse, car l'IA est conçue pour être précise.",
+              "correct": false,
+              "feedback": "Non, c'est le piège principal ! Les IA peuvent générer des informations fausses (hallucinations) avec une grande assurance. La confiance aveugle est dangereuse."
+            },
+            {
+              "id": "opt_2",
+              "text": "Copier-coller la réponse directement si elle semble cohérente.",
+              "correct": false,
+              "feedback": "Absolument pas. Même si la réponse semble logique, elle peut être subtilement erronée ou complètement inventée. Le copier-coller sans vérification est une mauvaise pratique."
+            },
+            {
+              "id": "opt_3",
+              "text": "Vérifier systématiquement l'information auprès de sources fiables et reconnues.",
+              "correct": true,
+              "feedback": "Exactement ! C'est le réflexe essentiel. L'IA est un point de départ, pas une finalité. La vérification humaine avec des sources externes (articles, études, experts) est indispensable."
+            },
+            {
+              "id": "opt_4",
+              "text": "Demander à l'IA de reformuler sa réponse pour voir si elle change d'avis.",
+              "correct": false,
+              "feedback": "Ce n'est pas une méthode de vérification fiable. L'IA pourrait simplement reformuler la même erreur d'une manière différente, renforçant l'illusion de validité."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Pour laquelle de ces tâches est-il le plus risqué de se fier uniquement à une IA sans supervision humaine ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Traduire un manuel technique très factuel.",
+              "correct": false,
+              "feedback": "C'est une tâche où l'IA excelle généralement, car le langage est précis et sans ambiguïté. Le risque d'erreur est relativement faible."
+            },
+            {
+              "id": "opt_2",
+              "text": "Rédiger un e-mail pour annoncer une mauvaise nouvelle à un collaborateur sensible.",
+              "correct": true,
+              "feedback": "Très juste ! Cette tâche demande de l'empathie, de la nuance et une compréhension du contexte humain que l'IA ne possède pas. Le risque de maladresse ou de blesser la personne est très élevé."
+            },
+            {
+              "id": "opt_3",
+              "text": "Classer des milliers de factures par date et par montant.",
+              "correct": false,
+              "feedback": "Non, c'est typiquement le genre de tâche répétitive et structurée où l'IA est extrêmement fiable et bien plus rapide qu'un humain."
+            },
+            {
+              "id": "opt_4",
+              "text": "Résumer un long rapport scientifique en extrayant les chiffres clés.",
+              "correct": false,
+              "feedback": "L'IA est très performante pour synthétiser des textes et extraire des données factuelles. Même s'il faut vérifier, le risque principal n'est pas là."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Message vocal retranscrit de Léa : « J’ai une anecdote rigolote : une IA m’a donné une mauvaise réponse historique. Peux-tu me faire une synthèse claire sur les limites actuelles de l’IA et pourquoi il faut toujours vérifier ses résultats ? »",
+          "points": 10,
+          "question": "Message vocal retranscrit de Léa : « J’ai une anecdote rigolote : une IA m’a donné une mauvaise réponse historique. Peux-tu me faire une synthèse claire sur les limites actuelles de l’IA et pourquoi il faut toujours vérifier ses résultats ? »"
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Les limites de l'IA et les hallucinations",
+          "definition": "Les \"limites de l'IA\" désignent les domaines où l'IA peut faire des erreurs, donner des informations incorrectes ou ne pas comprendre le contexte comme un humain. Elle manque de créativité authentique, de bon sens et d'intelligence émotionnelle.",
+          "analogy": "Pensez à l'IA comme à un assistant ultra-performant mais très spécialisé. Un GPS peut vous donner le chemin le plus rapide, mais il ne saura pas vous dire si la route est jolie ou si vous préférez passer par la campagne. Il suit ses instructions à la lettre, sans comprendre vos désirs profonds.",
+          "example": "Vous demandez à une IA de générer une image de \"poisson volant\". Elle pourrait créer une image techniquement parfaite d'un poisson avec des ailes, flottant dans le ciel. Mais elle ne comprend pas que c'est une créature imaginaire. Si vous lui demandez ensuite \"Où vit ce poisson ?\", elle pourrait chercher des informations erronées sur des \"habitats de poissons volants\", car elle n'a pas le recul pour savoir que c'est une pure invention. Simulation : E-mail de Léa FONTAINE De : Léa FONTAINE (Responsable Formation & IA) À : Vous Objet : L'IA n'est pas magique ! Gardons notre esprit critique Bonjour, Bienvenue dans ce nouveau challenge ! On entend partout que l'IA peut tout faire. C'est un peu vrai, elle est incroyable pour beaucoup de tâches. Mais il est crucial de se rappeler qu'elle n'est pas parfaite. Parfois, l'IA peut se tromper, inventer des faits ou mal interpréter une demande. Notre rôle, en tant qu'utilisateurs avertis, est de ne jamais prendre pour argent comptant ce qu'elle nous propose. Le mot d'ordre : vérifier, vérifier, et encore vérifier ! Prêt(e) à développer votre regard critique ? C'est parti ! Léa"
+        }
+      ],
+      "title": "Ce que l'IA ne fait pas bien - limites et vérification"
+    },
+    "eveil_ch8": {
+      "scenario": "Léa vous a montré comment les modèles de réponse peuvent vous faire gagner un temps précieux. Pour bien démarrer, par où commenceriez-vous ?",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Quelle est la première étape la plus judicieuse pour commencer à utiliser des modèles de réponse intelligents ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Demander à l'IA de rédiger toutes mes réponses à ma place.",
+              "correct": false,
+              "feedback": "Ce n'est pas l'approche la plus prudente. Il vaut mieux commencer petit et garder le contrôle sur le message final."
+            },
+            {
+              "id": "opt_2",
+              "text": "Identifier les types de messages que je rédige le plus souvent.",
+              "correct": true,
+              "feedback": "Excellente idée ! C'est la base. En identifiant les tâches répétitives, vous ciblez précisément où l'IA sera la plus utile."
+            },
+            {
+              "id": "opt_3",
+              "text": "Acheter un logiciel d'IA très complexe et coûteux.",
+              "correct": false,
+              "feedback": "Pas besoin de sortir l'artillerie lourde tout de suite ! Les outils que vous avez déjà (comme les assistants IA intégrés) sont souvent suffisants pour commencer."
+            },
+            {
+              "id": "opt_4",
+              "text": "Créer des modèles pour des conversations très rares et complexes.",
+              "correct": false,
+              "feedback": "Commencez simple ! L'objectif est de gagner du temps sur les tâches fréquentes, pas de résoudre les cas les plus compliqués dès le début."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Vous demandez à une IA de créer un modèle pour refuser poliment une invitation. Quelle instruction est la plus efficace pour obtenir un bon résultat ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 3,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Refuse l'invitation.",
+              "correct": false,
+              "feedback": "C'est trop vague. L'IA a besoin de plus de contexte pour générer une réponse de qualité et adaptée."
+            },
+            {
+              "id": "opt_2",
+              "text": "Rédige une réponse.",
+              "correct": false,
+              "feedback": "Un peu mieux, mais pour quelle situation ? Le manque de précision risque de donner un résultat générique et peu utilisable."
+            },
+            {
+              "id": "opt_3",
+              "text": "Sois poli.",
+              "correct": false,
+              "feedback": "La politesse est importante, mais ce n'est qu'une partie de l'instruction. Il manque le contexte et l'objectif."
+            },
+            {
+              "id": "opt_4",
+              "text": "Crée un modèle d'email pour décliner une invitation professionnelle, en restant poli, bref et en proposant de se revoir ultérieurement.",
+              "correct": true,
+              "feedback": "Parfait ! Cette instruction est précise, donne le contexte (professionnel), le ton (poli), le format (email) et les éléments clés à inclure."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Email de Julie : « Bonjour, tu m’as montré les modèles de réponse IA. Pour que je commence bien, peux-tu m’envoyer un plan simple des étapes à suivre pour créer un modèle de réponse efficace et adapté à nos besoins marketing ? »",
+          "points": 10,
+          "question": "Email de Julie : « Bonjour, tu m’as montré les modèles de réponse IA. Pour que je commence bien, peux-tu m’envoyer un plan simple des étapes à suivre pour créer un modèle de réponse efficace et adapté à nos besoins marketing ? »"
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Les modèles de réponse intelligents pour les e-mails",
+          "definition": "Les modèles de réponse intelligents sont des suggestions de réponses pré-rédigées par une IA, adaptées au contenu de l'e-mail que vous venez de recevoir. Au lieu de partir d'une page blanche, l'IA vous propose plusieurs options de réponse que vous pouvez utiliser telles quelles ou personnaliser.",
+          "analogy": "C'est comme un ami qui lit votre courrier par-dessus votre épaule et vous souffle : « Tu pourrais répondre ça, ou bien ça ». Vous choisissez la suggestion qui vous convient le mieux et vous l'adaptez à votre style.",
+          "example": "Paul reçoit un e-mail de son client qui demande un devis. Son outil de messagerie lui propose trois réponses : une formelle (« Suite à votre demande, veuillez trouver ci-joint... »), une cordiale (« Bonjour ! Voici le devis demandé... ») et une rapide (« Devis en PJ, n'hésitez pas si questions ! »). Paul choisit la version cordiale et ajoute une précision sur les délais."
+        }
+      ],
+      "title": "Créer des modèles de réponse intelligents avec l'IA"
+    },
+    "eveil_ch9": {
+      "scenario": "Bravo d'avoir relevé le défi ! Synthétiser peut sembler intimidant, mais avec l'IA, c'est comme avoir un assistant de lecture ultra-rapide. Voyons comment bien lui parler pour obtenir ce que vous voulez.",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Vous avez chargé le rapport de 50 pages dans une IA. Quelle est la meilleure première instruction (prompt) à lui donner pour obtenir rapidement une synthèse pour votre manager ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Résume ce document.",
+              "correct": false,
+              "feedback": "C'est un bon début, mais c'est un peu trop vague. L'IA va vous donner un résumé général, mais pas forcément les points stratégiques attendus par votre manager. Plus on est précis, meilleur est le résultat !"
+            },
+            {
+              "id": "opt_2",
+              "text": "Agis comme un analyste stratégique. Lis ce rapport et identifie les 3 à 4 points clés qui pourraient avoir un impact sur notre stratégie d'entreprise. Présente-les sous forme de liste à puces.",
+              "correct": true,
+              "feedback": "Excellent ! C'est une instruction parfaite. Vous donnez un rôle à l'IA (analyste), un objectif clair (points clés pour la stratégie) et un format de réponse (liste à puces). C'est la meilleure façon d'obtenir une synthèse utile et rapide."
+            },
+            {
+              "id": "opt_3",
+              "text": "Trouve les chiffres de ventes dans ce rapport.",
+              "correct": false,
+              "feedback": "C'est une demande précise, mais elle ne répond qu'à une petite partie du besoin de votre manager, qui veut une vue d'ensemble stratégique, pas seulement des chiffres bruts."
+            },
+            {
+              "id": "opt_4",
+              "text": "Explique ce document en termes simples.",
+              "correct": false,
+              "feedback": "Cela va simplifier le contenu, ce qui est utile, mais ça ne met pas forcément en avant les points les plus importants pour une décision stratégique. Votre manager est un expert, il a besoin d'informations clés, pas d'une simplification."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "L'IA vous a donné une excellente synthèse. Que faites-vous juste avant de l'envoyer à votre manager ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Je transfère l'email de l'IA directement. C'est rapide et efficace.",
+              "correct": false,
+              "feedback": "Attention, ce n'est pas une bonne pratique. L'IA est un outil, mais vous restez le pilote. Il faut toujours vérifier et valider son travail avant de le partager."
+            },
+            {
+              "id": "opt_2",
+              "text": "Je copie-colle le texte dans un email sans le lire.",
+              "correct": false,
+              "feedback": "C'est risqué ! L'IA, même très performante, peut parfois faire des erreurs ou mal interpréter une information. Une relecture est indispensable pour garantir la qualité."
+            },
+            {
+              "id": "opt_3",
+              "text": "Je lis la synthèse, je vérifie que les points sont cohérents avec ma connaissance du sujet et je corrige les petites erreurs ou le ton si besoin.",
+              "correct": true,
+              "feedback": "Parfait ! C'est exactement l'attitude à avoir. L'IA fait 90% du travail, mais votre expertise humaine pour les 10% restants (vérification, validation, personnalisation) est ce qui fait toute la différence."
+            },
+            {
+              "id": "opt_4",
+              "text": "Je demande à l'IA de vérifier elle-même son propre travail.",
+              "correct": false,
+              "feedback": "C'est une idée intéressante, mais qui a ses limites. Si l'IA a fait une erreur de raisonnement, elle risque de la répéter. Votre regard critique d'humain est plus fiable pour la validation finale."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Message Teams de Sophie : \"J’ai vu cette vidéo https://www.youtube.com/watch?v=MOFGh3TcSQw sur l’intégration de l’IA. Peux-tu m’expliquer comment utiliser l’IA pour synthétiser facilement des rapports complexes, en FALC ?\"",
+          "points": 10,
+          "question": "Message Teams de Sophie : \"J'ai trouvé cette vidéo très utile https://www.youtube.com/watch?v=Ww-z1YEwRmo qui montre comment résumer et synthétiser un document avec ChatGPT. Peux-tu la regarder et me faire une fiche pratique en langage simple (FALC) sur la méthode à suivre pour synthétiser nos rapports trimestriels avec l'IA ?\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "La synthèse de documents complexes par l'IA",
+          "definition": "La synthèse par IA, c'est demander à un programme informatique de lire un long texte à notre place et de nous en donner un résumé avec les idées les plus importantes.",
+          "analogy": "C'est comme avoir un ami qui a déjà lu un livre et qui vous raconte l'essentiel de l'histoire en 2 minutes, pour que vous sachiez de quoi ça parle sans avoir à tout lire.",
+          "example": "Vous donnez à l'IA un rapport de 50 pages sur le marché du vélo. Vous lui demandez : \"Quelles sont les 3 grandes tendances ?\". L'IA lit le rapport et vous répond : \"1. Les vélos électriques sont de plus en plus populaires. 2. Les gens achètent plus de vélos en ligne. 3. Les casques colorés sont à la mode.\""
+        }
+      ],
+      "title": "L'IA pour synthétiser des rapports complexes"
+    },
+    "eveil_ch10": {
+      "scenario": "Léa vous interpelle : \"Alors, maintenant que vous voyez le potentiel, récapitulons. Pour un débutant, quel est l'avantage le plus direct et le plus important de l'IA pour créer des présentations ?\"",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Selon les informations et l'exemple de Léa, quel est le principal bénéfice de l'utilisation de l'IA pour créer une présentation comme celle demandée par Marc ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Remplacer complètement le besoin de relire et de corriger le contenu.",
+              "correct": false,
+              "feedback": "Attention, c'est un piège ! L'IA est une assistante, pas une experte infaillible. Il est crucial de toujours vérifier et personnaliser les informations qu'elle génère."
+            },
+            {
+              "id": "opt_2",
+              "text": "Créer des designs beaucoup plus complexes que ceux des logiciels classiques.",
+              "correct": false,
+              "feedback": "Pas tout à fait. Si l'IA peut proposer de belles mises en page, son principal atout pour un débutant n'est pas la complexité, mais plutôt la rapidité et la simplicité d'exécution."
+            },
+            {
+              "id": "opt_3",
+              "text": "Générer très rapidement une première version complète (texte, structure, visuels).",
+              "correct": true,
+              "feedback": "Exactement ! C'est le cœur de la proposition de valeur : un gain de temps massif en automatisant la création d'une base de travail solide. C'est ce que Léa a voulu vous montrer."
+            },
+            {
+              "id": "opt_4",
+              "text": "Garantir que les informations générées sont toujours 100% à jour et factuelles.",
+              "correct": false,
+              "feedback": "Malheureusement non. Les IA peuvent parfois se baser sur des données anciennes ou faire des erreurs. La vérification humaine reste indispensable, surtout pour des données chiffrées ou factuelles."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Quelle serait la formulation (le \"prompt\") la plus efficace à donner à une IA génératrice d'images pour obtenir le visuel souhaité ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Image de bureau.",
+              "correct": false,
+              "feedback": "C'est beaucoup trop vague. Vous risquez d'obtenir une image de bureau d'entreprise générique, loin de votre idée de départ. Plus vous êtes précis, meilleur sera le résultat."
+            },
+            {
+              "id": "opt_2",
+              "text": "Un bureau à domicile futuriste et épuré, avec des plantes vertes luxuriantes et une grande fenêtre donnant sur une forêt, style peinture numérique réaliste.",
+              "correct": true,
+              "feedback": "Parfait ! Ce prompt est descriptif, il mentionne le sujet principal (bureau à domicile), le style (futuriste, épuré), des éléments clés (plantes, fenêtre, forêt) et même le rendu attendu (peinture numérique réaliste)."
+            },
+            {
+              "id": "opt_3",
+              "text": "Je veux une belle image pour ma présentation sur le télétravail.",
+              "correct": false,
+              "feedback": "L'IA ne peut pas deviner ce que vous considérez comme 'beau' ou ce qui est pertinent pour votre présentation. Il faut lui décrire concrètement ce que l'image doit contenir."
+            },
+            {
+              "id": "opt_4",
+              "text": "Crée un visuel de télétravail futuriste.",
+              "correct": false,
+              "feedback": "C'est un bon début, mais ça manque de détails. Qu'entendez-vous par 'futuriste' ? Quels éléments voulez-vous voir ? Le mot 'épuré' et la mention de la nature dans la bonne réponse font toute la différence."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Réunion avec Julie marketing : \"Pourrais-tu me préparer un résumé des principaux avantages de l’IA dans la création de présentations et visuels, surtout pour les débutants ? Ça aidera à convaincre l’équipe de s’y mettre.\"",
+          "points": 10,
+          "question": "Message Teams de Julie marketing : \"On doit présenter les résultats du trimestre au CODIR vendredi et je n'ai que 2 jours pour préparer les slides. Marc m'a dit que l'IA pouvait créer des présentations quasi automatiquement. Peux-tu me faire un mini-guide : quel outil utiliser, comment formuler ma demande à l'IA, et quels sont les pièges à éviter pour que le résultat soit pro ?\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'IA pour créer des présentations et visuels",
+          "definition": "L'intelligence artificielle aide à créer des présentations et des images rapidement et facilement. Elle propose des idées, organise les informations et choisit des designs adaptés sans que l'on ait besoin d'être un expert. Cela permet de gagner du temps et d'avoir un rendu professionnel même pour un débutant.",
+          "analogy": "C'est comme utiliser un assistant personnel qui vous aide à préparer un repas en vous donnant des recettes simples et en choisissant les bons ingrédients. Vous n'avez pas besoin d'être un chef pour réussir un plat délicieux.",
+          "example": "Sophie, assistante commerciale, doit préparer une présentation pour un client important en moins de deux heures. Elle utilise un outil d'IA qui lui suggère automatiquement un plan clair, des visuels adaptés et des graphiques basés sur ses données de vente. Grâce à cette aide, elle termine sa présentation rapidement, avec un design professionnel, et impressionne son client lors de la réunion."
+        }
+      ],
+      "title": "L'IA pour créer des présentations et visuels"
+    },
+    "eveil_ch11": {
+      "scenario": "Bonjour ! Je suis Léa, votre tutrice. J'ai remarqué que la rédaction de documents comme les comptes rendus ou les propositions de projet peut prendre beaucoup de temps. Et si une IA pouvait vous donner un sérieux coup de pouce ? Voyons ensemble comment l'utiliser efficacement pour cette tâche.",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Vous devez rédiger une proposition de projet pour un nouveau programme de bien-être au travail. Quel est le meilleur prompt à donner à une IA pour obtenir une première version complète et pertinente ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Rédige une proposition de projet.",
+              "correct": false,
+              "feedback": "C'est un bon début, mais c'est trop vague. L'IA ne sait pas de quel projet il s'agit. Plus vous donnez de détails, meilleur sera le résultat !"
+            },
+            {
+              "id": "opt_2",
+              "text": "Écris un document sur le bien-être au travail avec des idées d'actions.",
+              "correct": false,
+              "feedback": "C'est mieux, on précise le sujet. Mais l'IA ne sait toujours pas quel format de document vous attendez. Est-ce un article de blog, une note interne, une proposition de projet ?"
+            },
+            {
+              "id": "opt_3",
+              "text": "Agis comme un chef de projet. Rédige une proposition de projet détaillée pour un nouveau programme de bien-être en entreprise. Inclus : 1. Objectifs (améliorer la satisfaction, réduire le stress). 2. Actions (yoga, nutrition, gestion du stress). 3. Budget prévisionnel. 4. Bénéfices attendus (réduction de l'absentéisme, meilleure productivité). Adopte un ton professionnel et convaincant.",
+              "correct": true,
+              "feedback": "Excellent ! Ce prompt est parfait. Vous donnez un rôle à l'IA, le format attendu, le sujet précis et une structure détaillée. C'est la clé pour obtenir un résultat de qualité."
+            },
+            {
+              "id": "opt_4",
+              "text": "Fais une proposition de projet pour le bien-être avec budget et actions.",
+              "correct": false,
+              "feedback": "Pas mal, les éléments clés y sont. Mais on peut encore améliorer en donnant un rôle à l'IA et en précisant les objectifs et les bénéfices attendus pour un résultat plus complet."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "L'IA vous a généré une première version de la proposition de projet. Que faites-vous en premier ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Je l'envoie directement à mon manager, car l'IA fait toujours un travail parfait.",
+              "correct": false,
+              "feedback": "Attention, c'est une erreur de débutant ! L'IA peut faire des erreurs, omettre des informations importantes ou utiliser un ton qui ne correspond pas à votre entreprise. Il faut toujours vérifier."
+            },
+            {
+              "id": "opt_2",
+              "text": "Je vérifie la véracité des informations, j'ajuste le ton, j'ajoute des détails spécifiques à mon entreprise et je personnalise le contenu.",
+              "correct": true,
+              "feedback": "Absolument ! C'est l'étape cruciale. L'IA fournit la structure et le contenu de base, mais votre expertise métier et votre connaissance de l'entreprise sont indispensables pour transformer ce brouillon en un document final convaincant."
+            },
+            {
+              "id": "opt_3",
+              "text": "Je supprime tout et je recommence de zéro, car je n'ai pas confiance en ce qui a été généré.",
+              "correct": false,
+              "feedback": "Ce serait dommage de ne pas profiter du temps gagné ! Le texte de l'IA est une excellente base de travail. Conservez la structure et les bonnes idées, et concentrez-vous sur l'amélioration."
+            },
+            {
+              "id": "opt_4",
+              "text": "Je demande à l'IA de résumer le document pour voir si elle a bien compris.",
+              "correct": false,
+              "feedback": "C'est une technique intéressante pour vérifier la cohérence, mais l'étape la plus importante reste la relecture et l'enrichissement du contenu par vos soins."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Email de Léa : « La rédaction des documents professionnels prend beaucoup de temps. Peux-tu me rédiger un texte clair expliquant comment l’IA peut aider à rédiger plus vite et mieux ces documents, en utilisant un langage simple ? »",
+          "points": 10,
+          "question": "Email de Léa : « La rédaction des documents professionnels prend beaucoup de temps. Peux-tu me rédiger un texte clair expliquant comment l’IA peut aider à rédiger plus vite et mieux ces documents, en utilisant un langage simple ? »"
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'IA rédactionnelle pour les documents professionnels",
+          "definition": "Une IA rédactionnelle est un programme informatique qui sait écrire des textes. On lui donne une instruction (un 'prompt') et il génère un texte qui ressemble à ce qu'un humain pourrait écrire.",
+          "analogy": "C'est comme avoir un assistant personnel ultra-rapide. Vous lui expliquez ce que vous voulez (le brief), et il vous prépare une première version du document (un brouillon) en quelques secondes. À vous ensuite de le relire et de l'améliorer.",
+          "example": "Vous voulez préparer un discours. Au lieu de partir d'une page blanche, vous demandez à l'IA : \"Rédige un discours de 5 minutes pour remercier l'équipe projet pour son travail exceptionnel sur le projet Alpha. Mentionne notre réussite collective et notre capacité à surmonter les défis.\" Mise en situation : un email de votre manager De : N+1@entreprise.fr À : Vous@entreprise.fr Objet : Proposition projet bien-être Salut, Suite à notre discussion, pourrais-tu me préparer une proposition de projet pour le nouveau programme de bien-être ? Il me faudrait une première version avec les objectifs, les actions envisagées (ex: cours de yoga, ateliers nutrition, etc.), un budget prévisionnel et les bénéfices attendus pour l'entreprise. Pas besoin que ce soit parfait, juste une base pour qu'on en discute en réunion la semaine prochaine. Merci !"
+        }
+      ],
+      "title": "L'IA pour rédiger des documents professionnels"
+    },
+    "eveil_ch12": {
+      "scenario": "Bonjour ! Aujourd'hui, nous allons voir comment l'IA peut devenir votre assistante personnelle pour vous tenir au courant des dernières nouvelles de notre secteur. Fini de passer des heures à lire des dizaines d'articles chaque matin !",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Vous souhaitez mettre en place une veille informationnelle simple sur les innovations en 'logistique durable'. Quelle est la première étape la plus simple et concrète que vous pourriez réaliser avec un outil d'IA grand public ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Utiliser un outil d'IA pour lui demander de résumer les 3 actualités les plus importantes de la semaine sur la 'logistique durable'.",
+              "correct": true,
+              "feedback": "Exactement ! C'est la manière la plus directe d'obtenir une synthèse rapide et pertinente. L'IA fait le travail de lecture et de résumé pour vous."
+            },
+            {
+              "id": "opt_2",
+              "text": "Coder un algorithme de web scraping pour extraire les données de 50 sites d'actualités.",
+              "correct": false,
+              "feedback": "C'est une approche très technique qui n'est pas nécessaire. Les outils d'IA actuels peuvent faire cela pour vous sans que vous ayez à écrire une seule ligne de code."
+            },
+            {
+              "id": "opt_3",
+              "text": "S'abonner manuellement aux newsletters de 20 blogs spécialisés sur le sujet.",
+              "correct": false,
+              "feedback": "Cela augmente la quantité d'informations que vous recevez, mais ne vous aide pas à la synthétiser. L'IA peut analyser ces newsletters pour vous, mais l'abonnement seul ne suffit pas."
+            },
+            {
+              "id": "opt_4",
+              "text": "Acheter une base de données d'articles de presse sur la logistique.",
+              "correct": false,
+              "feedback": "C'est une démarche coûteuse et complexe. Les outils d'IA grand public peuvent accéder à l'information publique sur Internet sans cet investissement."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Pour obtenir un résumé pertinent de l'actualité, quelle formulation (prompt) est la plus efficace à donner à une IA ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Actualités.",
+              "correct": false,
+              "feedback": "C'est beaucoup trop vague. L'IA ne saura pas quel sujet, quelle période ou quel niveau de détail vous souhaitez. Soyez toujours plus précis !"
+            },
+            {
+              "id": "opt_2",
+              "text": "Donne-moi les news sur l'économie.",
+              "correct": false,
+              "feedback": "C'est un peu mieux, mais encore très large. 'L'économie' couvre des milliers de sujets. Le résultat risque d'être trop général pour être utile."
+            },
+            {
+              "id": "opt_3",
+              "text": "Résume en 3 points les principales annonces concernant les 'véhicules autonomes en Europe' de la semaine dernière.",
+              "correct": true,
+              "feedback": "Parfait ! Ce prompt est précis : il indique l'action (Résume en 3 points), le sujet exact ('véhicules autonomes en Europe') et la période (la semaine dernière)."
+            },
+            {
+              "id": "opt_4",
+              "text": "Je veux tout savoir sur l'intelligence artificielle, lis tous les articles et fais-moi un rapport complet.",
+              "correct": false,
+              "feedback": "Cette demande est irréaliste et trop ambitieuse. Il faut découper votre besoin en questions plus petites et plus ciblées pour obtenir des résultats exploitables."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Message Slack de Marc : \"J’ai vu cette vidéo https://www.youtube.com/watch?v=lOkO9nOyem0 qui parle d’expertise IA. Peux-tu me faire une synthèse sur comment l’IA peut m’aider à surveiller et résumer rapidement les actualités de notre secteur ?\"",
+          "points": 10,
+          "question": "Message Slack de Marc : \"J'ai regardé ce webinaire https://www.youtube.com/watch?v=0oaTcqEuS4w sur l'IA au service de la veille. C'est exactement ce qu'il nous faut ! Peux-tu le visionner et me rédiger une synthèse des points clés : quels outils sont recommandés, comment configurer une veille automatique, et comment l'appliquer à notre secteur ?\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'IA pour surveiller et résumer les actualités du secteur",
+          "definition": "L'intelligence artificielle peut lire beaucoup d'articles et d'informations rapidement. Elle choisit les plus importants et en fait un résumé simple. Cela aide à rester informé sans perdre de temps à tout lire.",
+          "analogy": "C'est comme si vous aviez un ami qui lit tous les journaux pour vous et vous raconte seulement ce qui est important. Vous écoutez son résumé au lieu de tout lire vous-même. Cela vous fait gagner du temps et vous évite d'être submergé d'informations.",
+          "example": "Sophie travaille dans une entreprise de technologie. Chaque matin, elle reçoit un résumé automatique créé par une IA qui a lu plus de 50 articles sur les nouveautés du secteur. Par exemple, l'IA lui indique qu'une nouvelle loi sur la protection des données va entrer en vigueur le mois prochain, ce qui peut affecter son travail. Grâce à ce résumé, Sophie peut rapidement informer son équipe et adapter leurs projets sans perdre de temps à chercher l'information elle-même."
+        }
+      ],
+      "title": "L'IA pour surveiller et résumer les actualités du secteur"
+    },
+    "eveil_ch13": {
+      "scenario": "Bonjour ! Je suis Léa, votre tutrice. Aujourd'hui, nous allons explorer comment l'intelligence artificielle peut devenir une véritable alliée dans vos missions RH de tous les jours. L'idée n'est pas de devenir un expert technique, mais de comprendre concrètement ce que l'IA peut faire pour vous faire gagner du temps et vous concentrer sur l'humain. Commençons par un premier cas pratique.",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Léa vous a parlé des tâches RH qui peuvent être facilitées par l'IA. Parmi les propositions suivantes, laquelle représente le MEILLEUR exemple d'utilisation de l'IA pour une tâche RH du quotidien, adaptée à un niveau débutant ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Développer un algorithme complexe pour prédire le taux de turnover de l'entreprise.",
+              "correct": false,
+              "feedback": "C'est une application très avancée de l'IA en RH, mais elle demande des compétences techniques pointues. Pour un débutant, c'est un peu comme vouloir courir un marathon sans s'être jamais entraîné. Commençons plus simple !"
+            },
+            {
+              "id": "opt_2",
+              "text": "Utiliser un outil en ligne basé sur l'IA pour générer une première ébauche de description de poste pour un nouveau recrutement.",
+              "correct": true,
+              "feedback": "Excellente réponse ! C'est un cas d'usage parfait pour débuter. C'est concret, rapide, et ça vous fait gagner un temps précieux sur une tâche parfois répétitive. L'IA vous donne une base que vous pouvez ensuite affiner."
+            },
+            {
+              "id": "opt_3",
+              "text": "Remplacer entièrement le processus d'entretiens annuels par un chatbot émotionnel.",
+              "correct": false,
+              "feedback": "L'IA peut aider à préparer les entretiens, mais remplacer l'interaction humaine pour des sujets aussi importants et sensibles n'est pas l'objectif. Le contact humain reste au cœur du métier RH !"
+            },
+            {
+              "id": "opt_4",
+              "text": "Installer et configurer un serveur dédié pour héberger un modèle d'IA open-source de gestion des talents.",
+              "correct": false,
+              "feedback": "Cette option est très technique et s'éloigne de l'aspect 'utilisation au quotidien' pour un profil RH. On cherche des outils clés en main pour commencer."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Vous recevez 150 candidatures pour le poste de commercial. Quelle est la manière la plus pertinente d'utiliser l'IA pour vous aider à les trier efficacement ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Demander à l'IA de supprimer automatiquement tous les CV qui contiennent des fautes d'orthographe.",
+              "correct": false,
+              "feedback": "Attention, ce critère peut être trop discriminant et vous faire passer à côté de bons profils. Une IA bien utilisée se base sur les compétences avant tout."
+            },
+            {
+              "id": "opt_2",
+              "text": "Laisser l'IA choisir les 5 meilleurs candidats et envoyer des réponses négatives automatiques à tous les autres.",
+              "correct": false,
+              "feedback": "C'est un peu radical ! L'IA est un outil d'aide à la décision, mais le choix final et la communication avec les candidats doivent rester sous votre contrôle pour garantir un processus humain."
+            },
+            {
+              "id": "opt_3",
+              "text": "Utiliser l'IA pour faire une présélection (shortlist) en se basant sur des mots-clés précis (ex: 'prospection', 'CRM', '2 ans d'expérience').",
+              "correct": true,
+              "feedback": "Exactement ! C'est la meilleure approche. L'IA agit comme un filtre intelligent en se basant sur des critères objectifs que vous définissez. Vous gardez la main tout en gagnant un temps considérable."
+            },
+            {
+              "id": "opt_4",
+              "text": "Demander à l'IA de noter chaque candidat de 1 à 10 en se basant uniquement sur la mise en page de leur CV.",
+              "correct": false,
+              "feedback": "L'apparence du CV est secondaire. Le plus important, ce sont les compétences et l'expérience du candidat. Concentrons l'IA sur ce qui compte vraiment pour le poste."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Email de Sophie RH : \"Bonjour, peux-tu me préparer une note simple et accessible sur les usages de l’IA dans les tâches RH quotidiennes ? Je veux que ce soit compréhensible pour toute l’équipe, même ceux qui ne connaissent pas l’IA.\"",
+          "points": 10,
+          "question": "Email de Sophie RH : \"Bonjour, peux-tu me préparer une note simple et accessible sur les usages de l’IA dans les tâches RH quotidiennes ? Je veux que ce soit compréhensible pour toute l’équipe, même ceux qui ne connaissent pas l’IA.\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'IA dans les Ressources Humaines",
+          "definition": "L'IA en RH, c'est l'utilisation de programmes informatiques 'intelligents' pour aider à réaliser des tâches répétitives comme le tri de CV, la planification d'entretiens ou la rédaction de brouillons de documents.",
+          "analogy": "C'est comme avoir un assistant personnel super rapide qui lit pour vous des centaines de CV et surligne les plus intéressants selon vos consignes, vous laissant plus de temps pour discuter avec les candidats.",
+          "example": "Vous devez recruter un 'Comptable'. Au lieu de lire 200 CV un par un, vous demandez à une IA de présélectionner les candidats qui ont '5 ans d'expérience' et maîtrisent le logiciel 'SAP'. L'IA vous présente une liste de 20 candidats en quelques minutes. Simulation de communication De : David Martin (Manager Commercial) À : Vous Objet : Lancement recrutement - Commercial Junior Bonjour, Peux-tu lancer le processus pour recruter un nouveau commercial junior ? On commence à être sous l'eau. Il nous faudrait une première version de l'annonce rapidement pour la valider. Merci !"
+        }
+      ],
+      "title": "L'IA pour les tâches RH du quotidien"
+    },
+    "eveil_ch14": {
+      "scenario": "Bonjour ! C'est Léa. Aujourd'hui, nous allons voir comment gagner du temps sur ces petites tâches qui reviennent sans cesse. Tu as sûrement déjà copié-collé des informations d'un endroit à un autre, n'est-ce pas ? Découvrons comment un outil comme Make peut faire cela à ta place.",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "D'après le document, quel est le rôle principal d'un outil d'automatisation comme Make ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Remplacer les employés pour les tâches complexes.",
+              "correct": false,
+              "feedback": "Non, l'objectif est de libérer du temps, pas de remplacer l'humain sur des tâches à valeur ajoutée."
+            },
+            {
+              "id": "opt_2",
+              "text": "Connecter des applications pour qu'elles exécutent des actions automatiquement.",
+              "correct": true,
+              "feedback": "Exactement ! Make agit comme un pont entre vos outils pour automatiser les actions répétitives."
+            },
+            {
+              "id": "opt_3",
+              "text": "Créer de nouvelles applications à partir de zéro.",
+              "correct": false,
+              "feedback": "Ce n'est pas le but de Make. Il connecte des applications existantes."
+            },
+            {
+              "id": "opt_4",
+              "text": "Analyser des données financières complexes.",
+              "correct": false,
+              "feedback": "Make n'est pas un outil d'analyse de données, mais d'automatisation de flux de travail."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Dans le vocabulaire de l'automatisation, comment appelle-t-on l'événement qui déclenche le démarrage d'une suite d'actions ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Une action",
+              "correct": false,
+              "feedback": "L'action est ce qui se passe *après* le déclenchement."
+            },
+            {
+              "id": "opt_2",
+              "text": "Un déclencheur (ou trigger)",
+              "correct": true,
+              "feedback": "Parfait ! C'est l'événement de départ, comme la réception d'un email, qui lance l'automatisation."
+            },
+            {
+              "id": "opt_3",
+              "text": "Un résultat",
+              "correct": false,
+              "feedback": "Le résultat est la finalité de l'automatisation, pas son point de départ."
+            },
+            {
+              "id": "opt_4",
+              "text": "Un scénario",
+              "correct": false,
+              "feedback": "Le scénario est l'ensemble du processus (déclencheur + actions), pas juste l'événement de départ."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Léa en message Teams : \"Pour gagner du temps, peux-tu me proposer une procédure simple pour automatiser une tâche répétitive avec Make, en expliquant comment l’IA peut intervenir dans cette automatisation ?\"",
+          "points": 10,
+          "question": "Léa en message Teams : \"Pour gagner du temps, peux-tu me proposer une procédure simple pour automatiser une tâche répétitive avec Make, en expliquant comment l’IA peut intervenir dans cette automatisation ?\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'automatisation no-code avec Make",
+          "definition": "Make est une plateforme qui permet de connecter différentes applications entre elles pour qu'elles travaillent ensemble automatiquement, sans avoir besoin de savoir programmer.",
+          "analogy": "Imagine un chef d'orchestre. Au lieu de jouer de tous les instruments, il donne le signal à chaque musicien au bon moment. Make est ce chef d'orchestre pour tes applications (tes emails, tes tableaux, etc.).",
+          "example": "Chaque fois que tu reçois un email avec une pièce jointe (déclencheur), Make l'enregistre automatiquement dans ton dossier partagé (action). Message de Léa (Teams) De : Léa FONTAINE Aujourd'hui à 09:15 Bonjour l'équipe ! J'ai remarqué que nous passions beaucoup de temps à copier les demandes de nos clients depuis nos emails vers notre tableau de suivi. C'est typiquement le genre de tâche que nous pouvons confier à Make. L'idée n'est pas de remplacer notre travail, mais de nous libérer de ce \"copier-coller\" pour nous concentrer sur la réponse à apporter au client. Qu'en pensez-vous ?"
+        }
+      ],
+      "title": "Automatiser une tâche répétitive simple avec Make"
+    },
+    "eveil_ch15": {
+      "scenario": "Léa vous a montré comment un bon prompt peut faire toute la différence. Mettez en pratique ses conseils pour obtenir le meilleur résultat possible de l'IA.",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Vous souhaitez utiliser une IA pour générer des idées de noms pour un nouveau projet interne de 'covoiturage d'entreprise'. Quel est le prompt le plus efficace parmi les suivants, en s'inspirant de la méthode ROCF ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Donne-moi des noms pour un projet de covoiturage.",
+              "correct": false,
+              "feedback": "C'est un bon début, mais c'est trop vague. L'IA ne connaît ni le contexte de l'entreprise, ni le ton recherché. Vous risquez d'obtenir des noms très génériques."
+            },
+            {
+              "id": "opt_2",
+              "text": "Agis comme un créatif publicitaire. Propose 5 noms pour un projet de covoiturage d'entreprise. Le ton doit être moderne et écologique. Le nom doit être court et facile à mémoriser. Présente-les dans une liste.",
+              "correct": true,
+              "feedback": "Excellent ! Vous avez défini un rôle (créatif publicitaire), un objectif (5 noms), un contexte (interne, moderne, écologique) et un format (liste). C'est la recette pour une réponse de qualité."
+            },
+            {
+              "id": "opt_3",
+              "text": "Je veux des noms de projets innovants et sympas.",
+              "correct": false,
+              "feedback": "Ce prompt est trop subjectif. 'Innovant' et 'sympa' peuvent vouloir dire beaucoup de choses. Sans objectif ni contexte clairs, l'IA va devoir deviner ce que vous attendez."
+            },
+            {
+              "id": "opt_4",
+              "text": "Trouve des noms pour une app de covoiturage comme BlaBlaCar mais pour notre entreprise.",
+              "correct": false,
+              "feedback": "L'analogie avec BlaBlaCar est une bonne idée pour donner du contexte. Cependant, il manque encore des précisions sur le ton, le format de réponse attendu et le rôle que l'IA doit jouer."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Vous avez demandé à une IA de vous rédiger un résumé d'un long rapport. La réponse est trop technique et difficile à comprendre pour des débutants. Quelle action corrective est la plus appropriée ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Recommencer avec un prompt totalement différent sur un autre sujet.",
+              "correct": false,
+              "feedback": "Ce n'est pas la meilleure approche. Abandonner à la première difficulté vous empêche d'apprendre à affiner vos demandes et d'obtenir ce que vous voulez vraiment."
+            },
+            {
+              "id": "opt_2",
+              "text": "Chercher la réponse soi-même dans le rapport original.",
+              "correct": false,
+              "feedback": "C'est une option, mais elle va à l'encontre de l'objectif d'utiliser l'IA pour gagner du temps. Il est plus efficace d'apprendre à mieux la guider."
+            },
+            {
+              "id": "opt_3",
+              "text": "Ajouter une instruction au prompt initial, comme : 'Simplifie le langage pour qu'un enfant de 12 ans puisse comprendre.'",
+              "correct": true,
+              "feedback": "Exactement ! C'est ce qu'on appelle l'itération. En ajoutant une contrainte de simplification, vous guidez l'IA vers le résultat souhaité sans tout recommencer. L'analogie de l'âge est très efficace pour ajuster le niveau de complexité."
+            },
+            {
+              "id": "opt_4",
+              "text": "Copier-coller la réponse de l'IA dans un moteur de recherche pour trouver une version plus simple.",
+              "correct": false,
+              "feedback": "Cela peut fonctionner, mais c'est un détour. Il est plus direct et formateur de dialoguer avec l'IA pour qu'elle ajuste elle-même sa proposition."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Message de Thomas IT : \"J’ai vu cette vidéo https://www.youtube.com/watch?v=HmzeIYCstlk sur l’utilisation de ChatGPT. Peux-tu me résumer les meilleures pratiques pour construire des prompts efficaces afin d’obtenir des réponses précises ?\"",
+          "points": 10,
+          "question": "Message de Thomas IT : \"J'ai commencé à regarder cette formation https://www.youtube.com/watch?v=348cxDG_9g4 sur le prompt engineering (les 20 premières minutes suffisent). C'est vraiment bien fait. Peux-tu la visionner et me résumer les meilleures pratiques pour écrire des prompts efficaces ? J'aimerais qu'on crée un petit guide interne pour l'équipe.\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'art du prompt : la méthode ROCF",
+          "definition": "Le prompt Un prompt, c'est une instruction ou une question que vous donnez à une intelligence artificielle pour qu'elle réalise une tâche. C'est le point de départ de votre conversation avec l'IA.",
+          "analogy": "Le GPS Pensez à un prompt comme à une adresse que vous entrez dans un GPS. Si vous tapez \"Paris\", le GPS ne saura pas où vous voulez aller précisément. Si vous entrez \"22 Avenue des Champs-Élysées, 75008 Paris\", il vous y mènera directement. Un prompt détaillé fonctionne de la même manière : il guide l'IA vers la destination exacte que vous visez.",
+          "example": "De vague à précis Prompt vague : \"Écris un email.\" Prompt précis (méthode ROCF) : \"Tu es un manager bienveillant (Rôle). Rédige un email pour féliciter ton équipe pour avoir terminé le projet Alpha avec succès et dans les temps (Objectif). L'ambiance est à la célébration, nous avons surmonté des défis techniques importants (Contexte). Le format doit être un court email de 3 paragraphes, avec un ton enthousiaste et reconnaissant (Format).\" Simulation : Un email de Léa De : Léa FONTAINE <lea.fontaine@immersium.co> À : Vous <vous@votre-entreprise.com> Objet : Petit conseil pour tes prompts IA Salut, J'espère que tu explores bien les possibilités de l'IA ! Je voulais te partager une astuce simple que j'utilise tout le temps : la méthode ROCF. Quand tu demandes quelque chose à l'IA, pense à lui donner : • Un Rôle : \"Agis comme un expert en marketing...\" • Un Objectif : \"...crée 3 slogans pour un nouveau café bio.\" • Du Contexte : \"La cible est jeune, urbaine et soucieuse de l'environnement.\" • Un Format : \"Présente les slogans sous forme de liste à puces.\" Tu verras, ça change tout ! C'est la différence entre une réponse générique et une réponse parfaitement adaptée à ton besoin. À bientôt, Léa FONTAINE Responsable Formation & IA"
+        }
+      ],
+      "title": "Construire des prompts qui donnent de bons résultats"
+    },
+    "eveil_ch16": {
+      "scenario": "Léa vous accueille avec le sourire : \"Bonjour ! Pour rester à la page sur l'IA sans y passer des heures, l'idéal est de mettre en place une veille automatisée. C'est un peu comme avoir un assistant personnel qui vous apporte les nouvelles les plus importantes. Voyons ensemble comment vous pouvez faire ça simplement.\"",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Quelle est la première étape la plus simple et efficace pour commencer votre veille sur l'intelligence artificielle ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "S'abonner à 50 newsletters sur l'IA pour ne rien manquer.",
+              "correct": false,
+              "feedback": "C'est une bonne intention, mais vous risquez la surcharge d'information (l'infobésité) ! Le but est de gagner du temps, pas de passer des heures à trier des emails."
+            },
+            {
+              "id": "opt_2",
+              "text": "Créer une alerte simple sur un moteur de recherche comme Google Alerts.",
+              "correct": true,
+              "feedback": "Exactement ! C'est le moyen le plus direct et le plus simple pour commencer. Vous ciblez précisément ce qui vous intéresse et recevez les informations sans effort."
+            },
+            {
+              "id": "opt_3",
+              "text": "Apprendre à coder un programme qui scanne le web.",
+              "correct": false,
+              "feedback": "C'est une approche très avancée et technique. Pour débuter, il existe des outils bien plus simples qui ne demandent aucune compétence en programmation."
+            },
+            {
+              "id": "opt_4",
+              "text": "Lire tous les matins la page d'accueil des grands sites d'actualité.",
+              "correct": false,
+              "feedback": "Cela peut être utile, mais ce n'est pas automatisé et peu ciblé. Vous risquez de manquer des informations spécifiques à vos centres d'intérêt sur l'IA."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Léa vous présente plusieurs options pour créer votre première alerte. Laquelle est la plus adaptée pour un débutant souhaitant une solution simple et gratuite ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Un agrégateur de flux RSS comme Feedly, qui demande de trouver et d'ajouter manuellement les sources.",
+              "correct": false,
+              "feedback": "Feedly est un excellent outil, mais il est un peu plus avancé. Pour une première fois, il demande de savoir ce qu'est un flux RSS et où le trouver, ce qui peut être un frein."
+            },
+            {
+              "id": "opt_2",
+              "text": "S'abonner aux alertes email de Google Alerts.",
+              "correct": true,
+              "feedback": "C'est le choix idéal pour commencer ! C'est gratuit, très facile à configurer en quelques clics et vous recevez directement les résultats dans votre boîte mail."
+            },
+            {
+              "id": "opt_3",
+              "text": "Utiliser un outil de veille professionnel payant comme Meltwater.",
+              "correct": false,
+              "feedback": "Ces outils sont extrêmement puissants, mais ils sont conçus pour les entreprises, sont souvent chers et bien trop complexes pour un usage personnel de découverte."
+            },
+            {
+              "id": "opt_4",
+              "text": "Suivre le hashtag #IA sur Twitter (X).",
+              "correct": false,
+              "feedback": "Suivre un hashtag est une forme de veille, mais le flux est souvent très bruyant et peu qualitatif. Ce n'est pas l'idéal pour recevoir une information synthétique et pertinente."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Email de Léa : \"Pour rester informé sans perdre de temps, j’aimerais mettre en place une veille IA automatisée. Peux-tu me faire un plan clair des étapes à suivre pour configurer cela simplement ?\"",
+          "points": 10,
+          "question": "Email de Léa : \"Pour rester informé sans perdre de temps, j’aimerais mettre en place une veille IA automatisée. Peux-tu me faire un plan clair des étapes à suivre pour configurer cela simplement ?\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Mettre en place une veille IA automatisée",
+          "definition": "La veille IA automatisée consiste à utiliser des outils qui collectent et analysent automatiquement les informations importantes sur l'intelligence artificielle. Cela permet de recevoir des nouvelles utiles sans chercher soi-même, et de rester informé facilement. C’est un gain de temps pour suivre les nouveautés et les tendances.",
+          "analogy": "C'est comme un aspirateur automatique qui nettoie la maison pendant que vous faites autre chose. Vous n'avez pas besoin de passer du temps à nettoyer, mais la maison reste propre. La veille automatisée fait pareil avec l'information.",
+          "example": "Dans une entreprise, Sophie est responsable de la transformation digitale. Elle utilise un outil de veille automatisée qui lui envoie chaque matin un résumé des dernières avancées en IA, avec des articles et des études de cas. Grâce à cela, sans y passer plus de 10 minutes par jour, elle peut informer son équipe des évolutions et adapter les projets en conséquence. Par exemple, elle découvre une nouvelle technologie d'analyse prédictive qui pourrait améliorer la gestion des stocks, et elle propose rapidement un test pilote."
+        }
+      ],
+      "title": "Mettre en place une veille IA automatisée"
+    },
+    "eveil_ch17": {
+      "scenario": "Camille, responsable marketing, se noie sous un fichier Excel de 5000 commentaires clients. Elle décide d'utiliser une nouvelle fonctionnalité d'IA intégrée à son logiciel pour y voir plus clair.",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Selon la discussion entre Camille et son IA, quel est le principal avantage d'utiliser l'IA pour analyser son fichier de retours clients ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Elle permet de corriger les fautes d'orthographe dans les commentaires.",
+              "correct": false,
+              "feedback": "Ce n'est pas sa fonction principale. L'IA se concentre sur le sens et les thèmes, pas sur la grammaire."
+            },
+            {
+              "id": "opt_2",
+              "text": "Elle peut identifier automatiquement les thèmes principaux et les tendances cachées.",
+              "correct": true,
+              "feedback": "Exactement ! L'IA a synthétisé 5000 lignes en 3 points clés, une tâche qui aurait été longue et complexe pour un humain."
+            },
+            {
+              "id": "opt_3",
+              "text": "Elle transforme le fichier Excel en une présentation PowerPoint.",
+              "correct": false,
+              "feedback": "Bien que certaines IA puissent le faire, ce n'est pas ce qui a été demandé ni l'avantage principal montré ici. L'analyse prime."
+            },
+            {
+              "id": "opt_4",
+              "text": "Elle répond automatiquement à chaque client par email.",
+              "correct": false,
+              "feedback": "L'analyse et la réponse sont deux choses différentes. Ici, l'IA a seulement analysé les données internes."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Vous avez un tableau listant les ventes mensuelles de 3 produits différents sur un an. Quel graphique conseillerez-vous à votre IA de créer pour comparer leur performance au fil du temps ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Un graphique circulaire (camembert) montrant la part de chaque produit dans les ventes totales.",
+              "correct": false,
+              "feedback": "Ce graphique est utile pour voir la proportion à un instant T, mais pas pour suivre une évolution dans le temps."
+            },
+            {
+              "id": "opt_2",
+              "text": "Un diagramme en barres montrant le total des ventes pour chaque produit.",
+              "correct": false,
+              "feedback": "C'est un bon début pour comparer les totaux, mais cela n'illustre pas l'évolution mensuelle de chaque produit."
+            },
+            {
+              "id": "opt_3",
+              "text": "Un graphique en courbes avec une courbe par produit, montrant les ventes chaque mois.",
+              "correct": true,
+              "feedback": "Parfait ! Le graphique en courbes est idéal pour montrer l'évolution d'une ou plusieurs variables dans le temps."
+            },
+            {
+              "id": "opt_4",
+              "text": "Un nuage de points montrant la corrélation entre les ventes et le mois.",
+              "correct": false,
+              "feedback": "Le nuage de points est plus adapté pour voir la relation entre deux variables numériques différentes, pas une évolution temporelle."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Message Slack de Camille marketing : \"Je suis noyée sous un énorme fichier Excel. Peux-tu me faire un petit tutoriel sur comment utiliser l’IA pour analyser et visualiser rapidement ces données ?\"",
+          "points": 10,
+          "question": "Message Slack de Camille marketing : \"Je suis noyée sous un énorme fichier Excel. Peux-tu me faire un petit tutoriel sur comment utiliser l’IA pour analyser et visualiser rapidement ces données ?\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'analyse de données par l'IA",
+          "definition": "L'analyse de données par l'IA, c'est utiliser un programme intelligent pour lire, comprendre et résumer de grandes quantités d'informations (comme des chiffres ou des textes) beaucoup plus vite qu'un humain. L'IA peut y trouver des tendances, des anomalies ou des liens cachés.",
+          "analogy": "Imaginez que vos données sont un immense puzzle de 10 000 pièces. Essayer de le faire seul prendrait des jours ! L'IA est comme un assistant qui trie les pièces par couleur et par forme en quelques secondes, vous montrant même à quoi l'image finale va ressembler.",
+          "example": "Voici une simulation d'échange entre Camille et son outil d'analyse IA. Camille: J'ai téléversé mon fichier Excel avec 5000 commentaires. Peux-tu me dire de quoi parlent les clients ? IA : Bien sûr. Après analyse, 3 thèmes principaux émergent : 62% des commentaires concernent des retards de livraison, 25% louent la qualité du produit, et 13% suggèrent une nouvelle fonctionnalité pour l'application mobile."
+        }
+      ],
+      "title": "L'IA pour analyser et visualiser des données complexes"
+    },
+    "eveil_ch18": {
+      "scenario": "Léa FONTAINE vous accueille avec un grand sourire : 'Bonjour ! Aujourd'hui, nous allons voir comment l'IA peut devenir votre meilleure alliée pour communiquer plus efficacement au travail. Fini le syndrome de la page blanche ! Prêt(e) à commencer ?'",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Vous devez envoyer un e-mail à toute votre équipe pour annoncer un changement de planning de dernière minute. Quelle est la meilleure façon d'utiliser une IA générative pour vous aider ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Copier-coller directement le texte généré par l'IA sans relecture.",
+              "correct": false,
+              "feedback": "Ce n'est pas l'idéal. L'IA peut faire des erreurs ou utiliser un ton qui n'est pas le vôtre. Il faut toujours vérifier et personnaliser."
+            },
+            {
+              "id": "opt_2",
+              "text": "Demander à l'IA de rédiger l'e-mail en lui donnant toutes les informations (nouvelle date, heure, raison) et le ton souhaité (par ex. 'informel mais clair').",
+              "correct": true,
+              "feedback": "Excellente approche ! C'est la méthode la plus efficace. Vous donnez un contexte précis à l'IA pour obtenir un résultat de qualité, que vous n'aurez plus qu'à valider."
+            },
+            {
+              "id": "opt_3",
+              "text": "Utiliser l'IA uniquement pour corriger les fautes d'orthographe de l'e-mail que vous avez déjà écrit.",
+              "correct": false,
+              "feedback": "C'est une bonne utilisation de l'IA, mais elle peut faire bien plus ! L'utiliser pour générer le premier jet vous fera gagner encore plus de temps."
+            },
+            {
+              "id": "opt_4",
+              "text": "Demander à l'IA de trouver une bonne blague à insérer dans l'e-mail pour détendre l'atmosphère.",
+              "correct": false,
+              "feedback": "Attention, l'humour est très subjectif et peut être mal interprété à l'écrit. Pour une communication professionnelle, il vaut mieux rester factuel et direct."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Votre manager vous demande de résumer un long rapport pour le comité de direction. Vous ne disposez que de 30 minutes. Comment l'IA peut-elle vous aider au mieux ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Demander à l'IA de lire le rapport à votre place et de l'apprendre par cœur.",
+              "correct": false,
+              "feedback": "L'IA n'a pas de 'mémoire' comme un humain. Elle traite l'information, mais ne l''apprend' pas. Cette approche n'est pas la bonne."
+            },
+            {
+              "id": "opt_2",
+              "text": "Copier-coller le texte du rapport dans l'IA et lui demander : 'Résume ce texte en 5 points clés pour un comité de direction'.",
+              "correct": true,
+              "feedback": "C'est exactement ça ! C'est la manière la plus rapide et efficace d'obtenir une synthèse pertinente que vous pourrez ensuite affiner."
+            },
+            {
+              "id": "opt_3",
+              "text": "Ignorer l'IA car la tâche est trop complexe et demande une compréhension humaine.",
+              "correct": false,
+              "feedback": "C'est dommage de se priver d'une aide précieuse. L'IA est justement très forte pour synthétiser de grands volumes de texte rapidement."
+            },
+            {
+              "id": "opt_4",
+              "text": "Demander à l'IA d'écrire un poème sur le rapport pour le présenter de manière originale.",
+              "correct": false,
+              "feedback": "L'originalité est appréciée, mais pour un comité de direction, un résumé clair et factuel est généralement plus attendu et plus efficace !"
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Léa en réunion : « Pour améliorer nos communications pro, peux-tu me préparer une liste claire des bénéfices de l’IA dans la rédaction de tous types de messages et documents ? »",
+          "points": 10,
+          "question": "Email de Léa : « On utilise l'IA pour les documents longs, mais on n'a rien mis en place pour les communications courtes du quotidien : emails clients, messages Slack, réponses aux réclamations, posts LinkedIn... Peux-tu me préparer un guide pratique avec 3-4 exemples concrets montrant comment l'IA peut nous aider à rédiger ces communications rapides de façon professionnelle ? »"
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'IA générative pour la communication professionnelle",
+          "definition": "Une IA générative pour le texte est un programme informatique capable de créer des textes (e-mails, résumés, comptes rendus, etc.) à partir d'une simple demande en langage courant, appelée « prompt ».",
+          "analogy": "C'est comme avoir un assistant de rédaction personnel. Vous lui donnez les idées principales et le contexte, et il vous propose une première version du texte, que vous pouvez ensuite ajuster à votre style et à votre besoin.",
+          "example": "Vous devez annoncer un changement d'horaire de réunion à toute l'équipe. Au lieu de rédiger l'e-mail de zéro, vous demandez à l'IA : « Rédige un e-mail professionnel mais cordial pour informer l'équipe que la réunion de demain passe de 10h à 14h ». En 5 secondes, vous avez un brouillon prêt à envoyer."
+        }
+      ],
+      "title": "L'IA pour rédiger tous types de communications pro"
+    },
+    "eveil_ch19": {
+      "scenario": "Léa FONTAINE : \"Bonjour ! Bienvenue dans ce nouveau défi. Aujourd'hui, nous allons explorer comment l'intelligence artificielle peut devenir votre meilleure alliée pour organiser votre quotidien professionnel. Fini le stress des agendas surchargés et des notes éparpillées ! Prêt(e) à découvrir comment reprendre le contrôle de votre temps ?\"",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Parmi les propositions suivantes, quel est le principal avantage d'utiliser une IA pour gérer son agenda ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "L'IA peut automatiquement trouver des créneaux communs pour des réunions, même avec des agendas complexes.",
+              "correct": true,
+              "feedback": "Exactement ! C'est l'un des super-pouvoirs de l'IA : elle analyse les disponibilités de chacun et propose intelligemment les meilleurs moments, vous faisant gagner un temps précieux."
+            },
+            {
+              "id": "opt_2",
+              "text": "L'IA peut refuser les invitations à des réunions qui ne vous intéressent pas.",
+              "correct": false,
+              "feedback": "Pas tout à fait. L'IA peut vous aider à identifier les réunions moins prioritaires, mais la décision finale de refuser vous appartient. L'IA est un assistant, pas un décideur."
+            },
+            {
+              "id": "opt_3",
+              "text": "L'IA peut participer aux réunions à votre place et prendre des notes.",
+              "correct": false,
+              "feedback": "Attention, nous n'en sommes pas encore là ! Si certaines IA peuvent transcrire des réunions, elles ne peuvent pas y participer activement à votre place. Votre présence et votre expertise restent essentielles."
+            },
+            {
+              "id": "opt_4",
+              "text": "L'IA remplit automatiquement votre agenda de fausses réunions pour que vous ayez l'air occupé(e).",
+              "correct": false,
+              "feedback": "Heureusement, non ! L'objectif de l'IA est de vous faire gagner en efficacité et en sérénité, pas de construire une fausse image de productivité. La transparence est la clé."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Vous avez trois tâches importantes à réaliser aujourd'hui : finaliser une présentation pour demain, répondre à 50 emails non lus et commencer une recherche de fond pour un projet à long terme. Comment une IA peut-elle le mieux vous aider à prioriser ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "L'IA choisit la tâche la plus rapide à faire pour vous motiver.",
+              "correct": false,
+              "feedback": "C'est une stratégie possible, mais pas toujours la plus pertinente. L'IA peut faire mieux qu'une simple estimation de durée. L'urgence et l'impact sont des critères plus importants."
+            },
+            {
+              "id": "opt_2",
+              "text": "L'IA analyse l'échéance, l'importance et le contexte de chaque tâche pour vous suggérer un ordre de traitement.",
+              "correct": true,
+              "feedback": "Absolument ! Une IA efficace va croiser plusieurs informations (échéances, personnes impliquées, liens avec d'autres projets) pour vous proposer la séquence de travail la plus logique et stratégique."
+            },
+            {
+              "id": "opt_3",
+              "text": "L'IA vous conseille de faire les trois tâches en même temps pour gagner du temps.",
+              "correct": false,
+              "feedback": "Attention au 'multitasking' ! C'est souvent une illusion de productivité. L'IA vous aidera plutôt à vous concentrer sur une seule chose à la fois, mais dans le bon ordre."
+            },
+            {
+              "id": "opt_4",
+              "text": "L'IA supprime la tâche la moins agréable pour vous soulager.",
+              "correct": false,
+              "feedback": "Ce serait tentant, mais ce n'est pas le rôle de l'IA ! Elle est là pour vous aider à affronter vos responsabilités, pas pour les faire disparaître. Toutes les tâches ont leur importance."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Message Teams de Marc : \"Peux-tu me rédiger une recommandation sur comment l’IA peut nous aider à gérer notre agenda, prioriser nos tâches et organiser nos notes au quotidien ? Je veux que ce soit facile à comprendre pour toute l’équipe.\"",
+          "points": 10,
+          "question": "Message Teams de Marc : \"Peux-tu me rédiger une recommandation sur comment l’IA peut nous aider à gérer notre agenda, prioriser nos tâches et organiser nos notes au quotidien ? Je veux que ce soit facile à comprendre pour toute l’équipe.\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'IA comme assistant de productivité",
+          "definition": "Un assistant IA pour la productivité est un programme informatique qui utilise l'intelligence artificielle pour vous aider à organiser votre travail : agenda, emails, tâches et notes.",
+          "analogy": "C'est comme avoir un assistant personnel très efficace, disponible 24h/24, qui prépare votre journée, trie vos informations et vous rappelle l'essentiel.",
+          "example": "Vous demandez à votre téléphone : \"Trouve un créneau de 30 minutes la semaine prochaine avec Marc et Sophie pour parler du projet Alpha\". L'IA analyse les trois agendas et vous propose directement les meilleures options. Simulation : E-mail reçu De : Martin Dubois À : Vous Objet : Brainstorming urgent projet Phoenix Salut, j'aurais besoin de ton avis sur le projet Phoenix. On peut se caler un moment rapidement ? Je suis assez flexible mais j'ai pas mal de contraintes. Dis-moi ce qui t'arrange. Action possible avec une IA : Vous transférez l'email à votre assistant IA (ex: assistant@votreentreprise.com) en indiquant \"Proposer une réunion de 45min\". L'IA se charge de la conversation avec Martin pour trouver le créneau parfait."
+        }
+      ],
+      "title": "L'IA pour gérer son agenda, ses priorités et ses notes"
+    },
+    "eveil_ch20": {
+      "scenario": "Léa vous lance sur le sujet : \"Pour bien démarrer, il est crucial de comprendre pourquoi la transparence est si importante en IA. Imaginez que nous utilisions un outil d'IA pour approuver des demandes de prêt. Que se passerait-il si nous ne pouvions pas expliquer pourquoi un prêt a été refusé ?\"",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Quel est l'un des risques majeurs si une IA utilisée en entreprise manque de transparence ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "L'IA pourrait être moins performante et plus lente.",
+              "correct": false,
+              "feedback": "Ce n'est pas le risque principal. Une IA non transparente peut être très rapide, mais ses décisions restent une 'boîte noire'."
+            },
+            {
+              "id": "opt_2",
+              "text": "Il serait difficile d'expliquer ses décisions, ce qui peut entraîner des problèmes de confiance et de conformité légale.",
+              "correct": true,
+              "feedback": "Exactement ! La transparence permet de justifier les décisions de l'IA, de détecter les erreurs et de s'assurer qu'elle est juste. C'est un pilier de la confiance."
+            },
+            {
+              "id": "opt_3",
+              "text": "L'IA manquera de créativité dans ses propositions.",
+              "correct": false,
+              "feedback": "La créativité n'est pas directement liée à la transparence. Le vrai problème est le manque de contrôle et de compréhension."
+            },
+            {
+              "id": "opt_4",
+              "text": "Elle nécessiterait une plus grande quantité de données pour fonctionner.",
+              "correct": false,
+              "feedback": "La quantité de données est importante pour l'apprentissage, mais elle n'est pas directement liée au principe de transparence du modèle une fois qu'il est en service."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Votre équipe utilise un outil d'IA pour trier les CV. Vous remarquez qu'il semble systématiquement écarter les candidatures de femmes pour un poste technique. Que faites-vous ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Vous ignorez le problème, en pensant que l'IA a sûrement de bonnes raisons.",
+              "correct": false,
+              "feedback": "Attention, c'est une erreur ! Faire aveuglément confiance à l'IA sans esprit critique peut conduire à des discriminations. L'IA apprend des données, et si ces données sont biaisées, l'IA le sera aussi."
+            },
+            {
+              "id": "opt_2",
+              "text": "Vous essayez de corriger manuellement la sélection pour inclure plus de femmes.",
+              "correct": false,
+              "feedback": "C'est une intention louable, mais cela ne résout pas le problème à la racine. Le biais dans l'algorithme restera et continuera de poser problème pour les prochains recrutements."
+            },
+            {
+              "id": "opt_3",
+              "text": "Vous arrêtez d'utiliser l'outil et signalez immédiatement ce biais potentiel à votre manager et à l'équipe technique.",
+              "correct": true,
+              "feedback": "Bravo ! C'est la bonne réaction. Il est crucial d'alerter pour que le modèle puisse être audité, corrigé et amélioré. C'est un acte fondamental d'IA responsable."
+            },
+            {
+              "id": "opt_4",
+              "text": "Vous cherchez sur internet un autre outil d'IA qui semble plus performant.",
+              "correct": false,
+              "feedback": "Changer d'outil sans comprendre le problème ne garantit pas que le nouveau sera meilleur. Il est plus responsable de chercher à corriger les outils que votre entreprise a validés."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Message vocal retranscrit de Léa : \"Explique-moi pourquoi la transparence est essentielle quand on utilise l’IA en entreprise, surtout dans des cas comme l’approbation de demandes ou la prise de décisions.\"",
+          "points": 10,
+          "question": "Message vocal retranscrit de Léa : \"On a eu un souci la semaine dernière : un candidat a découvert que son CV avait été filtré par notre IA de recrutement sans qu'on le prévienne. Ça a créé un malaise. Peux-tu me rédiger une note sur les bonnes pratiques de transparence quand on utilise l'IA en entreprise ? Avec des exemples concrets de ce qu'il faut faire et ne pas faire.\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'IA responsable et éthique en entreprise",
+          "definition": "L'IA responsable, c'est utiliser l'IA d'une manière qui est juste, transparente et qui respecte les gens. On s'assure que l'IA ne commet pas d'injustice, qu'on peut comprendre comment elle prend ses décisions et qu'elle protège nos informations personnelles.",
+          "analogy": "C'est comme avoir un assistant super intelligent. Pour lui faire confiance, vous devez savoir qu'il ne raconte pas de bêtises (fiabilité), qu'il peut vous expliquer pourquoi il vous suggère quelque chose (transparence) et qu'il ne va pas répéter vos secrets (confidentialité).",
+          "example": "Une entreprise utilise une IA pour trier des CV. Si l'IA est responsable, elle jugera les CV sur les compétences, sans faire de différence à cause du nom, de l'âge ou de l'origine du candidat. Si elle n'est pas responsable, elle pourrait écarter de bons candidats à cause de biais appris dans les anciennes données de recrutement. Communications simulées De : Service RH <rh@entreprise-eveil.fr> À : Tous les employés <tous@entreprise-eveil.fr> Objet : Nouvelle formation obligatoire sur l'IA Responsable Bonjour à toutes et à tous, Dans le cadre de notre engagement pour une innovation éthique, nous lançons une nouvelle formation obligatoire sur l'utilisation responsable de l'Intelligence Artificielle. Cette formation a pour but de vous donner les clés pour utiliser ces nouveaux outils de manière sûre, équitable et transparente. Votre participation est essentielle pour construire ensemble une culture de l'IA de confiance. Cordialement, Le Service RH"
+        }
+      ],
+      "title": "Utiliser l'IA de façon responsable en entreprise"
+    },
+    "eveil_ch21": {
+      "scenario": "Bravo, vous voici à la dernière mission de notre session sur les usages personnels de l'IA. Vous avez exploré, testé, et appris. Il est maintenant temps de synthétiser tout cela en un plan d'action concret et personnel. C'est le meilleur moyen de vous assurer que l'IA deviendra un véritable copilote pour vous au quotidien. Prêt(e) à bâtir votre plan ?",
+      "mission": null,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "En vous basant sur les conseils de Léa et le document de mission, quel élément est le MOINS prioritaire pour un premier plan d'adoption personnel et débutant ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "La liste des usages IA que l'on souhaite tester.",
+              "correct": false,
+              "feedback": "C'est au contraire le cœur du plan ! Sans idées d'usages, il n'y a pas de plan."
+            },
+            {
+              "id": "opt_2",
+              "text": "Une analyse financière détaillée du retour sur investissement (ROI).",
+              "correct": true,
+              "feedback": "Exactement. À ce stade débutant, l'objectif est de se lancer et de gagner en confiance, pas de faire une analyse financière complexe. La simplicité avant tout !"
+            },
+            {
+              "id": "opt_3",
+              "text": "Un calendrier simple pour se lancer, même si c'est juste pour la semaine prochaine.",
+              "correct": false,
+              "feedback": "C'est un élément très important pour passer de l'idée à l'action. Se fixer une date, c'est s'engager."
+            },
+            {
+              "id": "opt_4",
+              "text": "Le bénéfice attendu pour chaque usage (par ex: gagner du temps, être plus créatif).",
+              "correct": false,
+              "feedback": "C'est essentiel pour la motivation ! Savoir 'pourquoi' on le fait aide à rester engagé."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Vous avez listé trois usages potentiels. Léa vous conseille de bien choisir le premier. Quel critère est le plus pertinent pour un débutant qui veut se lancer sans se décourager ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Celui qui aura l'impact stratégique le plus fort pour l'entreprise.",
+              "correct": false,
+              "feedback": "C'est une excellente vision à long terme, mais pour un débutant, cela peut être un projet trop complexe et décourageant. Mieux vaut commencer petit."
+            },
+            {
+              "id": "opt_2",
+              "text": "Celui qui semble le plus facile et le plus rapide à mettre en place.",
+              "correct": true,
+              "feedback": "Parfait ! C'est la stratégie de la 'victoire rapide'. Un succès, même modeste, est la meilleure des motivations pour continuer à explorer l'IA."
+            },
+            {
+              "id": "opt_3",
+              "text": "Celui qui utilise la technologie d'IA la plus avancée et la plus récente.",
+              "correct": false,
+              "feedback": "Attention au 'syndrome de l'objet brillant'. Pour un premier usage, privilégiez la simplicité et l'utilité directe, pas la complexité technologique."
+            },
+            {
+              "id": "opt_4",
+              "text": "Celui qui peut remplacer complètement une de vos tâches actuelles.",
+              "correct": false,
+              "feedback": "C'est un objectif ambitieux. Il est souvent plus simple de commencer par une IA qui vous assiste sur une tâche, plutôt que de chercher à la remplacer entièrement."
+            }
+          ]
+        },
+        {
+          "type": "free",
+          "text": "Email de Léa Fontaine : \"Félicitations d’avoir parcouru toutes les étapes ! Pour clôturer cette session, peux-tu me rédiger un plan d’adoption personnalisé de l’IA pour Nexora, incluant les priorités, les ressources nécessaires, et les bénéfices attendus ? Ce plan servira de base à notre stratégie interne.\"",
+          "points": 10,
+          "question": "Email de Léa Fontaine : \"Félicitations d’avoir parcouru toutes les étapes ! Pour clôturer cette session, peux-tu me rédiger un plan d’adoption personnalisé de l’IA pour Nexora, incluant les priorités, les ressources nécessaires, et les bénéfices attendus ? Ce plan servira de base à notre stratégie interne.\""
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Le plan d'adoption personnalisé de l'IA",
+          "definition": "Un plan d'adoption de l'IA est une feuille de route personnelle qui décrit comment vous allez intégrer des outils IA dans votre travail. Il liste les tâches que vous voulez améliorer, les outils que vous allez essayer, et les étapes pour y arriver.",
+          "analogy": "C'est comme un programme d'entraînement sportif. Vous ne décidez pas juste de \"courir un marathon\". Vous commencez par des joggings de 10 minutes (un premier usage simple), puis vous augmentez la distance et la fréquence (des usages plus complexes), en suivant un calendrier précis.",
+          "example": "Un commercial pourrait prévoir : - Semaine 1 : Utiliser une IA pour résumer les longs échanges d'emails avec un client avant un appel. - Semaine 2 : Utiliser une IA pour rédiger une première version de ses emails de prospection. - Semaine 3 : Explorer un outil IA qui analyse les comptes-rendus de réunion pour en extraire les actions clés. Email de Léa FONTAINE De : Léa FONTAINE (Responsable Formation & IA) Objet : Votre mission : formaliser votre plan d'action IA Bonjour, Pour vous aider à démarrer, je vous propose un modèle simple pour votre plan. L'idée est de rester très concret. Ne visez pas la perfection, mais l'action ! Voici une trame que vous pouvez utiliser : Usage IA envisagéBénéfice attendu (Gain de temps, créativité...)Prochaine étape simple Remplissez-le avec vos propres idées. L'important est de faire le premier pas. Bonne mission ! Léa"
+        }
+      ],
+      "title": "MISSION FINALE — Mon plan d'adoption IA"
+    }
+  },
+  "intro_text": "C'est ton premier jour dans le programme IA de l'entreprise.\n\nNexora, c'est ton entreprise depuis trois ans. Une ETI de\n\n450 personnes dans les services aux entreprises, basée à\n\nLyon. Tu travailles au back-office — service client\n\nentreprises. Tu passes tes journées à répondre à des emails\n\nclients, préparer des dossiers, faire des comptes-rendus,\n\ngérer des tableaux de suivi. Un métier utile, dense,\n\nsouvent répétitif.\n\nIl y a six mois, la direction a décidé de lancer un grand\n\nprogramme interne : équiper les 450 collaborateurs d'outils\n\nd'IA générative et les former à les utiliser. Pas pour\n\nremplacer les gens — pour les libérer des tâches répétitives.\n\nLe programme est porté par Léa Fontaine, qui a été recrutée\n\nil y a quatre mois comme responsable formation IA.\n\nTu fais partie de la deuxième vague. 40 collaborateurs de\n\ndifférents services, toutes générations, tous niveaux\n\ntechniques confondus. Six semaines de formation progressive,\n\nsur ton poste, avec suivi personnel. L'objectif : que tu\n\ngagnes au moins 5 heures par semaine sur tes tâches\n\nrécurrentes.\n\nAujourd'hui, premier jour du programme. Au 3e étage, dans\n\nla salle de formation transformée en espace IA, Léa\n\nFontaine t'accueille. Tablette sous le bras, sourire posé,\n\ntrentaine affirmée. Elle te salue chaleureusement.\n\n« Bonjour, bienvenue. Je suis super contente que tu sois là.\n\nAvant qu'on attaque, je te présente trois personnes que tu\n\nvas côtoyer pendant ces six semaines. »\n\nElle t'invite à t'asseoir à une table ronde. Trois personnes\n\nsont déjà installées, café à la main. L'ambiance est\n\ndécontractée mais studieuse.\n\n=========================================================\n\nLE TOUR DE TABLE\n\n=========================================================\n\nLÉA FONTAINE — Responsable Formation IA et tutrice\n\n----------------------------------------------------\n\n« Moi d'abord. Léa Fontaine, 34 ans. Responsable formation\n\nIA chez Nexora depuis quatre mois. Avant, j'ai fait 8 ans\n\ncomme formatrice en transformation digitale chez un gros\n\néditeur de logiciels, puis deux ans comme consultante\n\nindépendante sur les sujets IA — j'ai accompagné une\n\nquarantaine d'entreprises sur leur adoption IA en 2024-2025.\n\nNotre directeur général m'a fait venir pour structurer le\n\nprogramme IA de Nexora. On est en 2026, l'IA générative\n\nest partout — ChatGPT, Claude, Copilot, Gemini, Genspark,\n\nNotion AI, des dizaines d'autres. Et pourtant, dans la\n\nplupart des entreprises, la majorité des collaborateurs\n\nne savent pas vraiment s'en servir. Soit ils l'ignorent\n\npar peur ou par habitude, soit ils l'utilisent mal, ou ils\n\ns'en servent en cachette parce qu'on ne leur a jamais dit\n\ncomment s'en servir bien.\n\nMon rôle avec toi pendant ces six semaines : te faire\n\npasser du stade 'je sais que ça existe' au stade 'je\n\nl'utilise efficacement tous les jours'. Pas devenir experte,\n\npas apprendre le prompt engineering avancé — juste gagner\n\ndu temps et monter en qualité sur ton poste actuel.\n\nMa méthode : on part toujours de TES tâches réelles, pas\n\nd'exercices théoriques. Tu apportes un cas concret à chaque\n\ndéfi, on le traite ensemble, tu repars avec un usage que\n\ntu peux appliquer dès le lendemain.\n\nComment on travaille : un défi par semaine, environ 1h30\n\nde travail par défi, suivi individuel 30 minutes le vendredi,\n\net un canal Teams pour les questions rapides. Je veux que\n\ntu me sollicites — pas que tu bloques tout seul sur un\n\ndétail technique.\n\nJe tiens à préciser une chose. Le bon usage de l'IA\n\nprofessionnelle n'est pas de cacher à ses collègues qu'on\n\nl'utilise. Au contraire — je vais t'apprendre à le dire,\n\nà expliquer ce que tu fais, à partager tes découvertes.\n\nLa transparence fait partie de la compétence. »\n\nElle fait un signe à sa droite.\n\n« Karim, à toi. »\n\n---\n\nKARIM BELDJOUDI — Ton manager direct\n\n--------------------------------------\n\nL'homme à sa droite, la quarantaine décontractée, chemise\n\ncol ouvert, te salue avec un sourire franc.\n\n« Karim Beldjoudi. Je suis ton manager — tu me connais,\n\non se voit tous les jours. Mais aujourd'hui, je suis là en\n\ntant que sponsor de ta formation IA dans notre équipe.\n\nJe vais être direct. Moi je ne suis pas particulièrement\n\nfan de la tech en général — j'ai appris à me débrouiller\n\navec les outils, mais je ne suis pas celui qui va te\n\nparler en détail des LLM et des tokens. Ce que j'ai\n\nenvie qu'il se passe pendant ces six semaines, c'est que\n\ntu gagnes du temps sur ce qui te bouffe ton quotidien :\n\nles emails qui n'en finissent pas, les comptes-rendus à\n\nrédiger, les tableaux à mettre à jour.\n\nConcrètement, ce que j'attends : que tu repartes de chaque\n\ndéfi avec quelque chose que tu mets en place la semaine\n\nd'après sur ton poste. Pas de théorie. Pas de 'on verra\n\nplus tard'. Du concret.\n\nEn échange, je te couvre. Je sais que les six prochaines\n\nsemaines, tu vas être un peu moins disponible en quantité,\n\nmême si la qualité devrait déjà monter. J'ai ajusté ta\n\ncharge avec l'équipe, on ne te demande pas d'être sur tous\n",
+  "level": "Avancé",
+  "domain": "IA en Entreprise",
+  "num": "03",
+  "tutor_name": "Léa Fontaine",
+  "tutor_role": null,
+  "competences": [
+    "ChatGPT",
+    "Claude",
+    "Copilot",
+    "Gemini",
+    "Genspark",
+    "Notion AI",
+    "Prompts",
+    "Productivite",
+    "Emails IA",
+    "Make"
+  ],
+  "intro_html": "<p class=\"ob-narrative\">C&#x27;est ton premier jour dans le programme IA de l&#x27;entreprise.</p>\n<p class=\"ob-narrative\">Nexora, c&#x27;est ton entreprise depuis trois ans. Une ETI de 450 personnes dans les services aux entreprises, basée à Lyon. Tu travailles au back-office — service client entreprises. Tu passes tes journées à répondre à des emails clients, préparer des dossiers, faire des comptes-rendus, gérer des tableaux de suivi. Un métier utile, dense, souvent répétitif.</p>\n<p class=\"ob-narrative\">Il y a six mois, la direction a décidé de lancer un grand programme interne : équiper les 450 collaborateurs d&#x27;outils d&#x27;IA générative et les former à les utiliser. Pas pour remplacer les gens — pour les libérer des tâches répétitives.</p>\n<p class=\"ob-narrative\">Le programme est porté par Léa Fontaine, qui a été recrutée il y a quatre mois comme responsable formation IA.</p>\n<p class=\"ob-narrative\">Tu fais partie de la deuxième vague. 40 collaborateurs de différents services, toutes générations, tous niveaux techniques confondus. Six semaines de formation progressive, sur ton poste, avec suivi personnel. L&#x27;objectif : que tu gagnes au moins 5 heures par semaine sur tes tâches récurrentes.</p>\n<p class=\"ob-narrative\">Aujourd&#x27;hui, premier jour du programme. Au 3e étage, dans la salle de formation transformée en espace IA, Léa Fontaine t&#x27;accueille. Tablette sous le bras, sourire posé, trentaine affirmée. Elle te salue chaleureusement.</p>\n<p class=\"ob-narrative\">« Bonjour, bienvenue. Je suis super contente que tu sois là.</p>\n<p class=\"ob-narrative\">Avant qu&#x27;on attaque, je te présente trois personnes que tu vas côtoyer pendant ces six semaines. »</p>\n<p class=\"ob-narrative\">Elle t&#x27;invite à t&#x27;asseoir à une table ronde. Trois personnes sont déjà installées, café à la main. L&#x27;ambiance est décontractée mais studieuse.</p>\n<div class=\"ob-section-title\">LE TOUR DE TABLE</div>\n<div class=\"ob-character-card\">\n<div class=\"ob-char-header\">\n<div class=\"ob-char-avatar\">LF</div>\n<div>\n<div class=\"ob-char-name\">LÉA FONTAINE</div>\n<div class=\"ob-char-role\">Responsable Formation IA et tutrice</div>\n</div></div>\n<div class=\"ob-char-speech\">« Moi d&#x27;abord. Léa Fontaine, 34 ans. Responsable formation IA chez Nexora depuis quatre mois. Avant, j&#x27;ai fait 8 ans comme formatrice en transformation digitale chez un gros éditeur de logiciels, puis deux ans comme consultante indépendante sur les sujets IA — j&#x27;ai accompagné une quarantaine d&#x27;entreprises sur leur adoption IA en 2024-2025.<br><br>Notre directeur général m&#x27;a fait venir pour structurer le programme IA de Nexora. On est en 2026, l&#x27;IA générative est partout — ChatGPT, Claude, Copilot, Gemini, Genspark, Notion AI, des dizaines d&#x27;autres. Et pourtant, dans la plupart des entreprises, la majorité des collaborateurs ne savent pas vraiment s&#x27;en servir. Soit ils l&#x27;ignorent par peur ou par habitude, soit ils l&#x27;utilisent mal, ou ils s&#x27;en servent en cachette parce qu&#x27;on ne leur a jamais dit comment s&#x27;en servir bien.<br><br>Mon rôle avec toi pendant ces six semaines : te faire passer du stade &#x27;je sais que ça existe&#x27; au stade &#x27;je l&#x27;utilise efficacement tous les jours&#x27;. Pas devenir experte, pas apprendre le prompt engineering avancé — juste gagner du temps et monter en qualité sur ton poste actuel.<br><br>Ma méthode : on part toujours de TES tâches réelles, pas d&#x27;exercices théoriques. Tu apportes un cas concret à chaque défi, on le traite ensemble, tu repars avec un usage que tu peux appliquer dès le lendemain.<br><br>Comment on travaille : un défi par semaine, environ 1h30 de travail par défi, suivi individuel 30 minutes le vendredi, et un canal Teams pour les questions rapides. Je veux que tu me sollicites — pas que tu bloques tout seul sur un détail technique.<br><br>Je tiens à préciser une chose. Le bon usage de l&#x27;IA professionnelle n&#x27;est pas de cacher à ses collègues qu&#x27;on l&#x27;utilise. Au contraire — je vais t&#x27;apprendre à le dire, à expliquer ce que tu fais, à partager tes découvertes.<br><br>La transparence fait partie de la compétence. »<br><br>Elle fait un signe à sa droite.<br><br>« Karim, à toi. »</div>\n</div>\n<div class=\"ob-character-card\">\n<div class=\"ob-char-header\">\n<div class=\"ob-char-avatar\">KB</div>\n<div>\n<div class=\"ob-char-name\">KARIM BELDJOUDI</div>\n<div class=\"ob-char-role\">Ton manager direct</div>\n</div></div>\n<div class=\"ob-char-speech\">« Karim Beldjoudi. Je suis ton manager — tu me connais, on se voit tous les jours. Mais aujourd&#x27;hui, je suis là en tant que sponsor de ta formation IA dans notre équipe.<br><br>Je vais être direct. Moi je ne suis pas particulièrement fan de la tech en général — j&#x27;ai appris à me débrouiller avec les outils, mais je ne suis pas celui qui va te parler en détail des LLM et des tokens. Ce que j&#x27;ai envie qu&#x27;il se passe pendant ces six semaines, c&#x27;est que tu gagnes du temps sur ce qui te bouffe ton quotidien : les emails qui n&#x27;en finissent pas, les comptes-rendus à rédiger, les tableaux à mettre à jour.<br><br>Concrètement, ce que j&#x27;attends : que tu repartes de chaque défi avec quelque chose que tu mets en place la semaine d&#x27;après sur ton poste. Pas de théorie. Pas de &#x27;on verra plus tard&#x27;. Du concret.<br><br>En échange, je te couvre. Je sais que les six prochaines semaines, tu vas être un peu moins disponible en quantité, même si la qualité devrait déjà monter. J&#x27;ai ajusté ta charge avec l&#x27;équipe, on ne te demande pas d&#x27;être sur tous</div>\n<p class=\"ob-narrative\">L&#x27;homme à sa droite, la quarantaine décontractée, chemise col ouvert, te salue avec un sourire franc.</p>\n</div>",
+  "notions": [
+    {
+      "challenge_num": 1,
+      "title": "C'est quoi l'IA en 2026 sans jargon ni peur",
+      "definition": "L'intelligence artificielle, ou IA, c'est une technologie qui aide les ordinateurs à apprendre et à faire des tâches comme les humains, sans qu'on ait besoin de leur dire chaque détail. En entreprise, elle sert à traiter des informations rapidement pour aider à prendre de meilleures décisions. C'est un outil qui facilite le travail, pas quelque chose de compliqué ou dangereux.",
+      "analogy": "C'est comme un assistant personnel qui apprend à vous connaître pour mieux vous aider chaque jour, sans que vous ayez à lui expliquer tout ce que vous faites. Il observe, comprend et propose des solutions pour vous simplifier la vie.",
+      "example": "Sophie travaille dans une entreprise de vente en ligne. Grâce à l'IA, son système analyse chaque jour les commandes et les préférences des clients pour suggérer les produits les plus populaires. Un matin, l'outil indique à Sophie que les ventes de t-shirts bleus ont augmenté de 20% en une semaine. Elle utilise cette information pour commander plus de stock et préparer une promotion ciblée, ce qui augmente les ventes et la satisfaction des clients."
+    },
+    {
+      "challenge_num": 5,
+      "title": "L'IA pour lire, trier et analyser des documents",
+      "definition": "L'intelligence artificielle aide à lire rapidement beaucoup de documents. Elle peut organiser ces documents en groupes selon leur contenu. Elle peut aussi trouver les informations importantes pour aider les personnes à mieux comprendre et gagner du temps.",
+      "analogy": "C'est comme avoir un assistant qui lit toutes tes lettres, les met dans des piles différentes selon le sujet, et te dit ce qui est important à retenir. Cela évite de passer des heures à tout lire soi-même.",
+      "example": "Marc est chef de projet dans une entreprise qui reçoit chaque jour plus de 200 emails et rapports. Grâce à l'IA, tous ces documents sont lus automatiquement, triés par thème comme finance, ressources humaines ou planning. L'IA souligne aussi les chiffres clés et les points importants. Marc peut ainsi rapidement prendre des décisions sans lire chaque document en détail, ce qui améliore son efficacité et réduit son stress."
+    },
+    {
+      "challenge_num": 6,
+      "title": "L'IA pour synthetiser - CR de reunions, docs, rapports",
+      "definition": "L'IA peut lire rapidement beaucoup d'informations comme des réunions, documents ou rapports, puis résumer les points importants. Cela permet de gagner du temps et de bien comprendre l'essentiel sans tout relire. C'est un outil qui aide à mieux organiser et partager l'information.",
+      "analogy": "C'est comme demander à un ami de confiance de te raconter en quelques phrases ce qui s'est passé pendant une longue conversation. Il retient l'essentiel pour que tu comprennes vite sans écouter toute la discussion.",
+      "example": "Dans une entreprise, Sophie assiste à une réunion avec 10 collègues pour discuter d'un nouveau projet. Après la réunion, elle utilise un logiciel d'IA qui transforme l'enregistrement audio en un résumé clair, listant les décisions prises et les prochaines étapes avec les noms des responsables. Le rapport généré fait trois paragraphes au lieu de 20 pages de notes, ce qui permet à toute l'équipe de rester informée rapidement et de se concentrer sur leurs tâches."
+    },
+    {
+      "challenge_num": 10,
+      "title": "L'IA pour creer des presentations et visuels",
+      "definition": "L'intelligence artificielle aide à créer des présentations et des images rapidement et facilement. Elle propose des idées, organise les informations et choisit des designs adaptés sans que l'on ait besoin d'être un expert. Cela permet de gagner du temps et d'avoir un rendu professionnel même pour un débutant.",
+      "analogy": "C'est comme utiliser un assistant personnel qui vous aide à préparer un repas en vous donnant des recettes simples et en choisissant les bons ingrédients. Vous n'avez pas besoin d'être un chef pour réussir un plat délicieux.",
+      "example": "Sophie, assistante commerciale, doit préparer une présentation pour un client important en moins de deux heures. Elle utilise un outil d'IA qui lui suggère automatiquement un plan clair, des visuels adaptés et des graphiques basés sur ses données de vente. Grâce à cette aide, elle termine sa présentation rapidement, avec un design professionnel, et impressionne son client lors de la réunion."
+    },
+    {
+      "challenge_num": 12,
+      "title": "L'IA pour surveiller et resumer les actualites du secteur",
+      "definition": "L'intelligence artificielle peut lire beaucoup d'articles et d'informations rapidement. Elle choisit les plus importants et en fait un résumé simple. Cela aide à rester informé sans perdre de temps à tout lire.",
+      "analogy": "C'est comme si vous aviez un ami qui lit tous les journaux pour vous et vous raconte seulement ce qui est important. Vous écoutez son résumé au lieu de tout lire vous-même. Cela vous fait gagner du temps et vous évite d'être submergé d'informations.",
+      "example": "Sophie travaille dans une entreprise de technologie. Chaque matin, elle reçoit un résumé automatique créé par une IA qui a lu plus de 50 articles sur les nouveautés du secteur. Par exemple, l'IA lui indique qu'une nouvelle loi sur la protection des données va entrer en vigueur le mois prochain, ce qui peut affecter son travail. Grâce à ce résumé, Sophie peut rapidement informer son équipe et adapter leurs projets sans perdre de temps à chercher l'information elle-même."
+    },
+    {
+      "challenge_num": 16,
+      "title": "Mettre en place une veille IA automatisee",
+      "definition": "La veille IA automatisée consiste à utiliser des outils qui collectent et analysent automatiquement les informations importantes sur l'intelligence artificielle. Cela permet de recevoir des nouvelles utiles sans chercher soi-même, et de rester informé facilement. C’est un gain de temps pour suivre les nouveautés et les tendances.",
+      "analogy": "C'est comme un aspirateur automatique qui nettoie la maison pendant que vous faites autre chose. Vous n'avez pas besoin de passer du temps à nettoyer, mais la maison reste propre. La veille automatisée fait pareil avec l'information.",
+      "example": "Dans une entreprise, Sophie est responsable de la transformation digitale. Elle utilise un outil de veille automatisée qui lui envoie chaque matin un résumé des dernières avancées en IA, avec des articles et des études de cas. Grâce à cela, sans y passer plus de 10 minutes par jour, elle peut informer son équipe des évolutions et adapter les projets en conséquence. Par exemple, elle découvre une nouvelle technologie d'analyse prédictive qui pourrait améliorer la gestion des stocks, et elle propose rapidement un test pilote."
+    }
+  ]
+}

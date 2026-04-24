@@ -233,6 +233,30 @@
 .free-textarea:focus{outline:none;border-color:var(--cobalt)}
 .free-textarea:disabled{opacity:.6;cursor:not-allowed;background:var(--bg-alt)}
 
+
+/* FREE RESPONSE - Rich Editor */
+.rich-editor-wrap{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .15s;background:var(--bg)}
+.rich-editor-wrap:focus-within{border-color:var(--cobalt)}
+.rich-editor-wrap.disabled{opacity:.6;pointer-events:none;background:var(--bg-alt)}
+.re-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:2px;padding:6px 8px;background:var(--bg-alt);border-bottom:1px solid var(--line)}
+.re-toolbar button{display:inline-flex;align-items:center;justify-content:center;width:30px;height:28px;border:none;background:transparent;border-radius:4px;cursor:pointer;color:var(--ink-soft);font-size:14px;font-weight:600;transition:all .12s}
+.re-toolbar button:hover{background:rgba(0,0,0,.06);color:var(--ink)}
+.re-toolbar button.active{background:var(--cobalt);color:#fff}
+.re-toolbar .re-sep{width:1px;height:20px;background:var(--line);margin:0 4px}
+.re-toolbar .re-upload-btn{width:auto;padding:0 10px;gap:5px;font-size:11px;font-weight:600;letter-spacing:.03em}
+.re-body{min-height:120px;max-height:400px;overflow-y:auto;padding:14px 16px;font-family:var(--f-body);font-size:14px;line-height:1.7;color:var(--ink);outline:none}
+.re-body:empty::before{content:attr(data-placeholder);color:var(--ink-mute);pointer-events:none}
+.re-body ul,.re-body ol{margin:4px 0 4px 20px;padding:0}
+.re-body li{margin-bottom:2px}
+.re-body blockquote{margin:8px 0;padding:8px 14px;border-left:3px solid var(--cobalt);background:rgba(0,85,255,.04);border-radius:0 var(--r) var(--r) 0}
+.re-attachments{padding:8px 12px;border-top:1px solid var(--line);background:var(--bg-alt)}
+.re-attachments:empty{display:none}
+.re-file-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--bg);border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--ink-soft);margin:2px 4px 2px 0}
+.re-file-chip .re-file-icon{font-size:13px}
+.re-file-chip .re-file-remove{cursor:pointer;color:var(--ink-mute);font-size:14px;margin-left:2px;transition:color .12s}
+.re-file-chip .re-file-remove:hover{color:#DC2626}
+.re-file-chip .re-file-name{max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.re-file-input{display:none}
 /* AI FEEDBACK */
 .ai-loading{display:flex;align-items:center;gap:10px;padding:14px 18px;background:rgba(0,85,255,.06);border:1px solid rgba(0,85,255,.15);border-radius:var(--r);margin-top:8px;font-size:13px;color:var(--cobalt)}
 .ai-spinner{width:18px;height:18px;border:2px solid rgba(0,85,255,.2);border-top-color:var(--cobalt);border-radius:50%;animation:aispin .6s linear infinite}
@@ -279,6 +303,18 @@
 .onboarding-screen .ob-hero h1 em{font-style:italic;color:var(--marine)}
 .onboarding-screen .ob-hero .ob-sub{font-size:15px;color:var(--ink-soft);max-width:520px;margin:0 auto}
 .onboarding-screen .ob-content{padding:32px 40px;font-size:14.5px;line-height:1.75;color:var(--ink-soft);max-width:760px;margin:0 auto}
+
+/* INTRO VIDEO */
+.ob-video-section{max-width:760px;margin:0 auto;padding:32px 40px 0}
+.ob-video-section .ob-video-label{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--cobalt);font-weight:600;margin-bottom:14px}
+.ob-video-section .ob-video-label svg{width:16px;height:16px}
+.ob-video-section .ob-video-title{font-family:var(--f-display);font-size:20px;font-weight:500;color:var(--ink);margin-bottom:16px;letter-spacing:-.015em}
+.ob-video-wrap{position:relative;width:100%;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 8px 30px -6px rgba(14,26,43,.18);background:#000}
+.ob-video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.ob-video-wrap video{width:100%;display:block}
+.ob-video-wrap.ratio-16-9{padding-top:56.25%}
+.ob-video-divider{max-width:760px;margin:28px auto 0;padding:0 40px}
+.ob-video-divider hr{border:none;border-top:1px solid var(--line)}
 .onboarding-screen .ob-content div{max-width:100%}
 
 /* Onboarding formatted sections */
@@ -399,6 +435,8 @@
      ═══════════════════════════════════════════════════════════════════ -->
 <script>
 (async function() {
+  const API_BASE = 'https://immersium-api.mx-cosaque.workers.dev';
+
   // ─── Paramètres URL ──────────────────────────────────────────────
   const params = new URLSearchParams(location.search);
   const gameId = params.get('game') || 'lumio';
@@ -411,14 +449,25 @@
   // ─── Charger le catalogue ────────────────────────────────────────
   let catalogue = null;
   try {
-    const resp = await fetch('/data/catalogue.json');
+    // Charger depuis l'API D1 (modifiable via le dashboard admin)
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 5000); // 5s timeout
+    const resp = await fetch(API_BASE + '/api/catalogue', { signal: ctrl.signal });
+    clearTimeout(timer);
+    if (!resp.ok) throw new Error('API error ' + resp.status);
     catalogue = await resp.json();
   } catch(e) {
-    document.getElementById('loading-msg').innerHTML = `
-      <h2>Erreur de chargement</h2>
-      <p>Impossible de charger les données du catalogue. Vérifiez que le fichier <code>data/catalogue.json</code> est bien déployé.</p>
-      <a href="catalogue.html" class="btn btn-primary" style="margin-top:16px">Retour au catalogue</a>`;
-    return;
+    console.warn('API catalogue indisponible, fallback sur catalogue.json local:', e.message);
+    try {
+      const resp2 = await fetch('/data/catalogue.json?v=' + Date.now());
+      catalogue = await resp2.json();
+    } catch(e2) {
+      document.getElementById('loading-msg').innerHTML = `
+        <h2>Erreur de chargement</h2>
+        <p>Impossible de charger les données du catalogue.</p>
+        <a href="catalogue.html" class="btn btn-primary" style="margin-top:16px">Retour au catalogue</a>`;
+      return;
+    }
   }
 
   // Support catalogue en format tableau (array) ou objet
@@ -435,6 +484,18 @@
       <a href="catalogue.html" class="btn btn-primary" style="margin-top:16px">Retour au catalogue</a>`;
     return;
   }
+
+  // ─── Enrichir avec les métadonnées vidéo depuis l'API D1 ────────
+  try {
+    const simResp = await fetch(API_BASE + '/api/simulations/' + gameId, { signal: AbortSignal.timeout(5000) });
+    if (simResp.ok) {
+      const simData = await simResp.json();
+      const sim = simData.data || simData;
+      if (sim.intro_video_url) game.intro_video_url = sim.intro_video_url;
+      if (sim.intro_video_title) game.intro_video_title = sim.intro_video_title;
+      if (sim.intro_video_poster) game.intro_video_poster = sim.intro_video_poster;
+    }
+  } catch(e) { console.warn('Métadonnées vidéo indisponibles:', e.message); }
 
   // ─── Données du jeu ──────────────────────────────────────────────
   const sessions = game.sessions || [];
@@ -883,6 +944,39 @@
       history.replaceState(null, '', `game.html?game=${gameId}&ch=0`);
 
       const content = document.getElementById('game-content');
+      // ─── Vidéo de présentation ─────────────────────────────────
+      const introVideoUrl = game.intro_video_url || '';
+      const introVideoTitle = game.intro_video_title || 'Présentation du tuteur et de l\'entreprise';
+      const introVideoPoster = game.intro_video_poster || '';
+      let videoHtml = '';
+      if (introVideoUrl) {
+        let playerHtml = '';
+        // YouTube
+        const ytMatch = introVideoUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/);
+        if (ytMatch) {
+          playerHtml = `<div class="ob-video-wrap ratio-16-9"><iframe src="https://www.youtube.com/embed/${ytMatch[1]}?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+        }
+        // Vimeo
+        else if (/vimeo\.com\/(\d+)/.test(introVideoUrl)) {
+          const vimeoId = introVideoUrl.match(/vimeo\.com\/(\d+)/)[1];
+          playerHtml = `<div class="ob-video-wrap ratio-16-9"><iframe src="https://player.vimeo.com/video/${vimeoId}?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+        }
+        // MP4 / fichier direct
+        else {
+          playerHtml = `<div class="ob-video-wrap"><video controls preload="metadata"${introVideoPoster ? ' poster="' + esc(introVideoPoster) + '"' : ''}><source src="${esc(introVideoUrl)}" type="video/mp4">Votre navigateur ne supporte pas la lecture vidéo.</video></div>`;
+        }
+        videoHtml = `
+          <div class="ob-video-section">
+            <div class="ob-video-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Vidéo de présentation
+            </div>
+            <div class="ob-video-title">${esc(introVideoTitle)}</div>
+            ${playerHtml}
+          </div>
+          <div class="ob-video-divider"><hr></div>`;
+      }
+
       content.innerHTML = `
         <div class="onboarding-screen">
           <div class="ob-hero">
@@ -893,6 +987,7 @@
             <h1>Bienvenue chez <em>${esc(gameName)}</em></h1>
             <div class="ob-sub">Avant de commencer votre premier défi, prenez le temps de découvrir l'entreprise, votre équipe et votre mission. Cette étape est indispensable pour bien comprendre le contexte de la simulation.</div>
           </div>
+          ${videoHtml}
           <div class="ob-content">${introHtml || '<p class="ob-narrative">Aucune information d\'intégration disponible.</p>'}</div>
           <div class="ob-actions">
             <button class="btn btn-primary btn-lg" onclick="goToChallenge(1)" style="background:${gameColor}">
@@ -902,6 +997,7 @@
           </div>
         </div>`;
       content.scrollTop = 0;
+      initRichEditors();
 
       // Clear toolbox
       const tb = document.getElementById('toolbox-content');
@@ -1045,7 +1141,7 @@
       } else if (qType === 'screenshot') {
         html += renderScreenshot(q, qNum);
       } else if (qType === 'free') {
-        html += `<textarea class="free-textarea" data-q="${qNum}" placeholder="${esc(q.placeholder || 'Rédigez votre réponse ici...')}"></textarea>`;
+        html += renderRichEditor(qNum, q.placeholder || 'Rédigez votre réponse ici...');
       } else {
         // MCQ (default)
         html += renderMCQ(q, qNum);
@@ -1104,6 +1200,9 @@
 
     // Initialize matching interactions
     initMatchingInteractions();
+
+    // Initialize rich text editors
+    initRichEditors();
 
     // Update toolbox
     renderToolbox(questions, challengeColor);
@@ -1223,7 +1322,7 @@
     if (q.opts && q.opts.length > 0) {
       h += renderMCQ(q, qNum);
     } else {
-      h += `<textarea class="free-textarea" data-q="${qNum}" placeholder="${esc(q.placeholder || 'Après avoir regardé la vidéo, rédigez votre réponse ici...')}"></textarea>`;
+      h += renderRichEditor(qNum, q.placeholder || 'Après avoir regardé la vidéo, rédigez votre réponse ici...');
     }
     return h;
   }
@@ -1242,7 +1341,7 @@
         <div>${q.toolInstruction.replace(/\n/g, '<br>')}</div>
       </div>`;
     }
-    h += `<textarea class="free-textarea" data-q="${qNum}" data-ai-type="tool" placeholder="${esc(q.placeholder || 'Décrivez ce que vous avez trouvé ou réalisé...')}"></textarea>`;
+    h += renderRichEditor(qNum, q.placeholder || 'Décrivez ce que vous avez trouvé ou réalisé...', 'tool');
     return h;
   }
 
@@ -1264,7 +1363,7 @@
       <strong>Comment faire une capture d'écran :</strong><br>
       Windows : touche Windows + Shift + S &nbsp;|&nbsp; Mac : Command + Shift + 4
     </div>`;
-    h += `<textarea class="free-textarea" data-q="${qNum}" data-ai-type="screenshot" placeholder="${esc(q.placeholder || 'Décrivez ce que montre votre capture d\'écran (éléments visibles, URL, etc.)...')}"></textarea>`;
+    h += renderRichEditor(qNum, q.placeholder || 'Décrivez ce que montre votre capture d\'\u00e9cran...', 'screenshot');
     return h;
   }
 
@@ -1584,12 +1683,11 @@
 
       // ─── FREE / TOOL / SCREENSHOT → IA ─────────────────────────
       if (qType === 'free' || qType === 'tool' || qType === 'screenshot') {
-        const textarea = document.querySelector(`.free-textarea[data-q="${qNum}"]`);
-        const answer = textarea ? textarea.value : '';
-        if (textarea) textarea.disabled = true;
+        const answer = getEditorText(qNum);
+        disableEditor(qNum);
 
         aiPromises.push(
-          correctFreeResponseWithAI(q, qNum, answer, challengeContext)
+          correctFreeResponseWithAI(q, qNum, answer + (getEditorAttachments(qNum).length ? '\n\n[Documents joints: ' + getEditorAttachments(qNum).map(a=>a.name).join(', ') + ']' : ''), challengeContext)
             .then(result => {
               aiTotal += result.total;
               aiScore += result.score;
@@ -1610,11 +1708,10 @@
           }
         } else {
           // Tuto with free response
-          const textarea = document.querySelector(`.free-textarea[data-q="${qNum}"]`);
-          const answer = textarea ? textarea.value : '';
-          if (textarea) textarea.disabled = true;
+          const answer = getEditorText(qNum);
+          disableEditor(qNum);
           aiPromises.push(
-            correctFreeResponseWithAI(q, qNum, answer, challengeContext)
+            correctFreeResponseWithAI(q, qNum, answer + (getEditorAttachments(qNum).length ? '\n\n[Documents joints: ' + getEditorAttachments(qNum).map(a=>a.name).join(', ') + ']' : ''), challengeContext)
               .then(result => {
                 aiTotal += result.total;
                 aiScore += result.score;
@@ -1813,11 +1910,20 @@
     if (purchases[gameId] || purchases['pass_all']) return true;
 
     try {
+      // Check all possible session sources
       var sess = JSON.parse(localStorage.getItem('imm_session') || '{}');
       if (sess.role === 'admin' || sess.role === 'formateur') return true;
 
+      // Check sessionStorage admin session (set by admin login)
+      var adminSess = JSON.parse(sessionStorage.getItem('imm-admin') || '{}');
+      if (adminSess.role === 'admin') return true;
+
+      // Check localStorage user session (set by user login)
+      var userSess = JSON.parse(localStorage.getItem('imm-user') || '{}');
+      if (userSess.role === 'admin' || userSess.role === 'formateur') return true;
+
       var freeEmails = JSON.parse(localStorage.getItem('imm_free_emails') || '{}');
-      var userEmail = (sess.email || '').toLowerCase();
+      var userEmail = (sess.email || userSess.email || '').toLowerCase();
       if (userEmail && freeEmails[userEmail]) {
         var acc = freeEmails[userEmail];
         if (acc.expire) {
@@ -1828,7 +1934,7 @@
         if (acc.sims && acc.sims.indexOf(gameId) !== -1) return true;
       }
 
-      var userName = (sess.name || '').toLowerCase();
+      var userName = (sess.name || userSess.name || userSess.display_name || adminSess.name || '').toLowerCase();
       var freeAccessList = JSON.parse(localStorage.getItem('imm_free_access') || '[]');
       for (var i = 0; i < freeAccessList.length; i++) {
         var fa = freeAccessList[i];
@@ -1863,29 +1969,33 @@
         <h2>D\u00e9bloquez <em>${esc(simName)}</em></h2>
         <p class="pw-sub">Le d\u00e9fi 1 est offert pour d\u00e9couvrir la simulation.<br>Pour acc\u00e9der aux ${totalChallenges - 1} d\u00e9fis suivants, choisissez une formule :</p>
         <div class="pw-plans">
-          <a href="paiement.html?plan=solo&sim=${gameId}" class="pw-plan featured">
+          <a href="tarifs.html" class="pw-plan">
             <div>
-              <div class="pw-plan-name">Une simulation — ${esc(simName)}</div>
-              <div class="pw-plan-desc">Acc\u00e8s complet \u00e0 tous les d\u00e9fis + certificat</div>
+              <div class="pw-plan-name">D\u00e9couverte</div>
+              <div class="pw-plan-desc">1 simulation au choix &mdash; acc\u00e8s complet + certificat</div>
             </div>
-            <div class="pw-plan-price">49 \u20ac</div>
+            <div class="pw-plan-price">19 \u20ac<span style=\"font-size:12px;font-weight:400;color:var(--ink-mute)\">/mois</span></div>
           </a>
-          <a href="paiement.html?plan=pass" class="pw-plan">
+          <a href="tarifs.html" class="pw-plan featured">
             <div>
-              <div class="pw-plan-name">Pass catalogue</div>
-              <div class="pw-plan-desc">Toutes les simulations pendant 12 mois</div>
+              <div class="pw-plan-name">Essentiel <span style=\"font-size:10px;background:var(--orange);color:#fff;padding:2px 6px;border-radius:4px;margin-left:6px;vertical-align:middle\">Populaire</span></div>
+              <div class="pw-plan-desc">3 simulations au choix &mdash; id\u00e9al pour progresser</div>
             </div>
-            <div class="pw-plan-price">249 \u20ac</div>
+            <div class="pw-plan-price">39 \u20ac<span style=\"font-size:12px;font-weight:400;color:var(--ink-mute)\">/mois</span></div>
           </a>
-          <a href="paiement.html?plan=free" class="pw-plan">
+          <a href="tarifs.html" class="pw-plan">
             <div>
-              <div class="pw-plan-name">D\u00e9couverte gratuite</div>
-              <div class="pw-plan-desc">D\u00e9fi 1 de chaque simulation, sans engagement</div>
+              <div class="pw-plan-name">Illimit\u00e9</div>
+              <div class="pw-plan-desc">Tout le catalogue &mdash; toutes les simulations + certificats</div>
             </div>
-            <div class="pw-plan-price">0 \u20ac</div>
+            <div class="pw-plan-price">69 \u20ac<span style=\"font-size:12px;font-weight:400;color:var(--ink-mute)\">/mois</span></div>
           </a>
         </div>
-        <div class="pw-free">Vous avez d\u00e9j\u00e0 un acc\u00e8s ? <a href="login.html?next=game.html%3Fgame%3D${gameId}%26ch%3D${idx}">Connectez-vous</a></div>
+        <p style=\"font-size:11.5px;color:var(--ink-mute);margin-top:12px;margin-bottom:0\">Sans engagement &bull; Annulable \u00e0 tout moment &bull; 2 mois offerts sur l'annuel</p>
+        <div class="pw-free">
+          ${localStorage.getItem('imm-token') ? '' : '<div style="margin-bottom:8px">Pas encore de compte ? <a href="login.html?mode=signup&redirect=game.html%3Fgame%3D' + gameId + '%26ch%3D' + idx + '" style="color:var(--jade);font-weight:600">Inscrivez-vous gratuitement</a></div>'}
+          Vous avez d\u00e9j\u00e0 un acc\u00e8s ? <a href="login.html?next=game.html%3Fgame%3D${gameId}%26ch%3D${idx}">Connectez-vous</a>
+        </div>
       </div>`;
     document.body.appendChild(overlay);
   }
@@ -1905,6 +2015,127 @@
     side.classList.toggle('mobile-open');
     document.body.style.overflow = side.classList.contains('mobile-open') ? 'hidden' : '';
   };
+
+  // --- Rich Editor ------------------------------------------------
+  function renderRichEditor(qNum, placeholder, aiType) {
+    const ph = esc(placeholder || 'Redigez votre reponse ici...');
+    const aiAttr = aiType ? ` data-ai-type="${aiType}"` : '';
+    return `<div class="rich-editor-wrap" data-q="${qNum}"${aiAttr}>
+      <div class="re-toolbar">
+        <button type="button" data-cmd="bold" title="Gras (Ctrl+B)"><b>G</b></button>
+        <button type="button" data-cmd="italic" title="Italique (Ctrl+I)"><i>I</i></button>
+        <button type="button" data-cmd="underline" title="Souligne (Ctrl+U)"><u>S</u></button>
+        <span class="re-sep"></span>
+        <button type="button" data-cmd="justifyLeft" title="Aligner a gauche">&#8676;</button>
+        <button type="button" data-cmd="justifyCenter" title="Centrer">&#8596;</button>
+        <button type="button" data-cmd="justifyRight" title="Aligner a droite">&#8677;</button>
+        <button type="button" data-cmd="justifyFull" title="Justifier">&#9776;</button>
+        <span class="re-sep"></span>
+        <button type="button" data-cmd="insertUnorderedList" title="Liste a puces">&#8226;</button>
+        <button type="button" data-cmd="insertOrderedList" title="Liste numerotee">1.</button>
+        <span class="re-sep"></span>
+        <button type="button" class="re-upload-btn" data-action="upload" title="Joindre un document">&#128206; Joindre</button>
+      </div>
+      <div class="re-body" contenteditable="true" data-placeholder="${ph}" data-q="${qNum}"></div>
+      <div class="re-attachments" data-q="${qNum}"></div>
+      <input type="file" class="re-file-input" data-q="${qNum}" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.png,.jpg,.jpeg,.gif,.webp" multiple>
+    </div>`;
+  }
+
+  function initRichEditors() {
+    document.querySelectorAll('.re-toolbar button[data-cmd]').forEach(btn => {
+      btn.addEventListener('mousedown', e => {
+        e.preventDefault();
+        document.execCommand(btn.dataset.cmd, false, null);
+        updateToolbarState(btn.closest('.re-toolbar'));
+      });
+    });
+    document.querySelectorAll('.re-toolbar button[data-action="upload"]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const wrap = btn.closest('.rich-editor-wrap');
+        const fileInput = wrap.querySelector('.re-file-input');
+        if (fileInput) fileInput.click();
+      });
+    });
+    document.querySelectorAll('.re-file-input').forEach(input => {
+      input.addEventListener('change', () => {
+        const wrap = input.closest('.rich-editor-wrap');
+        const attachments = wrap.querySelector('.re-attachments');
+        Array.from(input.files).forEach(file => {
+          const chip = document.createElement('span');
+          chip.className = 're-file-chip';
+          const ext = file.name.split('.').pop().toLowerCase();
+          chip.innerHTML = `<span class="re-file-icon">${getFileIcon(ext)}</span><span class="re-file-name" title="${esc(file.name)}">${esc(file.name)}</span><span class="re-file-remove" title="Retirer">&times;</span>`;
+          chip.dataset.fileName = file.name;
+          chip.dataset.fileSize = file.size;
+          chip._file = file;
+          chip.querySelector('.re-file-remove').addEventListener('click', () => chip.remove());
+          attachments.appendChild(chip);
+        });
+        input.value = '';
+      });
+    });
+    document.querySelectorAll('.re-body').forEach(body => {
+      body.addEventListener('keydown', e => {
+        if (e.ctrlKey || e.metaKey) {
+          if (e.key === 'b') { e.preventDefault(); document.execCommand('bold'); }
+          if (e.key === 'i') { e.preventDefault(); document.execCommand('italic'); }
+          if (e.key === 'u') { e.preventDefault(); document.execCommand('underline'); }
+        }
+      });
+      body.addEventListener('mouseup', () => updateToolbarState(body.closest('.rich-editor-wrap').querySelector('.re-toolbar')));
+      body.addEventListener('keyup', () => updateToolbarState(body.closest('.rich-editor-wrap').querySelector('.re-toolbar')));
+    });
+  }
+
+  function updateToolbarState(toolbar) {
+    if (!toolbar) return;
+    toolbar.querySelectorAll('button[data-cmd]').forEach(btn => {
+      try { btn.classList.toggle('active', document.queryCommandState(btn.dataset.cmd)); } catch(e) {}
+    });
+  }
+
+  function getFileIcon(ext) {
+    const m = {pdf:'&#128196;',doc:'&#128195;',docx:'&#128195;',xls:'&#128202;',xlsx:'&#128202;',ppt:'&#128202;',pptx:'&#128202;',txt:'&#128196;',csv:'&#128202;',png:'&#128444;',jpg:'&#128444;',jpeg:'&#128444;',gif:'&#128444;',webp:'&#128444;'};
+    return m[ext] || '&#128206;';
+  }
+
+  function getEditorText(qNum) {
+    const body = document.querySelector(`.re-body[data-q="${qNum}"]`);
+    if (body) return body.innerText.trim();
+    const ta = document.querySelector(`.free-textarea[data-q="${qNum}"]`);
+    return ta ? ta.value.trim() : '';
+  }
+
+  function getEditorHtml(qNum) {
+    const body = document.querySelector(`.re-body[data-q="${qNum}"]`);
+    if (body) return body.innerHTML.trim();
+    const ta = document.querySelector(`.free-textarea[data-q="${qNum}"]`);
+    return ta ? ta.value.trim() : '';
+  }
+
+  function getEditorAttachments(qNum) {
+    const wrap = document.querySelector(`.rich-editor-wrap[data-q="${qNum}"]`);
+    if (!wrap) return [];
+    return Array.from(wrap.querySelectorAll('.re-file-chip')).map(c => ({
+      name: c.dataset.fileName,
+      size: parseInt(c.dataset.fileSize || 0),
+      file: c._file || null
+    }));
+  }
+
+  function disableEditor(qNum) {
+    const wrap = document.querySelector(`.rich-editor-wrap[data-q="${qNum}"]`);
+    if (wrap) {
+      wrap.classList.add('disabled');
+      const body = wrap.querySelector('.re-body');
+      if (body) body.contentEditable = 'false';
+    }
+    const ta = document.querySelector(`.free-textarea[data-q="${qNum}"]`);
+    if (ta) ta.disabled = true;
+  }
+
 
   // ─── Helpers ─────────────────────────────────────────────────────
   function esc(s) {
