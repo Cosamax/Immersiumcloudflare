@@ -7,24 +7,24 @@
 (function() {
 
 var _CATALOG_FALLBACK = {
-  lumio:    { name:'LUMIO',    num:'01', domain:'Marketing Digital',       desc:'Illuminez votre stratégie de contenu et de visibilité en ligne.',              level:'Débutant',      levelColor:'#16A34A', color:'#0131B4', color2:'#FF6B35' },
-  breval:   { name:'BREVAL',   num:'02', domain:'Marketing Digital',       desc:'Maximisez le retour sur investissement de vos campagnes digitales.',           level:'Intermédiaire', levelColor:'#D97706', color:'#0125A8', color2:'#FF8C5A' },
-  heliance: { name:'HELIANCE', num:'03', domain:'Marketing Digital',       desc:'Développez la présence digitale d\'une marque à travers tous les canaux.',    level:'Avancé',        levelColor:'#DC2626', color:'#011A9E', color2:'#FFA07A' },
-  nexia:    { name:'NEXIA',    num:'04', domain:'Transformation Digitale', desc:'Connectez les enjeux de la transformation digitale à la stratégie d\'entreprise.', level:'Débutant', levelColor:'#16A34A', color:'#7C2D12', color2:'#F97316' },
-  orbis:    { name:'ORBIS',    num:'05', domain:'Transformation Digitale', desc:'Déployez une transformation digitale à 360°.',                                level:'Intermédiaire', levelColor:'#D97706', color:'#92400E', color2:'#FB923C' },
-  vertex:   { name:'VERTEX',   num:'06', domain:'Transformation Digitale', desc:'Atteignez le sommet de la maturité digitale.',                                level:'Avancé',        levelColor:'#DC2626', color:'#78350F', color2:'#FDBA74' },
-  solara:   { name:'SOLARA',   num:'07', domain:'Stratégie Marketing',     desc:'Élaborez une stratégie marketing complète pour une marque en croissance.',     level:'Débutant',      levelColor:'#16A34A', color:'#1D4ED8', color2:'#93C5FD' },
-  praxis:   { name:'PRAXIS',   num:'08', domain:'Stratégie Marketing',     desc:'Construisez et exécutez une stratégie marketing B2B efficace.',               level:'Intermédiaire', levelColor:'#D97706', color:'#1E40AF', color2:'#60A5FA' },
-  astra:    { name:'ASTRA',    num:'09', domain:'Stratégie Marketing',     desc:'Pilotez la stratégie marketing d\'un groupe multi-marques.',                  level:'Avancé',        levelColor:'#DC2626', color:'#1E3A5F', color2:'#3B82F6' },
-  eveil:    { name:'EVEIL',    num:'10', domain:'IA en Entreprise',        desc:'Éveillez les équipes aux enjeux et opportunités de l\'intelligence artificielle.', level:'Débutant',  levelColor:'#16A34A', color:'#0F172A', color2:'#6366F1' },
-  elan:     { name:'ELAN',     num:'11', domain:'IA en Entreprise',        desc:'Donnez un nouvel élan à une organisation grâce à l\'IA.',                     level:'Intermédiaire', levelColor:'#D97706', color:'#0F172A', color2:'#818CF8' },
-  ancre:    { name:'ANCRE',    num:'12', domain:'IA en Entreprise',        desc:'Ancrez l\'intelligence artificielle au cœur des processus d\'une entreprise.', level:'Avancé',       levelColor:'#DC2626', color:'#0F172A', color2:'#A5B4FC' },
-  signal:   { name:'SIGNAL',   num:'13', domain:'Communication',           desc:'Émettez les bons signaux sur les canaux digitaux.',                           level:'Débutant',      levelColor:'#16A34A', color:'#064E3B', color2:'#10B981' },
-  lien:     { name:'LIEN',     num:'14', domain:'Communication',           desc:'Renforcez les liens au sein des équipes par une communication efficace.',     level:'Intermédiaire', levelColor:'#D97706', color:'#065F46', color2:'#34D399' },
-  echo:     { name:'ECHO',     num:'15', domain:'Communication',           desc:'Faites résonner la communication interne d\'une organisation.',               level:'Avancé',        levelColor:'#DC2626', color:'#166534', color2:'#6EE7B7' },
+  lumio:    { name:'LUMIO',    num:'01', category:'Marketing', subcategory:'Marketing digital', domain:'Marketing Digital',       desc:'Illuminez votre stratégie de contenu et de visibilité en ligne.',              level:'Débutant',      levelColor:'#16A34A', color:'#0131B4', color2:'#FF6B35' },
+  breval:   { name:'BREVAL',   num:'02', category:'Marketing', subcategory:'Marketing digital', domain:'Marketing Digital',       desc:'Maximisez le retour sur investissement de vos campagnes digitales.',           level:'Intermédiaire', levelColor:'#D97706', color:'#0125A8', color2:'#FF8C5A' },
+  heliance: { name:'HELIANCE', num:'03', category:'Marketing', subcategory:'Stratégie marketing', domain:'Marketing Digital',       desc:'Développez la présence digitale d\'une marque à travers tous les canaux.',    level:'Avancé',        levelColor:'#DC2626', color:'#011A9E', color2:'#FFA07A' },
+  nexia:    { name:'NEXIA',    num:'04', category:'Digitalisation & Numérique', subcategory:'Transformation digitale', domain:'Transformation Digitale', desc:'Connectez les enjeux de la transformation digitale à la stratégie d\'entreprise.', level:'Débutant', levelColor:'#16A34A', color:'#7C2D12', color2:'#F97316' },
+  orbis:    { name:'ORBIS',    num:'05', category:'Digitalisation & Numérique', subcategory:'Transformation digitale', domain:'Transformation Digitale', desc:'Déployez une transformation digitale à 360°.',                                level:'Intermédiaire', levelColor:'#D97706', color:'#92400E', color2:'#FB923C' },
+  vertex:   { name:'VERTEX',   num:'06', category:'Digitalisation & Numérique', subcategory:'Transformation digitale', domain:'Transformation Digitale', desc:'Atteignez le sommet de la maturité digitale.',                                level:'Avancé',        levelColor:'#DC2626', color:'#78350F', color2:'#FDBA74' },
+  solara:   { name:'SOLARA',   num:'07', category:'Marketing', subcategory:'Stratégie marketing', domain:'Stratégie Marketing',     desc:'Élaborez une stratégie marketing complète pour une marque en croissance.',     level:'Débutant',      levelColor:'#16A34A', color:'#1D4ED8', color2:'#93C5FD' },
+  praxis:   { name:'PRAXIS',   num:'08', category:'Marketing', subcategory:'Stratégie marketing', domain:'Stratégie Marketing',     desc:'Construisez et exécutez une stratégie marketing B2B efficace.',               level:'Intermédiaire', levelColor:'#D97706', color:'#1E40AF', color2:'#60A5FA' },
+  astra:    { name:'ASTRA',    num:'09', category:'Marketing', subcategory:'Études et analyse marché', domain:'Stratégie Marketing',     desc:'Pilotez la stratégie marketing d\'un groupe multi-marques.',                  level:'Avancé',        levelColor:'#DC2626', color:'#1E3A5F', color2:'#3B82F6' },
+  eveil:    { name:'EVEIL',    num:'10', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', domain:'IA en Entreprise',        desc:'Éveillez les équipes aux enjeux et opportunités de l\'intelligence artificielle.', level:'Débutant',  levelColor:'#16A34A', color:'#0F172A', color2:'#6366F1' },
+  elan:     { name:'ELAN',     num:'11', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', domain:'IA en Entreprise',        desc:'Donnez un nouvel élan à une organisation grâce à l\'IA.',                     level:'Intermédiaire', levelColor:'#D97706', color:'#0F172A', color2:'#818CF8' },
+  ancre:    { name:'ANCRE',    num:'12', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', domain:'IA en Entreprise',        desc:'Ancrez l\'intelligence artificielle au cœur des processus d\'une entreprise.', level:'Avancé',       levelColor:'#DC2626', color:'#0F172A', color2:'#A5B4FC' },
+  signal:   { name:'SIGNAL',   num:'13', category:'Communication', subcategory:'Communication digitale', domain:'Communication',           desc:'Émettez les bons signaux sur les canaux digitaux.',                           level:'Débutant',      levelColor:'#16A34A', color:'#064E3B', color2:'#10B981' },
+  lien:     { name:'LIEN',     num:'14', category:'Communication', subcategory:'Communication professionnelle', domain:'Communication',           desc:'Renforcez les liens au sein des équipes par une communication efficace.',     level:'Intermédiaire', levelColor:'#D97706', color:'#065F46', color2:'#34D399' },
+  echo:     { name:'ECHO',     num:'15', category:'Communication', subcategory:'Communication professionnelle', domain:,     num:'15', domain:'Communication',           desc:'Faites résonner la communication interne d\'une organisation.',               level:'Avancé',        levelColor:'#DC2626', color:'#166534', color2:'#6EE7B7' },
 };
 
-var _DOMAINS = ['Marketing Digital','Transformation Digitale','Stratégie Marketing','IA en Entreprise','Communication'];
+var _DOMAINS = ['Marketing Digital','Transformation Digitale','Stratégie Marketing','Digitalisation & Numérique','Management','Gestion & Entrepreneuriat','Ressources humaines','Développement professionnel (soft skills)','Conformité & Cadre légal','Inclusion & Accessibilité'];
 
 var _LEVELS = ['Débutant','Intermédiaire','Avancé','Expert'];
 
@@ -39,8 +39,8 @@ function buildCatDropdown(catalog, panel) {
   var grouped = {};
   entries.forEach(function(pair) {
     var id = pair[0], info = pair[1];
-    if (!grouped[info.domain]) grouped[info.domain] = [];
-    grouped[info.domain].push(Object.assign({ id: id }, info));
+    if (!grouped[info.category]) grouped[info.category] = [];
+    grouped[info.category].push(Object.assign({ id: id }, info));
   });
   Object.keys(grouped).forEach(function(d) {
     grouped[d].sort(function(a, b) { return parseInt(a.num) - parseInt(b.num); });
@@ -108,7 +108,7 @@ if (catPanel) {
     var catalog = {};
     data.forEach(function(s) {
       catalog[s.game_id] = {
-        name: s.name, num: s.num, domain: s.domain, desc: s.description,
+        name: s.name, num: s.num, category: s.category, subcategory: s.subcategory, domain: s.domain, desc: s.description,
         level: s.level, levelColor: s.level_color, color: s.color, color2: s.color2,
         challengeCount: s.challenge_count
       };
