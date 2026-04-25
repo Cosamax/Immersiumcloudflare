@@ -4,16 +4,17 @@ on:
   push:
       branches:
             - main
+              workflow_dispatch:
 
-            jobs:
-              deploy:
-                  runs-on: ubuntu-latest
-                      name: Deploy
-                          steps:
-                                - uses: actions/checkout@v4
+              jobs:
+                deploy:
+                    runs-on: ubuntu-latest
+                        name: Deploy
+                            steps:
+                                  - uses: actions/checkout@v4
 
-                                      - name: Deploy avec Wrangler
-                                              uses: cloudflare/wrangler-action@v3
-                                                      with:
-                                                                apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-                                                                          accountId: 183c029ddaaef040cd2c510c0ad2638d
+                                        - name: Deploy avec Wrangler
+                                                uses: cloudflare/wrangler-action@v3
+                                                        with:
+                                                                  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                                                                            accountId: 183c029ddaaef040cd2c510c0ad2638d
