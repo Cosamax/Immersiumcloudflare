@@ -2892,8 +2892,17 @@ async function openSimModal(gameId) {
       </div>
 
       <div class="form-group">
-        <label class="form-label">Domaine</label>
+        <label class="form-label">Domaine (libre, héritage)</label>
         <input type="text" class="form-input" id="sim-domain" value="${escapeHtml(data.domain || '')}">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Catégories (cocher une ou plusieurs)</label>
+        <div id="sim-categories" class="cat-checks"></div>
+      </div>
+      <div class="form-group" id="sim-subcategories-row" style="display:none">
+        <label class="form-label">Sous-catégories</label>
+        <div id="sim-subcategories" class="cat-checks"></div>
       </div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
@@ -2967,14 +2976,89 @@ async function openSimModal(gameId) {
       </div>
 
       <div style="padding:12px 14px;background:var(--bg-alt);border-radius:var(--r-sm);font-size:12px;color:var(--ink-mute);margin-top:10px">
-        <strong style="color:var(--ink)">À savoir</strong> — Les champs "compétences" et "personnages" (listes JSON)
+        <strong style="color:var(--ink)">À savoir</strong> — Les champs "personnages" (liste JSON)
         ne sont pas éditables via ce formulaire pour l'instant. Utilise un import SQL pour les modifier.
       </div>
     `;
+
+    // Initialise les checkboxes catégories/sous-catégories
+    const initCats = (window.IMM_PARSE_CAT || ((v) => {
+      if (!v) return [];
+      if (Array.isArray(v)) return v;
+      const s = String(v).trim();
+      if (s.charAt(0) === '[') { try { const a = JSON.parse(s); if (Array.isArray(a)) return a; } catch(e){} }
+      return s ? [s] : [];
+    }))(data.category);
+    const initSubs = (window.IMM_PARSE_CAT || ((v) => {
+      if (!v) return [];
+      if (Array.isArray(v)) return v;
+      const s = String(v).trim();
+      if (s.charAt(0) === '[') { try { const a = JSON.parse(s); if (Array.isArray(a)) return a; } catch(e){} }
+      return s ? [s] : [];
+    }))(data.subcategory);
+    simRenderCategoryChecks(initCats, initSubs);
   } catch (e) {
     body.innerHTML = `<div style="padding:20px;color:#DC2626">Erreur : ${e.message}</div>`;
   }
 }
+
+/* ─── Catégories : rendu et lecture des checkboxes ─── */
+function escAttr(s){ return String(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function simRenderCategoryChecks(selectedCats, selectedSubs){
+  selectedCats = selectedCats || [];
+  selectedSubs = selectedSubs || [];
+  const taxo = window.IMM_TAXONOMY || [];
+  const catBox = document.getElementById('sim-categories');
+  if (!catBox) return;
+  catBox.innerHTML = taxo.map(c => {
+    const checked = selectedCats.indexOf(c.name) !== -1;
+    return `<label class="${checked?'checked':''}"><input type="checkbox" value="${escAttr(c.name)}" ${checked?'checked':''} onchange="simOnCatChange()">${escAttr(c.name)}</label>`;
+  }).join('');
+  simRenderSubcategoryChecks(selectedSubs);
+}
+
+function simRenderSubcategoryChecks(selectedSubs){
+  selectedSubs = selectedSubs || [];
+  const taxo = window.IMM_TAXONOMY || [];
+  const selectedCats = simReadSelectedCats();
+  const row = document.getElementById('sim-subcategories-row');
+  const box = document.getElementById('sim-subcategories');
+  if (!row || !box) return;
+  if (selectedCats.length === 0) { row.style.display = 'none'; box.innerHTML = ''; return; }
+  row.style.display = '';
+  let html = '';
+  taxo.forEach(c => {
+    if (selectedCats.indexOf(c.name) === -1) return;
+    if (!c.subs || !c.subs.length) return;
+    html += `<div class="cat-section"><div class="cat-section-title">${escAttr(c.name)}</div><div class="cat-section-row">`;
+    html += c.subs.map(s => {
+      const checked = selectedSubs.indexOf(s) !== -1;
+      return `<label class="${checked?'checked':''}"><input type="checkbox" value="${escAttr(s)}" ${checked?'checked':''} onchange="simOnSubChange(this)">${escAttr(s)}</label>`;
+    }).join('');
+    html += `</div></div>`;
+  });
+  box.innerHTML = html;
+}
+
+function simReadSelectedCats(){
+  return Array.from(document.querySelectorAll('#sim-categories input[type="checkbox"]:checked')).map(i => i.value);
+}
+function simReadSelectedSubs(){
+  return Array.from(document.querySelectorAll('#sim-subcategories input[type="checkbox"]:checked')).map(i => i.value);
+}
+window.simOnCatChange = function(){
+  document.querySelectorAll('#sim-categories label').forEach(l => {
+    const inp = l.querySelector('input');
+    if (inp.checked) l.classList.add('checked'); else l.classList.remove('checked');
+  });
+  const currentSubs = simReadSelectedSubs();
+  simRenderSubcategoryChecks(currentSubs);
+};
+window.simOnSubChange = function(input){
+  const label = input.closest('label');
+  if (input.checked) label.classList.add('checked'); else label.classList.remove('checked');
+};
 
 function closeSimModal() {
   document.getElementById('simModalOverlay').hidden = true;
@@ -2988,11 +3072,22 @@ async function saveSimulation() {
   btn.disabled = true;
   btn.innerHTML = '<span>Enregistrement…</span>';
 
+  // Sérialise les catégories/sous-cats (multi-select via checkboxes)
+  const serializeCat = window.IMM_SERIALIZE_CAT || ((arr) => {
+    if (!arr || !arr.length) return null;
+    const clean = arr.filter(Boolean);
+    if (clean.length === 0) return null;
+    if (clean.length === 1) return clean[0];
+    return JSON.stringify(clean);
+  });
+
   // Récupérer les valeurs
   const payload = {
     name: document.getElementById('sim-name').value.trim(),
     num: document.getElementById('sim-num').value.trim() || null,
     domain: document.getElementById('sim-domain').value.trim() || null,
+    category: serializeCat(simReadSelectedCats()),
+    subcategory: serializeCat(simReadSelectedSubs()),
     level: document.getElementById('sim-level').value || null,
     active: document.getElementById('sim-active').value === 'true',
     description: document.getElementById('sim-description').value.trim() || null,
