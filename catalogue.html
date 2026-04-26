@@ -476,10 +476,33 @@
     </div>
   </footer>
 
+<script src="js/imm-taxonomy.js"></script>
 <script>
 /* ══════════════════════════════════════════════════════
    CATALOGUE.HTML — Taxonomie v3 : sidebar accordéon
+   Un jeu peut appartenir à plusieurs catégories (multi-cat).
 ══════════════════════════════════════════════════════ */
+
+/* Normalise une sim pour qu'elle ait toujours .categories et .subcategories
+   (tableaux). Garde .category / .subcategory comme 1er élément (rétro-compat). */
+function normalizeSim(s){
+  var parse = window.IMM_PARSE_CAT || function(v){
+    if (!v) return [];
+    if (Array.isArray(v)) return v;
+    var str = String(v).trim();
+    if (!str) return [];
+    if (str.charAt(0) === '[') { try { var a = JSON.parse(str); if (Array.isArray(a)) return a; } catch(e){} }
+    return [str];
+  };
+  var cats = parse(s.categories || s.category);
+  var subs = parse(s.subcategories || s.subcategory);
+  return Object.assign({}, s, {
+    categories: cats,
+    subcategories: subs,
+    category: cats[0] || '',
+    subcategory: subs[0] || ''
+  });
+}
 
 const TAXONOMY = [
   { id:'communication', name:'Communication', color:'#10B981', grad:['#10B981','#06B6D4'], subs:['Communication professionnelle','Communication digitale','Communication écrite et orale','Communication interculturelle'] },
@@ -528,15 +551,15 @@ let searchQuery    = '';
 /* ─── Sidebar ─── */
 function buildSidebar() {
   const sidebar = document.getElementById('cat-sidebar');
-  const all = Object.entries(CATALOG).map(([id,s]) => ({...s,id}));
-  
+  const all = Object.entries(CATALOG).map(([id,s]) => normalizeSim({...s,id}));
+
   sidebar.innerHTML = TAXONOMY.map((cat, i) => {
-    const sims = all.filter(s => s.category === cat.name);
+    const sims = all.filter(s => (s.categories||[]).indexOf(cat.name) !== -1);
     const totalCount = sims.length;
     const isOpen = i === 0;
-    
+
     const subItems = cat.subs.map(sub => {
-      const count = sims.filter(s => s.subcategory === sub).length;
+      const count = sims.filter(s => (s.subcategories||[]).indexOf(sub) !== -1).length;
       return `<div class="sidebar-subitem ${activeSubcat===sub?'active':''}" onclick="filterBySub('${cat.name}','${sub.replace(/'/g,"\\'")}')">
         <span>${sub}</span>
         ${count > 0 ? `<span class="sidebar-subitem-count">${count}</span>` : ''}
@@ -603,15 +626,16 @@ function updateSidebarActive() {
 
 /* ─── Zone principale ─── */
 function renderMain() {
-  const all = Object.entries(CATALOG).map(([id,s]) => ({...s,id}));
+  const all = Object.entries(CATALOG).map(([id,s]) => normalizeSim({...s,id}));
   const main = document.getElementById('cat-main');
-  
-  // Filtres actifs
+
+  // Filtres actifs (un sim matche s'il appartient à la catégorie/sous-cat ciblée)
   let filtered = all.filter(s => {
-    const matchCat   = !activeCategory || s.category === activeCategory;
-    const matchSub   = !activeSubcat   || s.subcategory === activeSubcat;
+    const matchCat   = !activeCategory || (s.categories||[]).indexOf(activeCategory) !== -1;
+    const matchSub   = !activeSubcat   || (s.subcategories||[]).indexOf(activeSubcat) !== -1;
     const matchLevel = !activeLevel    || s.level === activeLevel;
-    const matchSearch = !searchQuery   || (s.name+s.category+s.subcategory+s.desc).toLowerCase().includes(searchQuery);
+    const haystack = (s.name+' '+(s.categories||[]).join(' ')+' '+(s.subcategories||[]).join(' ')+' '+(s.desc||'')).toLowerCase();
+    const matchSearch = !searchQuery   || haystack.includes(searchQuery);
     return matchCat && matchSub && matchLevel && matchSearch;
   });
 
@@ -623,12 +647,12 @@ function renderMain() {
   let html = '';
 
   catsToShow.forEach(cat => {
-    const catSims = filtered.filter(s => s.category === cat.name);
+    const catSims = filtered.filter(s => (s.categories||[]).indexOf(cat.name) !== -1);
     const [g1, g2] = cat.grad;
-    
+
     // N'afficher que les sous-cats filtrées si filtre actif
     const subsToShow = activeSubcat ? cat.subs.filter(s => s === activeSubcat) : cat.subs;
-    
+
     // Vérifie si au moins 1 sous-cat a du contenu ou si pas de filtre search
     const hasAnything = subsToShow.length > 0;
     if (!hasAnything) return;
@@ -642,7 +666,7 @@ function renderMain() {
       <p class="cat-section-subtitle">${subsToShow.join(' · ')}</p>`;
 
     subsToShow.forEach(sub => {
-      const subSims = catSims.filter(s => s.subcategory === sub);
+      const subSims = catSims.filter(s => (s.subcategories||[]).indexOf(sub) !== -1);
       
       html += `<div class="subcat-group">
         <div class="subcat-title">
@@ -666,8 +690,8 @@ function renderMain() {
               <div class="sim-title">${s.name}</div>
             </div>
             <div class="sim-body">
-              <div class="sim-subcat">${s.subcategory}</div>
-              <div class="sim-domain">${s.category}</div>
+              <div class="sim-subcat">${sub}</div>
+              <div class="sim-domain">${cat.name}</div>
               <p class="sim-desc">${s.desc}</p>
               <div class="sim-meta">
                 <span class="ch">21 défis</span>
@@ -719,6 +743,7 @@ renderMain();
     data.forEach(s => {
       const id = s.game_id;
       if (!id) return;
+      // Pass raw category/subcategory through — normalizeSim() handles JSON arrays
       next[id] = {
         name: s.name || id.toUpperCase(),
         num: s.num ? String(s.num).padStart(2, '0') : '',

@@ -48,6 +48,13 @@
 .sim-card[draggable="true"]{transition:opacity .15s,transform .15s}
 .sim-card.dragging{opacity:.4}
 .sim-card.drop-target{border:2px dashed var(--marine)!important}
+.cat-checks{display:flex;flex-wrap:wrap;gap:8px;padding:8px;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r);max-height:200px;overflow-y:auto}
+.cat-checks label{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--ink);background:var(--paper);padding:6px 10px;border-radius:var(--r);border:1px solid var(--line);cursor:pointer;transition:all .15s;margin-bottom:0}
+.cat-checks label:hover{border-color:var(--sand)}
+.cat-checks input[type="checkbox"]{margin:0;cursor:pointer;accent-color:var(--marine)}
+.cat-checks label.checked{background:var(--marine);color:#fff;border-color:var(--marine)}
+.cat-section{display:flex;flex-direction:column;gap:8px;width:100%}
+.cat-section-title{font-size:11px;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.05em;margin:4px 0 0}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(14,26,43,.5);backdrop-filter:blur(4px);z-index:50;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px;max-width:560px;width:90%;max-height:90vh;overflow-y:auto;box-shadow:var(--sh-lift)}
@@ -134,7 +141,15 @@
     <input type="hidden" id="edit-id">
     <div class="form-row"><label>ID jeu (game_id)</label><input type="text" id="f-game-id" placeholder="Ex : ancre, elan, vertex…"></div>
     <div class="form-row"><label>Nom</label><input type="text" id="f-name" placeholder="Nom de la simulation"></div>
-    <div class="form-row"><label>Domaine</label><input type="text" id="f-domain" placeholder="Ex : Commerce, Management…"></div>
+    <div class="form-row"><label>Domaine (libre, héritage)</label><input type="text" id="f-domain" placeholder="Ex : Commerce, Management…"></div>
+    <div class="form-row">
+      <label>Catégories (cocher une ou plusieurs)</label>
+      <div id="f-categories" class="cat-checks"></div>
+    </div>
+    <div class="form-row" id="f-subcategories-row" style="display:none">
+      <label>Sous-catégories</label>
+      <div id="f-subcategories" class="cat-checks"></div>
+    </div>
     <div class="form-row"><label>Niveau</label><input type="text" id="f-level" placeholder="Ex : Débutant, Intermédiaire, Avancé"></div>
     <div class="form-row"><label>Description</label><textarea id="f-desc" rows="3" placeholder="Description courte de la simulation"></textarea></div>
     <div class="form-cols">
@@ -153,9 +168,64 @@
 </div>
 
 <div id="toast" class="toast"></div>
+<script src="js/imm-taxonomy.js"></script>
 <script type="module" src="js/imm-shared.js"></script>
 <script>
 var allSims = [];
+
+/* ─── Catégories : rendu et lecture des checkboxes ─── */
+function renderCategoryChecks(selectedCats, selectedSubs){
+  selectedCats = selectedCats || [];
+  selectedSubs = selectedSubs || [];
+  var taxo = window.IMM_TAXONOMY || [];
+  var catBox = document.getElementById('f-categories');
+  catBox.innerHTML = taxo.map(function(c){
+    var checked = selectedCats.indexOf(c.name) !== -1;
+    return '<label class="'+(checked?'checked':'')+'"><input type="checkbox" value="'+esc(c.name)+'" '+(checked?'checked':'')+' onchange="onCatChange()">'+esc(c.name)+'</label>';
+  }).join('');
+  renderSubcategoryChecks(selectedSubs);
+}
+function renderSubcategoryChecks(selectedSubs){
+  selectedSubs = selectedSubs || [];
+  var taxo = window.IMM_TAXONOMY || [];
+  var selectedCats = readSelectedCats();
+  var row = document.getElementById('f-subcategories-row');
+  var box = document.getElementById('f-subcategories');
+  if (selectedCats.length === 0) { row.style.display='none'; box.innerHTML=''; return; }
+  row.style.display='';
+  var html = '';
+  taxo.forEach(function(c){
+    if (selectedCats.indexOf(c.name) === -1) return;
+    if (!c.subs || !c.subs.length) return;
+    html += '<div class="cat-section"><div class="cat-section-title">'+esc(c.name)+'</div>';
+    html += c.subs.map(function(s){
+      var checked = selectedSubs.indexOf(s) !== -1;
+      return '<label class="'+(checked?'checked':'')+'"><input type="checkbox" value="'+esc(s)+'" '+(checked?'checked':'')+' onchange="onSubChange(this)">'+esc(s)+'</label>';
+    }).join('');
+    html += '</div>';
+  });
+  box.innerHTML = html;
+}
+function readSelectedCats(){
+  return Array.prototype.slice.call(document.querySelectorAll('#f-categories input[type="checkbox"]:checked')).map(function(i){return i.value;});
+}
+function readSelectedSubs(){
+  return Array.prototype.slice.call(document.querySelectorAll('#f-subcategories input[type="checkbox"]:checked')).map(function(i){return i.value;});
+}
+window.onCatChange = function(){
+  // Mark visual checked state on parent label
+  document.querySelectorAll('#f-categories label').forEach(function(l){
+    var inp = l.querySelector('input');
+    if (inp.checked) l.classList.add('checked'); else l.classList.remove('checked');
+  });
+  // Re-render subcategories preserving currently checked subs
+  var currentSubs = readSelectedSubs();
+  renderSubcategoryChecks(currentSubs);
+};
+window.onSubChange = function(input){
+  var label = input.closest('label');
+  if (input.checked) label.classList.add('checked'); else label.classList.remove('checked');
+};
 
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function showToast(msg,type){ var t=document.getElementById('toast'); t.textContent=msg; t.className='toast show '+(type||''); setTimeout(function(){t.className='toast';},3000); }
@@ -274,6 +344,7 @@ window.openNewModal = function(){
   document.getElementById('f-color2').value='#4D7AFF';
   document.getElementById('f-num').value='';
   document.getElementById('f-challenges').value='21';
+  renderCategoryChecks([], []);
   document.getElementById('modal-overlay').classList.add('open');
 };
 
@@ -291,6 +362,9 @@ window.editSim = function(id){
   document.getElementById('f-color2').value=s.color2||'#4D7AFF';
   document.getElementById('f-num').value=s.num||'';
   document.getElementById('f-challenges').value=s.challenge_count||21;
+  var cats = window.IMM_PARSE_CAT(s.category);
+  var subs = window.IMM_PARSE_CAT(s.subcategory);
+  renderCategoryChecks(cats, subs);
   document.getElementById('modal-overlay').classList.add('open');
 };
 
@@ -312,10 +386,14 @@ window.saveSim = async function(){
   var id=document.getElementById('edit-id').value;
   var gameId=document.getElementById('f-game-id').value.trim();
   if(!gameId){ showToast('L\'ID est requis','error'); return; }
+  var selectedCats = readSelectedCats();
+  var selectedSubs = readSelectedSubs();
   var payload={
     game_id: gameId,
     name: document.getElementById('f-name').value.trim(),
     domain: document.getElementById('f-domain').value.trim(),
+    category: window.IMM_SERIALIZE_CAT(selectedCats),
+    subcategory: window.IMM_SERIALIZE_CAT(selectedSubs),
     level: document.getElementById('f-level').value.trim(),
     description: document.getElementById('f-desc').value.trim(),
     color: document.getElementById('f-color').value,
