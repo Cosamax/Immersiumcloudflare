@@ -3,5 +3,6 @@ main = "worker.js"
 compatibility_date = "2024-01-01"
 account_id = "183c029ddaaef040cd2c510c0ad2638d"
 
-[site]
-bucket = "."
+[assets]
+directory = "."
+binding = "ASSETS"
