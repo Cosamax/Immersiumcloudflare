@@ -100,7 +100,7 @@ svg { display: block; }
 .drawer { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 200; display: none; }
 .drawer.open { display: block; }
 .drawer-overlay { position: absolute; inset: 0; background: rgba(14,26,43,.5); backdrop-filter: blur(4px); }
-.drawer-panel { position: absolute; right: 0; top: 0; bottom: 0; width: 300px; background: var(--paper); padding: 28px 24px; display: flex; flex-direction: column; gap: 8px; box-shadow: -24px 0 48px rgba(14,26,43,.2); }
+.drawer-panel { position: absolute; right: 0; top: 0; bottom: 0; width: min(320px, 88vw); background: var(--paper); padding: 28px 24px; display: flex; flex-direction: column; gap: 8px; box-shadow: -24px 0 48px rgba(14,26,43,.2); overflow-y: auto; }
 .drawer-close { align-self: flex-end; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-sm); cursor: pointer; color: var(--ink); margin-bottom: 16px; }
 .drawer-panel a { display: flex; align-items: center; justify-content: space-between; padding: 13px 16px; border-radius: var(--r-sm); font-size: 15px; font-weight: 500; color: var(--ink); transition: background .15s; }
 .drawer-panel a:hover { background: var(--bg); }
@@ -1454,6 +1454,12 @@ function toggleDrawer() {
   d.classList.toggle('open');
   document.body.style.overflow = d.classList.contains('open') ? 'hidden' : '';
 }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const d = document.getElementById('drawer');
+    if (d && d.classList.contains('open')) toggleDrawer();
+  }
+});
 
 /* ── Reveal on scroll ── */
 const revealEls = document.querySelectorAll('.reveal');
