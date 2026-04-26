@@ -502,7 +502,8 @@ function renderNotionsTab(){
   if(!notions.length){
     html+='<div class="empty-panel"><h3>Aucune notion</h3><p>Aucune notion p\u00e9dagogique n\'est d\u00e9finie pour cette simulation.</p></div>';
   } else {
-    html+='<div class="ch-list">'+notions.map(function(n){
+    var totalN=notions.length;
+    html+='<div class="ch-list">'+notions.map(function(n,i){
       var defPreview=n.definition?n.definition.substring(0,150)+(n.definition.length>150?'\u2026':''):'\u2014';
       return '<div class="challenge-card">'
         +'<div class="ch-header">'
@@ -511,6 +512,8 @@ function renderNotionsTab(){
         +'<span class="ch-type-badge notion">'+esc(n.title||'Sans titre')+'</span>'
         +'</div>'
         +'<div class="ch-actions">'
+        +'<button class="btn xs" onclick="moveNotion('+n.id+',-1)" title="Monter"'+(i===0?' disabled style="opacity:.3;cursor:not-allowed"':'')+'>&#9650;</button>'
+        +'<button class="btn xs" onclick="moveNotion('+n.id+',1)" title="Descendre"'+(i===totalN-1?' disabled style="opacity:.3;cursor:not-allowed"':'')+'>&#9660;</button>'
         +'<button class="btn xs" onclick="editNotion('+n.id+')">Modifier</button>'
         +'<button class="btn danger-xs" onclick="deleteNotion('+n.id+')">Suppr.</button>'
         +'</div>'
@@ -523,6 +526,29 @@ function renderNotionsTab(){
   }
   return html;
 }
+
+window.moveNotion = async function(id, dir){
+  var sb=window.IMM_SUPABASE;
+  if(!sb) return;
+  var idx=notions.findIndex(function(n){return n.id===id;});
+  if(idx<0) return;
+  var newIdx=idx+dir;
+  if(newIdx<0||newIdx>=notions.length) return;
+  // Swap in local array
+  var tmp=notions[idx]; notions[idx]=notions[newIdx]; notions[newIdx]=tmp;
+  // Re-render immediately
+  renderEditor();
+  // Persist sort_order for any item whose position differs
+  for(var i=0;i<notions.length;i++){
+    var item=notions[i];
+    if(item.sort_order!==i){
+      var res=await sb.from('knowledge_notions').update({sort_order:i}).eq('id',item.id);
+      if(res.error){ showToast('Erreur tri notion : '+res.error.message,'error'); return; }
+      item.sort_order=i;
+    }
+  }
+  if(window.showToast) window.showToast('Ordre enregistr\u00e9','success');
+};
 
 /* ============================================================
    QUESTION MODAL — Open / Edit / Save / Delete
