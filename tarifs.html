@@ -151,11 +151,10 @@
   </div>
 </footer>
 
+<script src="js/imm-api.js"></script>
 <script type="module" src="js/imm-shared.js"></script>
 <script src="js/imm-catalog.js"></script>
-<script type="module">
-import { supabase } from './js/imm-shared.js';
-
+<script>
 window.switchBilling = function(type) {
   document.getElementById('pricing-individuel').style.display = type === 'individuel' ? '' : 'none';
   document.getElementById('pricing-b2b').style.display = type === 'b2b' ? '' : 'none';
@@ -185,6 +184,11 @@ function renderPlan(p) {
 }
 
 async function loadPricing() {
+  const supabase = window.IMM_SUPABASE;
+  if (!supabase) {
+    document.getElementById('grid-individuel').innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--ink-mute)">API indisponible.</p>';
+    return;
+  }
   const { data, error } = await supabase
     .from('pricing_plans')
     .select('*')
@@ -201,6 +205,8 @@ async function loadPricing() {
 }
 
 async function loadFaqTarifs() {
+  const supabase = window.IMM_SUPABASE;
+  if (!supabase) return;
   const { data } = await supabase
     .from('faq_items')
     .select('*')
