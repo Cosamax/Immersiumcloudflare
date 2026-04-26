@@ -245,15 +245,32 @@
      if (!window.IMM_DOMAINS)   window.IMM_DOMAINS   = _DOMAINS;
      if (!window.IMM_LEVELS)    window.IMM_LEVELS    = _LEVELS;
 
-   /* Build the nav dropdown grouped by CATEGORY (not domain) */
+   /* Parse a category field (string or JSON-array string) into a list of categories */
+   function _parseCats(v) {
+       if (window.IMM_PARSE_CAT) return window.IMM_PARSE_CAT(v);
+       if (!v) return [];
+       if (Array.isArray(v)) return v.filter(Boolean);
+       var s = String(v).trim();
+       if (!s) return [];
+       if (s.charAt(0) === '[') { try { var a = JSON.parse(s); if (Array.isArray(a)) return a.filter(Boolean); } catch(e){} }
+       return [s];
+   }
+
+   /* Build the nav dropdown grouped by CATEGORY (not domain).
+      A simulation can now appear in MULTIPLE categories. */
    function buildCatDropdown(catalog, panel) {
           var entries = Object.entries(catalog);
           var grouped = {};
           entries.forEach(function(pair) {
                    var id = pair[0], info = pair[1];
-                   var cat = info.category || info.domain || 'Autre';
-                   if (!grouped[cat]) grouped[cat] = [];
-                   grouped[cat].push(Object.assign({ id: id }, info));
+                   var cats = _parseCats(info.category);
+                   if (cats.length === 0) cats = _parseCats(info.domain);
+                   if (cats.length === 0) cats = ['Autre'];
+                   var subs = _parseCats(info.subcategory);
+                   cats.forEach(function(cat) {
+                              if (!grouped[cat]) grouped[cat] = [];
+                              grouped[cat].push(Object.assign({ id: id, _subForCat: subs[0] || '' }, info));
+                   });
           });
           Object.keys(grouped).forEach(function(cat) {
                    grouped[cat].sort(function(a, b) { return parseInt(a.num) - parseInt(b.num); });
@@ -272,6 +289,9 @@
           if (grid) {
                    grid.innerHTML = categories.map(function(cat) {
                               var sims = grouped[cat];
+                              // For each sim, pick a sub that belongs to this cat (per TAXONOMY) or fallback
+                              var taxoEntry = (_TAXONOMY||[]).filter(function(t){return t.name===cat;})[0];
+                              var validSubs = taxoEntry ? (taxoEntry.subs||[]) : [];
                               return '<div class="pub-cat-col">' +
                                            '<div class="cat-head">' +
                                              '<div class="ic">' + cat.charAt(0) + '</div>' +
@@ -279,10 +299,14 @@
                                            '</div>' +
                                            '<ul>' +
                                            sims.map(function(s) {
+                                                          var simSubs = _parseCats(s.subcategory);
+                                                          var displaySub = '';
+                                                          for (var i=0; i<simSubs.length; i++) { if (validSubs.indexOf(simSubs[i]) !== -1) { displaySub = simSubs[i]; break; } }
+                                                          if (!displaySub) displaySub = simSubs[0] || '';
                                                           return '<li><a href="game.html?game=' + s.id + '">' +
                                                                            '<span class="num">' + s.num + '</span>' +
                                                                            '<span class="nm">' + s.name + '</span>' +
-                                                                           '<span class="sub">' + s.subcategory + '</span>' +
+                                                                           '<span class="sub">' + displaySub + '</span>' +
                                                                          '</a></li>';
                                            }).join('') +
                                            '</ul>' +
