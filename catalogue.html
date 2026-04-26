@@ -494,7 +494,7 @@ const TAXONOMY = [
   { id:'inclusion', name:'Inclusion & Accessibilité', color:'#14B8A6', grad:['#14B8A6','#6366F1'], subs:['FALC et communication accessible'] }
 ];
 
-const CATALOG = {
+const CATALOG_FALLBACK = {
   lumio:    {name:'LUMIO',   num:'01', category:'Marketing',               subcategory:'Marketing digital',           desc:'Illuminez votre stratégie de contenu et de visibilité en ligne. Google Ads, SEO, social media.', level:'Débutant',      color:'#0131B4', popular:true},
   breval:   {name:'BREVAL',  num:'02', category:'Marketing',               subcategory:'Marketing digital',           desc:'Maximisez le retour sur investissement de vos campagnes digitales multicanales.',               level:'Intermédiaire', color:'#0125A8'},
   heliance: {name:'HELIANCE',num:'03', category:'Marketing',               subcategory:'Marketing digital',           desc:"Développez la présence digitale d'une marque à travers tous les canaux.",                       level:'Avancé',        color:'#011A9E'},
@@ -511,6 +511,8 @@ const CATALOG = {
   lien:     {name:'LIEN',    num:'14', category:'Communication',           subcategory:'Communication professionnelle',desc:"Renforcez les liens au sein des équipes par une communication interne efficace.",             level:'Intermédiaire', color:'#065F46'},
   echo:     {name:'ECHO',    num:'15', category:'Communication',           subcategory:'Communication professionnelle',desc:"Faites résonner la communication interne d'une organisation en pleine mutation.",             level:'Avancé',        color:'#166534'},
 };
+
+let CATALOG = Object.assign({}, CATALOG_FALLBACK);
 
 const LEVEL_COLORS = {
   'Débutant':      {bg:'#D1FAE5', fg:'#065F46'},
@@ -705,6 +707,38 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 
 buildSidebar();
 renderMain();
+
+/* ─── Sync from API (D1) — admin edits become live without redeploy ─── */
+(async function syncCatalogFromApi() {
+  try {
+    const resp = await fetch('https://immersium-api.mx-cosaque.workers.dev/api/simulations?eq.active=true&order=sort_order');
+    if (!resp.ok) return;
+    const data = await resp.json();
+    if (!Array.isArray(data) || data.length === 0) return;
+    const next = {};
+    data.forEach(s => {
+      const id = s.game_id;
+      if (!id) return;
+      next[id] = {
+        name: s.name || id.toUpperCase(),
+        num: s.num ? String(s.num).padStart(2, '0') : '',
+        category: s.category || s.domain || '',
+        subcategory: s.subcategory || '',
+        desc: s.description || '',
+        level: s.level || '',
+        color: s.color || '#0131B4',
+        popular: !!s.popular
+      };
+    });
+    if (Object.keys(next).length > 0) {
+      CATALOG = next;
+      buildSidebar();
+      renderMain();
+    }
+  } catch (e) {
+    console.warn('[Catalogue] Sync API failed, fallback statique:', e.message);
+  }
+})();
 </script>
 
 </body>
