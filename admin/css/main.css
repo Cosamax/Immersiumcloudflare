@@ -1044,8 +1044,11 @@ input, select, textarea { font: inherit; }
   border-radius: var(--r-lg);
   width: 100%;
   max-width: 500px;
+  max-height: calc(100vh - 40px);
   box-shadow: 0 20px 60px -12px rgba(14,26,43,.3);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 .modal-h {
   display: flex;
@@ -1053,6 +1056,7 @@ input, select, textarea { font: inherit; }
   justify-content: space-between;
   padding: 18px 20px;
   border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
 }
 .modal-h h3 { font-size: 15px; font-weight: 700; }
 .modal-close {
@@ -1067,7 +1071,7 @@ input, select, textarea { font: inherit; }
 }
 .modal-close:hover { background: var(--bg-alt); color: var(--ink); }
 .modal-close svg { width: 16px; height: 16px; }
-.modal-body { padding: 20px; }
+.modal-body { padding: 20px; overflow-y: auto; flex: 1 1 auto; min-height: 0; }
 .cat-checks { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px; background: var(--bg-alt); border: 1px solid var(--line); border-radius: 8px; max-height: 220px; overflow-y: auto; }
 .cat-checks label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--ink); background: var(--paper, #fff); padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); cursor: pointer; transition: all .15s; margin: 0; }
 .cat-checks label:hover { border-color: var(--sand, #C9A96E); }
@@ -1082,6 +1086,8 @@ input, select, textarea { font: inherit; }
   gap: 10px;
   padding: 14px 20px;
   border-top: 1px solid var(--line);
+  flex-shrink: 0;
+  background: var(--paper);
 }
 
 /* ══════════════════════════════
