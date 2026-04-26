@@ -165,12 +165,240 @@
                   .sim-banner{height:160px}
                   .sim-title{font-size:30px}
           }
-        </style>
-  </head>
-  <body>
+        
 
-    <!-- ─────────── NAV ─────────── -->
-    <nav class="pub-nav">
+/* ══════════════════════════════════════
+   LAYOUT CATALOGUE : sidebar + contenu
+══════════════════════════════════════ */
+.cat-layout {
+  display: flex;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  align-items: flex-start;
+}
+
+/* ── Sidebar ── */
+.cat-sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding-right: 16px;
+  border-right: 1px solid #e5e7eb;
+}
+.cat-sidebar::-webkit-scrollbar { width: 4px; }
+.cat-sidebar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
+
+/* ── Accordéon sidebar ── */
+.sidebar-cat {
+  margin-bottom: 4px;
+}
+.sidebar-cat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s;
+}
+.sidebar-cat-header:hover { background: #f3f4f6; }
+.sidebar-cat-header.active { background: #f0f9ff; }
+.sidebar-cat-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.sidebar-cat-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  flex: 1;
+  line-height: 1.3;
+}
+.sidebar-chevron {
+  width: 14px;
+  height: 14px;
+  color: #9ca3af;
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+.sidebar-cat.open .sidebar-chevron { transform: rotate(180deg); }
+
+.sidebar-sublist {
+  display: none;
+  padding-left: 44px;
+  padding-bottom: 4px;
+}
+.sidebar-cat.open .sidebar-sublist { display: block; }
+
+.sidebar-subitem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #4b5563;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+  line-height: 1.3;
+  gap: 6px;
+}
+.sidebar-subitem:hover { background: #f9fafb; color: #111; }
+.sidebar-subitem.active { color: #1d4ed8; font-weight: 600; background: #eff6ff; }
+.sidebar-subitem-count {
+  font-size: 11px;
+  color: #9ca3af;
+  background: #f3f4f6;
+  border-radius: 99px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+/* ── Zone principale ── */
+.cat-main {
+  flex: 1;
+  min-width: 0;
+  padding-left: 32px;
+}
+
+/* ── Header section avec barre de recherche ── */
+.cat-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.cat-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+.cat-search-wrap svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  width: 16px;
+  height: 16px;
+}
+.cat-search-wrap input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #fff;
+  outline: none;
+  transition: border .15s;
+}
+.cat-search-wrap input:focus { border-color: #2563eb; }
+.filter-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-btn {
+  padding: 8px 14px;
+  border-radius: 99px;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all .15s;
+}
+.filter-btn:hover { border-color: #2563eb; color: #2563eb; }
+.filter-btn.active { background: #111827; color: #fff; border-color: #111827; }
+
+/* ── Titre de section ── */
+.cat-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cat-section-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+}
+.cat-section-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+/* ── Sous-compétence group ── */
+.subcat-group { margin-bottom: 36px; }
+.subcat-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Grille de cartes ── */
+.acc-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+/* ── À venir ── */
+.coming-soon-wrap {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px;
+  background: #f9fafb;
+  border: 1.5px dashed #e5e7eb;
+  border-radius: 12px;
+  color: #9ca3af;
+  font-size: 14px;
+}
+.coming-soon-wrap svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cat-layout { flex-direction: column; padding: 0 16px 60px; }
+  .cat-sidebar { width: 100%; position: static; max-height: none; padding-right: 0; border-right: none; border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  .cat-main { padding-left: 0; }
+}
+
+</style>
+</head>
+<body>
+<nav class="pub-nav">
         <div class="pub-nav-inner">
               <a href="index.html" class="pub-brand">
                       <span class="name">Immer<em>sium</em></span>
@@ -190,40 +418,42 @@
             </div>
         </div>
     </nav>
-  
-  <!-- ─────────── HERO ─────────── -->
-  <section class="cat-hero">
-    <div class="container">
-        <div class="eyebrow">15 simulations · 10 catégories de compétences</div>
-        <h1 style="max-width:720px">Le catalogue <em>complet</em>.</h1>
-        <p class="lede" style="margin-top:16px">Communication, marketing, IA, transformation digitale, management… Explorez par compétence et plongez.</p>
+
+<!-- HERO -->
+<section class="cat-hero" style="background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#7c3aed 100%);padding:60px 24px 50px;text-align:center;color:#fff">
+  <p style="font-size:12px;font-weight:700;letter-spacing:.15em;color:#a78bfa;text-transform:uppercase;margin-bottom:12px">15 SIMULATIONS · 10 CATÉGORIES DE COMPÉTENCES</p>
+  <h1 style="font-size:clamp(32px,5vw,56px);font-weight:500;margin-bottom:14px">Le catalogue <em style="color:#fb923c">complet</em>.</h1>
+  <p style="font-size:17px;color:#cbd5e1;max-width:560px;margin:0 auto">Communication, marketing, IA, transformation digitale, management… Explorez par compétence et plongez.</p>
+</section>
+
+<!-- BARRE DE FILTRES -->
+<div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:14px 24px;position:sticky;top:56px;z-index:40">
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div class="cat-search-wrap" style="max-width:280px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search-input" placeholder="Rechercher une simulation…">
     </div>
-  </section>
-  
-  <!-- ─────────── FILTERS ─────────── -->
-  <div class="filters-bar">
-    <div class="container">
-        <div class="filters-inner">
-              <div class="search-wrap">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                      <input type="text" id="search-input" placeholder="Rechercher une simulation…">
-              </div>
-              <div class="filter-sep"></div>
-              <button class="filter-btn active" data-filter="level" data-value="">Tous niveaux</button>
-              <button class="filter-btn" data-filter="level" data-value="Débutant">Débutant</button>
-              <button class="filter-btn" data-filter="level" data-value="Intermédiaire">Intermédiaire</button>
-              <button class="filter-btn" data-filter="level" data-value="Avancé">Avancé</button>
-        </div>
+    <div class="filter-btns">
+      <button class="filter-btn active" data-value="">Tous niveaux</button>
+      <button class="filter-btn" data-value="Débutant">Débutant</button>
+      <button class="filter-btn" data-value="Intermédiaire">Intermédiaire</button>
+      <button class="filter-btn" data-value="Avancé">Avancé</button>
     </div>
   </div>
-  
-  <!-- ─────────── ACCORDION CONTAINER ─────────── -->
-  <div class="container">
-    <div class="cat-accordion" id="cat-accordion"></div>
-  </div>
-  
-  <!-- ─────────── FOOTER ─────────── -->
-  <footer class="pub-footer">
+</div>
+
+<!-- LAYOUT SIDEBAR + MAIN -->
+<div class="cat-layout" style="margin-top:32px">
+
+  <!-- SIDEBAR ACCORDÉON -->
+  <aside class="cat-sidebar" id="cat-sidebar"></aside>
+
+  <!-- CONTENU PRINCIPAL -->
+  <main class="cat-main" id="cat-main"></main>
+
+</div>
+
+<footer class="pub-footer">
     <div class="container">
         <div class="pub-footer-top">
               <div class="pub-footer-brand">
@@ -237,206 +467,238 @@
         </div>
         <div class="pub-footer-bottom"><div>© 2026 Immersium</div><div>Guadeloupe</div></div>
     </div>
-  </footer>footer>
+  </footer>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   CATALOGUE.HTML — Taxonomie v3 : sidebar accordéon
+══════════════════════════════════════════════════════ */
+
+const TAXONOMY = [
+  { id:'communication', name:'Communication', color:'#10B981', grad:['#10B981','#06B6D4'], subs:['Communication professionnelle','Communication digitale','Communication écrite et orale','Communication interculturelle'] },
+  { id:'marketing', name:'Marketing', color:'#2563EB', grad:['#2563EB','#7C3AED'], subs:['Marketing digital','Stratégie marketing','Marketing relationnel','Études et analyse marché'] },
+  { id:'commerce', name:'Commerce & Relation client', color:'#F59E0B', grad:['#F59E0B','#EF4444'], subs:['Techniques de vente','Négociation commerciale','Relation client / Accueil','Expérience client et fidélisation'] },
+  { id:'digital', name:'Digitalisation & Numérique', color:'#F97316', grad:['#F97316','#E11D48'], subs:['Transformation digitale','Intelligence artificielle','Outils collaboratifs','E-business / E-commerce'] },
+  { id:'management', name:'Management', color:'#8B5CF6', grad:['#8B5CF6','#EC4899'], subs:["Management d'équipe","Management de projet","Leadership et posture managériale","Conduite du changement"] },
+  { id:'gestion', name:'Gestion & Entrepreneuriat', color:'#0891B2', grad:['#0891B2','#0E6B5A'], subs:["Gestion d'entreprise","Création / reprise d'activité","Gestion financière","Pilotage de la performance"] },
+  { id:'rh', name:'Ressources humaines', color:'#EC4899', grad:['#EC4899','#8B5CF6'], subs:['Recrutement et intégration','Formation et développement','GPEC et talents','Qualité de vie au travail'] },
+  { id:'devpro', name:'Développement professionnel', color:'#84CC16', grad:['#84CC16','#10B981'], subs:['Efficacité professionnelle','Savoir-être et posture','Gestion du stress et des émotions','Méthodologie et organisation'] },
+  { id:'conformite', name:'Conformité & Cadre légal', color:'#6366F1', grad:['#6366F1','#0891B2'], subs:['Droit du numérique / RGPD','Droit commercial','Droit du travail','RSE et éthique'] },
+  { id:'inclusion', name:'Inclusion & Accessibilité', color:'#14B8A6', grad:['#14B8A6','#6366F1'], subs:['FALC et communication accessible'] }
+];
+
+const CATALOG = {
+  lumio:    {name:'LUMIO',   num:'01', category:'Marketing',               subcategory:'Marketing digital',           desc:'Illuminez votre stratégie de contenu et de visibilité en ligne. Google Ads, SEO, social media.', level:'Débutant',      color:'#0131B4', popular:true},
+  breval:   {name:'BREVAL',  num:'02', category:'Marketing',               subcategory:'Marketing digital',           desc:'Maximisez le retour sur investissement de vos campagnes digitales multicanales.',               level:'Intermédiaire', color:'#0125A8'},
+  heliance: {name:'HELIANCE',num:'03', category:'Marketing',               subcategory:'Marketing digital',           desc:"Développez la présence digitale d'une marque à travers tous les canaux.",                       level:'Avancé',        color:'#011A9E'},
+  nexia:    {name:'NEXIA',   num:'04', category:'Digitalisation & Numérique', subcategory:'Transformation digitale',  desc:"Connectez les enjeux de la transformation digitale à la stratégie d'entreprise.",               level:'Débutant',      color:'#7C2D12'},
+  orbis:    {name:'ORBIS',   num:'05', category:'Digitalisation & Numérique', subcategory:'Transformation digitale',  desc:"Déployez une transformation digitale à 360° dans une organisation.",                           level:'Intermédiaire', color:'#92400E'},
+  vertex:   {name:'VERTEX',  num:'06', category:'Digitalisation & Numérique', subcategory:'Transformation digitale',  desc:"Atteignez le sommet de la maturité digitale à travers un projet ambitieux.",                   level:'Avancé',        color:'#78350F'},
+  solara:   {name:'SOLARA',  num:'07', category:'Marketing',               subcategory:'Stratégie marketing',         desc:"Élaborez une stratégie marketing complète pour une marque en croissance.",                      level:'Débutant',      color:'#1D4ED8'},
+  praxis:   {name:'PRAXIS',  num:'08', category:'Marketing',               subcategory:'Stratégie marketing',         desc:"Construisez et exécutez une stratégie marketing B2B complète de A à Z.",                       level:'Intermédiaire', color:'#1E40AF'},
+  astra:    {name:'ASTRA',   num:'09', category:'Marketing',               subcategory:'Stratégie marketing',         desc:"Pilotez la stratégie marketing d'un groupe multi-marques à l'international.",                   level:'Avancé',        color:'#1E3A5F'},
+  eveil:    {name:'EVEIL',   num:'10', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', desc:"Éveillez les équipes aux enjeux et opportunités de l'intelligence artificielle en entreprise.", level:'Débutant',      color:'#0F172A'},
+  elan:     {name:'ELAN',    num:'11', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', desc:"Donnez un nouvel élan à une organisation grâce à l'IA générative et aux agents.",             level:'Intermédiaire', color:'#1E293B'},
+  ancre:    {name:'ANCRE',   num:'12', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', desc:"Ancrez l'intelligence artificielle au cœur des processus d'une entreprise.",                 level:'Avancé',        color:'#0F172A'},
+  signal:   {name:'SIGNAL',  num:'13', category:'Communication',           subcategory:'Communication digitale',       desc:"Émettez les bons signaux sur les canaux digitaux pour votre audience.",                        level:'Débutant',      color:'#064E3B'},
+  lien:     {name:'LIEN',    num:'14', category:'Communication',           subcategory:'Communication professionnelle',desc:"Renforcez les liens au sein des équipes par une communication interne efficace.",             level:'Intermédiaire', color:'#065F46'},
+  echo:     {name:'ECHO',    num:'15', category:'Communication',           subcategory:'Communication professionnelle',desc:"Faites résonner la communication interne d'une organisation en pleine mutation.",             level:'Avancé',        color:'#166534'},
+};
+
+const LEVEL_COLORS = {
+  'Débutant':      {bg:'#D1FAE5', fg:'#065F46'},
+  'Intermédiaire': {bg:'#FEF3C7', fg:'#92400E'},
+  'Avancé':        {bg:'#FEE2E2', fg:'#991B1B'},
+};
+
+let activeCategory = null;
+let activeSubcat   = null;
+let activeLevel    = '';
+let searchQuery    = '';
+
+/* ─── Sidebar ─── */
+function buildSidebar() {
+  const sidebar = document.getElementById('cat-sidebar');
+  const all = Object.entries(CATALOG).map(([id,s]) => ({...s,id}));
   
-  <script>
-    /* ═══════════════════════════════════════════════════════
-       CATALOGUE.HTML — Taxonomie v2 : 10 catégories
-          Les simulations sont groupées par catégorie, avec
-             affichage de la sous-catégorie sur chaque carte.
-             ═══════════════════════════════════════════════════════ */
+  sidebar.innerHTML = TAXONOMY.map((cat, i) => {
+    const sims = all.filter(s => s.category === cat.name);
+    const totalCount = sims.length;
+    const isOpen = i === 0;
+    
+    const subItems = cat.subs.map(sub => {
+      const count = sims.filter(s => s.subcategory === sub).length;
+      return `<div class="sidebar-subitem ${activeSubcat===sub?'active':''}" onclick="filterBySub('${cat.name}','${sub.replace(/'/g,"\\'")}')">
+        <span>${sub}</span>
+        ${count > 0 ? `<span class="sidebar-subitem-count">${count}</span>` : ''}
+      </div>`;
+    }).join('');
+    
+    return `<div class="sidebar-cat ${isOpen?'open':''}" id="sidebar-cat-${cat.id}">
+      <div class="sidebar-cat-header ${activeCategory===cat.name?'active':''}" onclick="toggleSidebarCat('${cat.id}', '${cat.name.replace(/'/g,"\\'")}')">
+        <div class="sidebar-cat-icon" style="background:${cat.color}">${cat.name.charAt(0)}</div>
+        <span class="sidebar-cat-name">${cat.name}</span>
+        <svg class="sidebar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="sidebar-sublist">${subItems}</div>
+    </div>`;
+  }).join('');
+}
 
-    /* ── Couleurs par catégorie ── */
-    const CAT_COLORS = {
-        'Communication':              '#10B981', /* jade       */
-        'Marketing':                  '#2563EB', /* bleu       */
-        'Commerce & Relation client': '#F59E0B', /* ambre      */
-        'Digitalisation & Numérique': '#F97316', /* coral      */
-        'Management':                 '#8B5CF6', /* violet     */
-        'Gestion & Entrepreneuriat':  '#0891B2', /* cyan       */
-        'Ressources humaines':        '#EC4899', /* rose       */
-        'Développement professionnel':'#84CC16', /* lime       */
-        'Conformité & Cadre légal':   '#6366F1', /* indigo     */
-        'Inclusion & Accessibilité':  '#14B8A6', /* teal       */
-    };
+function toggleSidebarCat(id, name) {
+  const el = document.getElementById('sidebar-cat-' + id);
+  const wasOpen = el.classList.contains('open');
+  // Ferme tous
+  document.querySelectorAll('.sidebar-cat').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) {
+    el.classList.add('open');
+    filterByCategory(name);
+  } else {
+    activeCategory = null;
+    activeSubcat = null;
+    renderMain();
+  }
+}
 
-    /* ── Gradients par catégorie ── */
-    const CAT_GRADIENTS = {
-        'Communication':              ['#10B981','#06B6D4'],
-        'Marketing':                  ['#2563EB','#7C3AED'],
-        'Commerce & Relation client': ['#F59E0B','#EF4444'],
-        'Digitalisation & Numérique': ['#F97316','#E11D48'],
-        'Management':                 ['#8B5CF6','#EC4899'],
-        'Gestion & Entrepreneuriat':  ['#0891B2','#0E6B5A'],
-        'Ressources humaines':        ['#EC4899','#8B5CF6'],
-        'Développement professionnel':['#84CC16','#10B981'],
-        'Conformité & Cadre légal':   ['#6366F1','#0891B2'],
-        'Inclusion & Accessibilité':  ['#14B8A6','#6366F1'],
-    };
+function filterByCategory(name) {
+  activeCategory = name;
+  activeSubcat = null;
+  renderMain();
+  updateSidebarActive();
+}
 
-    /* ── Ordre d'affichage des catégories ── */
-    const CAT_ORDER = [
-        'Communication',
-        'Marketing',
-        'Commerce & Relation client',
-        'Digitalisation & Numérique',
-        'Management',
-        'Gestion & Entrepreneuriat',
-        'Ressources humaines',
-        'Développement professionnel',
-        'Conformité & Cadre légal',
-        'Inclusion & Accessibilité',
-      ];
+function filterBySub(catName, subName) {
+  activeCategory = catName;
+  activeSubcat = subName;
+  renderMain();
+  updateSidebarActive();
+}
 
-    /* ── Catalogue inline (fallback) ── */
-    const CATALOG = {
-        lumio:    {name:'LUMIO',    num:'01', category:'Marketing',                  subcategory:'Marketing digital',         desc:'Illuminez votre stratégie de contenu et de visibilité en ligne. Google Ads, SEO, social media.', level:'Débutant',      color:'#0131B4', popular:true},
-        breval:   {name:'BREVAL',   num:'02', category:'Marketing',                  subcategory:'Marketing digital',         desc:'Maximisez le retour sur investissement de vos campagnes digitales multicanales.',               level:'Intermédiaire', color:'#0125A8'},
-        heliance: {name:'HELIANCE', num:'03', category:'Marketing',                  subcategory:'Marketing digital'        ,  desc:"Développez la présence digitale d'une marque à travers tous les canaux.",                       level:'Avancé',        color:'#011A9E'},
-        nexia:    {name:'NEXIA',    num:'04', category:'Digitalisation & Numérique', subcategory:'Transformation digitale',   desc:"Connectez les enjeux de la transformation digitale à la stratégie d'entreprise.",               level:'Débutant',      color:'#7C2D12'},
-        orbis:    {name:'ORBIS',    num:'05', category:'Digitalisation & Numérique', subcategory:'Transformation digitale',   desc:"Déployez une transformation digitale à 360° dans une organisation.",                            level:'Intermédiaire', color:'#92400E'},
-        vertex:   {name:'VERTEX',   num:'06', category:'Digitalisation & Numérique', subcategory:'Transformation digitale',   desc:"Atteignez le sommet de la maturité digitale à travers un projet ambitieux.",                    level:'Avancé',        color:'#78350F'},
-        solara:   {name:'SOLARA',   num:'07', category:'Marketing',                  subcategory:'Stratégie marketing',       desc:"Élaborez une stratégie marketing complète pour une marque en croissance.",                      level:'Débutant',      color:'#1D4ED8'},
-        praxis:   {name:'PRAXIS',   num:'08', category:'Marketing',                  subcategory:'Stratégie marketing',       desc:"Construisez et exécutez une stratégie marketing B2B complète de A à Z.",                       level:'Intermédiaire', color:'#1E40AF'},
-        astra:    {name:'ASTRA',    num:'09', category:'Marketing',                  subcategory:'Stratégie marketing'  ,     desc:"Pilotez la stratégie marketing d'un groupe multi-marques à l'international.",                   level:'Avancé',        color:'#1E3A5F'},
-        eveil:    {name:'EVEIL',    num:'10', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', desc:"Éveillez les équipes aux enjeux et opportunités de l'intelligence artificielle en entreprise.", level:'Débutant',      color:'#0F172A'},
-        elan:     {name:'ELAN',     num:'11', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', desc:"Donnez un nouvel élan à une organisation grâce à l'IA générative et aux agents.",              level:'Intermédiaire', color:'#1E293B'},
-        ancre:    {name:'ANCRE',    num:'12', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', desc:"Ancrez l'intelligence artificielle au cœur des processus d'une entreprise.",                   level:'Avancé',        color:'#0F172A'},
-        signal:   {name:'SIGNAL',   num:'13', category:'Communication',              subcategory:'Communication digitale',    desc:"Émettez les bons signaux sur les canaux digitaux pour votre audience.",                        level:'Débutant',      color:'#064E3B'},
-        lien:     {name:'LIEN',     num:'14', category:'Communication',              subcategory:'Communication professionnelle', desc:"Renforcez les liens au sein des équipes par une communication interne efficace.",           level:'Intermédiaire', color:'#065F46'},
-        echo:     {name:'ECHO',     num:'15', category:'Communication',              subcategory:'Communication professionnelle', desc:"Faites résonner la communication interne d'une organisation en pleine mutation.",            level:'Avancé',        color:'#166534'},
-    };
-
-    const LEVEL_COLORS = {
-        'Débutant':      {bg:'#D1FAE5', fg:'#065F46'},
-        'Intermédiaire': {bg:'#FEF3C7', fg:'#92400E'},
-        'Avancé':        {bg:'#FEE2E2', fg:'#991B1B'},
-    };
-    const LEVEL_ORDER = ['Débutant','Intermédiaire','Avancé'];
-
-    let activeLevel = '';
-    let searchQuery = '';
-
-    /* ─────────── RENDER ─────────── */
-    function groupByCategory(sims) {
-        const map = {};
-        sims.forEach(s => {
-              const cat = s.category || 'Autre';
-              (map[cat] = map[cat] || []).push(s);
-        });
-        const ordered = {};
-        CAT_ORDER.forEach(c => { if (map[c]) ordered[c] = map[c]; });
-        Object.keys(map).forEach(c => { if (!ordered[c]) ordered[c] = map[c]; });
-        return ordered;
-    }
-
-    function cardHTML(s, idx) {
-        const lvl = LEVEL_COLORS[s.level] || {bg:'#E5E7EB', fg:'#374151'};
-        const [g1, g2] = CAT_GRADIENTS[s.category] || ['#1E3A5F','#0E6B5A'];
-        const gradient = `linear-gradient(135deg, ${g1} 0%, ${g2} 100%)`;
-        return `
-            <a class="sim-card" href="game.html?game=${s.id}" data-level="${s.level}" data-search="${(s.name+' '+s.category+' '+s.subcategory+' '+s.desc).toLowerCase()}" style="animation:cardEntrance .4s cubic-bezier(.16,1,.3,1) ${idx*50}ms both">
-                  ${s.popular ? '<span class="sim-badge">Le plus populaire</span>' : ''}
-                        <div class="sim-banner" data-num="${s.num}" style="background:${gradient}">
-                                <div class="sim-ord">N° ${s.num}</div>
-                                        <div class="sim-title">${s.name}</div>
-                                              </div>
-                                                    <div class="sim-body">
-                                                            <div class="sim-subcat">${s.subcategory}</div>
-                                                                    <div class="sim-domain">${s.category}</div>
-                                                                            <p class="sim-desc">${s.desc}</p>
-                                                                                    <div class="sim-meta">
-                                                                                              <span class="ch">21 défis</span>
-                                                                                                        <span class="sim-level" style="background:${lvl.bg};color:${lvl.fg}">${s.level}</span>
-                                                                                                                </div>
-                                                                                                                      </div>
-                                                                                                                          </a>`;
-    }
-
-    function render() {
-        const all = Object.entries(CATALOG).map(([id, s]) => ({...s, id}));
-        const filtered = all.filter(s => {
-              const matchLevel  = !activeLevel  || s.level === activeLevel;
-              const matchSearch = !searchQuery  || (s.name+' '+s.category+' '+s.subcategory+' '+s.desc).toLowerCase().includes(searchQuery);
-              return matchLevel && matchSearch;
-        });
-
-        const container = document.getElementById('cat-accordion');
-        const grouped   = groupByCategory(filtered);
-        const cats      = Object.keys(grouped);
-
-        if (cats.length === 0) {
-              container.innerHTML = '<div class="no-results"><h3>Aucune simulation trouvée</h3><p>Essayez d\'autres filtres ou termes de recherche.</p></div>';
-              return;
+function updateSidebarActive() {
+  document.querySelectorAll('.sidebar-cat-header').forEach(h => h.classList.remove('active'));
+  document.querySelectorAll('.sidebar-subitem').forEach(s => s.classList.remove('active'));
+  if (activeCategory) {
+    TAXONOMY.forEach(cat => {
+      if (cat.name === activeCategory) {
+        const el = document.getElementById('sidebar-cat-' + cat.id);
+        if (el) el.querySelector('.sidebar-cat-header').classList.add('active');
+        if (activeSubcat) {
+          el.querySelectorAll('.sidebar-subitem').forEach(s => {
+            if (s.querySelector('span')?.textContent === activeSubcat) s.classList.add('active');
+          });
         }
+      }
+    });
+  }
+}
 
-        container.innerHTML = cats.map((cat, di) => {
-              const cards = grouped[cat];
-              const color = CAT_COLORS[cat] || '#1E3A5F';
-              const levels = [...new Set(cards.map(c => c.level))].sort((a,b) => LEVEL_ORDER.indexOf(a) - LEVEL_ORDER.indexOf(b));
-              const subcats = [...new Set(cards.map(c => c.subcategory))].join(' · ');
-              const isOpen = di === 0;
-              return `
-                    <div class="acc-group" data-category="${cat}">
-                            <div class="acc-header" onclick="toggleAccordion(this)">
-                                      <div class="acc-icon" style="background:${color}">${cat.charAt(0)}</div>
-                                                <div class="acc-title-wrap">
-                                                            <div class="acc-domain">${cat}</div>
-                                                                        <div class="acc-subcats">${subcats}</div>
-                                                                                    <div class="acc-tags">
-                                                                                                  ${levels.map(l => {
-                                                                                                                    const lc = LEVEL_COLORS[l] || {fg:'#888'};
-                                                                                                                    return `<span class="acc-tag" style="color:${lc.fg}">${l}</span>`;
-                                                                                                    }).join('')}
-                                                                                                                </div>
-                                                                                                                          </div>
-                                                                                                                                    <span class="acc-count">${cards.length} simulation${cards.length>1?'s':''}</span>
-                                                                                                                                              <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                                                                                                                                                      </div>
-                                                                                                                                                              <div class="acc-body${isOpen ? ' open' : ''}">
-                                                                                                                                                                        <div class="acc-body-inner">
-                                                                                                                                                                                    <div class="acc-cards">
-                                                                                                                                                                                                  ${cards.map((s, idx) => cardHTML(s, idx)).join('')}
-                                                                                                                                                                                                              </div>
-                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                      </div>`;
-        }).join('');
-    }
+/* ─── Zone principale ─── */
+function renderMain() {
+  const all = Object.entries(CATALOG).map(([id,s]) => ({...s,id}));
+  const main = document.getElementById('cat-main');
+  
+  // Filtres actifs
+  let filtered = all.filter(s => {
+    const matchCat   = !activeCategory || s.category === activeCategory;
+    const matchSub   = !activeSubcat   || s.subcategory === activeSubcat;
+    const matchLevel = !activeLevel    || s.level === activeLevel;
+    const matchSearch = !searchQuery   || (s.name+s.category+s.subcategory+s.desc).toLowerCase().includes(searchQuery);
+    return matchCat && matchSub && matchLevel && matchSearch;
+  });
 
-    /* ─────────── INTERACTIONS ─────────── */
-    function toggleAccordion(header) {
-        header.nextElementSibling.classList.toggle('open');
-    }
+  // Déterminer quelles catégories afficher
+  const catsToShow = activeCategory
+    ? TAXONOMY.filter(c => c.name === activeCategory)
+    : TAXONOMY;
 
-    document.getElementById('search-input').addEventListener('input', e => {
-        searchQuery = e.target.value.toLowerCase().trim();
-        render();
+  let html = '';
+
+  catsToShow.forEach(cat => {
+    const catSims = filtered.filter(s => s.category === cat.name);
+    const [g1, g2] = cat.grad;
+    
+    // N'afficher que les sous-cats filtrées si filtre actif
+    const subsToShow = activeSubcat ? cat.subs.filter(s => s === activeSubcat) : cat.subs;
+    
+    // Vérifie si au moins 1 sous-cat a du contenu ou si pas de filtre search
+    const hasAnything = subsToShow.length > 0;
+    if (!hasAnything) return;
+    if (searchQuery && catSims.length === 0) return;
+
+    html += `<div class="cat-section" id="section-${cat.id}">
+      <h2 class="cat-section-title">
+        <span class="cat-section-icon" style="background:linear-gradient(135deg,${g1},${g2})">${cat.name.charAt(0)}</span>
+        ${cat.name}
+      </h2>
+      <p class="cat-section-subtitle">${subsToShow.join(' · ')}</p>`;
+
+    subsToShow.forEach(sub => {
+      const subSims = catSims.filter(s => s.subcategory === sub);
+      
+      html += `<div class="subcat-group">
+        <div class="subcat-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          ${sub}
+        </div>
+        <div class="acc-cards">`;
+      
+      if (subSims.length === 0) {
+        html += `<div class="coming-soon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>Simulations <strong>à venir</strong> pour cette compétence</span>
+        </div>`;
+      } else {
+        subSims.forEach((s, idx) => {
+          const lvl = LEVEL_COLORS[s.level] || {bg:'#E5E7EB', fg:'#374151'};
+          html += `<a class="sim-card" href="game.html?game=${s.id}" data-level="${s.level}" style="animation:cardEntrance .4s cubic-bezier(.16,1,.3,1) ${idx*60}ms both">
+            ${s.popular ? '<span class="sim-badge">Le plus populaire</span>' : ''}
+            <div class="sim-banner" style="background:linear-gradient(135deg,${g1},${g2})">
+              <div class="sim-ord">N° ${s.num}</div>
+              <div class="sim-title">${s.name}</div>
+            </div>
+            <div class="sim-body">
+              <div class="sim-subcat">${s.subcategory}</div>
+              <div class="sim-domain">${s.category}</div>
+              <p class="sim-desc">${s.desc}</p>
+              <div class="sim-meta">
+                <span class="ch">21 défis</span>
+                <span class="sim-level" style="background:${lvl.bg};color:${lvl.fg}">${s.level}</span>
+              </div>
+            </div>
+          </a>`;
+        });
+      }
+      
+      html += `</div></div>`; // close acc-cards + subcat-group
     });
 
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-              activeLevel = btn.dataset.value;
-              document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-              btn.classList.add('active');
-              render();
-        });
-    });
+    html += `</div>`; // close cat-section
+  });
 
-    /* Support URL param ?level=Débutant */
-    const urlLevel = new URLSearchParams(window.location.search).get('level');
-    if (urlLevel) {
-        activeLevel = urlLevel;
-        document.querySelectorAll('.filter-btn').forEach(b => {
-              b.classList.toggle('active', b.dataset.value === urlLevel);
-        });
-    }
+  if (!html) {
+    html = `<div class="no-results"><h3>Aucune simulation trouvée</h3><p>Essayez d'autres filtres.</p></div>`;
+  }
 
-    render();
-  </script>
-  </body>
-</html>html>
-  </script></div></div></li></li></ul></h4></p></em></em>
-  </body>
-    </style></title>
-  </head>
+  main.innerHTML = html;
+}
+
+/* ─── Init ─── */
+document.getElementById('search-input').addEventListener('input', e => {
+  searchQuery = e.target.value.toLowerCase().trim();
+  renderMain();
+});
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeLevel = btn.dataset.value;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMain();
+  });
+});
+
+buildSidebar();
+renderMain();
+</script>
+
+</body>
+</html>
