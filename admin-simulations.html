@@ -37,6 +37,11 @@
 .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;font-family:var(--f-mono);background:var(--bg-alt);color:var(--ink-mute)}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink);transition:all .15s}
 .btn:hover{background:var(--paper-hover);border-color:var(--sand)}.btn.primary{background:var(--marine);color:#fff;border-color:var(--marine)}.btn.primary:hover{background:#0040DD}.btn.sm{padding:6px 12px;font-size:12px}
+.move-btns{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.move-btns button{background:var(--bg-alt);border:1px solid var(--line);border-radius:4px;width:24px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--ink-mute);cursor:pointer;padding:0;line-height:1}
+.move-btns button:hover:not(:disabled){background:var(--paper-hover);color:var(--ink)}
+.move-btns button:disabled{opacity:.3;cursor:not-allowed}
+.sim-card .sim-num-row{display:flex;align-items:flex-start;gap:8px}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(14,26,43,.5);backdrop-filter:blur(4px);z-index:50;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px;max-width:560px;width:90%;max-height:90vh;overflow-y:auto;box-shadow:var(--sh-lift)}
@@ -154,12 +159,19 @@ function renderGrid(data){
   var empty=document.getElementById('sims-empty');
   if(!data.length){ grid.style.display='none'; empty.style.display=''; return; }
   grid.style.display=''; empty.style.display='none';
-  grid.innerHTML=data.map(function(s){
+  var total=data.length;
+  grid.innerHTML=data.map(function(s,i){
     var num=s.num?String(s.num).padStart(2,'0'):'—';
     return '<div class="sim-card" style="--sim-color:'+esc(s.color||'#024AFF')+'">'
-      +'<div class="sim-num">SIM '+num+' · '+esc(s.game_id)+'</div>'
+      +'<div class="sim-num-row">'
+      +'<div style="flex:1"><div class="sim-num">SIM '+num+' · '+esc(s.game_id)+'</div>'
       +'<div class="sim-name">'+esc(s.name||'—')+'</div>'
-      +'<div class="sim-domain">'+esc(s.domain||'')+'</div>'
+      +'<div class="sim-domain">'+esc(s.domain||'')+'</div></div>'
+      +'<div class="move-btns">'
+      +'<button onclick="moveSim(\''+esc(s.id)+'\',-1)" title="Monter"'+(i===0?' disabled':'')+'>&#9650;</button>'
+      +'<button onclick="moveSim(\''+esc(s.id)+'\',1)" title="Descendre"'+(i===total-1?' disabled':'')+'>&#9660;</button>'
+      +'</div>'
+      +'</div>'
       +'<div class="sim-meta">'
       +(s.level?'<span class="pill">'+esc(s.level)+'</span>':'')
       +(s.challenge_count?'<span class="pill">'+s.challenge_count+' défis</span>':'')
@@ -171,6 +183,29 @@ function renderGrid(data){
       +'</div>';
   }).join('');
 }
+
+window.moveSim = async function(id, dir){
+  var supabase=window.IMM_SUPABASE;
+  if(!supabase){ showToast('Connexion non disponible','error'); return; }
+  var idx=allSims.findIndex(function(s){return s.id===id;});
+  if(idx<0) return;
+  var newIdx=idx+dir;
+  if(newIdx<0||newIdx>=allSims.length) return;
+  // Swap in local array
+  var tmp=allSims[idx]; allSims[idx]=allSims[newIdx]; allSims[newIdx]=tmp;
+  // Re-render immediately for snappy UX
+  renderGrid(allSims);
+  // Persist sort_order for all items whose position changed
+  for(var i=0;i<allSims.length;i++){
+    var item=allSims[i];
+    if(item.sort_order!==i){
+      var res=await supabase.from('simulations').update({sort_order:i}).eq('id',item.id);
+      if(res.error){ showToast('Erreur tri : '+res.error.message,'error'); return; }
+      item.sort_order=i;
+    }
+  }
+  showToast('Ordre enregistré','success');
+};
 
 window.openNewModal = function(){
   document.getElementById('modal-title').innerHTML='Nouvelle <em>simulation</em>';
