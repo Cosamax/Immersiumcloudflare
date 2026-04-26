@@ -42,6 +42,12 @@
 .move-btns button:hover:not(:disabled){background:var(--paper-hover);color:var(--ink)}
 .move-btns button:disabled{opacity:.3;cursor:not-allowed}
 .sim-card .sim-num-row{display:flex;align-items:flex-start;gap:8px}
+.drag-handle{cursor:grab;color:var(--ink-mute);padding:4px;border-radius:4px;display:flex;align-items:center;justify-content:center;user-select:none;font-size:14px}
+.drag-handle:hover{background:var(--bg-alt);color:var(--ink)}
+.drag-handle:active{cursor:grabbing}
+.sim-card[draggable="true"]{transition:opacity .15s,transform .15s}
+.sim-card.dragging{opacity:.4}
+.sim-card.drop-target{border:2px dashed var(--marine)!important}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(14,26,43,.5);backdrop-filter:blur(4px);z-index:50;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px;max-width:560px;width:90%;max-height:90vh;overflow-y:auto;box-shadow:var(--sh-lift)}
@@ -162,8 +168,9 @@ function renderGrid(data){
   var total=data.length;
   grid.innerHTML=data.map(function(s,i){
     var num=s.num?String(s.num).padStart(2,'0'):'—';
-    return '<div class="sim-card" style="--sim-color:'+esc(s.color||'#024AFF')+'">'
+    return '<div class="sim-card" draggable="true" data-sim-id="'+esc(s.id)+'" data-idx="'+i+'" style="--sim-color:'+esc(s.color||'#024AFF')+'">'
       +'<div class="sim-num-row">'
+      +'<div class="drag-handle" title="Glisser pour réordonner">&#x2630;</div>'
       +'<div style="flex:1"><div class="sim-num">SIM '+num+' · '+esc(s.game_id)+'</div>'
       +'<div class="sim-name">'+esc(s.name||'—')+'</div>'
       +'<div class="sim-domain">'+esc(s.domain||'')+'</div></div>'
@@ -182,6 +189,58 @@ function renderGrid(data){
       +'</div>'
       +'</div>';
   }).join('');
+  attachDragHandlers();
+}
+
+var dragSrcIdx=null;
+function attachDragHandlers(){
+  var cards=document.querySelectorAll('#sims-grid .sim-card');
+  cards.forEach(function(card){
+    card.addEventListener('dragstart',function(e){
+      dragSrcIdx=parseInt(card.dataset.idx,10);
+      card.classList.add('dragging');
+      e.dataTransfer.effectAllowed='move';
+      try{ e.dataTransfer.setData('text/plain',String(dragSrcIdx)); }catch(_){}
+    });
+    card.addEventListener('dragend',function(){
+      card.classList.remove('dragging');
+      cards.forEach(function(c){c.classList.remove('drop-target');});
+      dragSrcIdx=null;
+    });
+    card.addEventListener('dragover',function(e){
+      if(dragSrcIdx===null) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect='move';
+    });
+    card.addEventListener('dragenter',function(e){
+      if(dragSrcIdx===null) return;
+      var idx=parseInt(card.dataset.idx,10);
+      if(idx!==dragSrcIdx) card.classList.add('drop-target');
+    });
+    card.addEventListener('dragleave',function(){ card.classList.remove('drop-target'); });
+    card.addEventListener('drop',async function(e){
+      e.preventDefault();
+      card.classList.remove('drop-target');
+      var dstIdx=parseInt(card.dataset.idx,10);
+      if(dragSrcIdx===null||dragSrcIdx===dstIdx) return;
+      // Reorder array: remove src, insert at dst position
+      var moved=allSims.splice(dragSrcIdx,1)[0];
+      allSims.splice(dstIdx,0,moved);
+      renderGrid(allSims);
+      // Persist
+      var supabase=window.IMM_SUPABASE;
+      if(!supabase){ showToast('Connexion non disponible','error'); return; }
+      for(var i=0;i<allSims.length;i++){
+        var item=allSims[i];
+        if(item.sort_order!==i){
+          var res=await supabase.from('simulations').update({sort_order:i}).eq('id',item.id);
+          if(res.error){ showToast('Erreur tri : '+res.error.message,'error'); return; }
+          item.sort_order=i;
+        }
+      }
+      showToast('Ordre enregistré','success');
+    });
+  });
 }
 
 window.moveSim = async function(id, dir){

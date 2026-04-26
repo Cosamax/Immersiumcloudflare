@@ -48,8 +48,13 @@
 .ed-tab .badge{font-family:var(--f-mono);font-size:10px;background:var(--bg-alt);border:1px solid var(--line);padding:1px 6px;border-radius:999px;margin-left:6px}
 .ed-tab.active .badge{background:rgba(2,74,255,.08);border-color:rgba(2,74,255,.15);color:var(--marine)}
 .ch-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
-.challenge-card{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r);padding:18px;transition:border-color .15s}
+.challenge-card{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r);padding:18px;transition:border-color .15s,opacity .15s}
 .challenge-card:hover{border-color:var(--sand)}
+.challenge-card[draggable="true"] .drag-handle{cursor:grab;color:var(--ink-mute);padding:4px 6px;border-radius:4px;user-select:none;font-size:14px;line-height:1}
+.challenge-card[draggable="true"] .drag-handle:hover{background:var(--paper);color:var(--ink)}
+.challenge-card[draggable="true"] .drag-handle:active{cursor:grabbing}
+.challenge-card.dragging{opacity:.4}
+.challenge-card.drop-target{border:2px dashed var(--marine)!important}
 .challenge-card .ch-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:8px}
 .ch-meta{display:flex;align-items:center;gap:8px;flex:1;min-width:0;flex-wrap:wrap}
 .ch-num{font-family:var(--f-mono);font-size:11px;font-weight:700;color:var(--ink-mute);white-space:nowrap}
@@ -503,11 +508,12 @@ function renderNotionsTab(){
     html+='<div class="empty-panel"><h3>Aucune notion</h3><p>Aucune notion p\u00e9dagogique n\'est d\u00e9finie pour cette simulation.</p></div>';
   } else {
     var totalN=notions.length;
-    html+='<div class="ch-list">'+notions.map(function(n,i){
+    html+='<div class="ch-list" id="notions-list">'+notions.map(function(n,i){
       var defPreview=n.definition?n.definition.substring(0,150)+(n.definition.length>150?'\u2026':''):'\u2014';
-      return '<div class="challenge-card">'
+      return '<div class="challenge-card" draggable="true" data-notion-id="'+n.id+'" data-idx="'+i+'">'
         +'<div class="ch-header">'
         +'<div class="ch-meta">'
+        +'<span class="drag-handle" title="Glisser pour r\u00e9ordonner">&#x2630;</span>'
         +'<span class="ch-num">D\u00e9fi #'+esc(String(n.challenge_num||'?'))+'</span>'
         +'<span class="ch-type-badge notion">'+esc(n.title||'Sans titre')+'</span>'
         +'</div>'
@@ -523,8 +529,59 @@ function renderNotionsTab(){
         +(n.example?'<div style="margin-top:4px;font-size:11px;color:var(--ink-mute)"><strong>Exemple :</strong> '+esc(n.example.substring(0,100))+'</div>':'')
         +'</div>';
     }).join('')+'</div>';
+    // Attach drag handlers after DOM is ready
+    setTimeout(attachNotionsDragHandlers,0);
   }
   return html;
+}
+
+var notionDragSrcIdx=null;
+function attachNotionsDragHandlers(){
+  var cards=document.querySelectorAll('#notions-list .challenge-card');
+  cards.forEach(function(card){
+    card.addEventListener('dragstart',function(e){
+      notionDragSrcIdx=parseInt(card.dataset.idx,10);
+      card.classList.add('dragging');
+      e.dataTransfer.effectAllowed='move';
+      try{ e.dataTransfer.setData('text/plain',String(notionDragSrcIdx)); }catch(_){}
+    });
+    card.addEventListener('dragend',function(){
+      card.classList.remove('dragging');
+      cards.forEach(function(c){c.classList.remove('drop-target');});
+      notionDragSrcIdx=null;
+    });
+    card.addEventListener('dragover',function(e){
+      if(notionDragSrcIdx===null) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect='move';
+    });
+    card.addEventListener('dragenter',function(){
+      if(notionDragSrcIdx===null) return;
+      var idx=parseInt(card.dataset.idx,10);
+      if(idx!==notionDragSrcIdx) card.classList.add('drop-target');
+    });
+    card.addEventListener('dragleave',function(){ card.classList.remove('drop-target'); });
+    card.addEventListener('drop',async function(e){
+      e.preventDefault();
+      card.classList.remove('drop-target');
+      var dstIdx=parseInt(card.dataset.idx,10);
+      if(notionDragSrcIdx===null||notionDragSrcIdx===dstIdx) return;
+      var moved=notions.splice(notionDragSrcIdx,1)[0];
+      notions.splice(dstIdx,0,moved);
+      renderEditor();
+      var sb=window.IMM_SUPABASE;
+      if(!sb){ showToast('Connexion non disponible','error'); return; }
+      for(var i=0;i<notions.length;i++){
+        var item=notions[i];
+        if(item.sort_order!==i){
+          var res=await sb.from('knowledge_notions').update({sort_order:i}).eq('id',item.id);
+          if(res.error){ showToast('Erreur tri notion : '+res.error.message,'error'); return; }
+          item.sort_order=i;
+        }
+      }
+      showToast('Ordre enregistr\u00e9','success');
+    });
+  });
 }
 
 window.moveNotion = async function(id, dir){
