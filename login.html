@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/shared.css">
+<link rel="stylesheet" href="immersium-shared.css">
 <style>
 body { background: var(--ink); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
 body::before { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.055  0 0 0 0 0.102  0 0 0 0 0.169  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
@@ -45,6 +45,20 @@ body::before { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http:/
 
 .strength-bar { height: 4px; border-radius: 999px; background: var(--line); margin-top: 6px; overflow: hidden; }
 .strength-fill { height: 100%; border-radius: 999px; width: 0; transition: width .3s, background .3s; }
+
+.signup-name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+@media(max-width:480px) {
+  body { padding: 16px 12px; }
+  .auth-box { padding: 24px 20px; border-radius: var(--r-lg); }
+  .auth-tabs { padding: 3px; margin-bottom: 20px; }
+  .auth-tab { padding: 8px 6px; font-size: 12.5px; }
+  .auth-brand { margin-bottom: 24px; }
+  .auth-brand .name { font-size: 24px; }
+  .signup-name-row { grid-template-columns: 1fr; gap: 14px; }
+  .auth-orb-1 { width: 320px; height: 320px; top: -100px; right: -100px; }
+  .auth-orb-2 { width: 260px; height: 260px; bottom: -60px; left: -60px; }
+}
 </style>
 </head>
 <body>
@@ -86,7 +100,7 @@ body::before { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http:/
 
     <!-- SIGNUP FORM -->
     <form class="auth-form" id="form-signup" style="display:none" onsubmit="handleSignup(event)">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="signup-name-row">
         <div class="fld"><label>Prénom</label><input type="text" id="signup-firstname" required placeholder="Marie"></div>
         <div class="fld"><label>Nom</label><input type="text" id="signup-lastname" required placeholder="Dupont"></div>
       </div>
