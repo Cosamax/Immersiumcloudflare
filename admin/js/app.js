@@ -2804,13 +2804,14 @@ async function renderSimulations(el) {
         const plays = progressCount[s.game_id] || 0;
         const status = s.active ? 'Actif' : 'Inactif';
         const level = s.level || '—';
+        const displayName = s.name && String(s.name).trim() ? escapeHtml(s.name) : `<span style="color:var(--ink-mute);font-style:italic">${escapeHtml((s.game_id || 'sans-id').toUpperCase())}</span>`;
         return `<div class="sim-card" data-game="${s.game_id}">
           <div class="sim-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--marine)">${icon}</div>
           <div class="sim-body">
-            <div class="sim-title">${s.name}</div>
-            <div class="sim-meta">${s.domain || ''}${level !== '—' ? ' · ' + level : ''}</div>
+            <div class="sim-title">${displayName}</div>
+            <div class="sim-meta">${escapeHtml(s.domain || '')}${level !== '—' ? ' · ' + escapeHtml(level) : ''}</div>
             <div style="font-size:12px;color:var(--ink-mute);margin-top:8px;line-height:1.5">
-              ${s.description ? s.description.substring(0, 100) + (s.description.length > 100 ? '…' : '') : ''}
+              ${s.description ? escapeHtml(s.description.substring(0, 100)) + (s.description.length > 100 ? '…' : '') : ''}
             </div>
           </div>
           <div class="sim-footer">
@@ -3275,11 +3276,12 @@ async function renderEditorSimList(el) {
     <div class="simulations-grid">
       ${sims.map(s => {
         const icon = DOMAIN_ICONS[s.domain] || DEFAULT_ICON;
+        const displayName = s.name && String(s.name).trim() ? escapeHtml(s.name) : `<span style="color:var(--ink-mute);font-style:italic">${escapeHtml((s.game_id || 'sans-id').toUpperCase())}</span>`;
         return `<div class="sim-card" style="cursor:pointer" onclick="editorGoSim('${s.game_id}')">
           <div class="sim-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--marine)">${icon}</div>
           <div class="sim-body">
-            <div class="sim-title">${s.name}</div>
-            <div class="sim-meta">${s.domain || ''}${s.level ? ' · ' + s.level : ''}</div>
+            <div class="sim-title">${displayName}</div>
+            <div class="sim-meta">${escapeHtml(s.domain || '')}${s.level ? ' · ' + escapeHtml(s.level) : ''}</div>
           </div>
           <div class="sim-footer">
             ${badgeStatus(s.active ? 'Actif' : 'Inactif')}
