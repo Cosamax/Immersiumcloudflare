@@ -1068,6 +1068,14 @@ input, select, textarea { font: inherit; }
 .modal-close:hover { background: var(--bg-alt); color: var(--ink); }
 .modal-close svg { width: 16px; height: 16px; }
 .modal-body { padding: 20px; }
+.cat-checks { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px; background: var(--bg-alt); border: 1px solid var(--line); border-radius: 8px; max-height: 220px; overflow-y: auto; }
+.cat-checks label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--ink); background: var(--paper, #fff); padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); cursor: pointer; transition: all .15s; margin: 0; }
+.cat-checks label:hover { border-color: var(--sand, #C9A96E); }
+.cat-checks input[type="checkbox"] { margin: 0; cursor: pointer; accent-color: var(--marine, #024AFF); }
+.cat-checks label.checked { background: var(--marine, #024AFF); color: #fff; border-color: var(--marine, #024AFF); }
+.cat-checks .cat-section { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.cat-checks .cat-section-title { font-size: 11px; font-weight: 600; color: var(--ink-mute, #8896A6); text-transform: uppercase; letter-spacing: .05em; margin: 4px 0 0; }
+.cat-checks .cat-section .cat-section-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .modal-footer {
   display: flex;
   justify-content: flex-end;
