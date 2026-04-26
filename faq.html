@@ -108,12 +108,16 @@
   </div>
 </footer>
 
+<script src="js/imm-api.js"></script>
 <script type="module" src="js/imm-shared.js"></script>
 <script src="js/imm-catalog.js"></script>
-<script type="module">
-import { supabase } from './js/imm-shared.js';
-
+<script>
 async function loadFaq() {
+  const supabase = window.IMM_SUPABASE;
+  if (!supabase) {
+    document.getElementById('faq-content').innerHTML = '<p style="text-align:center;color:var(--ink-mute)">API indisponible.</p>';
+    return;
+  }
   const { data, error } = await supabase
     .from('faq_items')
     .select('*')
