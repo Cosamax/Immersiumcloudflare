@@ -393,6 +393,13 @@
   .cat-layout { flex-direction: column; padding: 0 16px 60px; }
   .cat-sidebar { width: 100%; position: static; max-height: none; padding-right: 0; border-right: none; border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
   .cat-main { padding-left: 0; }
+  .cat-hero { padding: 48px 16px 36px !important; }
+  .cat-hero h1 { font-size: clamp(28px,7vw,38px); }
+  .cat-hero p { max-width: 320px; margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 480px) {
+  .cat-hero { padding: 40px 16px 28px !important; }
+  .cat-hero h1 { font-size: clamp(24px,7vw,32px); }
 }
 
 </style>

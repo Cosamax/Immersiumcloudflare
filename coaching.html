@@ -177,6 +177,22 @@ h1 em,.h1 em{font-style:italic;color:var(--marine);font-weight:500}
   .cta-band-actions{width:100%}
   .cta-band-actions .btn{flex:1;justify-content:center}
 }
+@media(max-width:768px){
+  .coaching-hero{text-align:center;padding:56px 0 40px}
+  .coaching-hero .sub{margin-left:auto;margin-right:auto}
+  .coaching-hero .hero-ctas{justify-content:center}
+}
+@media(max-width:480px){
+  .coaching-hero{padding:44px 0 28px}
+  .coaching-hero h1{font-size:clamp(26px,7vw,34px)}
+  .coaching-hero .sub{max-width:320px;font-size:14px}
+  .coaching-hero .hero-ctas{flex-direction:column;gap:10px}
+  .coaching-hero .hero-ctas .btn{width:100%;max-width:320px;margin:0 auto;justify-content:center}
+  .cta-band h2{font-size:26px}
+  .cta-band p{font-size:13.5px}
+  .cta-band-actions{flex-direction:column}
+  .cta-band-actions .btn{width:100%;max-width:320px;margin:0 auto}
+}
 </style>
 </head>
 <body class="has-pub-nav">

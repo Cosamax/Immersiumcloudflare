@@ -165,7 +165,8 @@ h1 em,.h1 em{font-style:italic;color:var(--marine);font-weight:500}
   .contact-layout{grid-template-columns:1fr;gap:32px;padding:40px 0}
 }
 @media(max-width:768px){
-  .contact-head{padding:48px 0 36px}
+  .contact-head{padding:48px 0 36px;text-align:center}
+  .contact-head .sub{margin-left:auto;margin-right:auto}
   .contact-form-wrap{padding:28px 22px;border-radius:var(--r-lg)}
   .info-card{padding:20px}
 }
@@ -174,6 +175,9 @@ h1 em,.h1 em{font-style:italic;color:var(--marine);font-weight:500}
   .channels-grid{grid-template-columns:1fr}
   .contact-form-wrap{padding:22px 18px}
   .contact-form-wrap h2{font-size:22px}
+  .contact-head{padding:40px 0 28px}
+  .contact-head h1{font-size:clamp(26px,7vw,34px)}
+  .contact-head .sub{max-width:320px;font-size:14px}
 }
 </style>
 </head>
