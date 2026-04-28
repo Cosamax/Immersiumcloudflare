@@ -161,6 +161,12 @@
       <div class="form-row"><label>Numéro (#)</label><input type="number" id="f-num" placeholder="01" min="1" max="99"></div>
       <div class="form-row"><label>Nombre de défis</label><input type="number" id="f-challenges" placeholder="21" min="1"></div>
     </div>
+    <fieldset style="border:1px solid var(--bd,#e5e7eb);border-radius:10px;padding:12px;margin-top:12px">
+      <legend style="padding:0 6px;font-weight:600;font-size:14px;color:#475569">Vidéo de sortie (offboarding)</legend>
+      <div class="form-row"><label>URL vidéo (YouTube, Vimeo ou MP4)</label><input type="url" id="f-outro-url" placeholder="https://www.youtube.com/watch?v=..."></div>
+      <div class="form-row"><label>Titre de la vidéo</label><input type="text" id="f-outro-title" placeholder="Bravo, vous avez terminé !"></div>
+      <div class="form-row"><label>Image poster (URL)</label><input type="url" id="f-outro-poster" placeholder="https://..."></div>
+    </fieldset>
     <div class="modal-actions">
       <button class="btn" onclick="closeModal()">Annuler</button>
       <button class="btn primary" onclick="saveSim()">Enregistrer</button>
@@ -345,6 +351,9 @@ window.openNewModal = function(){
   document.getElementById('f-color2').value='#4D7AFF';
   document.getElementById('f-num').value='';
   document.getElementById('f-challenges').value='21';
+  document.getElementById('f-outro-url').value='';
+  document.getElementById('f-outro-title').value='';
+  document.getElementById('f-outro-poster').value='';
   renderCategoryChecks([], []);
   document.getElementById('modal-overlay').classList.add('open');
 };
@@ -363,6 +372,9 @@ window.editSim = function(id){
   document.getElementById('f-color2').value=s.color2||'#4D7AFF';
   document.getElementById('f-num').value=s.num||'';
   document.getElementById('f-challenges').value=s.challenge_count||21;
+  document.getElementById('f-outro-url').value=s.outro_video_url||'';
+  document.getElementById('f-outro-title').value=s.outro_video_title||'';
+  document.getElementById('f-outro-poster').value=s.outro_video_poster||'';
   var cats = window.IMM_PARSE_CAT(s.category);
   var subs = window.IMM_PARSE_CAT(s.subcategory);
   renderCategoryChecks(cats, subs);
@@ -406,6 +418,23 @@ window.saveSim = async function(){
   if(id){ result=await supabase.from('simulations').update(payload).eq('id',id); }
   else{ result=await supabase.from('simulations').insert(payload); }
   if(result.error){ showToast('Erreur : '+result.error.message,'error'); return; }
+  // Save outro video fields to worker D1 (in parallel of Supabase)
+  try {
+    var outroPayload = {
+      outro_video_url: document.getElementById('f-outro-url').value.trim()||null,
+      outro_video_title: document.getElementById('f-outro-title').value.trim()||null,
+      outro_video_poster: document.getElementById('f-outro-poster').value.trim()||null
+    };
+    var hasOutro = outroPayload.outro_video_url || outroPayload.outro_video_title || outroPayload.outro_video_poster;
+    if (hasOutro || id) {
+      await fetch('https://immersium-api.mx-cosaque.workers.dev/api/simulations/'+encodeURIComponent(gameId), {
+        method: 'PATCH',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(outroPayload)
+      });
+      await fetch('https://immersium-api.mx-cosaque.workers.dev/api/catalogue/invalidate', {method:'POST'});
+    }
+  } catch(e) { console.warn('D1 outro save failed:', e); }
   showToast('Simulation enregistrée','success');
   closeModal();
   loadData();
@@ -415,6 +444,21 @@ async function loadData(){
   var supabase=window.IMM_SUPABASE;
   if(!supabase) return;
   var res=await supabase.from('simulations').select('*').order('sort_order', {nullsFirst:false}).order('game_id');
+  // Merge outro_video_* from worker D1 catalogue
+  try {
+    var d1Res = await fetch('https://immersium-api.mx-cosaque.workers.dev/api/catalogue').then(function(r){return r.json();});
+    var d1Sims = (d1Res && d1Res.simulations) || [];
+    var d1Map = {};
+    d1Sims.forEach(function(d){ d1Map[d.game_id||d.gameId] = d; });
+    if (res.data) {
+      res.data.forEach(function(s){
+        var d = d1Map[s.game_id]; if (!d) return;
+        s.outro_video_url = d.outro_video_url || null;
+        s.outro_video_title = d.outro_video_title || null;
+        s.outro_video_poster = d.outro_video_poster || null;
+      });
+    }
+  } catch(e) { console.warn('D1 catalogue merge failed:', e); }
   document.getElementById('sims-loading').style.display='none';
   if(res.error){ document.getElementById('sims-loading').textContent='Erreur de chargement : '+res.error.message; return; }
   allSims=res.data||[];
