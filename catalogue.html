@@ -744,15 +744,15 @@ renderMain();
       const id = s.game_id;
       if (!id) return;
       // Pass raw category/subcategory through — normalizeSim() handles JSON arrays
-      next[id] = {
-        name: s.name || id.toUpperCase(),
-        num: s.num ? String(s.num).padStart(2, '0') : '',
-        category: s.category || s.domain || '',
-        subcategory: s.subcategory || '',
-        desc: s.description || '',
-        level: s.level || '',
-        color: s.color || '#0131B4',
-        popular: !!s.popular
+      const fb = CATALOG_FALLBACK[id] || {}; next[id] = {
+        name: s.name || fb.name || id.toUpperCase(),
+        num: s.num ? String(s.num).padStart(2, '0') : (fb.num || ''),
+        category: s.category || s.domain || fb.category || '',
+        subcategory: s.subcategory || fb.subcategory || '',
+        desc: s.description || fb.desc || '',
+        level: s.level || fb.level || '',
+        color: s.color || fb.color || '#0131B4',
+        popular: (s.popular !== undefined && s.popular !== null) ? !!s.popular : !!fb.popular
       };
     });
     if (Object.keys(next).length > 0) {
