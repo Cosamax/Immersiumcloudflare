@@ -492,6 +492,20 @@ document.addEventListener('imm:ready', function(e){
   }
   loadData();
 });
+
+// Fallback: if 'imm:ready' is never dispatched (e.g. direct page access), still load data
+function __immBootstrap(){
+  if (window.IMM_SUPABASE && (!window.allSims || !window.allSims.length)) {
+    loadData();
+  }
+}
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  setTimeout(__immBootstrap, 500);
+} else {
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(__immBootstrap, 500); });
+}
+// Also retry after 2s in case Supabase loads late
+setTimeout(__immBootstrap, 2000);
 </script>
 </body>
 </html>
