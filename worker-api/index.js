@@ -21,7 +21,7 @@ function err(message, status = 400) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
     }
@@ -1017,54 +1017,82 @@ export default {
 
       // ============================================================
       // CATALOGUE (public endpoint for game.html)
+      // ----------------------------------------------------------
+      // Optimisé : 5 requêtes D1 globales + assemblage en mémoire
+      // (au lieu de ~700 requêtes N+1). Cache HTTP via caches.default
+      // (TTL 5 min). Invalidation : POST /api/catalogue/invalidate.
       // ============================================================
       if (path === '/api/catalogue' && method === 'GET') {
-        const { results: sims } = await db.prepare('SELECT * FROM simulations WHERE active = 1 ORDER BY game_id').all();
+        const cacheUrl = new URL(request.url);
+        cacheUrl.search = '';
+        const cacheKey = new Request(cacheUrl.toString(), { method: 'GET' });
+        const cached = await caches.default.match(cacheKey);
+        if (cached) {
+          const h = new Headers(cached.headers);
+          h.set('X-Cache', 'HIT');
+          Object.entries(CORS_HEADERS).forEach(([k,v]) => h.set(k,v));
+          return new Response(cached.body, { status: cached.status, headers: h });
+        }
+
+        const [simsR, sessR, chsR, qsR, notionsR] = await Promise.all([
+          db.prepare('SELECT * FROM simulations WHERE active = 1 ORDER BY game_id').all(),
+          db.prepare('SELECT * FROM simulation_sessions ORDER BY game_id, session_num').all(),
+          db.prepare('SELECT * FROM challenges ORDER BY game_id, challenge_num').all(),
+          db.prepare('SELECT * FROM questions ORDER BY game_id, challenge_num, question_index').all(),
+          db.prepare('SELECT * FROM knowledge_notions ORDER BY game_id, challenge_num, sort_order').all(),
+        ]);
+
+        const sims = simsR.results || [];
+        const allSess = sessR.results || [];
+        const allChs = chsR.results || [];
+        const allQs = qsR.results || [];
+        const allNotions = notionsR.results || [];
+
+        const sessByGame = new Map();
+        for (const s of allSess) {
+          if (!sessByGame.has(s.game_id)) sessByGame.set(s.game_id, []);
+          sessByGame.get(s.game_id).push(s);
+        }
+        const chsByGame = new Map();
+        const chsByGameSess = new Map();
+        for (const c of allChs) {
+          if (!chsByGame.has(c.game_id)) chsByGame.set(c.game_id, []);
+          chsByGame.get(c.game_id).push(c);
+          const k = c.game_id + '|' + c.session_num;
+          if (!chsByGameSess.has(k)) chsByGameSess.set(k, []);
+          chsByGameSess.get(k).push(c);
+        }
+        const qsByGameCh = new Map();
+        for (const q of allQs) {
+          const k = q.game_id + '|' + q.challenge_num;
+          try { q.options = JSON.parse(q.options_json); } catch { q.options = q.options || []; }
+          try { q.correct_answer = JSON.parse(q.correct_answer); } catch { /* raw */ }
+          delete q.options_json;
+          if (!qsByGameCh.has(k)) qsByGameCh.set(k, []);
+          qsByGameCh.get(k).push(q);
+        }
+        const notionsByGameCh = new Map();
+        for (const n of allNotions) {
+          const k = n.game_id + '|' + n.challenge_num;
+          if (!notionsByGameCh.has(k)) notionsByGameCh.set(k, []);
+          notionsByGameCh.get(k).push(n);
+        }
+
         const catalogue = {};
         for (const sim of sims) {
-          const { results: sessions } = await db.prepare(
-            'SELECT * FROM simulation_sessions WHERE game_id = ? ORDER BY session_num'
-          ).bind(sim.game_id).all();
-
-          // Get challenges per session
-          for (const sess of sessions) {
-            const { results: chs } = await db.prepare(
-              'SELECT challenge_num, title FROM challenges WHERE game_id = ? AND session_num = ? ORDER BY challenge_num'
-            ).bind(sim.game_id, sess.session_num).all();
-            sess.challenges = chs.map(c => ({
-              id: `${sim.game_id}_ch${c.challenge_num}`,
-              title: c.title
-            }));
-          }
-
-          // Get challenges_data
-          const { results: allChs } = await db.prepare(
-            'SELECT * FROM challenges WHERE game_id = ? ORDER BY challenge_num'
-          ).bind(sim.game_id).all();
-
+          const sessions = (sessByGame.get(sim.game_id) || []).map(sess => ({
+            ...sess,
+            challenges: (chsByGameSess.get(sim.game_id + '|' + sess.session_num) || [])
+              .map(c => ({ id: `${sim.game_id}_ch${c.challenge_num}`, title: c.title })),
+          }));
           const challenges_data = {};
-          for (const ch of allChs) {
-            const { results: questions } = await db.prepare(
-              'SELECT * FROM questions WHERE game_id = ? AND challenge_num = ? ORDER BY question_index'
-            ).bind(sim.game_id, ch.challenge_num).all();
-
-            for (const q of questions) {
-              try { q.options = JSON.parse(q.options_json); } catch { q.options = []; }
-              try { q.correct_answer = JSON.parse(q.correct_answer); } catch { /* keep */ }
-              delete q.options_json;
-            }
-
-            const { results: notions } = await db.prepare(
-              'SELECT * FROM knowledge_notions WHERE game_id = ? AND challenge_num = ? ORDER BY sort_order'
-            ).bind(sim.game_id, ch.challenge_num).all();
-
+          for (const ch of (chsByGame.get(sim.game_id) || [])) {
             challenges_data[`${sim.game_id}_ch${ch.challenge_num}`] = {
               scenario: ch.scenario,
-              questions,
-              knowledge_notions: notions,
+              questions: qsByGameCh.get(sim.game_id + '|' + ch.challenge_num) || [],
+              knowledge_notions: notionsByGameCh.get(sim.game_id + '|' + ch.challenge_num) || [],
             };
           }
-
           catalogue[sim.game_id] = {
             title: sim.name,
             subtitle: sim.subtitle,
@@ -1078,10 +1106,36 @@ export default {
             domain: sim.domain,
           };
         }
-        return json(catalogue);
+
+        const body = JSON.stringify(catalogue);
+        const respHeaders = {
+          ...CORS_HEADERS,
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Cache-Control': 'public, max-age=300, s-maxage=300',
+          'X-Cache': 'MISS',
+        };
+        const cacheResp = new Response(body, {
+          status: 200,
+          headers: { 'Content-Type': 'application/json;charset=UTF-8', 'Cache-Control': 'public, max-age=300, s-maxage=300' },
+        });
+        if (ctx && ctx.waitUntil) {
+          ctx.waitUntil(caches.default.put(cacheKey, cacheResp));
+        } else {
+          await caches.default.put(cacheKey, cacheResp);
+        }
+        return new Response(body, { status: 200, headers: respHeaders });
       }
 
-      // ============================================================
+      if (path === '/api/catalogue/invalidate' && method === 'POST') {
+        const cacheUrl = new URL(request.url);
+        cacheUrl.pathname = '/api/catalogue';
+        cacheUrl.search = '';
+        const cacheKey = new Request(cacheUrl.toString(), { method: 'GET' });
+        const ok = await caches.default.delete(cacheKey);
+        return json({ success: true, deleted: ok });
+      }
+
+            // ============================================================
       // PAGE CONTENTS (CMS)
       // ============================================================
       if (path === '/api/page-contents' && method === 'GET') {
