@@ -530,7 +530,7 @@ const CATALOG_FALLBACK = {
   eveil:    {name:'EVEIL',   num:'10', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', desc:"Éveillez les équipes aux enjeux et opportunités de l'intelligence artificielle en entreprise.", level:'Débutant',      color:'#0F172A'},
   elan:     {name:'ELAN',    num:'11', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', desc:"Donnez un nouvel élan à une organisation grâce à l'IA générative et aux agents.",             level:'Intermédiaire', color:'#1E293B'},
   ancre:    {name:'ANCRE',   num:'12', category:'Digitalisation & Numérique', subcategory:'Intelligence artificielle', desc:"Ancrez l'intelligence artificielle au cœur des processus d'une entreprise.",                 level:'Avancé',        color:'#0F172A'},
-  signal:   {name:'SIGNAL',  num:'13', category:'Communication',           subcategory:'Communication digitale',       desc:"Émettez les bons signaux sur les canaux digitaux pour votre audience.",                        level:'Débutant',      color:'#064E3B'},
+  signal:   {name:'SIGNAL',  num:'13', category:'Communication',           subcategory:'Communication professionnelle',       desc:"Émettez les bons signaux dans votre communication professionnelle pour votre audience.",                        level:'Débutant',      color:'#064E3B'},
   lien:     {name:'LIEN',    num:'14', category:'Communication',           subcategory:'Communication professionnelle',desc:"Renforcez les liens au sein des équipes par une communication interne efficace.",             level:'Intermédiaire', color:'#065F46'},
   echo:     {name:'ECHO',    num:'15', category:'Communication',           subcategory:'Communication professionnelle',desc:"Faites résonner la communication interne d'une organisation en pleine mutation.",             level:'Avancé',        color:'#166534'},
 };
@@ -737,10 +737,10 @@ renderMain();
   try {
     const resp = await fetch('https://immersium-api.mx-cosaque.workers.dev/api/simulations?eq.active=true&order=sort_order');
     if (!resp.ok) return;
-    const data = await resp.json();
-    if (!Array.isArray(data) || data.length === 0) return;
+    const json = await resp.json();
+    const arr = Array.isArray(json) ? json : (json && Array.isArray(json.data) ? json.data : []); if (arr.length === 0) return;
     const next = {};
-    data.forEach(s => {
+    arr.forEach(s => {
       const id = s.game_id;
       if (!id) return;
       // Pass raw category/subcategory through — normalizeSim() handles JSON arrays
