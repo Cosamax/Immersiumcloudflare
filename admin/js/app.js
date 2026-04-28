@@ -2976,6 +2976,38 @@ async function openSimModal(gameId) {
         <textarea class="form-input" id="sim-intro" rows="4">${escapeHtml(data.intro_text || '')}</textarea>
       </div>
 
+      <fieldset style="border:1px solid var(--bd,#e5e7eb);border-radius:var(--r-sm);padding:12px;margin-top:14px">
+        <legend style="padding:0 6px;font-weight:600;font-size:13px;color:var(--ink)">Vidéo d'introduction (onboarding)</legend>
+        <div class="form-group">
+          <label class="form-label">URL vidéo (YouTube, Vimeo ou MP4)</label>
+          <input type="url" class="form-input" id="sim-intro-video-url" value="${escapeHtml(data.intro_video_url || '')}" placeholder="https://www.youtube.com/watch?v=...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Titre de la vidéo</label>
+          <input type="text" class="form-input" id="sim-intro-video-title" value="${escapeHtml(data.intro_video_title || '')}" placeholder="Bienvenue dans la simulation">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image poster (URL)</label>
+          <input type="url" class="form-input" id="sim-intro-video-poster" value="${escapeHtml(data.intro_video_poster || '')}" placeholder="https://...">
+        </div>
+      </fieldset>
+
+      <fieldset style="border:1px solid var(--bd,#e5e7eb);border-radius:var(--r-sm);padding:12px;margin-top:14px">
+        <legend style="padding:0 6px;font-weight:600;font-size:13px;color:var(--ink)">Vidéo de sortie (offboarding)</legend>
+        <div class="form-group">
+          <label class="form-label">URL vidéo (YouTube, Vimeo ou MP4)</label>
+          <input type="url" class="form-input" id="sim-outro-video-url" value="${escapeHtml(data.outro_video_url || '')}" placeholder="https://www.youtube.com/watch?v=...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Titre de la vidéo</label>
+          <input type="text" class="form-input" id="sim-outro-video-title" value="${escapeHtml(data.outro_video_title || '')}" placeholder="Bravo, vous avez terminé !">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image poster (URL)</label>
+          <input type="url" class="form-input" id="sim-outro-video-poster" value="${escapeHtml(data.outro_video_poster || '')}" placeholder="https://...">
+        </div>
+      </fieldset>
+
       <div style="padding:12px 14px;background:var(--bg-alt);border-radius:var(--r-sm);font-size:12px;color:var(--ink-mute);margin-top:10px">
         <strong style="color:var(--ink)">À savoir</strong> — Les champs "personnages" (liste JSON)
         ne sont pas éditables via ce formulaire pour l'instant. Utilise un import SQL pour les modifier.
@@ -3101,6 +3133,12 @@ async function saveSimulation() {
     color: document.getElementById('sim-color').value.trim() || null,
     level_color: document.getElementById('sim-level-color').value.trim() || null,
     intro_text: document.getElementById('sim-intro').value.trim() || null,
+    intro_video_url: (document.getElementById('sim-intro-video-url')?.value || '').trim() || null,
+    intro_video_title: (document.getElementById('sim-intro-video-title')?.value || '').trim() || null,
+    intro_video_poster: (document.getElementById('sim-intro-video-poster')?.value || '').trim() || null,
+    outro_video_url: (document.getElementById('sim-outro-video-url')?.value || '').trim() || null,
+    outro_video_title: (document.getElementById('sim-outro-video-title')?.value || '').trim() || null,
+    outro_video_poster: (document.getElementById('sim-outro-video-poster')?.value || '').trim() || null,
     updated_at: new Date().toISOString(),
   };
 
@@ -3135,6 +3173,8 @@ async function saveSimulation() {
     } else {
       showToast(`Simulation ${payload.name} mise à jour`, 'success');
     }
+    // Invalidate worker D1 catalogue cache so video fields propagate to the live game
+    try { await fetch('https://immersium-api.mx-cosaque.workers.dev/api/catalogue/invalidate', {method:'POST'}); } catch(e) { console.warn('cache invalidate failed:', e); }
     closeSimModal();
     // Recharger la liste
     await renderSimulations(document.getElementById('pageArea'));
