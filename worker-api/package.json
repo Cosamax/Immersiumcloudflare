@@ -1,0 +1,13 @@
+{
+    "name": "immersium-api",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Cloudflare Worker pour l'API Immersium (D1 backend)",
+    "scripts": {
+          "dev": "wrangler dev",
+          "deploy": "wrangler deploy"
+    },
+    "devDependencies": {
+          "wrangler": "^3.90.0"
+    }
+}
