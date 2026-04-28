@@ -162,6 +162,12 @@
       <div class="form-row"><label>Nombre de défis</label><input type="number" id="f-challenges" placeholder="21" min="1"></div>
     </div>
     <fieldset style="border:1px solid var(--bd,#e5e7eb);border-radius:10px;padding:12px;margin-top:12px">
+      <legend style="padding:0 6px;font-weight:600;font-size:14px;color:#475569">Vidéo d'introduction (onboarding)</legend>
+      <div class="form-row"><label>URL vidéo (YouTube, Vimeo ou MP4)</label><input type="url" id="f-intro-url" placeholder="https://www.youtube.com/watch?v=..."></div>
+      <div class="form-row"><label>Titre de la vidéo</label><input type="text" id="f-intro-title" placeholder="Bienvenue dans la simulation"></div>
+      <div class="form-row"><label>Image poster (URL)</label><input type="url" id="f-intro-poster" placeholder="https://..."></div>
+    </fieldset>
+    <fieldset style="border:1px solid var(--bd,#e5e7eb);border-radius:10px;padding:12px;margin-top:12px">
       <legend style="padding:0 6px;font-weight:600;font-size:14px;color:#475569">Vidéo de sortie (offboarding)</legend>
       <div class="form-row"><label>URL vidéo (YouTube, Vimeo ou MP4)</label><input type="url" id="f-outro-url" placeholder="https://www.youtube.com/watch?v=..."></div>
       <div class="form-row"><label>Titre de la vidéo</label><input type="text" id="f-outro-title" placeholder="Bravo, vous avez terminé !"></div>
@@ -351,6 +357,9 @@ window.openNewModal = function(){
   document.getElementById('f-color2').value='#4D7AFF';
   document.getElementById('f-num').value='';
   document.getElementById('f-challenges').value='21';
+  document.getElementById('f-intro-url').value='';
+  document.getElementById('f-intro-title').value='';
+  document.getElementById('f-intro-poster').value='';
   document.getElementById('f-outro-url').value='';
   document.getElementById('f-outro-title').value='';
   document.getElementById('f-outro-poster').value='';
@@ -372,6 +381,9 @@ window.editSim = function(id){
   document.getElementById('f-color2').value=s.color2||'#4D7AFF';
   document.getElementById('f-num').value=s.num||'';
   document.getElementById('f-challenges').value=s.challenge_count||21;
+  document.getElementById('f-intro-url').value=s.intro_video_url||'';
+  document.getElementById('f-intro-title').value=s.intro_video_title||'';
+  document.getElementById('f-intro-poster').value=s.intro_video_poster||'';
   document.getElementById('f-outro-url').value=s.outro_video_url||'';
   document.getElementById('f-outro-title').value=s.outro_video_title||'';
   document.getElementById('f-outro-poster').value=s.outro_video_poster||'';
@@ -421,11 +433,14 @@ window.saveSim = async function(){
   // Save outro video fields to worker D1 (in parallel of Supabase)
   try {
     var outroPayload = {
+      intro_video_url: document.getElementById('f-intro-url').value.trim()||null,
+      intro_video_title: document.getElementById('f-intro-title').value.trim()||null,
+      intro_video_poster: document.getElementById('f-intro-poster').value.trim()||null,
       outro_video_url: document.getElementById('f-outro-url').value.trim()||null,
       outro_video_title: document.getElementById('f-outro-title').value.trim()||null,
       outro_video_poster: document.getElementById('f-outro-poster').value.trim()||null
     };
-    var hasOutro = outroPayload.outro_video_url || outroPayload.outro_video_title || outroPayload.outro_video_poster;
+    var hasOutro = outroPayload.intro_video_url || outroPayload.intro_video_title || outroPayload.intro_video_poster || outroPayload.outro_video_url || outroPayload.outro_video_title || outroPayload.outro_video_poster;
     if (hasOutro || id) {
       await fetch('https://immersium-api.mx-cosaque.workers.dev/api/simulations/'+encodeURIComponent(gameId), {
         method: 'PATCH',
@@ -453,6 +468,9 @@ async function loadData(){
     if (res.data) {
       res.data.forEach(function(s){
         var d = d1Map[s.game_id]; if (!d) return;
+        s.intro_video_url = d.intro_video_url || null;
+        s.intro_video_title = d.intro_video_title || null;
+        s.intro_video_poster = d.intro_video_poster || null;
         s.outro_video_url = d.outro_video_url || null;
         s.outro_video_title = d.outro_video_title || null;
         s.outro_video_poster = d.outro_video_poster || null;
