@@ -3112,6 +3112,7 @@ async function saveSimulation() {
   }
 
   try {
+    console.log('[ADMIN saveSimulation] PATCH /simulations/' + currentEditingSim.game_id + ' payload:', JSON.parse(JSON.stringify(payload)));
     const { error } = await sb
       .from('simulations')
       .update(payload)
@@ -3119,7 +3120,21 @@ async function saveSimulation() {
 
     if (error) throw error;
 
-    showToast(`Simulation ${payload.name} mise à jour`, 'success');
+    // Vérification : relire la sim pour confirmer que category/subcategory ont bien été persistés
+    const { data: verifyData } = await sb.from('simulations').select('*').eq('game_id', currentEditingSim.game_id).single();
+    if (verifyData) {
+      console.log('[ADMIN saveSimulation] Lecture après PATCH:', { category: verifyData.category, subcategory: verifyData.subcategory });
+      const sentCat = payload.category;
+      const recvCat = verifyData.category;
+      if (sentCat && !recvCat) {
+        showToast('⚠ Catégories non persistées (API ignore le champ ?). Voir console.', 'error');
+        console.warn('[ADMIN] category ENVOYÉ:', sentCat, 'REÇU:', recvCat);
+      } else {
+        showToast(`Simulation ${payload.name} mise à jour`, 'success');
+      }
+    } else {
+      showToast(`Simulation ${payload.name} mise à jour`, 'success');
+    }
     closeSimModal();
     // Recharger la liste
     await renderSimulations(document.getElementById('pageArea'));
