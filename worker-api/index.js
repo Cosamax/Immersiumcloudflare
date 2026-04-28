@@ -1091,6 +1091,8 @@ export default {
               scenario: ch.scenario,
               questions: qsByGameCh.get(sim.game_id + '|' + ch.challenge_num) || [],
               knowledge_notions: notionsByGameCh.get(sim.game_id + '|' + ch.challenge_num) || [],
+              image_url: ch.image_url || '',
+              image_caption: ch.image_caption || ''
             };
           }
           catalogue[sim.game_id] = {
@@ -1104,6 +1106,9 @@ export default {
             intro_html: sim.intro_html,
             level: sim.level,
             domain: sim.domain,
+            outro_video_url: sim.outro_video_url || '',
+            outro_video_title: sim.outro_video_title || '',
+            outro_video_poster: sim.outro_video_poster || '',
           };
         }
 
