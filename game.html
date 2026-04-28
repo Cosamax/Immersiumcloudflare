@@ -604,6 +604,24 @@
   // ─── Variable pour suivre la phase courante ────────────────────────
   let currentPhase = 'knowledge'; // 'knowledge' or 'questions'
 
+  // ─── Helper pour rendre la vidéo d'offboarding ────────────────
+  window.renderOutroVideo = function(game) {
+    const u = (game && game.outro_video_url || '').trim();
+    if (!u) return '';
+    const t = (game && game.outro_video_title || 'Vidéo de bilan').trim();
+    let player = '';
+    const yt = u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/);
+    const vm = u.match(/vimeo\.com\/(\d+)/);
+    if (yt) {
+      player = '<iframe width="100%" height="315" src="https://www.youtube.com/embed/' + yt[1] + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius:12px;display:block"></iframe>';
+    } else if (vm) {
+      player = '<iframe src="https://player.vimeo.com/video/' + vm[1] + '" width="100%" height="315" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="border-radius:12px;display:block"></iframe>';
+    } else {
+      player = '<video controls style="width:100%;border-radius:12px;display:block"><source src="' + u + '"></video>';
+    }
+    return '<div style="margin:24px 0;padding:24px;background:#f8f9fb;border-radius:16px"><div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#6b7280;margin-bottom:8px">▶ Vidéo de fin de parcours</div><div style="font-size:18px;font-weight:600;color:#0f172a;margin-bottom:16px">' + t + '</div>' + player + '</div>';
+  };
+
   // ─── Trouver les données d'un défi par index séquentiel ──────────
   function getChallengeData(idx) {
     const ch = flatChallenges[idx - 1];
@@ -642,6 +660,12 @@
       // Attach scenario to first question
       if (qi === 0 && scenario) {
         transformed.sc = scenario;
+      }
+
+      // Attach image to first question (image_url from challenge data)
+      if (qi === 0 && raw.image_url) {
+        transformed.imgUrl = raw.image_url;
+        transformed.imgCaption = raw.image_caption || '';
       }
 
       const opts = rq.options || [];
@@ -1108,6 +1132,14 @@
       html += `<div class="game-briefing">
         <div class="from" style="color:${challengeColor}">Contexte du défi</div>
         <div class="content">${esc(firstQ.sc)}</div>
+      </div>`;
+    }
+
+    // Image illustrative du défi
+    if (firstQ.imgUrl) {
+      html += `<div style="margin:16px 0">
+        <img src="${firstQ.imgUrl}" alt="${esc(firstQ.imgCaption || '')}" style="width:100%;max-height:480px;object-fit:cover;border-radius:12px;display:block" loading="lazy" />
+        ${firstQ.imgCaption ? `<div style="font-size:13px;color:#6b7280;margin-top:8px;font-style:italic;text-align:center">${esc(firstQ.imgCaption)}</div>` : ''}
       </div>`;
     }
 
@@ -1865,7 +1897,7 @@
       <div style="font-family:var(--f-display);font-size:42px;font-weight:500;color:${scoreColor}">${finalPct}%</div>
       <div style="font-size:14px;color:var(--ink-soft);margin-top:8px">${finalLabel}</div>
       <div style="font-size:12px;color:var(--ink-mute);margin-top:4px">${finalPct >= 70 ? 'Excellent travail !' : finalPct >= 40 ? 'Consultez les corrections ci-dessus pour progresser.' : 'Relisez attentivement le contexte et réessayez.'}</div>
-      ${idx < totalChallenges ? `<button class="btn btn-primary btn-lg" style="margin-top:16px" onclick="goToChallenge(${idx + 1})">Passer au défi suivant \u2192</button>` : `<a href="catalogue.html" class="btn btn-primary btn-lg" style="margin-top:16px">Retour au catalogue</a>`}
+      ${idx < totalChallenges ? `<button class="btn btn-primary btn-lg" style="margin-top:16px" onclick="goToChallenge(${idx + 1})">Passer au défi suivant \u2192</button>` : `${typeof renderOutroVideo === 'function' ? renderOutroVideo(game) : ''}<a href="catalogue.html" class="btn btn-primary btn-lg" style="margin-top:16px">Retour au catalogue</a>`}
     </div>`;
 
     const actions = content.querySelector('.game-actions');
