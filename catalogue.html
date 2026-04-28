@@ -747,7 +747,7 @@ renderMain();
       const fb = CATALOG_FALLBACK[id] || {}; next[id] = {
         name: s.name || fb.name || id.toUpperCase(),
         num: s.num ? String(s.num).padStart(2, '0') : (fb.num || ''),
-        category: s.category || s.domain || fb.category || '',
+        category: s.category || fb.category || s.domain || '',
         subcategory: s.subcategory || fb.subcategory || '',
         desc: s.description || fb.desc || '',
         level: s.level || fb.level || '',
