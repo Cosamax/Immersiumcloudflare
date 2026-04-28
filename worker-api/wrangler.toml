@@ -1,0 +1,11 @@
+name = "immersium-api"
+main = "index.js"
+compatibility_date = "2024-12-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "immersium-db"
+database_id = "c2a8ccf4-546b-4883-8a02-1153f885eaa0"
+
+# Pas de routes ici : le worker conserve son hostname workers.dev
+# (immersium-api.mx-cosaque.workers.dev) tel que configure cote Cloudflare.
