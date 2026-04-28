@@ -116,7 +116,7 @@ export default {
         const body = await request.json();
         const sets = [];
         const vals = [];
-        const allowed = ['name', 'subtitle', 'domain', 'color', 'level', 'active', 'featured', 'featured_order', 'intro_text', 'intro_html', 'intro_video_url', 'intro_video_title', 'intro_video_poster', 'category', 'subcategory'];
+        const allowed = ['name', 'subtitle', 'domain', 'color', 'level', 'active', 'featured', 'featured_order', 'intro_text', 'intro_html', 'intro_video_url', 'intro_video_title', 'intro_video_poster', 'category', 'subcategory', 'outro_video_url', 'outro_video_title', 'outro_video_poster'];
         for (const [k, v] of Object.entries(body)) {
           if (allowed.includes(k)) { sets.push(`${k} = ?`); vals.push(v); }
         }
@@ -162,7 +162,7 @@ export default {
         const body = await request.json();
         const sets = [];
         const vals = [];
-        const allowed = ['title', 'session_num', 'scenario', 'duration_min', 'max_score'];
+        const allowed = ['title', 'session_num', 'scenario', 'duration_min', 'max_score', 'image_url', 'image_caption'];
         for (const [k, v] of Object.entries(body)) {
           if (allowed.includes(k)) { sets.push(`${k} = ?`); vals.push(v); }
         }
@@ -790,7 +790,7 @@ export default {
         const chNum = body.challenge_num || url.searchParams.get('challenge_num');
         const sets = [];
         const vals = [];
-        const allowed = ['title', 'session_num', 'scenario', 'duration_min', 'max_score'];
+        const allowed = ['title', 'session_num', 'scenario', 'duration_min', 'max_score', 'image_url', 'image_caption'];
         for (const [k, v] of Object.entries(body)) {
           if (allowed.includes(k)) { sets.push(`${k} = ?`); vals.push(v); }
         }
@@ -1134,6 +1134,33 @@ export default {
         const ok = await caches.default.delete(cacheKey);
         return json({ success: true, deleted: ok });
       }
+
+      // ============================================================
+      // MEDIA MIGRATION (idempotent ALTER TABLE)
+      // ============================================================
+      if (path === '/api/admin/migrate-media' && method === 'POST') {
+        const db = env.DB;
+        const ops = [
+          "ALTER TABLE simulations ADD COLUMN outro_video_url TEXT DEFAULT ''",
+          "ALTER TABLE simulations ADD COLUMN outro_video_title TEXT DEFAULT ''",
+          "ALTER TABLE simulations ADD COLUMN outro_video_poster TEXT DEFAULT ''",
+          "ALTER TABLE challenges ADD COLUMN image_url TEXT DEFAULT ''",
+          "ALTER TABLE challenges ADD COLUMN image_caption TEXT DEFAULT ''"
+        ];
+        const results = [];
+        for (const sql of ops) {
+          try {
+            await db.prepare(sql).run();
+            results.push({ sql: sql.slice(0, 80), status: 'ok' });
+          } catch (e) {
+            const msg = String(e && e.message || e);
+            const already = msg.includes('duplicate column') || msg.includes('already exists');
+            results.push({ sql: sql.slice(0, 80), status: already ? 'already' : 'error', error: already ? null : msg });
+          }
+        }
+        return json({ success: true, results });
+      }
+
 
             // ============================================================
       // PAGE CONTENTS (CMS)
