@@ -260,6 +260,11 @@
         <input type="number" id="sc-max-score" min="1" max="1000" value="100">
       </div>
     </div>
+    <fieldset style="border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom:12px">
+      <legend style="padding:0 6px;font-weight:600;font-size:14px;color:#475569">Image illustrative du défi</legend>
+      <div class="form-row"><label>URL de l'image</label><input type="url" id="sc-image-url" placeholder="https://..."></div>
+      <div class="form-row"><label>Légende (optionnelle)</label><input type="text" id="sc-image-caption" placeholder="Ex: Salle de réunion"></div>
+    </fieldset>
     <div class="modal-foot">
       <button class="btn" onclick="closeScModal()">Annuler</button>
       <button class="btn primary" onclick="saveScenario()">Enregistrer</button>
@@ -757,6 +762,8 @@ window.editScenario = function(id){
   document.getElementById('sc-scenario').value=sc.scenario||'';
   document.getElementById('sc-duration').value=sc.duration_min||15;
   document.getElementById('sc-max-score').value=sc.max_score||100;
+  document.getElementById('sc-image-url').value=sc.image_url||'';
+  document.getElementById('sc-image-caption').value=sc.image_caption||sc.caption||'';
   document.getElementById('sc-modal').style.display='flex';
 };
 
@@ -778,6 +785,22 @@ window.saveScenario = async function(){
   // Use the generic PATCH /api/challenges/:game_id with challenge_num in body
   var res=await sb.from('challenges').update(payload).eq('game_id',gameId);
   if(res.error){ showToast('Erreur : '+(res.error.message||JSON.stringify(res.error)),'error'); return; }
+  // Save image fields to worker D1 (in parallel of Supabase)
+  try {
+    var imgPayload = {
+      challenge_num: chNum,
+      image_url: document.getElementById('sc-image-url').value.trim()||null,
+      caption: document.getElementById('sc-image-caption').value.trim()||null
+    };
+    if (imgPayload.image_url || imgPayload.caption) {
+      await fetch('https://immersium-api.mx-cosaque.workers.dev/api/challenges/'+encodeURIComponent(gameId)+'?challenge_num='+chNum, {
+        method: 'PATCH',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(imgPayload)
+      });
+      await fetch('https://immersium-api.mx-cosaque.workers.dev/api/catalogue/invalidate', {method:'POST'});
+    }
+  } catch(e) { console.warn('D1 image save failed:', e); }
   showToast('Sc\u00e9nario mis \u00e0 jour','success');
   closeScModal();
   await selectGame(currentGame.game_id);
