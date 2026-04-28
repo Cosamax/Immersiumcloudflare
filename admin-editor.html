@@ -763,7 +763,7 @@ window.editScenario = function(id){
   document.getElementById('sc-duration').value=sc.duration_min||15;
   document.getElementById('sc-max-score').value=sc.max_score||100;
   document.getElementById('sc-image-url').value=sc.image_url||'';
-  document.getElementById('sc-image-caption').value=sc.image_caption||sc.caption||'';
+  document.getElementById('sc-image-caption').value=sc.image_caption||'';
   document.getElementById('sc-modal').style.display='flex';
 };
 
@@ -790,9 +790,9 @@ window.saveScenario = async function(){
     var imgPayload = {
       challenge_num: chNum,
       image_url: document.getElementById('sc-image-url').value.trim()||null,
-      caption: document.getElementById('sc-image-caption').value.trim()||null
+      image_caption: document.getElementById('sc-image-caption').value.trim()||null
     };
-    if (imgPayload.image_url || imgPayload.caption) {
+    if (imgPayload.image_url || imgPayload.image_caption) {
       await fetch('https://immersium-api.mx-cosaque.workers.dev/api/challenges/'+encodeURIComponent(gameId)+'?challenge_num='+chNum, {
         method: 'PATCH',
         headers: {'Content-Type':'application/json'},
