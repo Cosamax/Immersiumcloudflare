@@ -6223,19 +6223,32 @@ window.openImportSimModal = function() {
         </button>
       </div>
       <div class="modal-body" id="importSimBody">
-        <div style="padding:14px 16px;background:var(--bg-alt);border-left:3px solid var(--marine);border-radius:var(--r-sm);margin-bottom:18px;font-size:12.5px;line-height:1.6;color:var(--ink-soft)">
+        <div style="padding:14px;background:var(--bg-alt);border-left:3px solid var(--marine);border-radius:var(--r-sm);margin-bottom:16px;font-size:14px;line-height:1.6;color:var(--ink-soft)">
           <strong style="color:var(--ink)">Format attendu</strong> : fichier JSON produit par le bouton "Export JSON" d'une simulation Immersium.<br>
-          <strong style="color:var(--ink)">Si la simulation existe déjà</strong>, les défis manquants seront ajoutés. Les défis existants seront conservés tels quels (mode fusion).
+          Si la simulation existe déjà, choisis le mode d'import ci-dessous.
         </div>
         <div class="form-group">
           <label class="form-label">Fichier JSON à importer</label>
           <input type="file" class="form-input" id="import-file" accept="application/json,.json" onchange="handleImportFile(event)">
         </div>
+        <div class="form-group" id="import-mode-group" style="display:none">
+          <label class="form-label">Mode d'import</label>
+          <div style="display:flex;flex-direction:column;gap:10px;padding:12px;background:var(--bg-alt);border-radius:var(--r-sm);border:1px solid var(--line)">
+            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:14px">
+              <input type="radio" name="importMode" value="merge" checked style="margin-top:3px">
+              <span><strong>Fusion (sûr)</strong><br><span style="color:var(--ink-soft);font-size:13px">Ajoute les défis manquants. Les défis existants sont conservés. Aucune suppression.</span></span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:14px">
+              <input type="radio" name="importMode" value="replace" style="margin-top:3px">
+              <span><strong style="color:#b91c1c">Remplacement complet (destructif)</strong><br><span style="color:var(--ink-soft);font-size:13px">Supprime tous les défis, questions et notions existants pour ce game_id, puis importe le contenu du fichier. Un backup JSON est téléchargé automatiquement avant suppression.</span></span>
+            </label>
+          </div>
+        </div>
         <div id="import-preview"></div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeImportSimModal()">Annuler</button>
-        <button class="btn btn-primary" id="import-confirm-btn" onclick="confirmImportSim()" disabled>Importer</button>
+        <button class="btn-ghost" onclick="closeImportSimModal()">Annuler</button>
+        <button class="btn-primary" id="import-confirm-btn" onclick="confirmImportSim()" disabled>Importer</button>
       </div>
     </div>
   `;
@@ -6248,12 +6261,14 @@ window.closeImportSimModal = function() {
   window._importPayload = null;
 };
 
-window.handleImportFile = async function(event) {
+window.handleImportFile = async function(event){
   const file = event.target.files[0];
   const preview = document.getElementById('import-preview');
   const btn = document.getElementById('import-confirm-btn');
+  const modeGroup = document.getElementById('import-mode-group');
   preview.innerHTML = '';
   btn.disabled = true;
+  if (modeGroup) modeGroup.style.display = 'none';
   window._importPayload = null;
 
   if (!file) return;
@@ -6262,86 +6277,72 @@ window.handleImportFile = async function(event) {
     const text = await file.text();
     const payload = JSON.parse(text);
 
-    if (!payload.simulation || !payload.simulation.game_id) {
+    if (!payload.simulation || !payload.simulation.game_id){
       throw new Error('Format invalide : il manque le bloc "simulation" avec game_id.');
     }
-    if (!Array.isArray(payload.challenges)) {
+    if (!Array.isArray(payload.challenges)){
       throw new Error('Format invalide : le champ "challenges" doit être un tableau.');
     }
 
     const sim = payload.simulation;
     const challenges = payload.challenges;
-    const totalQuestions = challenges.reduce((t, c) => t + (c.questions?.length || 0), 0);
+    const totalQuestions = challenges.reduce((acc,c)=> acc + ((c.questions||[]).length), 0);
 
     const sb = window.IMM_SUPABASE;
     const { data: existing } = await sb.from('simulations').select('game_id,name').eq('game_id', sim.game_id).maybeSingle();
 
     let existingChalNums = [];
-    if (existing) {
+    if (existing){
       const { data: existingChals } = await sb.from('challenges').select('challenge_num').eq('game_id', sim.game_id);
-      existingChalNums = [...new Set((existingChals || []).map(c => c.challenge_num))];
+      existingChalNums = (existingChals||[]).map(c=>c.challenge_num);
     }
-
-    const newChalNums = challenges.map(c => c.challenge_num).filter(n => !existingChalNums.includes(n));
-    const skippedChalNums = challenges.map(c => c.challenge_num).filter(n => existingChalNums.includes(n));
+    const newChalNums = challenges.map(c=>c.challenge_num).filter(n=> !existingChalNums.includes(n));
+    const skippedChalNums = challenges.map(c=>c.challenge_num).filter(n=> existingChalNums.includes(n));
 
     let notionsCount = 0;
-    challenges.forEach(c => (c.questions || []).forEach(q => {
-      if (Array.isArray(q.knowledge_notions)) notionsCount += q.knowledge_notions.length;
-    }));
+    challenges.forEach(c => {
+      if (Array.isArray(c.knowledge_notions)) notionsCount += c.knowledge_notions.length;
+      (c.questions||[]).forEach(q=>{
+        if (Array.isArray(q.knowledge_notions)) notionsCount += q.knowledge_notions.length;
+      });
+    });
 
-    window._importPayload = { payload, newChalNums, skippedChalNums, existing };
+    window._importPayload = { payload, newChalNums, skippedChalNums, existing, totalChalNums: challenges.map(c=>c.challenge_num) };
 
     preview.innerHTML = `
-      <div style="margin-top:18px;padding:16px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--bg-alt)">
-        <div style="font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:10px">Aperçu de l'import</div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+      <div style="margin-top:16px;padding:14px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--bg-alt)">
+        <div style="font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.04em;font-weight:700;margin-bottom:10px">Aperçu de l'import</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
           <div><div style="font-size:11px;color:var(--ink-mute)">game_id</div><div style="font-family:var(--f-mono);font-size:13px;font-weight:600">${escapeHtml(sim.game_id)}</div></div>
-          <div><div style="font-size:11px;color:var(--ink-mute)">Nom</div><div style="font-size:13px;font-weight:500">${escapeHtml(sim.name || '—')}</div></div>
-          <div><div style="font-size:11px;color:var(--ink-mute)">Domaine</div><div style="font-size:13px">${escapeHtml(sim.domain || '—')}</div></div>
-          <div><div style="font-size:11px;color:var(--ink-mute)">Tuteur</div><div style="font-size:13px">${escapeHtml(sim.tutor_name || '—')}</div></div>
+          <div><div style="font-size:11px;color:var(--ink-mute)">Nom</div><div style="font-size:13px;font-weight:600">${escapeHtml(sim.name||sim.title||'')}</div></div>
+          <div><div style="font-size:11px;color:var(--ink-mute)">Domaine</div><div style="font-size:13px">${escapeHtml(sim.domain||'—')}</div></div>
+          <div><div style="font-size:11px;color:var(--ink-mute)">Niveau</div><div style="font-size:13px">${escapeHtml(sim.level||'—')}</div></div>
         </div>
-
-        <div style="display:flex;gap:20px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line);font-size:13px">
-          <div><strong>${challenges.length}</strong> défi${challenges.length > 1 ? 's' : ''} dans le fichier</div>
-          <div><strong>${totalQuestions}</strong> question${totalQuestions > 1 ? 's' : ''}</div>
-          <div><strong>${notionsCount}</strong> notion${notionsCount > 1 ? 's' : ''} pédagogique${notionsCount > 1 ? 's' : ''}</div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft)">
+          <div><strong>${challenges.length}</strong> défis dans le fichier</div>
+          <div><strong>${totalQuestions}</strong> questions</div>
+          ${notionsCount? `<div><strong>${notionsCount}</strong> notions</div>`:''}
         </div>
+        ${existing ? `<div style="margin-top:12px;padding:10px;background:#fef3c7;border-radius:6px;font-size:13px;color:#78350f"><strong>⚠ Simulation existante</strong> : "${escapeHtml(existing.name)}". ${skippedChalNums.length} défi(s) déjà présent(s), ${newChalNums.length} nouveau(x).</div>` : '<div style="margin-top:12px;padding:10px;background:#dcfce7;border-radius:6px;font-size:13px;color:#14532d"><strong>✓ Nouvelle simulation</strong> — sera créée.</div>'}
+      </div>`;
 
-        ${existing ? `
-          <div style="margin-top:14px;padding:12px;background:#FEF6EE;border:1px solid #FED7AA;border-radius:var(--r-sm);font-size:12.5px;line-height:1.6">
-            <strong style="color:#9A3412">Simulation existante détectée</strong> : <code>${escapeHtml(existing.game_id)}</code> (${escapeHtml(existing.name)})<br>
-            <strong style="color:var(--jade)">${newChalNums.length}</strong> défi${newChalNums.length > 1 ? 's' : ''} à ajouter · <strong style="color:var(--ink-mute)">${skippedChalNums.length}</strong> défi${skippedChalNums.length > 1 ? 's' : ''} déjà présent${skippedChalNums.length > 1 ? 's' : ''} (ignoré${skippedChalNums.length > 1 ? 's' : ''})<br>
-            ${newChalNums.length > 0 ? `Nouveaux : défis ${newChalNums.join(', ')}` : 'Aucun nouveau défi à ajouter.'}
-            <div style="margin-top:8px;font-size:11px;color:var(--ink-mute)">La fiche simulation (nom, description, tuteur…) ne sera <strong>pas</strong> écrasée.</div>
-          </div>
-        ` : `
-          <div style="margin-top:14px;padding:12px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--r-sm);font-size:12.5px;color:#166534">
-            <strong>Nouvelle simulation</strong> — sera créée de zéro avec ses ${challenges.length} défis.
-          </div>
-        `}
-      </div>
-    `;
-
-    const hasWork = !existing || newChalNums.length > 0;
-    document.getElementById('import-confirm-btn').disabled = !hasWork;
-    if (!hasWork) {
-      preview.innerHTML += `<div style="margin-top:10px;padding:10px;background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--r-sm);font-size:12px;color:#991B1B">Aucune modification à faire — tous les défis sont déjà en base.</div>`;
-    }
-
-  } catch (e) {
-    console.error('[IMPORT PARSE]', e);
-    preview.innerHTML = `<div style="margin-top:16px;padding:14px;background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--r-sm);color:#991B1B;font-size:13px">
-      <strong>Fichier invalide</strong><br>${escapeHtml(e.message)}
-    </div>`;
+    if (existing && modeGroup) modeGroup.style.display = '';
+    btn.disabled = false;
+  } catch(e){
+    preview.innerHTML = `<div style="margin-top:16px;padding:12px;background:#fee2e2;border-radius:6px;color:#991b1b;font-size:13px"><strong>Erreur :</strong> ${escapeHtml(e.message)}</div>`;
   }
 };
 
-window.confirmImportSim = async function() {
+window.confirmImportSim = async function(){
   const ctx = window._importPayload;
   if (!ctx) return;
-  const { payload, newChalNums, existing } = ctx;
+  const { payload, newChalNums, existing, totalChalNums } = ctx;
+
+  const modeRadios = document.getElementsByName('importMode');
+  let mode = 'merge';
+  for (const r of modeRadios){ if (r.checked) { mode = r.value; break; } }
+  if (!existing) mode = 'create';
+
   const sb = window.IMM_SUPABASE;
   const btn = document.getElementById('import-confirm-btn');
   btn.disabled = true;
@@ -6349,67 +6350,156 @@ window.confirmImportSim = async function() {
 
   try {
     const sim = payload.simulation;
+    const challenges = payload.challenges;
 
-    if (!existing) {
-      const simPayload = { ...sim };
-      delete simPayload.created_at;
-      delete simPayload.updated_at;
-      const { error: simErr } = await sb.from('simulations').insert([simPayload]);
-      if (simErr) throw new Error('Création simulation : ' + simErr.message);
+    if (mode === 'replace'){
+      const [chRes, qRes, nRes] = await Promise.all([
+        sb.from('challenges').select('*').eq('game_id', sim.game_id),
+        sb.from('questions').select('*').eq('game_id', sim.game_id),
+        sb.from('notions').select('*').eq('game_id', sim.game_id)
+      ]);
+      const backup = {
+        backup_at: new Date().toISOString(),
+        game_id: sim.game_id,
+        simulation: existing,
+        challenges: chRes.data || [],
+        questions: qRes.data || [],
+        notions: nRes.data || []
+      };
+      const blob = new Blob([JSON.stringify(backup,null,2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'backup_' + sim.game_id + '_' + new Date().toISOString().replace(/[:.]/g,'-') + '.json';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+
+      const delQ = await sb.from('questions').delete().eq('game_id', sim.game_id);
+      if (delQ.error) throw new Error('Suppression questions : ' + delQ.error.message);
+      const delN = await sb.from('notions').delete().eq('game_id', sim.game_id);
+      if (delN.error) throw new Error('Suppression notions : ' + delN.error.message);
+      try { await sb.from('knowledge_notions').delete().eq('game_id', sim.game_id); } catch(_e){}
+      const delC = await sb.from('challenges').delete().eq('game_id', sim.game_id);
+      if (delC.error) throw new Error('Suppression challenges : ' + delC.error.message);
     }
 
-    const rowsToInsert = [];
-    (payload.challenges || []).forEach(c => {
-      if (!newChalNums.includes(c.challenge_num)) return;
+    if (mode !== 'merge'){
+      const simPayload = Object.assign({}, sim);
+      delete simPayload.created_at;
+      delete simPayload.updated_at;
+      if (simPayload.title && !simPayload.name) simPayload.name = simPayload.title;
+      if (simPayload.challenges_count == null && typeof sim.challenges === 'number') simPayload.challenge_count = sim.challenges;
+      const allowed = ['game_id','name','subtitle','domain','color','level','challenge_count','active','featured','featured_order','intro_text','intro_html','intro_video_url','intro_video_title','intro_video_poster','category','subcategory','outro_video_url','outro_video_title','outro_video_poster'];
+      const cleanSim = {};
+      for (const k of Object.keys(simPayload)){
+        if (allowed.includes(k)) cleanSim[k] = simPayload[k];
+      }
+      cleanSim.game_id = sim.game_id;
+      const { error: upErr } = await sb.from('simulations').upsert(cleanSim, { onConflict: 'game_id' });
+      if (upErr) throw new Error('Upsert simulation : ' + upErr.message);
+    }
+
+    const numsToInsert = (mode === 'merge') ? newChalNums : totalChalNums;
+    const challengeRows = [];
+    const questionRows = [];
+    const notionRows = [];
+
+    challenges.forEach(c => {
+      if (!numsToInsert.includes(c.challenge_num)) return;
+      challengeRows.push({
+        game_id: sim.game_id,
+        challenge_num: c.challenge_num,
+        title: c.title || c.challenge_title || null,
+        challenge_title: c.title || c.challenge_title || null,
+        session_num: c.session_num || null,
+        session_name: c.session_name || c.session_title || null,
+        scenario: c.scenario || null,
+        duration_min: c.duration_minutes || c.duration_min || null,
+        max_score: c.max_score || null,
+        image_url: (c.header_image && c.header_image.url) || c.image_url || null,
+        image_caption: (c.header_image && c.header_image.caption) || c.image_caption || null
+      });
+
       (c.questions || []).forEach((q, qIdx) => {
-        rowsToInsert.push({
+        questionRows.push({
           game_id: sim.game_id,
           challenge_num: c.challenge_num,
-          challenge_title: c.challenge_title || null,
-          session_name: c.session_name || null,
-          question_index: q.question_index ?? qIdx,
+          question_index: q.question_index || (qIdx + 1),
           type: q.type || 'open',
-          question: q.question || null,
-          prompt: q.prompt || null,
+          question: q.question || q.text || null,
+          explanation: q.explanation || null,
+          points: q.points || null,
+          correct_answer: (q.correct_answer != null) ? String(q.correct_answer) : null,
           options: q.options || null,
-          correct_answer: q.correct_answer ?? null,
-          points: q.points ?? 10,
-          active: q.active !== false,
-          knowledge_notions: q.knowledge_notions || null,
-          knowledge_base: q.knowledge_base || null,
-          comm_before: q.comm_before || null,
-          comm_after: q.comm_after || null,
-          feedback_correct: q.feedback_correct || null,
-          feedback_wrong: q.feedback_wrong || null,
-          retain: q.retain || null,
+          yt_url: q.yt_url || null,
+          placeholder: q.placeholder || null,
+          ai_prompt: q.ai_prompt || null,
+          tool_url: q.tool_url || null,
+          tool_instruction: q.tool_instruction || null
+        });
+      });
+
+      (c.knowledge_notions || []).forEach((n, nIdx) => {
+        notionRows.push({
+          game_id: sim.game_id,
+          challenge_num: c.challenge_num,
+          title: n.title || null,
+          definition: n.definition || null,
+          analogy: n.analogy || null,
+          example: n.example || null,
+          sort_order: nIdx + 1
         });
       });
     });
 
-    if (rowsToInsert.length > 0) {
-      for (let i = 0; i < rowsToInsert.length; i += 50) {
-        const batch = rowsToInsert.slice(i, i + 50);
-        const { error: chErr } = await sb.from('challenges').insert(batch);
-        if (chErr) throw new Error(`Insert défis (batch ${i}) : ${chErr.message}`);
+    const batchSize = 200;
+    if (challengeRows.length){
+      for (let i=0; i<challengeRows.length; i+=batchSize){
+        const slice = challengeRows.slice(i, i+batchSize);
+        const { error } = await sb.from('challenges').insert(slice);
+        if (error) throw new Error('Insert challenges : ' + error.message);
+      }
+    }
+    if (questionRows.length){
+      for (let i=0; i<questionRows.length; i+=batchSize){
+        const slice = questionRows.slice(i, i+batchSize);
+        const { error } = await sb.from('questions').insert(slice);
+        if (error) throw new Error('Insert questions : ' + error.message);
+      }
+    }
+    if (notionRows.length){
+      for (let i=0; i<notionRows.length; i+=batchSize){
+        const slice = notionRows.slice(i, i+batchSize);
+        const { error } = await sb.from('notions').insert(slice);
+        if (error){ console.warn('Insert notions failed:', error.message); }
+        try { await sb.from('knowledge_notions').insert(slice); } catch(_e){}
       }
     }
 
-    const nbDefisAjoutes = newChalNums.length;
-    const nbQuestionsAjoutees = rowsToInsert.length;
+    try {
+      await fetch('https://immersium-api.mx-cosaque.workers.dev/admin/invalidate-catalogue', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ game_id: sim.game_id })
+      });
+    } catch(_e){}
+
     let msg;
-    if (!existing) {
-      msg = `${sim.name} créé (${nbDefisAjoutes} défis, ${nbQuestionsAjoutees} questions)`;
-    } else if (nbDefisAjoutes === 0) {
-      msg = 'Rien à importer';
+    if (mode === 'replace'){
+      msg = '✅ "' + (sim.name||sim.title||sim.game_id) + '" remplacé : ' + challengeRows.length + ' défis, ' + questionRows.length + ' questions, ' + notionRows.length + ' notions. Backup téléchargé.';
+    } else if (mode === 'create'){
+      msg = '✅ "' + (sim.name||sim.title||sim.game_id) + '" créé : ' + challengeRows.length + ' défis, ' + questionRows.length + ' questions.';
+    } else if (challengeRows.length === 0){
+      msg = 'Rien à importer (tous les défis existent déjà).';
     } else {
-      msg = `${nbDefisAjoutes} défi${nbDefisAjoutes > 1 ? 's' : ''} ajouté${nbDefisAjoutes > 1 ? 's' : ''} à ${existing.name} (${nbQuestionsAjoutees} questions)`;
+      msg = '✅ ' + challengeRows.length + ' défi(s) ajouté(s) à "' + existing.name + '", ' + questionRows.length + ' questions.';
     }
     showToast(msg, 'success');
     closeImportSimModal();
     renderSimulations(document.getElementById('pageArea'));
-  } catch (e) {
-    console.error('[IMPORT]', e);
-    showToast('Erreur import : ' + (e.message || e), 'error');
+  } catch(e){
+    console.error('IMPORT', e);
+    showToast('Erreur import : ' + (e.message||e), 'error');
     btn.disabled = false;
     btn.textContent = 'Réessayer';
   }
