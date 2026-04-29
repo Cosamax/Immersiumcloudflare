@@ -1276,7 +1276,7 @@ export default {
       }
 
       // ============================================================
-      // MEDIA MIGRATION (idempotent ALTER TABLE)
+      // MEDIA MIGRATION (idempotent ALTER TABLE — legacy, conservé pour compat)
       // ============================================================
       if (path === '/api/admin/migrate-media' && method === 'POST') {
         const db = env.DB;
@@ -1299,6 +1299,62 @@ export default {
           }
         }
         return json({ success: true, results });
+      }
+
+      // ============================================================
+      // SCHEMA MIGRATION (idempotent, exhaustive)
+      // Garantit que toutes les colonnes attendues par l'endpoint
+      // /api/admin/simulations/import-bundle existent en D1.
+      // À appeler une fois par environnement (ou après un upgrade).
+      // ============================================================
+      if (path === '/api/admin/migrate-schema' && method === 'POST') {
+        const admin = await requireAdmin(request, db);
+        if (!admin) return err('Authentification administrateur requise', 401);
+
+        const ops = [
+          // simulations — colonnes manquantes côté frontend / import-bundle
+          "ALTER TABLE simulations ADD COLUMN description TEXT DEFAULT ''",
+          "ALTER TABLE simulations ADD COLUMN category TEXT DEFAULT ''",
+          "ALTER TABLE simulations ADD COLUMN subcategory TEXT DEFAULT ''",
+          "ALTER TABLE simulations ADD COLUMN num TEXT DEFAULT ''",
+          "ALTER TABLE simulations ADD COLUMN sort_order INTEGER DEFAULT 0",
+          "ALTER TABLE simulations ADD COLUMN popular INTEGER DEFAULT 0",
+          "ALTER TABLE simulations ADD COLUMN intro_video_url TEXT DEFAULT ''",
+          "ALTER TABLE simulations ADD COLUMN intro_video_title TEXT DEFAULT ''",
+          "ALTER TABLE simulations ADD COLUMN intro_video_poster TEXT DEFAULT ''",
+          "ALTER TABLE simulations ADD COLUMN outro_video_url TEXT DEFAULT ''",
+          "ALTER TABLE simulations ADD COLUMN outro_video_title TEXT DEFAULT ''",
+          "ALTER TABLE simulations ADD COLUMN outro_video_poster TEXT DEFAULT ''",
+          // simulation_sessions — colonne 'subtitle' déjà observée en prod, ajoutée si absente
+          "ALTER TABLE simulation_sessions ADD COLUMN subtitle TEXT DEFAULT ''",
+          // challenges — colonnes media déjà gérées par migrate-media, redoublées ici pour idempotence
+          "ALTER TABLE challenges ADD COLUMN image_url TEXT DEFAULT ''",
+          "ALTER TABLE challenges ADD COLUMN image_caption TEXT DEFAULT ''",
+        ];
+
+        const results = [];
+        for (const sql of ops) {
+          try {
+            await db.prepare(sql).run();
+            results.push({ sql: sql.slice(0, 100), status: 'added' });
+          } catch (e) {
+            const msg = String(e && e.message || e);
+            const already = msg.includes('duplicate column') || msg.includes('already exists');
+            results.push({
+              sql: sql.slice(0, 100),
+              status: already ? 'already_exists' : 'error',
+              error: already ? null : msg,
+            });
+          }
+        }
+
+        // Bilan synthétique
+        const counts = results.reduce((acc, r) => {
+          acc[r.status] = (acc[r.status] || 0) + 1;
+          return acc;
+        }, {});
+
+        return json({ success: true, counts, results });
       }
 
 
