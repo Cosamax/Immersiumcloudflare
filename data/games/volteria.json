@@ -1,0 +1,2116 @@
+{
+  "bundle_version": "1.0",
+  "mode": "create",
+  "simulation": {
+    "game_id": "volteria",
+    "name": "VOLTERIA",
+    "subtitle": "Communication Digitale PME",
+    "domain": "Communication Digitale",
+    "category": "Communication",
+    "subcategory": "Communication digitale",
+    "color": "#0B3D5C",
+    "level": "Intermédiaire",
+    "challenge_count": 21,
+    "active": 1,
+    "featured": 0,
+    "num": "16",
+    "sort_order": 16,
+    "intro_text": "LUNDI MATIN, 8H12\n\nTu pousses la porte de l'open-space communication de VOLTERIA Pro, à Baie-Mahault. Zone industrielle de Jarry, troisième étage. Deux ans que tu travailles ici comme Chargée de Communication Digitale, et tu connais maintenant chaque collègue, chaque magasin du groupe, chaque saison commerciale.\n\nVOLTERIA Pro, c'est une PME guadeloupéenne. Soixante-quinze salariés répartis sur cinq magasins de bricolage et matériaux de construction. Le siège est ici, à Baie-Mahault. Quatre points de vente sur la Guadeloupe : Baie-Mahault, Le Gosier, Saint-François, Basse-Terre. Plus un magasin à Saint-Martin. Soixante pour cent de la clientèle est constituée d'artisans du BTP et d'entreprises. Quarante pour cent de particuliers qui font des travaux dans leur maison.\n\nTu poses ton sac sur ton bureau. Aurélie Saint-Prix, ta manager directe et Responsable Communication, arrive avec deux cafés. Trente-huit ans, antillaise, huit ans dans l'entreprise. Style chaleureux, exigeant sur le fond, bienveillante avec ses équipes.\n\n« Bonjour. Café ? Bon. Tu sais qu'on a deux mois jusqu'au lancement de KARU Pro, notre marque distributeur de matériaux. Le comité de pilotage demande une vraie stratégie de communication. Et on cherche le pilote. »\n\nLE PROJET KARU PRO\n\n« KARU Pro, c'est notre marque distributeur. Marges supérieures de 40%, et différenciation face à la concurrence nationale. Le comité de pilotage a validé le projet, mais ils veulent voir une vraie stratégie de communication digitale avant de lancer. Pas juste des posts Facebook. Une stratégie. Un plan. Des KPI. »\n\nLA COMPÉTITION INTERNE\n\n« Cédric, Mélina et toi êtes en lice pour devenir Chef de Projet Communication sur KARU Pro. C'est un nouveau poste, un cran au-dessus de ta fonction actuelle. Plus de responsabilités, un budget de 80 K€, une équipe à coordonner. Vous avez chacun six semaines pour me convaincre. Le vendredi de la sixième semaine, vous présentez votre plan au comité de pilotage. Celui qui convainc obtient le poste. »\n\n« Je ne te ferai aucun cadeau. Je ne ferai aucun cadeau à Cédric ni à Mélina non plus. C'est le mérite qui décidera. »\n\nPAR OÙ COMMENCER\n\nAurélie sort une feuille de son carnet et te la tend. « Vendredi de la sixième semaine, à dix heures, comité de pilotage. Marie-José Toussaint, la DG, sera là. Cédric pitchera, Mélina aussi, toi aussi. Quinze minutes par candidat. »\n\nTu regardes la feuille. Six chantiers. Six semaines. Tu prends une grande respiration. « Bon. Par où on commence ? »\n\nAurélie sourit. « Par la stratégie. La vraie. Pas les posts. La stratégie. »\n",
+    "intro_html": "<div class=\"ob-section-title\">LUNDI MATIN, 8H12</div>\n<p class=\"ob-narrative\">Tu pousses la porte de l&#x27;open-space communication de VOLTERIA Pro, à Baie-Mahault. Zone industrielle de Jarry, troisième étage. Deux ans que tu travailles ici comme Chargée de Communication Digitale, et tu connais maintenant chaque collègue, chaque magasin du groupe, chaque saison commerciale.</p>\n<p class=\"ob-narrative\">VOLTERIA Pro, c&#x27;est une PME guadeloupéenne. Soixante-quinze salariés répartis sur cinq magasins de bricolage et matériaux de construction. Le siège est ici, à Baie-Mahault. Quatre points de vente sur la Guadeloupe : Baie-Mahault, Le Gosier, Saint-François, Basse-Terre. Plus un magasin à Saint-Martin. Soixante pour cent de la clientèle est constituée d&#x27;artisans du BTP et d&#x27;entreprises. Quarante pour cent de particuliers qui font des travaux dans leur maison.</p>\n<p class=\"ob-narrative\">Tu poses ton sac sur ton bureau. Aurélie Saint-Prix, ta manager directe et Responsable Communication, arrive avec deux cafés. Trente-huit ans, antillaise, huit ans dans l&#x27;entreprise. Style chaleureux, exigeant sur le fond, bienveillante avec ses équipes.</p>\n<p class=\"ob-narrative\">« Bonjour. Café ? Bon. Tu sais qu&#x27;on a deux mois jusqu&#x27;au lancement de KARU Pro, notre marque distributeur de matériaux. Le comité de pilotage demande une vraie stratégie de communication. Et on cherche le pilote. »</p>\n<div class=\"ob-section-title\">LE PROJET KARU PRO</div>\n<p class=\"ob-narrative\">« KARU Pro, c&#x27;est notre marque distributeur. Marges supérieures de 40%, et différenciation face à la concurrence nationale. Le comité de pilotage a validé le projet, mais ils veulent voir une vraie stratégie de communication digitale avant de lancer. Pas juste des posts Facebook. Une stratégie. Un plan. Des KPI. »</p>\n<div class=\"ob-section-title\">LA COMPÉTITION INTERNE</div>\n<p class=\"ob-narrative\">« Cédric, Mélina et toi êtes en lice pour devenir Chef de Projet Communication sur KARU Pro. C&#x27;est un nouveau poste, un cran au-dessus de ta fonction actuelle. Plus de responsabilités, un budget de 80 K€, une équipe à coordonner. Vous avez chacun six semaines pour me convaincre. Le vendredi de la sixième semaine, vous présentez votre plan au comité de pilotage. Celui qui convainc obtient le poste. »</p>\n<p class=\"ob-narrative\">« Je ne te ferai aucun cadeau. Je ne ferai aucun cadeau à Cédric ni à Mélina non plus. C&#x27;est le mérite qui décidera. »</p>\n<div class=\"ob-section-title\">PAR OÙ COMMENCER</div>\n<p class=\"ob-narrative\">Aurélie sort une feuille de son carnet et te la tend. « Vendredi de la sixième semaine, à dix heures, comité de pilotage. Marie-José Toussaint, la DG, sera là. Cédric pitchera, Mélina aussi, toi aussi. Quinze minutes par candidat. »</p>\n<p class=\"ob-narrative\">Tu regardes la feuille. Six chantiers. Six semaines. Tu prends une grande respiration. « Bon. Par où on commence ? »</p>\n<p class=\"ob-narrative\">Aurélie sourit. « Par la stratégie. La vraie. Pas les posts. La stratégie. »</p>",
+    "description": "Pilote la communication digitale d'une PME guadeloupéenne (75 salariés, bricolage et matériaux). Six semaines pour gagner le poste de Chef de Projet sur la marque distributeur KARU Pro, face à deux collègues."
+  },
+  "sessions": [
+    {
+      "session_num": 1,
+      "title": "Session 1 — Stratégie et fondamentaux"
+    },
+    {
+      "session_num": 2,
+      "title": "Session 2 — Pilotage et optimisation"
+    },
+    {
+      "session_num": 3,
+      "title": "Session 3 — Mission et synthèse"
+    }
+  ],
+  "characters": [
+    {
+      "name": "Aurélie Saint-Prix",
+      "role": "Tutrice / Responsable Communication",
+      "description": "38 ans, antillaise, 8 ans dans l'entreprise. Style chaleureux, exigeant sur le fond, bienveillante avec ses équipes. Manage le joueur tout au long du parcours et arbitre la compétition pour le poste KARU Pro.",
+      "sort_order": 1
+    },
+    {
+      "name": "Marie-José Toussaint",
+      "role": "Directrice Générale VOLTERIA Pro",
+      "description": "Décide qui obtient le poste de Chef de Projet KARU Pro lors du COMEX final. Attendue sur des chiffres, pas sur des promesses.",
+      "sort_order": 2
+    },
+    {
+      "name": "Cédric Lormier",
+      "role": "Directeur Marketing — concurrent direct du joueur",
+      "description": "32 ans, orienté résultats. Concurrent du joueur pour le poste de Chef de Projet KARU Pro. Veut intégrer des KPI marketing comme le ROI dans le pilotage.",
+      "sort_order": 3
+    },
+    {
+      "name": "Mélina Bambou",
+      "role": "Community Manager — concurrente directe du joueur",
+      "description": "28 ans, B2C-orientée, propose du contenu visuel type magazine déco. Concurrente du joueur pour le poste KARU Pro mais aussi alliée potentielle.",
+      "sort_order": 4
+    },
+    {
+      "name": "Frédérique Sambou",
+      "role": "Responsable du magasin de Saint-François",
+      "description": "Sollicite régulièrement le pôle communication pour ses opérations magasin. Test pour la rigueur du calendrier éditorial.",
+      "sort_order": 5
+    },
+    {
+      "name": "Yvon Pacéré",
+      "role": "Client B2B fidèle — artisan BTP",
+      "description": "Gérant d'une entreprise de bâtiment, client fidèle de VOLTERIA Pro depuis 15 ans. Vouvoie le joueur. Voix authentique des artisans cibles.",
+      "sort_order": 6
+    },
+    {
+      "name": "Karim Boutrin",
+      "role": "Référent RGPD VOLTERIA Pro",
+      "description": "Alerte sur les obligations RGPD non documentées et travaille avec le joueur sur le registre des traitements et la procédure de violation.",
+      "sort_order": 7
+    },
+    {
+      "name": "Léopoldine (agence Brindille)",
+      "role": "Cheffe de projet créative — agence externe",
+      "description": "Pilote la production des visuels et de la vidéo de lancement KARU Pro. Premier interlocuteur prestataire du joueur.",
+      "sort_order": 8
+    }
+  ],
+  "competences": [
+    "Calendrier éditorial multicanal",
+    "Segmentation de base clients B2B/B2C",
+    "Brief créatif et coordination agence",
+    "Animation de communautés",
+    "Email marketing et A/B testing",
+    "Gestion de crise digitale",
+    "Mesure de performance et KPI",
+    "Coordination prestataires externes",
+    "Conformité RGPD pour PME",
+    "Pitch stratégique au COMEX"
+  ],
+  "challenges": [
+    {
+      "challenge_num": 1,
+      "session_num": 1,
+      "title": "Construire un calendrier éditorial mensuel cohérent",
+      "scenario": "Lundi 9h. Aurélie te dit : « Premier livrable. Tu construis un calendrier éditorial pour mars complet. Pour les 5 magasins. Tu m'envoies vendredi. Cédric et Mélina ont la même mission. On comparera. »",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "À quel rythme publier sur les canaux de VOLTERIA Pro ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "3 fois par semaine pour ne pas saturer.",
+              "correct": false,
+              "feedback": "Trop peu pour une PME multi-magasins B2B+B2C. Tu deviens invisible entre 2 publications."
+            },
+            {
+              "id": "opt_2",
+              "text": "6 fois par semaine sur tous les canaux.",
+              "correct": false,
+              "feedback": "Insoutenable pour ton équipe à 3. Tu vas brûler Mélina et toi-même."
+            },
+            {
+              "id": "opt_3",
+              "text": "4 à 5 publications hebdomadaires en alternant canaux selon les cibles.",
+              "correct": true,
+              "feedback": "Aurélie : « Exactement. Le rythme tient sur la durée, et l'alternance par cible évite la cacophonie. »"
+            },
+            {
+              "id": "opt_4",
+              "text": "Aucune règle fixe.",
+              "correct": false,
+              "feedback": "Sans rythme, tu disparais. L'algorithme valorise la régularité."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Frédérique Sambou (mag. Saint-François) te demande de publier sa braderie demain. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu publies tout de suite.",
+              "correct": false,
+              "feedback": "Tu casses ton calendrier dès le premier jour."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu lui réponds que sa braderie sera intégrée au calendrier de la semaine prochaine, slot 'opérations magasins' du jeudi, à condition qu'elle te fournisse visuel et texte 48h avant.",
+              "correct": true,
+              "feedback": "Tu fais de la pédagogie tout en restant utile. Tu protèges ton calendrier."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu refuses sa demande.",
+              "correct": false,
+              "feedback": "Trop rigide. Frédérique va se plaindre à Aurélie."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu publies via Mélina.",
+              "correct": false,
+              "feedback": "Tu te défausses sur Mélina, qui est dans la même course que toi."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Décris en 4 lignes la structure de calendrier éditorial mensuel que tu présenteras à Aurélie vendredi (rythme, canaux, segments cibles, slot dédié aux magasins).",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Le calendrier éditorial mensuel",
+          "definition": "Document qui structure la communication d'une PME sur tous ses canaux : quel jour, quel canal, quel type de contenu, quelle cible. Il garantit régularité, équilibre B2B/B2C et tient sur la durée.",
+          "analogy": "Comme le planning d'un restaurant : tu sais quel plat est servi quel jour à quelle table.",
+          "example": "4 à 5 publications hebdo réparties par canal (Facebook, email, site) et par cible (artisans B2B / particuliers B2C / opérations magasins).",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 2,
+      "session_num": 1,
+      "title": "Segmenter ta base clients : B2B vs B2C, fidèles vs prospects",
+      "scenario": "Mardi 10h. Cédric passe avec un fichier Excel. « 2400 contacts arrosés de la même newsletter pendant 2 ans. Taux d'ouverture en chute. Aurélie veut qu'on segmente. Mélina veut t'aider. Synchro avec elle ? »",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Comment cadres-tu la collaboration avec Mélina ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "« OK Mélina, on bosse ensemble. Tu fais ce que tu veux. »",
+              "correct": false,
+              "feedback": "Trop flou. Vous allez vous chevaucher."
+            },
+            {
+              "id": "opt_2",
+              "text": "« Non merci, je gère seule. Aurélie m'a confié la mission. »",
+              "correct": false,
+              "feedback": "Trop fermé. Tu te coupes d'une vraie ressource."
+            },
+            {
+              "id": "opt_3",
+              "text": "« Avec plaisir. Moi je définis les 4 segments et la logique, toi tu prends en charge l'écriture des 4 newsletters types. On se cale jeudi 14h. »",
+              "correct": true,
+              "feedback": "Mélina : « Parfait. À jeudi. » Vous avancez plus vite ensemble."
+            },
+            {
+              "id": "opt_4",
+              "text": "« Voyons mardi prochain. »",
+              "correct": false,
+              "feedback": "Tu temporises. Tu prends du retard."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "412 contacts n'ouvrent plus rien depuis 18 mois. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu les laisses dans la base.",
+              "correct": false,
+              "feedback": "Tu nuis à ton taux d'ouverture global."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu lances une campagne de réactivation, puis tu supprimes ceux qui n'ouvrent toujours pas après 30 jours.",
+              "correct": true,
+              "feedback": "Tu fais juste. La réactivation respecte les contacts. La suppression nettoie ta base."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu les supprimes immédiatement.",
+              "correct": false,
+              "feedback": "Trop radical. Certains peuvent revenir."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu transfères à Mélina.",
+              "correct": false,
+              "feedback": "Tu te défausses."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Décris les 4 segments (axes B2B/B2C × fidèles/prospects) avec un exemple de message-type adapté à chacun.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "La segmentation 2x2",
+          "definition": "Découper sa base contacts sur 2 axes croisés : type de client (B2B / B2C) × niveau de relation (fidèle / prospect). On obtient 4 segments, chacun avec un message adapté.",
+          "analogy": "Comme un menu adapté à chaque clientèle : tu ne sers pas la même chose à un habitué qu'à un touriste.",
+          "example": "A1 : artisans fidèles (offres pro, nouveautés). A2 : artisans prospects (preuves, démos). B1 : particuliers fidèles (saisons). B2 : particuliers prospects (notoriété).",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 3,
+      "session_num": 1,
+      "title": "Rédiger un brief créatif pour ton agence partenaire",
+      "scenario": "Mercredi 14h. Aurélie te dit : « Pour KARU Pro, on doit produire des visuels et une vidéo de lancement. Cédric a négocié 25 K€. C'est toi qui rédiges le brief créatif. Tu me l'envoies vendredi. »",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Comment décris-tu la cible dans ton brief à Léopoldine (agence Brindille) ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "« Artisans du BTP guadeloupéens. »",
+              "correct": false,
+              "feedback": "Trop générique. Léopoldine va produire un visuel banal."
+            },
+            {
+              "id": "opt_2",
+              "text": "« Hommes 30-55 ans, CSP+, vivant en Guadeloupe. »",
+              "correct": false,
+              "feedback": "Données démographiques mais pas humaines."
+            },
+            {
+              "id": "opt_3",
+              "text": "« Artisan BTP, 35-45 ans, gérant d'une entreprise de 3 à 8 salariés, achète aujourd'hui chez la concurrence par habitude, valorise la fiabilité du produit et la disponibilité immédiate. »",
+              "correct": true,
+              "feedback": "Aurélie : « Voilà. Tu donnes une personne, ses croyances actuelles, et ce qui la fera bouger. »"
+            },
+            {
+              "id": "opt_4",
+              "text": "« Tout le monde qui pourrait acheter chez VOLTERIA Pro. »",
+              "correct": false,
+              "feedback": "Tu n'as pas segmenté."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Léopoldine te dit que 25 K€ est un peu serré pour le scope demandé. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu acceptes immédiatement de réduire les livrables.",
+              "correct": false,
+              "feedback": "Tu cèdes sans négocier."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu lui demandes ce qu'elle propose comme adaptation. Tu reviens vers Aurélie avec les options.",
+              "correct": true,
+              "feedback": "Tu négocies dans le respect. Tu remontes à Aurélie qui valide."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu lui dis que le budget est non négociable.",
+              "correct": false,
+              "feedback": "Trop rigide. Léopoldine va livrer du moyen."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu acceptes d'augmenter le budget de 5 K€ sans en parler à Aurélie.",
+              "correct": false,
+              "feedback": "Faute professionnelle grave."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Rédige les 5 sections clés du brief créatif KARU Pro pour Léopoldine (cible, message, ton, livrables, contraintes).",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Le brief créatif en 5 sections",
+          "definition": "Document que tu remets à ton agence externe pour cadrer une production. 5 sections : cible (persona précis), message clé, ton, livrables attendus, contraintes (budget, deadline, charte).",
+          "analogy": "Comme la commande chez l'artisan : plus tu es précis sur le produit final, plus la livraison est juste.",
+          "example": "Cible = artisan BTP 35-45 ans, gérant 3-8 salariés, achète aujourd'hui à la concurrence. Message = des outils qui tiennent. Ton = factuel. Livrables = 1 vidéo + 5 visuels. Budget = 25 K€.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 4,
+      "session_num": 1,
+      "title": "Identifier le bon ton pour les artisans : ni trop techno, ni trop marketing",
+      "scenario": "Jeudi 11h. Tu reçois la première proposition de copywriting de Brindille. Le slogan : « KARU Pro, l'innovation au service de votre passion ». Yvon Pacéré est dans le bureau d'Aurélie. Tu sors lui montrer. Il sourit poliment : « C'est joli, mais ça ne me parle pas. Je veux des outils qui tiennent. La passion, je l'ai déjà. »",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Quel slogan tu retiens pour KARU Pro ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "« KARU Pro, l'excellence au service du professionnel exigeant. »",
+              "correct": false,
+              "feedback": "Toujours dans le marketing creux."
+            },
+            {
+              "id": "opt_2",
+              "text": "« KARU Pro, la révolution outillage. »",
+              "correct": false,
+              "feedback": "Tu remets 'révolution', le mot qui agace."
+            },
+            {
+              "id": "opt_3",
+              "text": "« KARU Pro, des outils qui tiennent. »",
+              "correct": true,
+              "feedback": "Aurélie : « Exactement. Court, factuel, ça parle directement à Yvon. »"
+            },
+            {
+              "id": "opt_4",
+              "text": "« KARU Pro, votre allié quotidien. »",
+              "correct": false,
+              "feedback": "Trop générique."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Quels arguments produit choisis-tu pour la fiche KARU Pro destinée aux artisans ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "« Innovant, premium, garantie satisfaction. »",
+              "correct": false,
+              "feedback": "Trois mots vides."
+            },
+            {
+              "id": "opt_2",
+              "text": "« Testé sur 200 chantiers réels. Garantie 5 ans. Disponible en 24h en magasin. »",
+              "correct": true,
+              "feedback": "Trois bénéfices factuels. Yvon hocherait la tête."
+            },
+            {
+              "id": "opt_3",
+              "text": "« Made in Antilles, fierté locale. »",
+              "correct": false,
+              "feedback": "Bons arguments mais secondaires pour un artisan."
+            },
+            {
+              "id": "opt_4",
+              "text": "« Le meilleur rapport qualité-prix. »",
+              "correct": false,
+              "feedback": "Phrase générique sans preuve."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Reformule en 3 phrases courtes le pitch KARU Pro destiné à Yvon Pacéré, en t'appuyant sur des faits vérifiables.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Le ton juste pour les artisans",
+          "definition": "Pour parler à un artisan B2B, on fuit deux extrêmes : le marketing creux (excellence, passion, révolution) et le techno-jargon. On parle factuel, court, avec des preuves vérifiables.",
+          "analogy": "Comme expliquer un outil sur un chantier : pas de blabla, on montre comment ça tient et combien de temps.",
+          "example": "Au lieu de 'l'innovation au service de votre passion', dire 'testé sur 200 chantiers, garantie 5 ans, dispo en 24h'.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 5,
+      "session_num": 1,
+      "title": "Animer la page Facebook avec un mix B2B/B2C",
+      "scenario": "Vendredi 14h. Tu présentes ton plan à Aurélie. Mélina propose 100% contenu visuel B2C type magazine déco. Tu proposes ta règle des tiers. Cédric passe et s'arrête.",
+      "duration_min": 60,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Pourquoi défendre la règle des tiers (1/3 B2B, 1/3 B2C, 1/3 mixte) ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "« Parce que B2B c'est plus sérieux. »",
+              "correct": false,
+              "feedback": "Avis subjectif. Cédric va te demander des chiffres."
+            },
+            {
+              "id": "opt_2",
+              "text": "« Parce que Aurélie a dit qu'on visait les deux cibles. »",
+              "correct": false,
+              "feedback": "Tu te défausses sur l'autorité."
+            },
+            {
+              "id": "opt_3",
+              "text": "« Parce que 60% de notre CA vient des artisans B2B. La règle des tiers permet de garder les deux cibles présentes sans saturer ni les uns ni les autres. »",
+              "correct": true,
+              "feedback": "Aurélie sourit. Cédric hoche la tête. Tu appuies ta logique sur un chiffre business."
+            },
+            {
+              "id": "opt_4",
+              "text": "« Parce que Mélina ne connaît pas le B2B. »",
+              "correct": false,
+              "feedback": "Tu attaques Mélina personnellement."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Sous un post B2B, des artisans corrigent une info technique. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu effaces les commentaires correctifs.",
+              "correct": false,
+              "feedback": "Catastrophe. La suppression sera vue comme du déni d'expertise."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu réponds publiquement en remerciant pour la précision et en mettant à jour le post avec un addendum.",
+              "correct": true,
+              "feedback": "Tu valorises l'expertise des artisans. Le post va gagner en engagement."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu ignores les commentaires.",
+              "correct": false,
+              "feedback": "Tu te discrédites auprès de ta cible la plus précieuse."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu transfères à Cédric.",
+              "correct": false,
+              "feedback": "Tu te défausses."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Donne 3 idées concrètes de posts (1 B2B, 1 B2C, 1 mixte) en cohérence avec la règle des tiers.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "La règle des tiers (mix B2B/B2C)",
+          "definition": "Sur une page Facebook qui adresse 2 cibles, on répartit 1/3 contenu B2B (artisans), 1/3 contenu B2C (particuliers), 1/3 contenu mixte (les deux). Aucune cible ne se sent oubliée ni saturée.",
+          "analogy": "Comme une radio généraliste : musique, info, divertissement — alternance qui garde tout le monde à l'écoute.",
+          "example": "Lundi B2B (chantier réussi), mercredi B2C (DIY salle de bains), vendredi mixte (braderie magasin).",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 6,
+      "session_num": 1,
+      "title": "Préparer une campagne emailing : la règle des 3 lectures",
+      "scenario": "Lundi semaine 2, 9h. Aurélie te confie la première campagne pré-lancement KARU Pro. Cible : 800 artisans B2B fidèles. Date d'envoi : mardi prochain. Tu as 7 jours.",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Tu testes l'email avant envoi. Que vérifies-tu en priorité ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Que le mail s'ouvre dans Outlook desktop.",
+              "correct": false,
+              "feedback": "Outlook desktop est utilisé par moins de 20% des artisans."
+            },
+            {
+              "id": "opt_2",
+              "text": "Que le mail s'affiche bien dans Gmail.",
+              "correct": false,
+              "feedback": "Bien, mais insuffisant."
+            },
+            {
+              "id": "opt_3",
+              "text": "Que le mail s'affiche correctement sur smartphone (60% des ouvertures B2B), Gmail et Outlook desktop.",
+              "correct": true,
+              "feedback": "Tu fais juste. Trois canaux testés."
+            },
+            {
+              "id": "opt_4",
+              "text": "Que les images sont bien dans le mail.",
+              "correct": false,
+              "feedback": "Important mais pas le seul critère."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Mélina te signale que sur smartphone, le bouton CTA est sous la ligne de flottaison. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu remontes le bouton CTA en haut, dans la première vue mobile, et tu réenvoies un test.",
+              "correct": true,
+              "feedback": "Bonne réaction. Tu corriges immédiatement et tu re-testes."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu lui dis que c'est volontaire.",
+              "correct": false,
+              "feedback": "Faux. Sur smartphone, beaucoup ne scrollent jamais."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu envoies quand même.",
+              "correct": false,
+              "feedback": "Tu rates l'optimisation."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu reportes la campagne.",
+              "correct": false,
+              "feedback": "Sur-réaction."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Rédige l'objet, le pré-header et le CTA de ton email pré-lancement KARU Pro pour les 800 artisans B2B.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "La règle des 3 lectures emailing",
+          "definition": "Avant tout envoi, tester l'email dans 3 contextes : smartphone (60% des ouvertures B2B), Gmail desktop, Outlook desktop. Vérifier : affichage, position du CTA dans la première vue, lisibilité.",
+          "analogy": "Comme essayer une tenue dans 3 miroirs différents avant de sortir : ce qui passe dans un miroir peut casser dans un autre.",
+          "example": "CTA en bas de mail : tombe sous la ligne de flottaison sur smartphone → on remonte le CTA et on re-teste.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 7,
+      "session_num": 1,
+      "title": "L'incident d'envoi à toute la base : 2400 personnes au lieu de 800",
+      "scenario": "Mardi semaine 2, 9h32. Mélina te ping : 'Heu... j'ai vu que ton mail KARU Pro est arrivé chez ma sœur qui n'est pas artisane.' Tu vérifies. Tu as oublié de cocher le filtre 'segment B2B fidèles'. Aurélie est en COMEX. Cédric est sur le site de Saint-François. Tu es seule.",
+      "duration_min": 70,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Premier réflexe ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu envoies un message correctif à toute la base immédiatement.",
+              "correct": false,
+              "feedback": "Trop précipité. Sans recul, ton message va aggraver la confusion."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu attends qu'Aurélie sorte de réunion.",
+              "correct": false,
+              "feedback": "Tu perds 1h de temps précieux."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu envoies un SMS à Aurélie pour la prévenir, et tu prépares un message correctif que tu lui montres dès qu'elle sort.",
+              "correct": true,
+              "feedback": "Tu fais juste. Tu préviens sans déranger, tu prépares la solution."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu supprimes la campagne dans Brevo.",
+              "correct": false,
+              "feedback": "Impossible techniquement. Une campagne envoyée est partie."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Quel message correctif rédiges-tu ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "« Bonjour, suite à un dysfonctionnement technique majeur, vous avez reçu par erreur un email destiné à nos clients pros... »",
+              "correct": false,
+              "feedback": "Tu mens sur la cause. Si un client questionne, tu seras pris en défaut."
+            },
+            {
+              "id": "opt_2",
+              "text": "« Bonjour, vous avez reçu ce matin un email destiné à nos clients pros. Si vous n'êtes pas concerné, merci de l'ignorer. Pour les particuliers, nous reviendrons vers vous très prochainement avec un contenu adapté. »",
+              "correct": true,
+              "feedback": "Aurélie : 'Bien. Tu reconnais sans en faire un drame, tu rassures sur la suite, tu signes humainement.'"
+            },
+            {
+              "id": "opt_3",
+              "text": "« Bonjour, désolés, le mail précédent était une erreur. »",
+              "correct": false,
+              "feedback": "Trop sec, suspicieux."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu n'envoies pas de correctif.",
+              "correct": false,
+              "feedback": "Tu touches que 23 personnes sur 2400."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Décris les 5 réflexes que tu retiens de cet incident pour qu'il ne se reproduise jamais (prévenir, corriger, répondre, analyser, documenter).",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'incident de segmentation : 5 réflexes",
+          "definition": "Quand un email part au mauvais segment : 1) Prévenir le manager (SMS, pas drame), 2) Préparer un correctif clair, 3) Répondre humainement sans mentir, 4) Analyser la cause, 5) Documenter pour qu'il ne se reproduise pas.",
+          "analogy": "Comme envoyer une invitation pro à toute ta liste perso : tu ne supprimes pas, tu rectifies posément.",
+          "example": "2400 personnes au lieu de 800 : SMS à Aurélie + correctif rédigé + envoi correctif validé + post-mortem sur le filtre oublié.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 8,
+      "session_num": 2,
+      "title": "A/B testing : faire parler les chiffres",
+      "scenario": "Mercredi 10h. Cédric te demande : 'On a une intuition sur l'objet. Tu peux faire un A/B test avant l'envoi global ?'",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Tu testes 2 objets sur 200 contacts. L'objet B fait +18% d'ouverture. Tu fais quoi pour le reste ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu envoies aux 800 sans plus de test.",
+              "correct": false,
+              "feedback": "C'est le but, mais valide d'abord avec Cédric le délai."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu confirmes à Cédric, tu programmes l'envoi pour demain 9h aux 600 restants.",
+              "correct": true,
+              "feedback": "Tu fais juste. Tu n'envoies qu'aux 600 restants pour ne pas spammer ceux qui ont déjà reçu."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu fais un nouveau test sur 200 autres.",
+              "correct": false,
+              "feedback": "Sur-test inutile. La différence est significative."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu envoies à toute la base 2400 d'un coup.",
+              "correct": false,
+              "feedback": "Tu spammes la base B2C."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Comment racontes-tu l'apprentissage de l'A/B test à Cédric ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "'L'objet B est mieux, on continue.'",
+              "correct": false,
+              "feedback": "Trop binaire."
+            },
+            {
+              "id": "opt_2",
+              "text": "'L'objet B est plus engageant, parce qu'il parle bénéfice (vos outils) vs marque (KARU Pro). Leçon : nos prochains objets parleront du bénéfice client avant de parler de nous.'",
+              "correct": true,
+              "feedback": "Tu fais l'analyse. Tu donnes l'enseignement transposable."
+            },
+            {
+              "id": "opt_3",
+              "text": "'On verra à la prochaine campagne.'",
+              "correct": false,
+              "feedback": "Tu rates l'apprentissage."
+            },
+            {
+              "id": "opt_4",
+              "text": "'Mélina avait raison.'",
+              "correct": false,
+              "feedback": "Hors sujet."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Rédige un mini-protocole d'A/B test (variable, taille échantillon, seuil de significativité, durée) que tu appliqueras systématiquement.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'A/B testing rigoureux",
+          "definition": "Tester UNE seule variable (objet, heure, CTA…) sur deux échantillons comparables (≥100 contacts chacun), mesurer une métrique précise, décider en 24-48h. On ne teste jamais 2 choses à la fois.",
+          "analogy": "Comme une recette : tu changes le sel OU la cuisson, jamais les deux, sinon tu ne sais pas ce qui a changé.",
+          "example": "Objet A 'KARU Pro disponible' vs Objet B 'Vos outils enfin en stock' sur 200 contacts → B fait +18% → on envoie B aux 600 restants.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 9,
+      "session_num": 2,
+      "title": "Mesurer ce qui compte vraiment : 4 KPI pour piloter",
+      "scenario": "Jeudi 14h. Aurélie te dit : 'Cédric a 47 indicateurs. Je veux que toi tu en aies 4. Lesquels et pourquoi ?'",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Lequel de ces indicateurs N'est PAS un de tes 4 KPI hebdomadaires ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Le nombre d'abonnés Facebook (vanité).",
+              "correct": true,
+              "feedback": "Bien. Métrique de vanité qui ne dit rien sur l'efficacité."
+            },
+            {
+              "id": "opt_2",
+              "text": "Le taux d'ouverture.",
+              "correct": false,
+              "feedback": "Mauvais. KPI numéro 1."
+            },
+            {
+              "id": "opt_3",
+              "text": "Le taux de clics.",
+              "correct": false,
+              "feedback": "Mauvais. Indispensable."
+            },
+            {
+              "id": "opt_4",
+              "text": "Le taux de désabonnement.",
+              "correct": false,
+              "feedback": "Mauvais. Indispensable."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Cédric te demande d'ajouter le ROI à tes 4 KPI. Tu réponds ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "'Je le mettrai en KPI 5 plus tard.'",
+              "correct": false,
+              "feedback": "Tu cèdes sans logique."
+            },
+            {
+              "id": "opt_2",
+              "text": "'Le ROI est pour ton reporting marketing, pas pour le pilotage.'",
+              "correct": false,
+              "feedback": "Trop abrupt avec Cédric."
+            },
+            {
+              "id": "opt_3",
+              "text": "'Le ROI est essentiel mais c'est trimestriel, pas hebdo. Mes 4 KPI sont des indicateurs hebdo qui me permettent d'agir vite. Le ROI vient en bilan trimestriel.'",
+              "correct": true,
+              "feedback": "Tu nuances bien."
+            },
+            {
+              "id": "opt_4",
+              "text": "'Tu as raison, j'ajoute le ROI.'",
+              "correct": false,
+              "feedback": "Tu cèdes sans logique."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Liste tes 4 KPI hebdomadaires avec leur seuil d'alerte et l'action déclenchée si le seuil est franchi.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "4 KPI pour piloter (pas 47)",
+          "definition": "Pour piloter en hebdo, on garde 4 indicateurs actionnables : taux d'ouverture, taux de clics, taux de désabonnement, taux d'engagement social. Le ROI vient en bilan trimestriel, pas en pilotage hebdo.",
+          "analogy": "Comme le tableau de bord d'une voiture : 4 indicateurs visibles d'un coup d'œil suffisent à conduire.",
+          "example": "KPI 1 ouverture (>22%), KPI 2 clic (>3%), KPI 3 désabo (<0,5%), KPI 4 engagement Facebook (>4%).",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 10,
+      "session_num": 2,
+      "title": "Optimiser tes campagnes selon les retours",
+      "scenario": "Lundi semaine 3. Tu présentes ton premier reporting. Aurélie : 'Et la suite ? Comment tu améliores ?'",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Quelle action d'optimisation tu lances cette semaine ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Refaire toutes les campagnes depuis le début.",
+              "correct": false,
+              "feedback": "Sur-réaction."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tester l'heure d'envoi : 9h vs 11h vs 17h, sur 100 contacts chaque.",
+              "correct": true,
+              "feedback": "Tu testes une variable précise sans tout casser."
+            },
+            {
+              "id": "opt_3",
+              "text": "Changer l'agence créative.",
+              "correct": false,
+              "feedback": "Hors sujet."
+            },
+            {
+              "id": "opt_4",
+              "text": "Doubler le budget.",
+              "correct": false,
+              "feedback": "Question budgétaire hors ressort."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Quelle métrique tu suis pour valider ton test d'horaire ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Le nombre de likes Facebook.",
+              "correct": false,
+              "feedback": "Hors sujet."
+            },
+            {
+              "id": "opt_2",
+              "text": "Le taux d'ouverture par tranche horaire de test.",
+              "correct": true,
+              "feedback": "Tu mesures ce qui répond à ta question."
+            },
+            {
+              "id": "opt_3",
+              "text": "Le ROI à 30 jours.",
+              "correct": false,
+              "feedback": "Trop long pour un test rapide."
+            },
+            {
+              "id": "opt_4",
+              "text": "Les désabonnements.",
+              "correct": false,
+              "feedback": "Indicateur secondaire ici."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Décris ta routine d'optimisation hebdomadaire : 1 hypothèse à tester, 1 variable, 1 décision à J+7.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Optimisation par hypothèse",
+          "definition": "Chaque semaine, 1 hypothèse à tester, 1 variable, 1 décision à J+7. On évite la sur-réaction (tout refaire) et l'inaction (rien tester).",
+          "analogy": "Comme un sportif qui ajuste un détail par séance : posture, respiration, foulée — pas tout en même temps.",
+          "example": "Semaine 3 : 'les ouvertures chutent l'après-midi'. Test 9h vs 11h vs 17h sur 100 contacts. Décision le mardi suivant.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 11,
+      "session_num": 2,
+      "title": "Animer la communauté Facebook : 3 réflexes",
+      "scenario": "Mardi semaine 3, 14h. Un troll : 'VOLTERIA Pro c'est de la merde, j'ai eu un produit défectueux et personne ne me répond.' 47 likes en 30 min. Aurélie te texte : 'Tu gères ?'",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Comment réponds-tu publiquement ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "« Vous mentez Monsieur. »",
+              "correct": false,
+              "feedback": "Tu rentres dans le clash."
+            },
+            {
+              "id": "opt_2",
+              "text": "« Bonjour, nous prenons votre retour très au sérieux. Pouvez-vous nous écrire en privé avec votre numéro de commande ? Notre équipe SAV vous rappelle dans la journée. »",
+              "correct": true,
+              "feedback": "Tu désamorces. Les 47 likeurs voient une entreprise qui assume."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu supprimes le commentaire.",
+              "correct": false,
+              "feedback": "La suppression sera vue. Effet décuplé."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu ne réponds pas.",
+              "correct": false,
+              "feedback": "Le commentaire reste visible et fait des petits."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Tu as récupéré son numéro de commande, tu vois qu'il y a vraiment eu un défaut produit. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu lui rembourses immédiatement et tu clos.",
+              "correct": false,
+              "feedback": "Tu agis vite mais sans investiguer."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu lui demandes des preuves d'achat.",
+              "correct": false,
+              "feedback": "Tu vas le braquer."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu reconnais l'erreur, tu rembourses, et tu remontes l'incident à Aurélie pour qu'on regarde pourquoi son SAV est passé entre les mailles.",
+              "correct": true,
+              "feedback": "Tu agis sur les deux fronts."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu lui demandes d'effacer son commentaire en échange du remboursement.",
+              "correct": false,
+              "feedback": "Chantage, très mauvaise pratique."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Décris en 3 réflexes ta charte de community management VOLTERIA Pro (réactivité, ton, escalade interne).",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'animation de communauté en 3 réflexes",
+          "definition": "Réagir à 100% des commentaires sous 24h, liker les positifs, modérer fermement (sans censurer) les négatifs en sortant du public vers le privé.",
+          "analogy": "Comme tenir le standard d'un magasin : on répond à tout le monde, même au client mécontent — surtout au client mécontent.",
+          "example": "Troll public : 'Bonjour, écrivez-nous en privé avec votre numéro de commande, on vous rappelle dans la journée.' → on désamorce, on traite en privé.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 12,
+      "session_num": 2,
+      "title": "Gérer une crise sur les réseaux : pas de panique, méthode",
+      "scenario": "Mercredi semaine 3, 8h45. Mélina te ping : 'T'as vu ce que Castorama dit sur KARU Pro ?' Campagne ciblée, virale.",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Premier réflexe ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu réunis Aurélie et Cédric en urgence.",
+              "correct": true,
+              "feedback": "Tu fais juste. Une crise se gère collectivement."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu réponds publiquement seule pour réagir vite.",
+              "correct": false,
+              "feedback": "Trop risqué."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu attends que ça passe.",
+              "correct": false,
+              "feedback": "Une crise digitale ne passe pas seule."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu attaques Castorama frontalement.",
+              "correct": false,
+              "feedback": "Tu rentres dans la guerre médiatique."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Quelle stratégie de réponse à 24h ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Attaquer en justice pour diffamation.",
+              "correct": false,
+              "feedback": "Long, coûteux, peu de chances."
+            },
+            {
+              "id": "opt_2",
+              "text": "Sortir un communiqué calme qui valorise les preuves de qualité KARU Pro (tests, garantie, 200 chantiers) sans citer Castorama.",
+              "correct": true,
+              "feedback": "Vous prenez la haute route."
+            },
+            {
+              "id": "opt_3",
+              "text": "Lancer une campagne dénigrante.",
+              "correct": false,
+              "feedback": "Vous descendez à leur niveau."
+            },
+            {
+              "id": "opt_4",
+              "text": "Ignorer.",
+              "correct": false,
+              "feedback": "Vous laissez le terrain."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Décris la méthode 4 temps de gestion de crise (alerte / cellule / message / suivi) que tu appliques à ce cas Castorama.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "La gestion de crise digitale en 4 temps",
+          "definition": "1) Alerte (mobiliser la cellule), 2) Qualifier (ampleur, sources, audience), 3) Message (calme, factuel, valorise les preuves), 4) Suivi (monitoring 72h, débrief).",
+          "analogy": "Comme un pompier : on n'éteint pas un feu en criant, on suit un protocole.",
+          "example": "Castorama attaque KARU Pro : Aurélie + Cédric + toi en cellule, communiqué qui valorise les 200 chantiers + garantie 5 ans, sans citer le concurrent.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 13,
+      "session_num": 2,
+      "title": "Coordonner avec Brindille (agence externe) au quotidien",
+      "scenario": "Jeudi semaine 3. Léopoldine envoie la première proposition créative. Cédric veut tout changer. Aurélie veut deux ajustements. Mélina trouve ça super.",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Comment tu remontes les retours à Léopoldine ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu transmets tous les commentaires bruts à Léopoldine.",
+              "correct": false,
+              "feedback": "Tu lui transmets le chaos."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu fais une moyenne des avis.",
+              "correct": false,
+              "feedback": "Une moyenne d'opinions divergentes donne du mou."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu organises une réunion interne pour aligner les retours, puis tu envoies un brief de retour structuré à Léopoldine.",
+              "correct": true,
+              "feedback": "Tu fais juste. Léopoldine reçoit une voix unifiée."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu décides toute seule.",
+              "correct": false,
+              "feedback": "Tu prends une responsabilité qui n'est pas la tienne."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Léopoldine demande 5 jours de rab pour intégrer les retours. Cédric refuse. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu négocies un compromis : 3 jours de plus, mais en limitant la portée des retours aux 3 plus importants.",
+              "correct": true,
+              "feedback": "Tu trouves le juste milieu."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu accordes les 5 jours sans en parler à Cédric.",
+              "correct": false,
+              "feedback": "Tu prends une décision qui n'est pas la tienne."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu refuses, deadline c'est deadline.",
+              "correct": false,
+              "feedback": "Léopoldine va livrer du moyen."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu changes d'agence.",
+              "correct": false,
+              "feedback": "Sur-réaction."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Rédige le format-type du brief de retour structuré que tu enverras à Léopoldine après chaque comité de relecture.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "La voix unifiée vers l'agence",
+          "definition": "Quand plusieurs personnes commentent une livraison agence, on n'envoie JAMAIS les retours bruts. On organise un comité interne, on tranche les contradictions, on envoie UN brief de retour structuré.",
+          "analogy": "Comme un orchestre : un seul chef parle au compositeur, pas chaque musicien séparément.",
+          "example": "Cédric veut tout changer, Aurélie veut 2 ajustements, Mélina valide → réunion 30 min → brief retour à Léopoldine en 5 points hiérarchisés.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 14,
+      "session_num": 2,
+      "title": "Produire une vidéo lancement : brief, tournage, livraison",
+      "scenario": "Vendredi semaine 3. Léopoldine propose de tourner avec un acteur professionnel parisien. Toi tu as une autre idée.",
+      "duration_min": 60,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Qui choisis-tu pour la vidéo de lancement ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu acceptes l'acteur parisien.",
+              "correct": false,
+              "feedback": "Tu rates l'authenticité locale."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu acceptes mais tu négocies le prix.",
+              "correct": false,
+              "feedback": "Toujours pas authentique."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu proposes Yvon Pacéré, vrai artisan client de VOLTERIA Pro depuis 15 ans, contre une remise sur ses prochains achats.",
+              "correct": true,
+              "feedback": "Authenticité locale + économie + relation client renforcée."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu proposes Cédric ou Aurélie.",
+              "correct": false,
+              "feedback": "Pas crédible pour les artisans cible."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Quoi de plus important à préparer avec Yvon avant le tournage ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Le maquillage et la garde-robe.",
+              "correct": false,
+              "feedback": "Détails. Tu rates l'essentiel."
+            },
+            {
+              "id": "opt_2",
+              "text": "Le script court qu'il va lire, en lui laissant la liberté de reformuler dans son langage naturel.",
+              "correct": true,
+              "feedback": "Tu fais juste. Yvon va dire avec ses mots."
+            },
+            {
+              "id": "opt_3",
+              "text": "La rémunération précise.",
+              "correct": false,
+              "feedback": "Important mais c'est l'agence qui contractualise."
+            },
+            {
+              "id": "opt_4",
+              "text": "Les questions des journalistes.",
+              "correct": false,
+              "feedback": "Hors sujet."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Rédige un mini-script (3 phrases) que prononcerait Yvon Pacéré dans la vidéo de lancement KARU Pro, dans son langage à lui.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "L'authenticité locale en vidéo",
+          "definition": "Pour parler aux artisans, un vrai client local crédible bat un acteur professionnel. Le vrai client lit un script court mais reformule dans son langage naturel.",
+          "analogy": "Comme un témoignage en justice : on croit celui qui parle de mémoire, pas celui qui récite.",
+          "example": "Yvon Pacéré, artisan client depuis 15 ans, dit avec ses mots 'ces outils tiennent sur le chantier' — au lieu d'un acteur parisien qui récite.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 15,
+      "session_num": 3,
+      "title": "Analyser les statistiques mensuelles : raconter avec des chiffres",
+      "scenario": "Lundi semaine 4, 9h. Aurélie veut un bilan mars complet pour le COMEX vendredi.",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Quel format de reporting tu choisis pour le COMEX ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Excel brut de 47 lignes avec tous les chiffres.",
+              "correct": false,
+              "feedback": "Personne ne lira."
+            },
+            {
+              "id": "opt_2",
+              "text": "Slide unique avec les 4 KPI et les 3 enseignements clés en gras.",
+              "correct": true,
+              "feedback": "Lisible en 30 secondes au COMEX."
+            },
+            {
+              "id": "opt_3",
+              "text": "Document Word de 12 pages.",
+              "correct": false,
+              "feedback": "Trop long."
+            },
+            {
+              "id": "opt_4",
+              "text": "Vidéo de présentation de 5 minutes.",
+              "correct": false,
+              "feedback": "Inadapté."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Cédric te demande d'intégrer le ROI dans la slide. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu intègres le ROI à la présentation, c'est pertinent au COMEX.",
+              "correct": true,
+              "feedback": "Tu fais juste. Au COMEX, le ROI est attendu."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu refuses, ce n'est pas dans tes 4 KPI.",
+              "correct": false,
+              "feedback": "Trop rigide."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu transmets à Cédric pour qu'il l'intègre lui-même.",
+              "correct": false,
+              "feedback": "Tu te défausses."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu reportes au prochain COMEX.",
+              "correct": false,
+              "feedback": "Cédric a raison de le demander."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Rédige les 3 enseignements clés que tu mettras en gras sur ta slide unique COMEX (forme : 1 phrase = 1 chiffre + 1 décision).",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Le reporting COMEX : une slide, trois enseignements",
+          "definition": "Au COMEX, format 1 slide max : 4 KPI clés + 3 enseignements en gras (1 phrase = 1 chiffre + 1 décision). Lisible en 30 secondes. Le détail Excel reste en annexe.",
+          "analogy": "Comme un journal télévisé : titres en haut, détail si on creuse — pas l'inverse.",
+          "example": "Ouverture 24% (+3 pts) → on garde l'objet bénéfice. Désabo 0,3% → seuil OK. Clic 2,1% (-0,4) → tester nouveau CTA.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 16,
+      "session_num": 3,
+      "title": "Faire monter en compétence Mélina : déléguer sans démissionner",
+      "scenario": "Mardi semaine 4. Aurélie : 'Tu vas peut-être devenir Chef de Projet KARU Pro. Comment tu fais évoluer Mélina pour qu'elle prenne certaines de tes missions ?'",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Quelle progression tu choisis pour Mélina ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tout lui confier d'un coup.",
+              "correct": false,
+              "feedback": "Trop brutal. Mélina ne sera pas prête."
+            },
+            {
+              "id": "opt_2",
+              "text": "Garder ton périmètre tel quel.",
+              "correct": false,
+              "feedback": "Tu rates l'opportunité de monter Mélina."
+            },
+            {
+              "id": "opt_3",
+              "text": "Lui confier d'abord les posts Instagram en autonomie totale, puis l'animation Facebook en niveau 2, puis observer.",
+              "correct": true,
+              "feedback": "Progression douce, tu observes, tu ajustes."
+            },
+            {
+              "id": "opt_4",
+              "text": "La cantonner à des tâches mineures.",
+              "correct": false,
+              "feedback": "Mauvais pour l'équipe."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Mélina a publié un post avec une faute d'orthographe. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu lui demandes de corriger seule.",
+              "correct": false,
+              "feedback": "Tu rates l'occasion de coacher."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu corriges avec elle, tu lui montres comment vérifier avant publication, et tu en restes là.",
+              "correct": true,
+              "feedback": "Tu coaches sans drame."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu fais un mail à Aurélie pour signaler.",
+              "correct": false,
+              "feedback": "Sur-réaction qui plombe Mélina."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu reprends toi-même les posts.",
+              "correct": false,
+              "feedback": "Tu casses la délégation pour une faute d'orthographe."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Décris ton plan d'évolution Mélina sur 3 mois (3 jalons, 3 missions confiées, 3 indicateurs de réussite).",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Déléguer sans démissionner",
+          "definition": "Faire monter un junior par paliers : 1) Mission en autonomie sur un canal simple, 2) Niveau 2 sur un canal plus exigeant, 3) Observer et coacher sans reprendre. On ne corrige PAS à sa place.",
+          "analogy": "Comme apprendre à nager : on lâche d'abord en petite profondeur, puis on s'écarte progressivement.",
+          "example": "Mélina : Instagram en autonomie totale → puis Facebook niveau 2 → coaching sur erreur (faute orthographe) au lieu de reprendre soi-même.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 17,
+      "session_num": 3,
+      "title": "Préparer un partenariat influenceur local",
+      "scenario": "Mercredi semaine 4. Cédric te propose : 'On a 3000 € pour partenariat. Vous trouvez quelqu'un avec Mélina ?'",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Tu hésites entre @ZairaTV (450 K abonnés généraliste) et @bricolage_antilles (18 K abonnés bricoleurs). Tu choisis ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "@ZairaTV pour le volume.",
+              "correct": false,
+              "feedback": "Sur 450 K, peut-être 1% s'intéressent au bricolage."
+            },
+            {
+              "id": "opt_2",
+              "text": "@bricolage_antilles pour la pertinence.",
+              "correct": true,
+              "feedback": "18 K vrais bricoleurs valent plus que 450 K généralistes pour KARU Pro."
+            },
+            {
+              "id": "opt_3",
+              "text": "Les deux pour maximiser.",
+              "correct": false,
+              "feedback": "Tu dépasses le budget."
+            },
+            {
+              "id": "opt_4",
+              "text": "Aucun, c'est trop risqué.",
+              "correct": false,
+              "feedback": "Tu rates l'opportunité."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "@bricolage_antilles te dit qu'elle veut garder le droit de critiquer le produit si elle ne l'aime pas. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu acceptes : son authenticité est précisément la valeur du partenariat.",
+              "correct": true,
+              "feedback": "Si elle ne peut pas critiquer, son audience saura que c'est un publi."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu refuses : tu paies pour un partenariat positif.",
+              "correct": false,
+              "feedback": "Tu casses l'authenticité."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu lui demandes de mettre les critiques en commentaire privé.",
+              "correct": false,
+              "feedback": "Tu lui demandes de tricher."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu lui proposes de la former.",
+              "correct": false,
+              "feedback": "Hors sujet et patronisant."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Rédige les 4 clauses essentielles du contrat de partenariat avec @bricolage_antilles (livrables, mention #ad, droit critique, KPI).",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Influence : pertinence > volume",
+          "definition": "Un influenceur niche pertinent (18 K bricoleurs) bat un influenceur généraliste massif (450 K). Le partenariat fonctionne SI l'influenceur garde son droit de critique — sinon l'audience flaire le publi.",
+          "analogy": "Comme un libraire passionné : 100 lecteurs qui le suivent valent plus que 10 000 qui passent dans un hypermarché.",
+          "example": "@bricolage_antilles 18 K abonnés → engagement 8% sur 1 440 vrais bricoleurs. Vs @ZairaTV 450 K → 0,8% engagement sur 3 600 généralistes.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 18,
+      "session_num": 3,
+      "title": "Gérer son temps : le piège du multitasking",
+      "scenario": "Jeudi semaine 4. Tu n'as pas avancé sur la stratégie KARU Pro de la semaine. Tu as répondu à 47 messages Teams et 23 emails.",
+      "duration_min": 55,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Comment tu protèges ton temps stratégique ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu travailles plus tard le soir.",
+              "correct": false,
+              "feedback": "Tu épuises."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu refuses tous les messages.",
+              "correct": false,
+              "feedback": "Tu casses la collaboration."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu bloques 8h-11h chaque matin pour KARU Pro, en mode 'ne pas déranger'.",
+              "correct": true,
+              "feedback": "Tu protèges les plages essentielles."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu travailles le weekend.",
+              "correct": false,
+              "feedback": "Tu épuises."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Cédric te ping pendant ta plage protégée pour une question qui peut attendre. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu réponds immédiatement.",
+              "correct": false,
+              "feedback": "Tu casses ta propre règle."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu réponds à 11h en sortant de plage protégée, en disant 'Je sortais de mode focus'.",
+              "correct": true,
+              "feedback": "Tu tiens ta règle, tu communiques."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu mets en silencieux pour la journée.",
+              "correct": false,
+              "feedback": "Trop fermé."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu réponds 'pas le temps'.",
+              "correct": false,
+              "feedback": "Trop sec."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Rédige ta semaine-type protégée : plages focus, plages collaboration, plages reporting (sur 5 jours).",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Plages focus protégées",
+          "definition": "Bloquer 2-3h chaque matin en mode 'ne pas déranger' pour les missions stratégiques. Le reste de la journée reste collaboratif. Tenir sa règle, communiquer en sortant.",
+          "analogy": "Comme un chirurgien : pendant l'opération, on ne dérange pas — entre deux, il est joignable.",
+          "example": "8h-11h KARU Pro stratégie, 11h-12h messages Teams en rafale, 14h-17h opérationnel et collaboration.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 19,
+      "session_num": 3,
+      "title": "RGPD pour PME : les obligations supplémentaires",
+      "scenario": "Lundi semaine 5, 9h. Karim Boutrin t'écrit : 'On a 2400 contacts dans la base mais aucun registre RGPD ne décrit pourquoi on les a et combien de temps on les garde.'",
+      "duration_min": 60,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Comment tu réagis ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu lui réponds que c'est son rôle de référent.",
+              "correct": false,
+              "feedback": "Tu te défausses."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu travailles avec Karim pour construire le registre des traitements en 1 semaine.",
+              "correct": true,
+              "feedback": "Tu prends le sujet au sérieux."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu dis qu'on verra ça après le lancement KARU Pro.",
+              "correct": false,
+              "feedback": "Tu reportes une obligation légale."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu transferes à Aurélie sans agir.",
+              "correct": false,
+              "feedback": "Tu te défausses encore."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Karim demande qui est responsable de chaque traitement. Tu fais quoi ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Tu fais le mapping avec lui : newsletter = toi, SAV = Cédric, prospects = Aurélie.",
+              "correct": true,
+              "feedback": "Tu identifies clairement. Cela responsabilise chacun."
+            },
+            {
+              "id": "opt_2",
+              "text": "Tu mets Aurélie pour tout.",
+              "correct": false,
+              "feedback": "Faux. Réparti selon qui pilote."
+            },
+            {
+              "id": "opt_3",
+              "text": "Tu mets toi pour tout.",
+              "correct": false,
+              "feedback": "Tu n'as pas la compétence pour le SAV."
+            },
+            {
+              "id": "opt_4",
+              "text": "Tu n'identifies personne.",
+              "correct": false,
+              "feedback": "Tu rates l'objectif."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Décris les 3 obligations RGPD prioritaires d'une PME (registre, référent, procédure violation 72h) et l'outil concret que tu utiliserais pour chaque.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "RGPD en PME : 3 obligations",
+          "definition": "1) Tenir un registre des traitements (qui, pourquoi, combien de temps), 2) Désigner un référent RGPD (pas obligatoirement DPO), 3) Avoir une procédure de violation (notification CNIL sous 72h).",
+          "analogy": "Comme passer du permis voiture au permis poids lourd : ce n'est pas plus dangereux, c'est plus encadré.",
+          "example": "Registre sur Notion partagé, Karim référent RGPD, procédure violation documentée : qui prévient qui en moins de 72h.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 20,
+      "session_num": 3,
+      "title": "Préparer une crise SAV virale : avant qu'elle n'arrive",
+      "scenario": "Mardi semaine 5, 14h. Aurélie : 'KARU Pro lancement dans 3 semaines. Si on a une crise SAV virale, qu'est-ce qu'on fait ?' Tu n'as pas de plan.",
+      "duration_min": 60,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Quel dispositif d'alerte tu mets en place ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "Une cellule de crise dédiée avec 4 personnes en astreinte.",
+              "correct": false,
+              "feedback": "Surdimensionné pour une PME."
+            },
+            {
+              "id": "opt_2",
+              "text": "Des alertes Google + un canal Teams 'crise' avec Aurélie, Cédric, Karim, toi.",
+              "correct": true,
+              "feedback": "Léger, efficace, gratuit."
+            },
+            {
+              "id": "opt_3",
+              "text": "Un cabinet externe en astreinte.",
+              "correct": false,
+              "feedback": "Trop coûteux."
+            },
+            {
+              "id": "opt_4",
+              "text": "Rien, on verra.",
+              "correct": false,
+              "feedback": "Tu n'es pas prête."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Quel template de réponse universelle tu prépares ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 0,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "« Bonjour, nous prenons votre retour très au sérieux. Pouvez-vous nous écrire en privé avec votre numéro de commande ? »",
+              "correct": true,
+              "feedback": "Template universel : reconnaissance + sortie du public."
+            },
+            {
+              "id": "opt_2",
+              "text": "« VOLTERIA Pro est leader, nous sommes irréprochables. »",
+              "correct": false,
+              "feedback": "Pire template."
+            },
+            {
+              "id": "opt_3",
+              "text": "« Désolés, c'est notre faute, nous remboursons tout. »",
+              "correct": false,
+              "feedback": "Capitulation."
+            },
+            {
+              "id": "opt_4",
+              "text": "« Pas de commentaire. »",
+              "correct": false,
+              "feedback": "Réponse de coupable."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Décris ton playbook crise SAV virale en 4 étapes (détecter, qualifier, répondre, débriefer) avec qui fait quoi à chaque étape.",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Playbook crise SAV virale",
+          "definition": "Anticiper AVANT qu'elle arrive : 1) Détecter (alertes Google, Mention), 2) Qualifier (ampleur, audience), 3) Répondre (template universel reconnaissance + sortie du public), 4) Débriefer.",
+          "analogy": "Comme un exercice incendie : on ne l'apprend pas pendant le feu.",
+          "example": "Canal Teams 'crise' (Aurélie, Cédric, Karim, toi) + alertes Google sur 'KARU Pro' + template de réponse universelle pré-rédigé.",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "challenge_num": 21,
+      "session_num": 3,
+      "title": "MISSION FINALE — Pitch du plan KARU Pro devant le comité de pilotage",
+      "scenario": "Vendredi semaine 6, 10h. Tu entres en salle COMEX. Marie-José Toussaint, DG, est là. Aurélie aussi. Cédric vient de pitcher, Mélina aussi. Ton tour. 15 minutes max.",
+      "duration_min": 75,
+      "max_score": 30,
+      "questions": [
+        {
+          "question_index": 1,
+          "type": "mcq",
+          "question": "Comment tu ouvres ton pitch ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 2,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "'Je suis la plus expérimentée des trois.'",
+              "correct": false,
+              "feedback": "Tu attaques tes collègues."
+            },
+            {
+              "id": "opt_2",
+              "text": "'Mon plan est complet.'",
+              "correct": false,
+              "feedback": "Trop vague."
+            },
+            {
+              "id": "opt_3",
+              "text": "'Mon plan repose sur une segmentation précise des cibles, une mesure rigoureuse de 4 KPI, et un budget tenu à 80 K€. Trois choses concrètes que vous pourrez challenger sur des chiffres.'",
+              "correct": true,
+              "feedback": "Marie-José hoche la tête. Trois différenciateurs concrets, mesurables."
+            },
+            {
+              "id": "opt_4",
+              "text": "'Mon plan est plus créatif.'",
+              "correct": false,
+              "feedback": "La créativité ne se promet pas."
+            }
+          ]
+        },
+        {
+          "question_index": 2,
+          "type": "mcq",
+          "question": "Marie-José : « Pourquoi 80 K€ ? » Tu réponds ?",
+          "explanation": "",
+          "points": 10,
+          "correct_answer": 1,
+          "options": [
+            {
+              "id": "opt_1",
+              "text": "'Aurélie l'a fixé.'",
+              "correct": false,
+              "feedback": "Tu te défausses."
+            },
+            {
+              "id": "opt_2",
+              "text": "'80 K€ permet de couvrir l'agence (25 K€), les campagnes média (35 K€), les influenceurs (10 K€), et 10 K€ de marge. Si on dépasse, je te remonte.'",
+              "correct": true,
+              "feedback": "Tu décomposes. Tu reconnais la marge. Tu engages un suivi."
+            },
+            {
+              "id": "opt_3",
+              "text": "'Si c'est insuffisant, je demanderai plus.'",
+              "correct": false,
+              "feedback": "Tu paraissses mal préparée."
+            },
+            {
+              "id": "opt_4",
+              "text": "'C'est du marketing, ça suffit.'",
+              "correct": false,
+              "feedback": "Cédric va te tuer."
+            }
+          ]
+        },
+        {
+          "question_index": 3,
+          "type": "free",
+          "question": "Rédige le pitch S.T.A.R complet de ton plan KARU Pro en 4 paragraphes (Situation / Tâche / Action / Résultat attendu).",
+          "explanation": "Évaluation par le formateur selon la grille en annexe (cohérence ×3, qualité ×3, justesse pédagogique ×3, ancrage narratif ×1).",
+          "points": 10,
+          "correct_answer": [],
+          "options": []
+        }
+      ],
+      "knowledge_notions": [
+        {
+          "title": "Le pitch stratégique S.T.A.R",
+          "definition": "Structure de pitch en 4 sections, 5 minutes max : Situation (contexte), Tâche (objectif fixé), Action (ce que tu as fait/vas faire), Résultat (chiffres mesurables, KPI engagés).",
+          "analogy": "Comme un commercial qui vend une voiture : besoin client → modèle → preuve essai → bénéfice chiffré.",
+          "example": "S : VOLTERIA Pro lance KARU Pro. T : 80 K€ pour générer X% de notoriété et Y leads B2B. A : segmentation + 4 KPI + plan 3 sessions. R : objectif chiffré + suivi mensuel COMEX.",
+          "sort_order": 1
+        }
+      ]
+    }
+  ]
+}
