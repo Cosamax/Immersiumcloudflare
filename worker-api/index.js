@@ -20,6 +20,27 @@ function err(message, status = 400) {
   return json({ error: message }, status);
 }
 
+/**
+ * Vérifie qu'une requête provient d'un administrateur authentifié.
+ * Réutilise le système de session existant : Bearer token dans Authorization,
+ * stocké en table auth_sessions, lié à un profile avec role='admin'.
+ * Retourne le user admin si OK, ou null sinon.
+ */
+async function requireAdmin(request, db) {
+  const authHeader = request.headers.get('Authorization');
+  if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
+  const token = authHeader.slice(7).trim();
+  if (!token) return null;
+  const session = await db.prepare(
+    `SELECT p.id, p.role, p.full_name, p.email
+     FROM auth_sessions s
+     JOIN profiles p ON s.user_id = p.id
+     WHERE s.token = ? AND s.expires_at > datetime('now')`
+  ).bind(token).first();
+  if (!session || session.role !== 'admin') return null;
+  return session;
+}
+
 export default {
   async fetch(request, env, ctx) {
     if (request.method === 'OPTIONS') {
@@ -126,6 +147,117 @@ export default {
           await db.prepare(`UPDATE simulations SET ${sets.join(', ')} WHERE game_id = ?`).bind(...vals).run();
         }
         return json({ success: true });
+      }
+
+      // POST /api/simulations — créer une nouvelle simulation
+      if (path === '/api/simulations' && method === 'POST') {
+        const admin = await requireAdmin(request, db);
+        if (!admin) return err('Authentification administrateur requise', 401);
+        const body = await request.json();
+        if (!body.game_id) return err('game_id requis', 400);
+        // Idempotence : si déjà existant, renvoyer 409
+        const existing = await db.prepare('SELECT game_id FROM simulations WHERE game_id = ?').bind(body.game_id).first();
+        if (existing) return err('Une simulation avec ce game_id existe déjà', 409);
+        const allowed = ['game_id','name','subtitle','domain','color','level','challenge_count','active','featured','featured_order','intro_text','intro_html','intro_video_url','intro_video_title','intro_video_poster','outro_video_url','outro_video_title','outro_video_poster','category','subcategory','description','popular','sort_order','num'];
+        const cols = []; const placeholders = []; const vals = [];
+        for (const k of allowed) {
+          if (body[k] !== undefined) { cols.push(k); placeholders.push('?'); vals.push(body[k]); }
+        }
+        if (!cols.includes('active')) { cols.push('active'); placeholders.push('?'); vals.push(1); }
+        if (!cols.includes('challenge_count')) { cols.push('challenge_count'); placeholders.push('?'); vals.push(0); }
+        await db.prepare(`INSERT INTO simulations (${cols.join(',')}) VALUES (${placeholders.join(',')})`).bind(...vals).run();
+        return json({ success: true, game_id: body.game_id }, 201);
+      }
+
+      // DELETE /api/simulations/:gid — supprimer une simulation et tout son contenu
+      if (path.match(/^\/api\/simulations\/[^/]+$/) && method === 'DELETE') {
+        const admin = await requireAdmin(request, db);
+        if (!admin) return err('Authentification administrateur requise', 401);
+        const gid = decodeURIComponent(path.split('/').pop());
+        await db.batch([
+          db.prepare('DELETE FROM knowledge_notions WHERE game_id = ?').bind(gid),
+          db.prepare('DELETE FROM questions WHERE game_id = ?').bind(gid),
+          db.prepare('DELETE FROM challenges WHERE game_id = ?').bind(gid),
+          db.prepare('DELETE FROM simulation_sessions WHERE game_id = ?').bind(gid),
+          db.prepare('DELETE FROM simulation_characters WHERE game_id = ?').bind(gid),
+          db.prepare('DELETE FROM simulation_competences WHERE game_id = ?').bind(gid),
+          db.prepare('DELETE FROM simulations WHERE game_id = ?').bind(gid),
+        ]);
+        return json({ success: true });
+      }
+
+      // ============================================================
+      // SIMULATION_SESSIONS — CRUD complet (manquait au schéma)
+      // ============================================================
+      if (path === '/api/simulation-sessions' && method === 'GET') {
+        const gid = url.searchParams.get('game_id');
+        let q = 'SELECT * FROM simulation_sessions';
+        const params = [];
+        if (gid) { q += ' WHERE game_id = ?'; params.push(gid); }
+        q += ' ORDER BY game_id, session_num';
+        const { results } = params.length
+          ? await db.prepare(q).bind(...params).all()
+          : await db.prepare(q).all();
+        return json({ data: results });
+      }
+
+      if (path === '/api/simulation-sessions' && method === 'POST') {
+        const admin = await requireAdmin(request, db);
+        if (!admin) return err('Authentification administrateur requise', 401);
+        const body = await request.json();
+        if (!body.game_id || body.session_num == null) return err('game_id et session_num requis', 400);
+        await db.prepare(
+          'INSERT OR REPLACE INTO simulation_sessions (game_id, session_num, title) VALUES (?, ?, ?)'
+        ).bind(body.game_id, body.session_num, body.title || '').run();
+        return json({ success: true }, 201);
+      }
+
+      if (path === '/api/simulation-sessions' && (method === 'PATCH' || method === 'PUT')) {
+        const admin = await requireAdmin(request, db);
+        if (!admin) return err('Authentification administrateur requise', 401);
+        const body = await request.json();
+        if (!body.game_id || body.session_num == null) return err('game_id et session_num requis', 400);
+        const allowed = ['title','session_num'];
+        const sets = []; const vals = [];
+        for (const k of allowed) {
+          if (k === 'session_num' && body.new_session_num != null) {
+            sets.push('session_num = ?'); vals.push(body.new_session_num);
+          } else if (k !== 'session_num' && body[k] !== undefined) {
+            sets.push(`${k} = ?`); vals.push(body[k]);
+          }
+        }
+        if (sets.length) {
+          vals.push(body.game_id, body.session_num);
+          await db.prepare(
+            `UPDATE simulation_sessions SET ${sets.join(', ')} WHERE game_id = ? AND session_num = ?`
+          ).bind(...vals).run();
+        }
+        return json({ success: true });
+      }
+
+      if (path === '/api/simulation-sessions' && method === 'DELETE') {
+        const admin = await requireAdmin(request, db);
+        if (!admin) return err('Authentification administrateur requise', 401);
+        const gid = url.searchParams.get('game_id');
+        const num = url.searchParams.get('session_num');
+        if (!gid || !num) return err('game_id et session_num requis (query params)', 400);
+        await db.prepare(
+          'DELETE FROM simulation_sessions WHERE game_id = ? AND session_num = ?'
+        ).bind(gid, parseInt(num)).run();
+        return json({ success: true });
+      }
+
+      // GET /api/simulation-competences (listing manquant)
+      if (path === '/api/simulation-competences' && method === 'GET') {
+        const gid = url.searchParams.get('game_id');
+        let q = 'SELECT * FROM simulation_competences';
+        const params = [];
+        if (gid) { q += ' WHERE game_id = ?'; params.push(gid); }
+        q += ' ORDER BY game_id, sort_order';
+        const { results } = params.length
+          ? await db.prepare(q).bind(...params).all()
+          : await db.prepare(q).all();
+        return json({ data: results });
       }
 
       // ============================================================
@@ -1348,6 +1480,210 @@ export default {
         const id = decodeURIComponent(path.split('/').pop());
         await db.prepare('DELETE FROM free_accesses WHERE id = ?').bind(id).run();
         return json({ success: true });
+      }
+
+      // ============================================================
+      // ADMIN — IMPORT / EXPORT BUNDLE (atomique)
+      // ============================================================
+      // POST /api/admin/simulations/import-bundle
+      // Body : { mode: 'merge'|'replace'|'create', simulation, sessions[], characters[], competences[], challenges[{questions[], knowledge_notions[]}] }
+      // Tout est exécuté dans un seul db.batch() (transactionnel D1).
+      if (path === '/api/admin/simulations/import-bundle' && method === 'POST') {
+        const admin = await requireAdmin(request, db);
+        if (!admin) return err('Authentification administrateur requise', 401);
+        const bundle = await request.json();
+        if (!bundle || !bundle.simulation || !bundle.simulation.game_id) {
+          return err('Format invalide : il manque le bloc "simulation" avec game_id', 400);
+        }
+        const sim = bundle.simulation;
+        const gid = sim.game_id;
+        const mode = (bundle.mode || 'merge').toLowerCase();
+        if (!['merge', 'replace', 'create'].includes(mode)) {
+          return err('mode invalide (merge | replace | create)', 400);
+        }
+        const sessions = Array.isArray(bundle.sessions) ? bundle.sessions : [];
+        const characters = Array.isArray(bundle.characters) ? bundle.characters : [];
+        const competences = Array.isArray(bundle.competences) ? bundle.competences : [];
+        const challenges = Array.isArray(bundle.challenges) ? bundle.challenges : [];
+
+        const stmts = [];
+
+        // En mode replace ou create : on nettoie les tables liées
+        if (mode === 'replace' || mode === 'create') {
+          stmts.push(db.prepare('DELETE FROM knowledge_notions WHERE game_id = ?').bind(gid));
+          stmts.push(db.prepare('DELETE FROM questions WHERE game_id = ?').bind(gid));
+          stmts.push(db.prepare('DELETE FROM challenges WHERE game_id = ?').bind(gid));
+          stmts.push(db.prepare('DELETE FROM simulation_sessions WHERE game_id = ?').bind(gid));
+          stmts.push(db.prepare('DELETE FROM simulation_characters WHERE game_id = ?').bind(gid));
+          stmts.push(db.prepare('DELETE FROM simulation_competences WHERE game_id = ?').bind(gid));
+        }
+
+        // Upsert simulation
+        if (sim.challenge_count == null && challenges.length) sim.challenge_count = challenges.length;
+        if (sim.active == null) sim.active = 1;
+        const simAllowed = ['game_id','name','subtitle','domain','color','level','challenge_count','active','featured','featured_order','intro_text','intro_html','intro_video_url','intro_video_title','intro_video_poster','outro_video_url','outro_video_title','outro_video_poster','category','subcategory','description','popular','sort_order','num'];
+        // Compat : on accepte 'title' à la place de 'name', et 'challenges' (count) à la place de 'challenge_count'
+        if (sim.title && sim.name == null) sim.name = sim.title;
+        if (typeof sim.challenges === 'number' && sim.challenge_count == null) sim.challenge_count = sim.challenges;
+        const simCols = []; const simPlaceholders = []; const simVals = [];
+        for (const k of simAllowed) {
+          if (sim[k] !== undefined) { simCols.push(k); simPlaceholders.push('?'); simVals.push(sim[k]); }
+        }
+        const updateCols = simCols.filter(c => c !== 'game_id').map(c => `${c}=excluded.${c}`).join(',');
+        stmts.push(db.prepare(
+          `INSERT INTO simulations (${simCols.join(',')}) VALUES (${simPlaceholders.join(',')})
+           ON CONFLICT(game_id) DO UPDATE SET ${updateCols}`
+        ).bind(...simVals));
+
+        // Sessions
+        for (const s of sessions) {
+          if (s.session_num == null) continue;
+          stmts.push(db.prepare(
+            'INSERT OR REPLACE INTO simulation_sessions (game_id, session_num, title) VALUES (?, ?, ?)'
+          ).bind(gid, s.session_num, s.title || ''));
+        }
+
+        // Characters (recréés à chaque import, pas de clé naturelle)
+        for (let i = 0; i < characters.length; i++) {
+          const c = characters[i];
+          stmts.push(db.prepare(
+            'INSERT INTO simulation_characters (game_id, name, role, description, sort_order) VALUES (?, ?, ?, ?, ?)'
+          ).bind(gid, c.name || '', c.role || '', c.description || '', c.sort_order || (i + 1)));
+        }
+
+        // Competences (acceptent string ou objet {label, sort_order})
+        for (let i = 0; i < competences.length; i++) {
+          const c = competences[i];
+          const label = typeof c === 'string' ? c : (c.label || c.name || '');
+          const sort_order = (typeof c === 'object' && c.sort_order != null) ? c.sort_order : (i + 1);
+          stmts.push(db.prepare(
+            'INSERT INTO simulation_competences (game_id, label, sort_order) VALUES (?, ?, ?)'
+          ).bind(gid, label, sort_order));
+        }
+
+        // Challenges + leurs questions + leurs notions
+        let qCount = 0, nCount = 0;
+        for (const ch of challenges) {
+          if (ch.challenge_num == null) continue;
+          stmts.push(db.prepare(
+            'INSERT INTO challenges (game_id, challenge_num, session_num, title, scenario, duration_min, max_score, image_url, image_caption) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+          ).bind(
+            gid,
+            ch.challenge_num,
+            ch.session_num || 1,
+            ch.title || '',
+            ch.scenario || '',
+            ch.duration_min || ch.duration_minutes || null,
+            ch.max_score || null,
+            (ch.header_image && ch.header_image.url) || ch.image_url || null,
+            (ch.header_image && ch.header_image.caption) || ch.image_caption || null
+          ));
+
+          const qs = Array.isArray(ch.questions) ? ch.questions : [];
+          for (let qi = 0; qi < qs.length; qi++) {
+            const q = qs[qi];
+            stmts.push(db.prepare(
+              'INSERT INTO questions (game_id, challenge_num, question_index, type, question, options_json, correct_answer, explanation, points) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+            ).bind(
+              gid,
+              ch.challenge_num,
+              q.question_index || (qi + 1),
+              q.type || 'mcq',
+              q.question || '',
+              JSON.stringify(q.options || []),
+              typeof q.correct_answer === 'string' ? q.correct_answer : JSON.stringify(q.correct_answer ?? ''),
+              q.explanation || '',
+              q.points || 10
+            ));
+            qCount++;
+          }
+
+          const ns = Array.isArray(ch.knowledge_notions) ? ch.knowledge_notions : [];
+          for (let ni = 0; ni < ns.length; ni++) {
+            const n = ns[ni];
+            stmts.push(db.prepare(
+              'INSERT INTO knowledge_notions (game_id, challenge_num, title, definition, analogy, example, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?)'
+            ).bind(
+              gid,
+              ch.challenge_num,
+              n.title || '',
+              n.definition || '',
+              n.analogy || '',
+              n.example || '',
+              n.sort_order || (ni + 1)
+            ));
+            nCount++;
+          }
+        }
+
+        // Exécution atomique
+        await db.batch(stmts);
+
+        // Invalidation du cache catalogue (best effort)
+        try {
+          const cacheUrl = new URL('/api/catalogue', request.url);
+          await caches.default.delete(new Request(cacheUrl.toString(), { method: 'GET' }));
+        } catch (_e) { /* cache miss = no-op */ }
+
+        return json({
+          success: true,
+          mode,
+          game_id: gid,
+          created: {
+            simulation: 1,
+            sessions: sessions.length,
+            characters: characters.length,
+            competences: competences.length,
+            challenges: challenges.length,
+            questions: qCount,
+            notions: nCount,
+          }
+        }, 201);
+      }
+
+      // GET /api/admin/simulations/:gid/export-bundle — export complet d'un jeu en JSON
+      if (path.match(/^\/api\/admin\/simulations\/[^/]+\/export-bundle$/) && method === 'GET') {
+        const admin = await requireAdmin(request, db);
+        if (!admin) return err('Authentification administrateur requise', 401);
+        const gid = decodeURIComponent(path.split('/')[4]);
+        const sim = await db.prepare('SELECT * FROM simulations WHERE game_id = ?').bind(gid).first();
+        if (!sim) return err('Simulation introuvable', 404);
+        const [sessR, charR, compR, chR, qR, nR] = await Promise.all([
+          db.prepare('SELECT * FROM simulation_sessions WHERE game_id = ? ORDER BY session_num').bind(gid).all(),
+          db.prepare('SELECT * FROM simulation_characters WHERE game_id = ? ORDER BY sort_order').bind(gid).all(),
+          db.prepare('SELECT * FROM simulation_competences WHERE game_id = ? ORDER BY sort_order').bind(gid).all(),
+          db.prepare('SELECT * FROM challenges WHERE game_id = ? ORDER BY challenge_num').bind(gid).all(),
+          db.prepare('SELECT * FROM questions WHERE game_id = ? ORDER BY challenge_num, question_index').bind(gid).all(),
+          db.prepare('SELECT * FROM knowledge_notions WHERE game_id = ? ORDER BY challenge_num, sort_order').bind(gid).all(),
+        ]);
+        // Regroupement par challenge
+        const qByCh = new Map();
+        for (const q of qR.results || []) {
+          try { q.options = JSON.parse(q.options_json); } catch { q.options = []; }
+          try { q.correct_answer = JSON.parse(q.correct_answer); } catch { /* keep string */ }
+          delete q.options_json;
+          if (!qByCh.has(q.challenge_num)) qByCh.set(q.challenge_num, []);
+          qByCh.get(q.challenge_num).push(q);
+        }
+        const nByCh = new Map();
+        for (const n of nR.results || []) {
+          if (!nByCh.has(n.challenge_num)) nByCh.set(n.challenge_num, []);
+          nByCh.get(n.challenge_num).push(n);
+        }
+        const challengesOut = (chR.results || []).map(c => ({
+          ...c,
+          questions: qByCh.get(c.challenge_num) || [],
+          knowledge_notions: nByCh.get(c.challenge_num) || [],
+        }));
+        return json({
+          bundle_version: '1.0',
+          exported_at: new Date().toISOString(),
+          simulation: sim,
+          sessions: sessR.results || [],
+          characters: charR.results || [],
+          competences: compR.results || [],
+          challenges: challengesOut,
+        });
       }
 
       // ============================================================
