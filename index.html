@@ -221,7 +221,8 @@ html, body { overflow-x: hidden; }
 .persona-tile::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--accent, var(--marine)); opacity: 0; transition: opacity .25s; }
 .persona-tile:hover { transform: translateY(-4px); box-shadow: 0 16px 32px -12px rgba(14,26,43,.18); border-color: var(--accent, var(--marine)); }
 .persona-tile:hover::before { opacity: 1; }
-.persona-tile .icon { font-size: 28px; line-height: 1; }
+.persona-tile .icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(0,0,0,.04); display: flex; align-items: center; justify-content: center; color: var(--accent, var(--marine)); flex-shrink: 0; }
+.persona-tile .icon svg { width: 22px; height: 22px; }
 .persona-tile .label { font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--accent, var(--marine)); }
 .persona-tile h3 { font-family: var(--f-display); font-size: 19px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; color: var(--ink); }
 .persona-tile p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; flex: 1; }
@@ -756,7 +757,7 @@ html, body { overflow-x: hidden; }
     <div class="personas-grid">
 
       <a href="#audiences" class="persona-tile reveal" style="--accent:#0131B4">
-        <div class="icon">🎓</div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
         <div class="label">Étudiant</div>
         <h3>Sortez du cours, confrontez-vous au réel</h3>
         <p>BTS, BUT, mastère, école : ancrez vos cours dans des cas concrets et arrivez en stage avec un capital d'expérience.</p>
@@ -764,7 +765,7 @@ html, body { overflow-x: hidden; }
       </a>
 
       <a href="#audiences" class="persona-tile reveal reveal-d1" style="--accent:#0D9488">
-        <div class="icon">💼</div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><path d="M2 13h20"/></svg></div>
         <div class="label">Pro en perfectionnement</div>
         <h3>Restez opérationnel sur les nouveaux outils</h3>
         <p>Cadres, experts, indépendants : mettez-vous à jour sur l'IA, les nouveaux canaux, les nouvelles méthodes par la pratique.</p>
@@ -772,7 +773,7 @@ html, body { overflow-x: hidden; }
       </a>
 
       <a href="#audiences" class="persona-tile reveal reveal-d2" style="--accent:#7C3AED">
-        <div class="icon">🤫</div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
         <div class="label">Reskilling discret</div>
         <h3>Préparez votre prochain move, en silence</h3>
         <p>Reconversion, mobilité, candidature interne : apprenez à votre rythme, sans en parler à votre manager. Sortez du bois quand vous serez prêt.</p>
@@ -780,7 +781,7 @@ html, body { overflow-x: hidden; }
       </a>
 
       <a href="#audiences" class="persona-tile reveal reveal-d3" style="--accent:#D97706">
-        <div class="icon">🎯</div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M7 8h10M7 12h6"/></svg></div>
         <div class="label">Formateur, CFA, OF</div>
         <h3>Des situations pédagogiques prêtes à l'emploi</h3>
         <p>15+ univers métier, des centaines de défis ancrés dans le réel, tableau de bord formateur. Enrichissez vos programmes sans R&amp;D pédagogique.</p>
