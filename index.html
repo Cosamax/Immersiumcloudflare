@@ -583,7 +583,7 @@ html, body { overflow-x: hidden; }
         <div class="hero-eyebrow">Plateforme d'entraînement métier par simulation</div>
         <h1>De la théorie au terrain.<br>Sans le <em>grand saut</em>.</h1>
         <p class="hero-subline">
-          15 simulations métier ultra-réalistes pour passer du « je sais » au <strong>« je sais faire »</strong>.
+          <span class="js-sim-count">15</span> simulations métier ultra-réalistes pour passer du « je sais » au <strong>« je sais faire »</strong>.
           Étudiant en quête de réel, pro en perfectionnement, formateur en quête de cas concrets,
           ou en train de préparer votre prochaine évolution discrètement : votre terrain d'entraînement est ici.
         </p>
@@ -933,9 +933,9 @@ html, body { overflow-x: hidden; }
     <div class="sims-header">
       <div>
         <div class="section-label reveal">Le catalogue</div>
-        <h2 class="section-h2 reveal reveal-d1">15 simulations.<br>Une seule <em>mission</em> : vous rendre opérationnel.</h2>
+        <h2 class="section-h2 reveal reveal-d1"><span class="js-sim-count">15</span> simulations.<br>Une seule <em>mission</em> : vous rendre opérationnel.</h2>
       </div>
-      <a href="catalogue.html" class="btn btn-outline reveal">Voir les 15 simulations →</a>
+      <a href="catalogue.html" class="btn btn-outline reveal">Voir les <span class="js-sim-count">15</span> simulations →</a>
     </div>
     <div class="sims-grid">
 
@@ -1049,7 +1049,7 @@ html, body { overflow-x: hidden; }
       <div class="how-step reveal">
         <div class="step-circle">01</div>
         <h4>Choisissez votre univers</h4>
-        <p>15 simulations couvrant marketing, IA, communication, transformation digitale. Commencez par celle qui vous correspond.</p>
+        <p><span class="js-sim-count">15</span> simulations couvrant marketing, IA, communication, transformation digitale. Commencez par celle qui vous correspond.</p>
         <span class="free-badge">Gratuit</span>
       </div>
 
@@ -1099,7 +1099,7 @@ html, body { overflow-x: hidden; }
           <ul class="audience-features">
             <li><span class="aud-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="5 13 10 18 20 7"/></svg></span>Premier défi complet offert, sans CB</li>
             <li><span class="aud-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="5 13 10 18 20 7"/></svg></span>Certificat à ajouter au CV / LinkedIn</li>
-            <li><span class="aud-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="5 13 10 18 20 7"/></svg></span>Accès aux 15 simulations par abonnement</li>
+            <li><span class="aud-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="5 13 10 18 20 7"/></svg></span>Accès aux <span class="js-sim-count">15</span> simulations par abonnement</li>
             <li><span class="aud-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="5 13 10 18 20 7"/></svg></span>BTS · BUT · Mastères · Écoles</li>
           </ul>
           <a href="login.html?mode=signup" class="btn btn-jade" style="width:100%;justify-content:center">
@@ -1182,7 +1182,7 @@ html, body { overflow-x: hidden; }
           <div class="audience-sub">Vous cherchez des situations pédagogiques prêtes à l'emploi</div>
         </div>
         <div class="audience-card-body">
-          <p style="font-size:14px;color:var(--ink-soft);line-height:1.6;margin-bottom:18px">15 univers métier, 441 défis ancrés dans le réel, feedback IA, tableau de bord formateur. Enrichissez votre programme avec un volet pratique sans investir en R&amp;D pédagogique.</p>
+          <p style="font-size:14px;color:var(--ink-soft);line-height:1.6;margin-bottom:18px"><span class="js-sim-count">15</span> univers métier, des centaines de défis ancrés dans le réel, feedback IA, tableau de bord formateur. Enrichissez votre programme avec un volet pratique sans investir en R&amp;D pédagogique.</p>
           <ul class="audience-features">
             <li><span class="aud-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="5 13 10 18 20 7"/></svg></span>Tableau de bord formateur temps réel</li>
             <li><span class="aud-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="5 13 10 18 20 7"/></svg></span>Suivi individuel et par promotion</li>
@@ -1372,7 +1372,7 @@ html, body { overflow-x: hidden; }
       <div class="footer-brand">
         <div class="logo">Immer<em>sium</em></div>
         <div class="tagline">Learn by doing · Caraïbes</div>
-        <p>La plateforme pédagogique qui remplace les cours par des missions. 15 simulations. 441 défis. 100% pratique.</p>
+        <p>La plateforme d'entraînement métier par simulation. <span class="js-sim-count">15</span> univers. 100% pratique.</p>
       </div>
       <div class="footer-col">
         <h4>Produit</h4>
@@ -1440,13 +1440,40 @@ const revealObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 revealEls.forEach(el => revealObs.observe(el));
 
-/* ── Animated counters ── */
+/* ── Animated counters (count-1 = sims, mis à jour dynamiquement) ── */
 const COUNTERS = [
   { id:'count-1', target:15,   suffix:'',   dec:0 },
   { id:'count-2', target:441,  suffix:'',   dec:0 },
   { id:'count-3', target:2400, suffix:'+',  dec:0 },
   { id:'count-4', target:4.9,  suffix:'/5', dec:1 },
 ];
+
+/* ── Sync sim count from API D1 (replaces all .js-sim-count + count-1 target) ── */
+(async function syncSimCount() {
+  try {
+    const resp = await fetch('https://immersium-api.mx-cosaque.workers.dev/api/simulations?order=sort_order');
+    if (!resp.ok) return;
+    const json = await resp.json();
+    let arr = [];
+    if (Array.isArray(json)) arr = json;
+    else if (json && Array.isArray(json.data)) arr = json.data;
+    else if (json && Array.isArray(json.rows)) arr = json.rows;
+    else if (json && Array.isArray(json.results)) arr = json.results;
+    arr = arr.filter(s => s.active !== false);
+    const n = arr.length;
+    if (n < 1) return;
+    // Met à jour tous les <span class="js-sim-count"> du DOM
+    document.querySelectorAll('.js-sim-count').forEach(el => { el.textContent = n; });
+    // Met à jour aussi la target du compteur animé social-proof
+    const c1 = COUNTERS.find(c => c.id === 'count-1');
+    if (c1) c1.target = n;
+    // Si l'animation a déjà tourné (avec l'ancienne target 15), on corrige tout de suite
+    const c1El = document.getElementById('count-1');
+    if (c1El && (typeof countersStarted !== 'undefined') && countersStarted) {
+      c1El.textContent = String(n);
+    }
+  } catch(e) { console.warn('[index] sync sim count failed:', e.message); }
+})();
 function animCounter(el, target, suffix, dec) {
   const dur = 1600; let start = null;
   function tick(ts) {
