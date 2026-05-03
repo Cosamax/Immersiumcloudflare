@@ -1451,17 +1451,22 @@ const COUNTERS = [
 /* ── Sync sim count from API D1 (replaces all .js-sim-count + count-1 target) ── */
 (async function syncSimCount() {
   try {
+    console.log('[Home v2] Fetch /api/simulations…');
     const resp = await fetch('https://immersium-api.mx-cosaque.workers.dev/api/simulations?order=sort_order');
+    console.log('[Home v2] HTTP:', resp.status, resp.ok);
     if (!resp.ok) return;
     const json = await resp.json();
+    console.log('[Home v2] JSON forme:', Array.isArray(json) ? 'array' : typeof json, 'keys:', json && typeof json === 'object' ? Object.keys(json).slice(0,5) : null);
     let arr = [];
     if (Array.isArray(json)) arr = json;
     else if (json && Array.isArray(json.data)) arr = json.data;
     else if (json && Array.isArray(json.rows)) arr = json.rows;
     else if (json && Array.isArray(json.results)) arr = json.results;
+    console.log('[Home v2] Sims totales:', arr.length);
     arr = arr.filter(s => s.active !== false);
     const n = arr.length;
-    if (n < 1) return;
+    console.log('[Home v2] Sims actives (active≠false):', n);
+    if (n < 1) { console.warn('[Home v2] 0 sim active, abandon'); return; }
     // Total défis = somme des challenge_count (fallback 21 si absent)
     const totalChallenges = arr.reduce((sum, s) => sum + (parseInt(s.challenge_count) || 21), 0);
     // Met à jour tous les <span class="js-sim-count"> du DOM
