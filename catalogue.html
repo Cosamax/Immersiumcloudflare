@@ -744,10 +744,14 @@ function updateSimCounters(n) {
 /* ─── Sync from API (D1) — admin edits become live without redeploy ─── */
 (async function syncCatalogFromApi() {
   try {
+    console.log('[Catalogue v3] Fetch /api/simulations?eq.active=true…');
     const resp = await fetch('https://immersium-api.mx-cosaque.workers.dev/api/simulations?eq.active=true&order=sort_order');
+    console.log('[Catalogue v3] HTTP:', resp.status);
     if (!resp.ok) return;
     const json = await resp.json();
-    const arr = Array.isArray(json) ? json : (json && Array.isArray(json.data) ? json.data : []); if (arr.length === 0) return;
+    const arr = Array.isArray(json) ? json : (json && Array.isArray(json.data) ? json.data : []);
+    console.log('[Catalogue v3] Sims actives reçues:', arr.length);
+    if (arr.length === 0) return;
     const next = {};
     arr.forEach(s => {
       const id = s.game_id;
