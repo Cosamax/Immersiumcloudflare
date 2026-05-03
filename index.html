@@ -1506,10 +1506,16 @@ const COUNTERS = [
       const started = (typeof countersStarted !== 'undefined') && countersStarted;
       console.log('[Home v3] Étape 5 — countersStarted =', started);
       if (started) {
-        const c1El = document.getElementById('count-1');
-        if (c1El) c1El.textContent = String(n);
-        const c2El = document.getElementById('count-2');
-        if (c2El) c2El.textContent = totalChallenges.toLocaleString('fr-FR');
+        // L'animation existante a capturé l'ancienne target dans sa closure (15, 441).
+        // On laisse finir l'animation (~1.6s), puis on RELANCE animCounter avec la
+        // nouvelle target. Le tick précédent est terminé, pas de fight.
+        setTimeout(() => {
+          const c1El = document.getElementById('count-1');
+          if (c1El && typeof animCounter === 'function') animCounter(c1El, n, '', 0);
+          const c2El = document.getElementById('count-2');
+          if (c2El && typeof animCounter === 'function') animCounter(c2El, totalChallenges, '', 0);
+          console.log('[Home v3] Étape 5b — re-animation lancée avec nouvelles targets');
+        }, 1700);
       }
     } catch(e5) { console.error('[Home v3] Étape 5 KO:', e5.message); }
 
