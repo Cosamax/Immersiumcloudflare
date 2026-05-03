@@ -1466,27 +1466,55 @@ const COUNTERS = [
     arr = arr.filter(s => s.active !== false);
     const n = arr.length;
     console.log('[Home v2] Sims actives (active≠false):', n);
-    if (n < 1) { console.warn('[Home v2] 0 sim active, abandon'); return; }
-    // Total défis = somme des challenge_count (fallback 21 si absent)
-    const totalChallenges = arr.reduce((sum, s) => sum + (parseInt(s.challenge_count) || 21), 0);
-    // Met à jour tous les <span class="js-sim-count"> du DOM
-    document.querySelectorAll('.js-sim-count').forEach(el => { el.textContent = n; });
-    // Met à jour les "X autres simulations" (n - 4 affichées dans la grille)
-    const others = Math.max(0, n - 4);
-    document.querySelectorAll('.js-sim-count-others').forEach(el => { el.textContent = others; });
-    // Met à jour aussi la target du compteur animé social-proof
-    const c1 = COUNTERS.find(c => c.id === 'count-1');
-    if (c1) c1.target = n;
-    const c2 = COUNTERS.find(c => c.id === 'count-2');
-    if (c2) c2.target = totalChallenges;
-    // Si l'animation a déjà tourné (avec les anciennes targets), on corrige tout de suite
-    if ((typeof countersStarted !== 'undefined') && countersStarted) {
-      const c1El = document.getElementById('count-1');
-      if (c1El) c1El.textContent = String(n);
-      const c2El = document.getElementById('count-2');
-      if (c2El) c2El.textContent = totalChallenges.toLocaleString('fr-FR');
-    }
-  } catch(e) { console.warn('[index] sync sim count failed:', e.message); }
+    if (n < 1) { console.warn('[Home v3] 0 sim active, abandon'); return; }
+
+    // Étape 1 : MAJ des spans .js-sim-count (très sûr)
+    try {
+      const els = document.querySelectorAll('.js-sim-count');
+      console.log('[Home v3] Étape 1 — spans js-sim-count trouvés:', els.length);
+      els.forEach(el => { el.textContent = n; });
+      console.log('[Home v3] Étape 1 OK');
+    } catch(e1) { console.error('[Home v3] Étape 1 KO:', e1.message); }
+
+    // Étape 2 : MAJ des spans .js-sim-count-others (n - 4)
+    try {
+      const others = Math.max(0, n - 4);
+      const els = document.querySelectorAll('.js-sim-count-others');
+      console.log('[Home v3] Étape 2 — spans others trouvés:', els.length, 'valeur:', others);
+      els.forEach(el => { el.textContent = others; });
+      console.log('[Home v3] Étape 2 OK');
+    } catch(e2) { console.error('[Home v3] Étape 2 KO:', e2.message); }
+
+    // Étape 3 : MAJ des targets COUNTERS animés
+    try {
+      const c1 = (typeof COUNTERS !== 'undefined') ? COUNTERS.find(c => c.id === 'count-1') : null;
+      if (c1) c1.target = n;
+      console.log('[Home v3] Étape 3 — count-1.target =', n);
+    } catch(e3) { console.error('[Home v3] Étape 3 KO:', e3.message); }
+
+    // Étape 4 : Total défis (peut crasher si arr a forme inattendue)
+    let totalChallenges = 0;
+    try {
+      totalChallenges = arr.reduce((sum, s) => sum + (parseInt(s && s.challenge_count) || 21), 0);
+      const c2 = (typeof COUNTERS !== 'undefined') ? COUNTERS.find(c => c.id === 'count-2') : null;
+      if (c2) c2.target = totalChallenges;
+      console.log('[Home v3] Étape 4 — totalChallenges =', totalChallenges);
+    } catch(e4) { console.error('[Home v3] Étape 4 KO:', e4.message); }
+
+    // Étape 5 : Override DOM si l'animation a déjà tourné
+    try {
+      const started = (typeof countersStarted !== 'undefined') && countersStarted;
+      console.log('[Home v3] Étape 5 — countersStarted =', started);
+      if (started) {
+        const c1El = document.getElementById('count-1');
+        if (c1El) c1El.textContent = String(n);
+        const c2El = document.getElementById('count-2');
+        if (c2El) c2El.textContent = totalChallenges.toLocaleString('fr-FR');
+      }
+    } catch(e5) { console.error('[Home v3] Étape 5 KO:', e5.message); }
+
+    console.log('[Home v3] ✓ Sync terminé. n =', n);
+  } catch(e) { console.warn('[Home v3] sync sim count failed:', e.message); }
 })();
 function animCounter(el, target, suffix, dec) {
   const dur = 1600; let start = null;
