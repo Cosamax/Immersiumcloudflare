@@ -428,7 +428,7 @@
 
 <!-- HERO -->
 <section class="cat-hero" style="background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#7c3aed 100%);padding:60px 24px 50px;text-align:center;color:#fff">
-  <p id="cat-counter" style="font-size:12px;font-weight:700;letter-spacing:.15em;color:#a78bfa;text-transform:uppercase;margin-bottom:12px">— SIMULATIONS · 10 CATÉGORIES DE COMPÉTENCES</p>
+  <p style="font-size:12px;font-weight:700;letter-spacing:.15em;color:#a78bfa;text-transform:uppercase;margin-bottom:12px">15 SIMULATIONS · 10 CATÉGORIES DE COMPÉTENCES</p>
   <h1 style="font-size:clamp(32px,5vw,56px);font-weight:500;margin-bottom:14px">Le catalogue <em style="color:#fb923c">complet</em>.</h1>
   <p style="font-size:17px;color:#cbd5e1;max-width:560px;margin:0 auto">Communication, marketing, IA, transformation digitale, management… Explorez par compétence et plongez.</p>
 </section>
@@ -466,7 +466,7 @@
               <div class="pub-footer-brand">
                       <div class="name">Immer<em>sium</em></div>
                       <div class="tag">Learn by doing · Caraïbes</div>
-                      <p id="footer-tagline">— simulations. 100% pratique.</p>
+                      <p>15 simulations. 315 défis. 100% pratique.</p>
               </div>
               <div class="pub-footer-col"><h4>Produit</h4><ul><li><a href="catalogue.html">Catalogue</a></li><li><a href="coaching.html">Coaching</a></li><li><a href="tarifs.html">Tarifs</a></li></ul></div>
               <div class="pub-footer-col"><h4>Aide</h4><ul><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul></div>
@@ -731,36 +731,14 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 
 buildSidebar();
 renderMain();
-updateSimCounters(Object.keys(CATALOG).length);
-
-/* ─── Met à jour tous les compteurs dynamiques (header + footer) ─── */
-function updateSimCounters(n) {
-  const cat = document.getElementById('cat-counter');
-  if (cat) cat.textContent = `${n} SIMULATIONS · 10 CATÉGORIES DE COMPÉTENCES`;
-  const tag = document.getElementById('footer-tagline');
-  if (tag) tag.textContent = `${n} simulations. 100% pratique.`;
-}
 
 /* ─── Sync from API (D1) — admin edits become live without redeploy ─── */
 (async function syncCatalogFromApi() {
   try {
-    console.log('[Catalogue v4] Fetch /api/simulations sans filtre actif…');
-    const resp = await fetch('https://immersium-api.mx-cosaque.workers.dev/api/simulations?order=sort_order');
-    console.log('[Catalogue v4] HTTP:', resp.status);
+    const resp = await fetch('https://immersium-api.mx-cosaque.workers.dev/api/simulations?eq.active=true&order=sort_order');
     if (!resp.ok) return;
     const json = await resp.json();
-    console.log('[Catalogue v4] JSON brut (forme):', Array.isArray(json) ? 'array' : (typeof json), json && Object.keys(json).slice(0, 5));
-    // Gère plusieurs formats : array direct, {data:[]}, {rows:[]}, {results:[]}
-    let arr = [];
-    if (Array.isArray(json)) arr = json;
-    else if (json && Array.isArray(json.data)) arr = json.data;
-    else if (json && Array.isArray(json.rows)) arr = json.rows;
-    else if (json && Array.isArray(json.results)) arr = json.results;
-    console.log('[Catalogue v4] Sims totales:', arr.length);
-    // Filtre côté client : exclut active=false uniquement (active=true OR null OR absent → garde)
-    arr = arr.filter(s => s.active !== false);
-    console.log('[Catalogue v4] Sims gardées (active≠false):', arr.length);
-    if (arr.length === 0) return;
+    const arr = Array.isArray(json) ? json : (json && Array.isArray(json.data) ? json.data : []); if (arr.length === 0) return;
     const next = {};
     arr.forEach(s => {
       const id = s.game_id;
@@ -781,7 +759,6 @@ function updateSimCounters(n) {
       CATALOG = next;
       buildSidebar();
       renderMain();
-      updateSimCounters(Object.keys(CATALOG).length);
     }
   } catch (e) {
     console.warn('[Catalogue] Sync API failed, fallback statique:', e.message);
