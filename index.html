@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Immersium — Apprenez en pratiquant. Maîtrisez vraiment.</title>
-<meta name="description" content="Plateforme d'entraînement métier par simulation. 15 univers, 441 défis ancrés dans le réel. Le complément pratique idéal à vos cours, votre formation ou votre première expérience pro.">
+<meta name="description" content="Plateforme d'entraînement métier par simulation. Des dizaines d'univers et des centaines de défis ancrés dans le réel. Le complément pratique idéal à vos cours, votre formation ou votre première expérience pro.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter+Tight:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -1028,7 +1028,7 @@ html, body { overflow-x: hidden; }
     </div>
     <div class="sims-cta-center reveal">
       <a href="catalogue.html" class="btn btn-primary btn-lg">
-        Voir les 11 autres simulations
+        Voir les <span class="js-sim-count-others">11</span> autres simulations
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M5 12h14M13 5l7 7-7 7"/>
         </svg>
@@ -1462,15 +1462,24 @@ const COUNTERS = [
     arr = arr.filter(s => s.active !== false);
     const n = arr.length;
     if (n < 1) return;
+    // Total défis = somme des challenge_count (fallback 21 si absent)
+    const totalChallenges = arr.reduce((sum, s) => sum + (parseInt(s.challenge_count) || 21), 0);
     // Met à jour tous les <span class="js-sim-count"> du DOM
     document.querySelectorAll('.js-sim-count').forEach(el => { el.textContent = n; });
+    // Met à jour les "X autres simulations" (n - 4 affichées dans la grille)
+    const others = Math.max(0, n - 4);
+    document.querySelectorAll('.js-sim-count-others').forEach(el => { el.textContent = others; });
     // Met à jour aussi la target du compteur animé social-proof
     const c1 = COUNTERS.find(c => c.id === 'count-1');
     if (c1) c1.target = n;
-    // Si l'animation a déjà tourné (avec l'ancienne target 15), on corrige tout de suite
-    const c1El = document.getElementById('count-1');
-    if (c1El && (typeof countersStarted !== 'undefined') && countersStarted) {
-      c1El.textContent = String(n);
+    const c2 = COUNTERS.find(c => c.id === 'count-2');
+    if (c2) c2.target = totalChallenges;
+    // Si l'animation a déjà tourné (avec les anciennes targets), on corrige tout de suite
+    if ((typeof countersStarted !== 'undefined') && countersStarted) {
+      const c1El = document.getElementById('count-1');
+      if (c1El) c1El.textContent = String(n);
+      const c2El = document.getElementById('count-2');
+      if (c2El) c2El.textContent = totalChallenges.toLocaleString('fr-FR');
     }
   } catch(e) { console.warn('[index] sync sim count failed:', e.message); }
 })();
