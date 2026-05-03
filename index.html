@@ -1451,76 +1451,44 @@ const COUNTERS = [
 /* ── Sync sim count from API D1 (replaces all .js-sim-count + count-1 target) ── */
 (async function syncSimCount() {
   try {
-    console.log('[Home v2] Fetch /api/simulations…');
     const resp = await fetch('https://immersium-api.mx-cosaque.workers.dev/api/simulations?order=sort_order');
-    console.log('[Home v2] HTTP:', resp.status, resp.ok);
     if (!resp.ok) return;
     const json = await resp.json();
-    console.log('[Home v2] JSON forme:', Array.isArray(json) ? 'array' : typeof json, 'keys:', json && typeof json === 'object' ? Object.keys(json).slice(0,5) : null);
     let arr = [];
     if (Array.isArray(json)) arr = json;
     else if (json && Array.isArray(json.data)) arr = json.data;
     else if (json && Array.isArray(json.rows)) arr = json.rows;
     else if (json && Array.isArray(json.results)) arr = json.results;
-    console.log('[Home v2] Sims totales:', arr.length);
     arr = arr.filter(s => s.active !== false);
     const n = arr.length;
-    console.log('[Home v2] Sims actives (active≠false):', n);
-    if (n < 1) { console.warn('[Home v3] 0 sim active, abandon'); return; }
+    if (n < 1) return;
 
-    // Étape 1 : MAJ des spans .js-sim-count (très sûr)
-    try {
-      const els = document.querySelectorAll('.js-sim-count');
-      console.log('[Home v3] Étape 1 — spans js-sim-count trouvés:', els.length);
-      els.forEach(el => { el.textContent = n; });
-      console.log('[Home v3] Étape 1 OK');
-    } catch(e1) { console.error('[Home v3] Étape 1 KO:', e1.message); }
+    // Total défis (somme des challenge_count, fallback 21 si absent)
+    const totalChallenges = arr.reduce((sum, s) => sum + (parseInt(s && s.challenge_count) || 21), 0);
 
-    // Étape 2 : MAJ des spans .js-sim-count-others (n - 4)
-    try {
-      const others = Math.max(0, n - 4);
-      const els = document.querySelectorAll('.js-sim-count-others');
-      console.log('[Home v3] Étape 2 — spans others trouvés:', els.length, 'valeur:', others);
-      els.forEach(el => { el.textContent = others; });
-      console.log('[Home v3] Étape 2 OK');
-    } catch(e2) { console.error('[Home v3] Étape 2 KO:', e2.message); }
+    // MAJ des spans .js-sim-count et .js-sim-count-others
+    document.querySelectorAll('.js-sim-count').forEach(el => { el.textContent = n; });
+    document.querySelectorAll('.js-sim-count-others').forEach(el => { el.textContent = Math.max(0, n - 4); });
 
-    // Étape 3 : MAJ des targets COUNTERS animés
-    try {
-      const c1 = (typeof COUNTERS !== 'undefined') ? COUNTERS.find(c => c.id === 'count-1') : null;
-      if (c1) c1.target = n;
-      console.log('[Home v3] Étape 3 — count-1.target =', n);
-    } catch(e3) { console.error('[Home v3] Étape 3 KO:', e3.message); }
+    // MAJ des targets des compteurs animés
+    if (typeof COUNTERS !== 'undefined') {
+      const c1 = COUNTERS.find(c => c.id === 'count-1'); if (c1) c1.target = n;
+      const c2 = COUNTERS.find(c => c.id === 'count-2'); if (c2) c2.target = totalChallenges;
+    }
 
-    // Étape 4 : Total défis (peut crasher si arr a forme inattendue)
-    let totalChallenges = 0;
-    try {
-      totalChallenges = arr.reduce((sum, s) => sum + (parseInt(s && s.challenge_count) || 21), 0);
-      const c2 = (typeof COUNTERS !== 'undefined') ? COUNTERS.find(c => c.id === 'count-2') : null;
-      if (c2) c2.target = totalChallenges;
-      console.log('[Home v3] Étape 4 — totalChallenges =', totalChallenges);
-    } catch(e4) { console.error('[Home v3] Étape 4 KO:', e4.message); }
-
-    // Étape 5 : Override DOM si l'animation a déjà tourné
-    try {
-      const started = (typeof countersStarted !== 'undefined') && countersStarted;
-      console.log('[Home v3] Étape 5 — countersStarted =', started);
-      if (started) {
-        // L'animation existante a capturé l'ancienne target dans sa closure (15, 441).
-        // On laisse finir l'animation (~1.6s), puis on RELANCE animCounter avec la
-        // nouvelle target. Le tick précédent est terminé, pas de fight.
-        setTimeout(() => {
-          const c1El = document.getElementById('count-1');
-          if (c1El && typeof animCounter === 'function') animCounter(c1El, n, '', 0);
-          const c2El = document.getElementById('count-2');
-          if (c2El && typeof animCounter === 'function') animCounter(c2El, totalChallenges, '', 0);
-          console.log('[Home v3] Étape 5b — re-animation lancée avec nouvelles targets');
-        }, 1700);
-      }
-    } catch(e5) { console.error('[Home v3] Étape 5 KO:', e5.message); }
-
-    console.log('[Home v3] ✓ Sync terminé. n =', n);
-  } catch(e) { console.warn('[Home v3] sync sim count failed:', e.message); }
+    // Si l'animation initiale a déjà tourné, attendre sa fin (~1.6s) puis relancer
+    // animCounter avec la nouvelle target — animation fluide 15→51 et 441→1071
+    const started = (typeof countersStarted !== 'undefined') && countersStarted;
+    if (started) {
+      setTimeout(() => {
+        const c1El = document.getElementById('count-1');
+        if (c1El && typeof animCounter === 'function') animCounter(c1El, n, '', 0);
+        const c2El = document.getElementById('count-2');
+        if (c2El && typeof animCounter === 'function') animCounter(c2El, totalChallenges, '', 0);
+      }, 1700);
+    }
+  } catch(e) { /* sync silencieux : fallback sur valeurs hardcodées */ }
+})();
 })();
 function animCounter(el, target, suffix, dec) {
   const dur = 1600; let start = null;
