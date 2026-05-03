@@ -210,6 +210,27 @@ html, body { overflow-x: hidden; }
 @keyframes progress-grow { to { width: 40%; } }
 .hero-score-badge { font-family: var(--f-display); font-size: 22px; font-weight: 500; color: var(--marine); font-style: italic; flex-shrink: 0; }
 
+/* ─── PERSONAS QUICK PICK (juste après hero) ─── */
+.personas-section { padding: 56px 0 64px; background: var(--paper); border-bottom: 1px solid var(--line); }
+.personas-head { text-align: center; margin-bottom: 32px; }
+.personas-head .eyebrow { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--marine); margin-bottom: 10px; }
+.personas-head h2 { font-family: var(--f-display); font-size: 32px; font-weight: 600; letter-spacing: -.02em; line-height: 1.15; }
+.personas-head h2 em { color: var(--orange); font-style: italic; }
+.personas-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.persona-tile { background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r-xl); padding: 24px 22px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; transition: all .25s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; }
+.persona-tile::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--accent, var(--marine)); opacity: 0; transition: opacity .25s; }
+.persona-tile:hover { transform: translateY(-4px); box-shadow: 0 16px 32px -12px rgba(14,26,43,.18); border-color: var(--accent, var(--marine)); }
+.persona-tile:hover::before { opacity: 1; }
+.persona-tile .icon { font-size: 28px; line-height: 1; }
+.persona-tile .label { font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--accent, var(--marine)); }
+.persona-tile h3 { font-family: var(--f-display); font-size: 19px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; color: var(--ink); }
+.persona-tile p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; flex: 1; }
+.persona-tile .arrow { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--accent, var(--marine)); margin-top: 4px; }
+.persona-tile .arrow svg { width: 14px; height: 14px; transition: transform .2s; }
+.persona-tile:hover .arrow svg { transform: translateX(4px); }
+@media(max-width: 1100px) { .personas-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 600px) { .personas-grid { grid-template-columns: 1fr; gap: 12px; } .personas-section { padding: 44px 0 48px; } .personas-head h2 { font-size: 26px; } .persona-tile { padding: 20px 18px; } }
+
 /* ─── URGENCY TICKER ─── */
 .urgency-bar { background: var(--ink); color: rgba(255,255,255,.9); padding: 13px 0; overflow: hidden; }
 .urgency-inner { display: flex; align-items: center; white-space: nowrap; animation: ticker-scroll 32s linear infinite; }
@@ -725,6 +746,51 @@ html, body { overflow-x: hidden; }
   </div>
 </section>
 
+<!-- ══ PERSONAS QUICK PICK ══ -->
+<section class="personas-section">
+  <div class="container">
+    <div class="personas-head reveal">
+      <div class="eyebrow">Pour qui exactement ?</div>
+      <h2>Tu te <em>reconnais</em> ?</h2>
+    </div>
+    <div class="personas-grid">
+
+      <a href="#audiences" class="persona-tile reveal" style="--accent:#0131B4">
+        <div class="icon">🎓</div>
+        <div class="label">Étudiant</div>
+        <h3>Sortez du cours, confrontez-vous au réel</h3>
+        <p>BTS, BUT, mastère, école : ancrez vos cours dans des cas concrets et arrivez en stage avec un capital d'expérience.</p>
+        <span class="arrow">Voir comment <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+
+      <a href="#audiences" class="persona-tile reveal reveal-d1" style="--accent:#0D9488">
+        <div class="icon">💼</div>
+        <div class="label">Pro en perfectionnement</div>
+        <h3>Restez opérationnel sur les nouveaux outils</h3>
+        <p>Cadres, experts, indépendants : mettez-vous à jour sur l'IA, les nouveaux canaux, les nouvelles méthodes par la pratique.</p>
+        <span class="arrow">Voir comment <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+
+      <a href="#audiences" class="persona-tile reveal reveal-d2" style="--accent:#7C3AED">
+        <div class="icon">🤫</div>
+        <div class="label">Reskilling discret</div>
+        <h3>Préparez votre prochain move, en silence</h3>
+        <p>Reconversion, mobilité, candidature interne : apprenez à votre rythme, sans en parler à votre manager. Sortez du bois quand vous serez prêt.</p>
+        <span class="arrow">Voir comment <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+
+      <a href="#audiences" class="persona-tile reveal reveal-d3" style="--accent:#D97706">
+        <div class="icon">🎯</div>
+        <div class="label">Formateur, CFA, OF</div>
+        <h3>Des situations pédagogiques prêtes à l'emploi</h3>
+        <p>15+ univers métier, des centaines de défis ancrés dans le réel, tableau de bord formateur. Enrichissez vos programmes sans R&amp;D pédagogique.</p>
+        <span class="arrow">Voir comment <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
 <!-- ══ URGENCY TICKER ══ -->
 <div class="urgency-bar">
   <div class="urgency-inner">
@@ -1076,7 +1142,7 @@ html, body { overflow-x: hidden; }
 </section>
 
 <!-- ══ AUDIENCES ══ -->
-<section class="audiences-section">
+<section class="audiences-section" id="audiences">
   <div class="container">
     <div class="section-label reveal">Pour qui ?</div>
     <h2 class="section-h2 reveal reveal-d1">Quatre profils.<br>Quatre raisons de <em>pratiquer</em>.</h2>
