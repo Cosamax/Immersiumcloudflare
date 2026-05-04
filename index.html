@@ -73,6 +73,23 @@ html, body { overflow-x: hidden; }
 .pub-links a:hover { background: rgba(255,255,255,.08); color: #fff; }
 .pub-links a.active { color: #fff; font-weight: 600; }
 .pub-cta { display: flex; align-items: center; gap: 10px; }
+
+/* Catalogue dropdown — catégories uniquement (pas de sous-cats) */
+.pub-nav-item-cat { position: relative; }
+.pub-nav-item-cat > a { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+.pub-nav-item-cat > a .chev { transition: transform .2s; display: inline-block; font-size: 10px; opacity: .6; }
+.pub-cat-simple { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(-8px); min-width: 280px; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 20px 50px -12px rgba(14,26,43,.2), 0 8px 20px -6px rgba(14,26,43,.08); padding: 10px; opacity: 0; pointer-events: none; transition: opacity .18s, transform .18s; z-index: 60; }
+.pub-cat-simple::before { content: ""; position: absolute; top: -8px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 14px; height: 14px; background: var(--paper); border-top: 1px solid var(--line); border-left: 1px solid var(--line); border-radius: 3px 0 0 0; }
+.pub-cat-simple a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; font-size: 13.5px; color: var(--ink); font-weight: 500; transition: background .12s; text-decoration: none; }
+.pub-cat-simple a:hover { background: var(--bg-alt, #F0EDE7); }
+.pub-cat-simple .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.pub-cat-simple .all-link { margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--line); font-weight: 600; color: var(--marine); }
+@media(hover:hover) and (min-width:961px) {
+  .pub-nav-item-cat:hover > a .chev { transform: rotate(180deg); }
+  .pub-nav-item-cat:hover .pub-cat-simple, .pub-nav-item-cat:focus-within .pub-cat-simple { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+}
+.pub-nav-item-cat.open .pub-cat-simple { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+@media(max-width:960px) { .pub-nav-item-cat .pub-cat-simple { display: none; } .pub-nav-item-cat > a .chev { display: none; } }
 .pub-burger { display: none; width: 40px; height: 40px; border-radius: 10px; background: var(--paper); border: 1px solid var(--line); cursor: pointer; align-items: center; justify-content: center; padding: 0; color: var(--ink); }
 .pub-burger svg { width: 18px; height: 18px; }
 .pub-drawer { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(14,26,43,.6); backdrop-filter: blur(4px); opacity: 0; transition: opacity .2s; pointer-events: none; }
@@ -549,7 +566,10 @@ html, body { overflow-x: hidden; }
     <a href="index.html" class="pub-brand"><span class="name">Immer<em>sium</em></span><span class="pub-beta">BÊTA</span></a>
     <div class="pub-links">
       <a href="index.html" class="active">Accueil</a>
-      <a href="catalogue.html">Catalogue</a>
+      <div class="pub-nav-item-cat" id="cat-dropdown-wrap">
+        <a href="catalogue.html">Catalogue<span class="chev">▾</span></a>
+        <div class="pub-cat-simple" id="cat-dropdown-panel"></div>
+      </div>
       <a href="coaching.html">Coaching</a>
       <a href="tarifs.html">Tarifs</a>
       <a href="about.html">À propos</a>
@@ -1487,7 +1507,38 @@ html, body { overflow-x: hidden; }
 </footer>
 
 <!-- ══ SCRIPTS ══ -->
+<script src="js/imm-taxonomy.js"></script>
 <script>
+/* ── Catalogue dropdown : peuple le menu déroulant avec les 10 catégories ── */
+(function buildCatDropdown() {
+  const panel = document.getElementById('cat-dropdown-panel');
+  if (!panel) return;
+  const taxo = window.IMM_TAXONOMY || [];
+  if (taxo.length === 0) return;
+  panel.innerHTML = taxo.map(c => `
+    <a href="catalogue.html#section-${c.id}">
+      <span class="dot" style="background:${c.color}"></span>
+      <span>${c.name}</span>
+    </a>
+  `).join('') + `<a href="catalogue.html" class="all-link"><span class="dot" style="background:var(--ink)"></span><span>Voir tout le catalogue →</span></a>`;
+  // Click hors zone ferme le dropdown sur mobile/tablet
+  const wrap = document.getElementById('cat-dropdown-wrap');
+  document.addEventListener('click', (e) => { if (wrap && !wrap.contains(e.target)) wrap.classList.remove('open'); });
+  // Tap sur le lien Catalogue (mobile/tablet) → toggle ouvert au lieu d'aller direct au lien
+  if (wrap) {
+    const link = wrap.querySelector(':scope > a');
+    if (link) {
+      link.addEventListener('click', (e) => {
+        const canHover = window.matchMedia('(hover: hover)').matches;
+        if (window.innerWidth <= 960 || !canHover) {
+          e.preventDefault();
+          wrap.classList.toggle('open');
+        }
+      });
+    }
+  }
+})();
+
 /* ── Drawer ── */
 function toggleDrawer() {
   const d = document.getElementById('drawer');
