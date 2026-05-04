@@ -507,44 +507,29 @@ html, body { overflow-x: hidden; }
 }
 </style>
 </head>
-<body>
+<body class="has-pub-nav">
 
-<!-- ══ ANNOUNCE BAR ══ -->
-<div class="announce-bar">
-  <span class="badge">BÊTA</span>
-  Accès exclusif — <a href="catalogue.html">premier défi 100% gratuit, sans carte bancaire →</a>
-</div>
-
-<!-- ══ NAVBAR ══ -->
-<nav class="navbar" id="navbar">
-  <div class="container">
-    <div class="navbar-inner">
-      <a href="index.html" class="nav-brand">
-        <div class="logo-name">Immer<em>sium</em></div>
-        <span class="beta-pill">BÊTA</span>
-      </a>
-      <div class="nav-links">
-        <a href="index.html" class="active">Accueil</a>
-        <a href="catalogue.html">Catalogue</a>
-        <a href="coaching.html">Coaching</a>
-        <a href="tarifs.html">Tarifs</a>
-        <a href="about.html">À propos</a>
-        <a href="faq.html">FAQ</a>
-      </div>
-      <div class="nav-actions">
-        <a href="login.html" class="btn btn-outline">Connexion</a>
-        <a href="catalogue.html" class="btn btn-jade">Commencer gratuitement →</a>
-        <button class="burger-btn" onclick="toggleDrawer()" aria-label="Menu">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
-        </button>
-      </div>
+<nav class="pub-nav">
+  <div class="pub-nav-inner">
+    <a href="index.html" class="pub-brand"><span class="name">Immer<em>sium</em></span><span class="pub-beta">BETA</span></a>
+    <div class="pub-links">
+      <a href="index.html" class="active">Accueil</a>
+      <div class="pub-nav-item-cat"><a href="catalogue.html">Catalogue<span class="chev">▾</span></a><div class="pub-cat-panel" onclick="event.stopPropagation()"><div class="pub-cat-header"></div><div class="pub-cat-grid"></div><div class="pub-cat-footer"></div></div></div>
+      <a href="coaching.html">Coaching</a>
+      <a href="tarifs.html">Tarifs</a>
+      <a href="about.html">À propos</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="pub-burger" onclick="toggleDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="pub-cta">
+      <a href="login.html" class="btn btn-ghost nav-login-btn">Connexion</a>
+      <a href="dashboard.html" class="btn btn-ghost nav-dash-btn" style="display:none">Mon espace →</a>
+      <a href="catalogue.html" class="btn btn-jade nav-cta-btn">Essayer gratuitement →</a>
     </div>
   </div>
 </nav>
+<div class="pub-drawer" id="pub-drawer" onclick="if(event.target===this) toggleDrawer()"><div class="pub-drawer-panel"><div class="pub-drawer-head"><div class="pub-brand"><span class="name">Immer<em>sium</em></span></div><button class="pub-drawer-close" onclick="toggleDrawer()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><nav class="pub-drawer-links"><a href="index.html" class="active">Accueil<span class="arr">→</span></a><a href="catalogue.html">Catalogue<span class="arr">→</span></a><a href="coaching.html">Coaching<span class="arr">→</span></a><a href="tarifs.html">Tarifs<span class="arr">→</span></a><a href="about.html">À propos<span class="arr">→</span></a><a href="contact.html">Contact<span class="arr">→</span></a></nav>
 
 <!-- DRAWER MOBILE -->
 <div class="drawer" id="drawer">
@@ -1532,5 +1517,8 @@ window.addEventListener('scroll', () => {
   navbar.style.boxShadow = window.scrollY > 20 ? '0 4px 24px rgba(14,26,43,.1)' : 'none';
 }, { passive: true });
 </script>
+
+<script type="module" src="js/imm-shared.js"></script>
+<script src="js/imm-catalog.js"></script>
 </body>
 </html>
