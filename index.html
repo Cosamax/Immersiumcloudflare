@@ -576,9 +576,9 @@ html, body { overflow-x: hidden; }
 
       <!-- Gauche : copy -->
       <div class="hero-content">
-        <div class="hero-eyebrow">Le complément pratique de votre parcours</div>
-        <h1>De la théorie au terrain.<br>En plus de votre <em>parcours</em>.</h1>
-        <p class="hero-subline">
+        <div class="hero-eyebrow" data-cms-text="hero_eyebrow">Le complément pratique de votre parcours</div>
+        <h1 data-cms-html="hero_h1">De la théorie au terrain.<br>En plus de votre <em>parcours</em>.</h1>
+        <p class="hero-subline" data-cms-html="hero_subline">
           Immersium ne remplace pas votre formation, votre diplôme ou votre VAE. Il leur donne un ancrage concret — des simulations métier pour passer du savoir-faire déclaré au savoir-faire démontré.
         </p>
         <div class="hero-cta-block">
@@ -837,8 +837,8 @@ html, body { overflow-x: hidden; }
 <section class="value-section">
   <div class="container">
     <div class="section-label reveal">Pourquoi Immersium</div>
-    <h2 class="section-h2 reveal reveal-d1">La formation vous ouvre la porte.<br>Immersium vous fait entrer.</h2>
-    <p class="section-sub reveal reveal-d2">Votre diplôme prouve ce que vous savez. Immersium prouve ce que vous savez faire. Ce n'est pas l'un ou l'autre — c'est l'un, renforcé par l'autre.</p>
+    <h2 class="section-h2 reveal reveal-d1" data-cms-html="value_h2">La formation vous ouvre la porte.<br>Immersium vous fait entrer.</h2>
+    <p class="section-sub reveal reveal-d2" data-cms-html="value_sub">Votre diplôme prouve ce que vous savez. Immersium prouve ce que vous savez faire. Ce n'est pas l'un ou l'autre — c'est l'un, renforcé par l'autre.</p>
     <div class="value-grid">
 
       <div class="value-card reveal" data-n="01">
@@ -889,8 +889,8 @@ html, body { overflow-x: hidden; }
 
       <div class="problem-left">
         <div class="section-label reveal">L’écart entre savoir et savoir-faire.</div>
-        <h2 class="section-h2 reveal reveal-d1">Votre formation vous a donné les bases.<br>Il reste une étape.</h2>
-        <p class="section-sub reveal reveal-d2">La pratique ne s'improvise pas. Entre ce que l'on sait et ce que l'on sait faire, il y a un écart. Immersium est là pour le combler.</p>
+        <h2 class="section-h2 reveal reveal-d1" data-cms-html="parcours_h2">Votre formation vous a donné les bases.<br>Il reste une étape.</h2>
+        <p class="section-sub reveal reveal-d2" data-cms-html="parcours_sub">La pratique ne s'improvise pas. Entre ce que l'on sait et ce que l'on sait faire, il y a un écart. Immersium est là pour le combler.</p>
       </div>
 
       <div class="vs-list reveal reveal-d1">
@@ -1379,8 +1379,8 @@ html, body { overflow-x: hidden; }
       </svg>
       Premier défi 100% offert — Aucune carte bancaire
     </div>
-    <h2 class="reveal reveal-d1">Votre premier défi vous attend.<br>Sans engagement, <em>sans surprise</em>.</h2>
-    <p class="reveal reveal-d2">15 minutes pour passer de ce que vous savez à ce que vous maîtrisez. 1er défi 100 % offert, sans carte bancaire. En complément de votre parcours, pas à la place. Garantie satisfait ou remboursé 14 jours.</p>
+    <h2 class="reveal reveal-d1" data-cms-html="final_h2">Votre premier défi vous attend.<br>Sans engagement, <em>sans surprise</em>.</h2>
+    <p class="reveal reveal-d2" data-cms-html="final_sub">15 minutes pour passer de ce que vous savez à ce que vous maîtrisez. 1er défi 100 % offert, sans carte bancaire. En complément de votre parcours, pas à la place. Garantie satisfait ou remboursé 14 jours.</p>
     <div class="final-cta-actions reveal reveal-d2">
       <a href="login.html?mode=signup" class="btn btn-jade btn-xl">
         Démarrer gratuitement
@@ -1531,6 +1531,34 @@ const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   navbar.style.boxShadow = window.scrollY > 20 ? '0 4px 24px rgba(14,26,43,.1)' : 'none';
 }, { passive: true });
+
+/* ── CMS loader pour la home — récupère page_contents.home et remplace
+      les éléments avec [data-cms-text] (texte brut) ou [data-cms-html]
+      (HTML autorisé). Si l'API échoue, le texte par défaut reste affiché. ── */
+(async function loadHomeCMS() {
+  try {
+    const resp = await fetch('https://immersium-api.mx-cosaque.workers.dev/api/page_contents?eq.page_id=home');
+    if (!resp.ok) return;
+    const json = await resp.json();
+    let arr = [];
+    if (Array.isArray(json)) arr = json;
+    else if (json && Array.isArray(json.data)) arr = json.data;
+    else if (json && Array.isArray(json.rows)) arr = json.rows;
+    else if (json && Array.isArray(json.results)) arr = json.results;
+    const row = arr.find(r => r.page_id === 'home');
+    if (!row || !row.content) return;
+    const c = typeof row.content === 'string' ? JSON.parse(row.content) : row.content;
+    if (!c || typeof c !== 'object') return;
+    document.querySelectorAll('[data-cms-text]').forEach(el => {
+      const k = el.getAttribute('data-cms-text');
+      if (c[k]) el.textContent = c[k];
+    });
+    document.querySelectorAll('[data-cms-html]').forEach(el => {
+      const k = el.getAttribute('data-cms-html');
+      if (c[k]) el.innerHTML = c[k];
+    });
+  } catch(e) { /* silencieux : fallback hardcodé */ }
+})();
 </script>
 </body>
 </html>

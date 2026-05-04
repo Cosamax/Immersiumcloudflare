@@ -369,6 +369,7 @@ function fieldHtml(label, id, value, type, rows) {
 // ── CONFIGURATION DES PAGES ──
 // Chaque page definit ses sections : champs simples et/ou blocs editables
 var PAGES = [
+  { id: 'home', label: 'Accueil', icon: 'home' },
   { id: 'contact', label: 'Contact', icon: 'mail' },
   { id: 'faq', label: 'FAQ', icon: 'help' },
   { id: 'about', label: 'Qui suis-je ?', icon: 'user' },
@@ -514,8 +515,56 @@ function fieldsCard(title, desc, page, fields, saveId) {
 function buildPanels() {
   var html = '';
 
+  // ── ACCUEIL (HOME) ──
+  html += '<div id="panel-home" style="display:block">';
+  html += fieldsCard('Hero (haut de page)', 'Titre principal, sous-titre et accroche de la home.', 'home', [
+    {key:'hero_eyebrow', label:'Eyebrow (petite phrase au-dessus du titre)'},
+    {key:'hero_h1', label:'Titre principal (HTML autorisé : <em> pour l\'italique orange, <br> pour saut de ligne)', type:'textarea', rows:2},
+    {key:'hero_subline', label:'Sous-titre / description', type:'textarea', rows:4}
+  ], 'home-hero');
+  html += fieldsCard('Tuiles "Tu te reconnais ?"', 'Les 4 personas sous le hero. Chaque tuile : label, titre, paragraphe.', 'home', [
+    {key:'personas_h2', label:'Titre de la section (HTML : <em> pour italique)'},
+    {key:'persona1_label', label:'Tuile 1 — Label (uppercase, ex: ÉTUDIANT)'},
+    {key:'persona1_title', label:'Tuile 1 — Titre'},
+    {key:'persona1_text', label:'Tuile 1 — Paragraphe', type:'textarea', rows:3},
+    {key:'persona2_label', label:'Tuile 2 — Label'},
+    {key:'persona2_title', label:'Tuile 2 — Titre'},
+    {key:'persona2_text', label:'Tuile 2 — Paragraphe', type:'textarea', rows:3},
+    {key:'persona3_label', label:'Tuile 3 — Label'},
+    {key:'persona3_title', label:'Tuile 3 — Titre'},
+    {key:'persona3_text', label:'Tuile 3 — Paragraphe', type:'textarea', rows:3},
+    {key:'persona4_label', label:'Tuile 4 — Label'},
+    {key:'persona4_title', label:'Tuile 4 — Titre'},
+    {key:'persona4_text', label:'Tuile 4 — Paragraphe', type:'textarea', rows:3}
+  ], 'home-personas');
+  html += fieldsCard('Section "Pourquoi" (3 valeurs)', 'Titre et 3 cartes valeurs.', 'home', [
+    {key:'value_h2', label:'Titre (HTML autorisé)', type:'textarea', rows:2},
+    {key:'value_sub', label:'Sous-titre', type:'textarea', rows:3},
+    {key:'value1_title', label:'Carte 1 — Titre'},
+    {key:'value1_text', label:'Carte 1 — Description', type:'textarea', rows:3},
+    {key:'value2_title', label:'Carte 2 — Titre'},
+    {key:'value2_text', label:'Carte 2 — Description', type:'textarea', rows:3},
+    {key:'value3_title', label:'Carte 3 — Titre'},
+    {key:'value3_text', label:'Carte 3 — Description', type:'textarea', rows:3}
+  ], 'home-value');
+  html += fieldsCard('Section "Parcours" (théorie → pratique → terrain)', 'Le parcours en 3 étapes.', 'home', [
+    {key:'parcours_h2', label:'Titre (HTML autorisé)', type:'textarea', rows:2},
+    {key:'parcours_sub', label:'Sous-titre', type:'textarea', rows:3},
+    {key:'step1_title', label:'Étape 1 — Titre'},
+    {key:'step1_text', label:'Étape 1 — Texte', type:'textarea', rows:2},
+    {key:'step2_title', label:'Étape 2 — Titre'},
+    {key:'step2_text', label:'Étape 2 — Texte', type:'textarea', rows:2},
+    {key:'step3_title', label:'Étape 3 — Titre'},
+    {key:'step3_text', label:'Étape 3 — Texte', type:'textarea', rows:2}
+  ], 'home-parcours');
+  html += fieldsCard('Final CTA (avant le footer)', 'Dernier appel à l\'action.', 'home', [
+    {key:'final_h2', label:'Titre (HTML autorisé)', type:'textarea', rows:2},
+    {key:'final_sub', label:'Sous-titre', type:'textarea', rows:3}
+  ], 'home-final');
+  html += '</div>';
+
   // ── CONTACT ──
-  html += '<div id="panel-contact" style="display:block">';
+  html += '<div id="panel-contact" style="display:none">';
   html += fieldsCard('Informations de contact', 'Emails, telephone et adresse affiches sur la page contact.html.', 'contact', [
     {key:'title', label:'Titre de la page'},
     {key:'subtitle', label:'Sous-titre'},
