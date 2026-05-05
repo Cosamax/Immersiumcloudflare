@@ -97,6 +97,8 @@ body.has-pub-nav{padding-top:68px}
 .pub-cta{display:flex;align-items:center;gap:10px}
 .pub-cta .btn-ghost{color:rgba(255,255,255,.85)}
 .pub-cta .btn-ghost:hover{background:rgba(255,255,255,.1);color:#fff}
+.pub-cta .btn-outline{background:transparent;color:rgba(255,255,255,.85);border-color:rgba(255,255,255,.25)}
+.pub-cta .btn-outline:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.55);color:#fff}
 
 /* ═══════════════════════════════════════════════════
    BUTTONS / PILLS
