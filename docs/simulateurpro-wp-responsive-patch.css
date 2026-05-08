@@ -1,0 +1,169 @@
+/* ══════════════════════════════════════════════════════════════
+   simulateurpro.fr — Patch responsive WordPress (Divi)
+   Date : 2026-05-08
+   Cible : pages WordPress .sp-page / .sp-home / .cat-page-wrap /
+           .sp-mes-* + parcours WooCommerce.
+   ══════════════════════════════════════════════════════════════
+   COMMENT INSTALLER (3 voies, dans l'ordre de simplicité)
+
+   1) Personnaliseur WordPress (recommandé, sans Divi)
+      Tableau de bord → Apparence → Personnaliser → CSS additionnel
+      → coller tout le contenu sous cette en-tête → Publier.
+
+   2) Divi → Options du thème → CSS personnalisé
+      Tableau de bord → Divi → Options du thème → onglet Général
+      → champ « CSS personnalisé » → coller → Enregistrer.
+
+   3) Plugin « Simple Custom CSS » (si pas d'accès à 1 ni 2)
+      Extensions → Ajouter → installer & activer Simple Custom CSS
+      → Apparence → CSS personnalisé → coller → Mettre à jour.
+
+   Couvre : 7 bugs P0 (overflow scroll horizontal, hero h1 trop
+   grand, padding sections géant, grilles 2-col qui collent,
+   tarifs B2B, sticky FAQ, mes-simulations 320px) + tuning P1
+   (cards, boutons, banner catalogue, boutique h1 inline,
+   accessibilité tactile). Réversible : retirer ce bloc et tout
+   redevient comme avant.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Anti scroll horizontal Windows (bug 100vw + scrollbar) ── */
+html, body { overflow-x: hidden; }
+.sp-page, .sp-home {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* ── 2. Tablette (≤1024 px) : étape intermédiaire pour grilles 4-col ── */
+@media (max-width: 1024px) {
+  .sp-page .grid-4,
+  .sp-page .step-grid,
+  .sp-page .sim-grid,
+  .sp-page .team-grid,
+  .sp-page .grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── 3. Tablette (≤920 px) : compléments à la media query existante ── */
+@media (max-width: 920px) {
+  /* Hero h1 (bug spécificité .page-hero h1 60px) */
+  .sp-page .page-hero h1,
+  .sp-home .page-hero h1 { font-size: 42px !important; }
+  .sp-page .page-hero p,
+  .sp-home .page-hero p { font-size: 16px; }
+
+  /* Padding sections trop grand sur mobile */
+  .sp-page .page-hero,
+  .sp-home .page-hero { padding: 64px 0 56px !important; }
+  .sp-page .section,
+  .sp-home .section { padding: 64px 0 !important; }
+  .sp-page .section[style*="padding:100px 0"],
+  .sp-home .section[style*="padding:100px 0"] { padding: 64px 0 !important; }
+
+  /* Grids 2-col inline (contact, demander, FAQ) → 1 col */
+  .sp-page .container > div[style*="grid-template-columns:1fr 1fr"],
+  .sp-page .container > div[style*="grid-template-columns: 1fr 1fr"],
+  .sp-page .container > div[style*="grid-template-columns:240px 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  /* Aside sticky FAQ → flux normal */
+  .sp-page aside[style*="position:sticky"] { position: static !important; }
+
+  /* Tarifs B2B 2-col inline */
+  .sp-page .price-grid[style*="grid-template-columns:repeat(2,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* h2 32 px inline → réduire */
+  .sp-page h2[style*="font-size:32px"] { font-size: 26px !important; }
+
+  /* Empêche scale qui déborde */
+  .sp-page .price-card.featured,
+  .sp-page .sim-card:hover { transform: none !important; }
+}
+
+/* ── 4. Téléphone (≤600 px) : tuning fin ── */
+@media (max-width: 600px) {
+  .sp-page h1, .sp-home h1,
+  .sp-page .page-hero h1, .sp-home .page-hero h1 { font-size: 34px !important; }
+  .sp-page h2, .sp-home h2 { font-size: 24px !important; }
+
+  .sp-page .container, .sp-home .container { padding: 0 16px !important; }
+  .sp-page .page-hero, .sp-home .page-hero { padding: 48px 0 40px !important; }
+  .sp-page .section, .sp-home .section { padding: 48px 0 !important; }
+  .sp-page .section[style*="padding:100px 0"] { padding: 48px 0 !important; }
+
+  .sp-page .card,
+  .sp-page .price-card,
+  .sp-page .team-card,
+  .sp-page .sim-card { padding: 22px !important; }
+
+  /* Boutons full-width sur mobile */
+  .sp-page .ctas .btn, .sp-home .ctas .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sp-page .step .num { font-size: 48px !important; }
+  .sp-page .team-card .avatar {
+    width: 64px; height: 64px; font-size: 22px;
+  }
+
+  /* Catalogue : sim-banner réduit */
+  .cat-page-wrap .sim-banner { height: 140px; }
+  .cat-page-wrap .sim-banner::after { font-size: 110px; }
+
+  /* Mes simulations : grid minmax 320 px déborde sur 360 px viewport */
+  .sp-mes-grid { grid-template-columns: 1fr !important; }
+  .sp-mes-head h1 { font-size: 32px !important; }
+  .sp-mes-wrap { padding: 32px 16px !important; }
+
+  /* Boutique : h1 inline 56 px */
+  body.page-id-65 h1[style*="font-size:56px"] { font-size: 32px !important; }
+
+  /* a11y : zones tactiles ≥ 44 px */
+  .sp-page .btn, .sp-home .btn,
+  .sp-page .acc-q,
+  .sp-page details summary { min-height: 44px; }
+}
+
+/* ── 5. Très petit écran (≤380 px, iPhone SE 1ère gén.) ── */
+@media (max-width: 380px) {
+  .sp-page h1, .sp-home h1,
+  .sp-page .page-hero h1, .sp-home .page-hero h1 { font-size: 28px !important; }
+  .sp-page h2, .sp-home h2 { font-size: 21px !important; }
+  .sp-page .price-amount { font-size: 38px !important; }
+}
+
+/* ── 6. Catalogue : ajustements barre de recherche / filtres ── */
+@media (max-width: 480px) {
+  .cat-page-wrap .cat-search-wrap { max-width: 100% !important; }
+  .cat-page-wrap .cat-filter-btns { width: 100%; justify-content: flex-start; }
+  .cat-page-wrap .cat-section-header { padding: 12px 14px !important; }
+}
+
+/* ── 7. WooCommerce : panier, commande, mon compte ── */
+@media (max-width: 768px) {
+  .woocommerce-cart .wp-block-woocommerce-cart,
+  .woocommerce-checkout .wc-block-checkout,
+  .woocommerce-account .woocommerce-MyAccount-content { padding: 16px !important; }
+
+  .woocommerce-cart table.shop_table,
+  .woocommerce-checkout table.shop_table { font-size: 14px; }
+
+  .woocommerce-cart .wc-block-cart__main,
+  .woocommerce-cart .wc-block-cart__sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+
+  .wc-block-components-button,
+  .woocommerce .button {
+    max-width: 100%;
+    white-space: normal !important;
+  }
+}
